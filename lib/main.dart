@@ -70,7 +70,7 @@ class _AppTranslateState extends State<AppTranslate> {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'NeoEnergy',
+          title: 'Drona',
              supportedLocales: _localization.supportedLocales,
              localizationsDelegates: _localization.localizationsDelegates,
           theme: themeProvider.isDarkTheme ? themeDataDark : themeDataLight,

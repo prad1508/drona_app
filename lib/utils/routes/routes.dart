@@ -5,6 +5,7 @@ import 'package:drona/view/registeration/otp.dart';
 import 'package:drona/view/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../view/profile/edit_proile.dart';
 import '../../view/registeration/acadmic_setup.dart';
 import '../../view/registeration/choose _service.dart';
 import '../../view/registeration/registration.dart';
@@ -42,6 +43,8 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const DetailFilled());
       case RoutesName.WelcomeScreen:
         return MaterialPageRoute(builder: (BuildContext context) => const WelcomeScreen());
+      case RoutesName.EditProfile:
+        return MaterialPageRoute(builder: (BuildContext context) => const EditProfile());
         
 
       default:

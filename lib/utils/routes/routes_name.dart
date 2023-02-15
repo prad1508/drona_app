@@ -16,8 +16,9 @@ class RoutesName {
   static const String Registration = 'Registration_screen';
   static const String OtpPage = 'OtpPage_screen';
   static const String ChooseService = 'ChooseService_screen';
-  static const String  DetailFilled = 'DetailFilled_screen';
+  static const String DetailFilled = 'DetailFilled_screen';
   static const String WelcomeScreen = 'WelcomeScreen_screen';
+  static const String EditProfile = 'EditProfile_screen';
 
 
 }
