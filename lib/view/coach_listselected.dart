@@ -237,7 +237,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Continue',
+                    title: 'Send Invite',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,

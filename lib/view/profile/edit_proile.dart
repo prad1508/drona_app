@@ -415,7 +415,7 @@ class _EditProfileState extends State<EditProfile> {
                         print(salary);
                         print(doj);
                         print(_genderValue);
-                        Navigator.pushNamed(context, RoutesName.CoachList);
+                        Navigator.pushNamed(context, RoutesName.CoachListSelected);
                       }),
                 ],
               ),

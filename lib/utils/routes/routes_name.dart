@@ -19,7 +19,6 @@ class RoutesName {
   static const String DetailFilled = 'DetailFilled_screen';
   static const String WelcomeScreen = 'WelcomeScreen_screen';
   static const String EditProfile = 'EditProfile_screen';
-  static const String CoachList = 'CoachList_screen';
   static const String CoachListSelected = 'CoachListSelected_screen';
 
 }

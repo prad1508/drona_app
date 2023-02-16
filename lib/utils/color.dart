@@ -5,8 +5,8 @@ const secondryColor = Color.fromRGBO(253, 104, 93, 1);
 const successColor = Color.fromRGBO(27, 134, 55, 1);
 final ThemeData themeDataLight =  ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.lightBlue[800],
-    primaryColorDark:Color.fromARGB(255, 0, 0, 0),
+    primaryColor: const Color.fromRGBO(42, 98, 184, 1),
+    primaryColorDark:const Color.fromARGB(255, 0, 0, 0),
     primaryColorLight: Colors.orangeAccent,
     secondaryHeaderColor: Color.fromARGB(255, 0, 0, 0),
     scaffoldBackgroundColor: Colors.white,  
@@ -14,7 +14,7 @@ final ThemeData themeDataLight =  ThemeData(
           titleLarge: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(13, 30, 57, 1), fontFamily: 'poppin'),
           titleMedium: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(13, 30, 57, 1), fontFamily: 'poppin'),
           bodyLarge: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(57, 64, 74, 1), fontFamily: 'Loto-Regular'),
-          bodyMedium:  TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(57, 64, 74, 1), fontFamily: 'Loto-Regular'),  
+          bodyMedium:  TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: Color.fromRGBO(57, 64, 74, 1), fontFamily: 'Loto-Regular'),  
           bodySmall: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(57, 64, 74, 1), fontFamily: 'Loto-Regular'),
         ),
       iconTheme: const IconThemeData(

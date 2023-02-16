@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
@@ -15,8 +16,46 @@ class AcadmicSetup extends StatefulWidget {
 }
 
 class _AcadmicSetupState extends State<AcadmicSetup> {
-  //multi language support
+   //transltate
   final FlutterLocalization _localization = FlutterLocalization.instance;
+
+  TextEditingController reasoncontroller = TextEditingController();
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("English"), value: "en"),
+      DropdownMenuItem(child: Text("हिंदी"), value: "hi"),
+    ];
+    return menuItems;
+  }
+   String selectedValue = 'en';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getlanguageState();
+    String selectedValue = "en";
+  }
+
+  //setselected language
+  @override
+  addlanguageState(lang) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('lang', lang);
+  }
+
+  //get selected language
+  @override
+  getlanguageState() async {
+  
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+   setState(() {
+    if(prefs.getString('lang') == null) return;
+       if(prefs.getString('lang').toString() != null){
+         selectedValue = prefs.getString('lang').toString();
+       }
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,23 +71,45 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image(
+                const Image(
                   image: AssetImage('assets/images/logo2.png'),
                   width: 175,
                   height: 64,
                 ),
-                SizedBox(
-                  height: 40,
+                const SizedBox(
+                  height: 28,
                 ),
                 SizedBox(
-                    width: 180,
                     child: Text(AppLocale.title1.getString(context),
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17, height: 1.7),
                         textAlign: TextAlign.center)),
-                SizedBox(
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                    padding: const EdgeInsets.only(left: 20),
+                    width: MediaQuery.of(context).size.height * 0.3,
+                    child: DropdownButton(
+                        isExpanded: true,
+                        elevation: 1,
+                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                        iconEnabledColor: Colors.black,
+                        style:
+                            const TextStyle(color: Colors.black),
+                        value: selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                            addlanguageState(newValue);
+                            _localization.translate(selectedValue);
+                          });
+                        },
+                        items: dropdownItems),
+                  ),
+                   const SizedBox(
                   height: 40,
                 ),
                 RoundButton(
@@ -59,10 +120,10 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   textColor: Theme.of(context).scaffoldBackgroundColor,
                   onPress: () =>  Navigator.pushNamed(context, RoutesName.Registration),
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 24,
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                 ),
                 Transform.translate(
@@ -78,7 +139,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                       onPressed: null,
                       child: Text(
                         AppLocale.or.getString(context),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -88,8 +149,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   style: TextStyle(
                       color: Theme.of(context).primaryColor, fontSize: 14),
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 14,
                 ),
                 RoundButton(
                   loading: false,
@@ -101,17 +162,17 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                 ),
                 SizedBox(
                   width: 200,
-                  height: 80,
+                  height: 50,
                   child: Row(
                     children: [
-                      Text(AppLocale.title5.getString(context), style: Theme.of(context).textTheme.bodyLarge,),
+                      Text(AppLocale.title5.getString(context), style: Theme.of(context).textTheme.bodyMedium,),
                       TextButton(
                         onPressed: (){
-                           Navigator.pushNamed(context, RoutesName.login);
+                          // Navigator.pushNamed(context, RoutesName.login);
                         },
                         child: Text(
                           AppLocale.login.getString(context),
-                          style: TextStyle(fontSize: 18, color: Colors.red),
+                          style: const TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       ),
                     ],
