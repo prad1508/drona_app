@@ -1,4 +1,5 @@
 
+import 'package:drona/view/profile/view_profile.dart';
 import 'package:drona/view/registeration/detail_filled.dart';
 import 'package:drona/view/registeration/otp.dart';
 import 'package:drona/view/welcome_screen.dart';
@@ -47,6 +48,8 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const EditProfile());
       case RoutesName.CoachListSelected:
         return MaterialPageRoute(builder: (BuildContext context) => const CoachListSelected());
+      case RoutesName.ViewProfilenew:
+        return MaterialPageRoute(builder: (BuildContext context) => const ViewProfilenew());
 
       default:
         return MaterialPageRoute(builder: (_){

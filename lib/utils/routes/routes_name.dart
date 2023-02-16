@@ -20,5 +20,6 @@ class RoutesName {
   static const String WelcomeScreen = 'WelcomeScreen_screen';
   static const String EditProfile = 'EditProfile_screen';
   static const String CoachListSelected = 'CoachListSelected_screen';
+  static const String ViewProfilenew = 'ViewProfilenew_screen';
 
 }

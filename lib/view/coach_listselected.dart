@@ -1,8 +1,10 @@
+import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
 import '../res/widget/round_button.dart';
+import '../utils/routes/routes_name.dart';
 
 class CoachListSelected extends StatefulWidget {
   const CoachListSelected({super.key});
@@ -120,9 +122,17 @@ class _CoachListSelectedState extends State<CoachListSelected> {
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+          leading: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              Text(
+                _selectedItems.length.toString(),
+                style: TextStyle(color: Colors.black),
+              )
+            ],
           ),
           title: Text(
             'Coach List',
@@ -239,17 +249,20 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                             ["categorgyImg"])),
                                   ),
                                   onTap: () {
-                                    if (_selectedItems.contains(index)) {
-                                      setState(() {
-                                        _selectedItems
-                                            .removeWhere((val) => val == index);
-                                      });
-                                    }
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ViewProfilenew()));
                                   },
                                   onLongPress: () {
                                     if (!_selectedItems.contains(index)) {
                                       setState(() {
                                         _selectedItems.add(index);
+                                      });
+                                    } else {
+                                      setState(() {
+                                        _selectedItems
+                                            .removeWhere((val) => val == index);
                                       });
                                     }
                                   },
@@ -298,10 +311,26 @@ class _CoachListSelectedState extends State<CoachListSelected> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text("Send invite ", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, fontFamily: 'Loto-Regular'),),
-                  SizedBox(height: 28,),
-                  const Text("Send invitation to all the coaches", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, fontFamily: 'Loto-Regular'),),
-                   SizedBox(height: 28,),
+                  const Text(
+                    "Send invite ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontFamily: 'Loto-Regular'),
+                  ),
+                  SizedBox(
+                    height: 28,
+                  ),
+                  const Text(
+                    "Send invitation to all the coaches",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        fontFamily: 'Loto-Regular'),
+                  ),
+                  SizedBox(
+                    height: 28,
+                  ),
                   const SizedBox(height: 15),
                   RoundButton(
                     loading: false,
@@ -310,14 +339,13 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () {
-                          Navigator.of(context).pop();
-                        },
-                    ),
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ],
               ),
             ),
           );
         });
   }
-
 }
