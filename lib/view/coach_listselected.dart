@@ -163,7 +163,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Card(
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                     side: BorderSide(
                       color: Color.fromARGB(255, 197, 196, 196),
                     ),
@@ -173,7 +176,9 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
                       decoration: const InputDecoration(
-                          hintText: 'Search', border: InputBorder.none),
+                          contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+                          hintText: 'Search',
+                          border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
                   ),
@@ -197,21 +202,50 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                           .withOpacity(0.5)
                                       : Colors.transparent,
                                   leading: CircleAvatar(
-                                    radius: 30,
-                                    child: Image(
-                                        image: AssetImage(
-                                            _foundUsers[index]["proImg"])),
+                                      radius: 20.5,
+                                      backgroundColor: const Color.fromRGBO(
+                                          194, 235, 216, 1),
+                                      child: _selectedItems.contains(index)
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Color.fromRGBO(
+                                                  71, 192, 136, 1),
+                                              size: 30.0,
+                                            )
+                                          : Image(
+                                              image: AssetImage(
+                                                  _foundUsers[index]
+                                                      ["proImg"]))),
+                                  title: Text(
+                                    _foundUsers[index]['name'],
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(57, 64, 74, 1),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Loto-Regular'),
                                   ),
-                                  title: Text(_foundUsers[index]['name']),
                                   subtitle: Text(
-                                      _foundUsers[index]["detail"].toString()),
+                                    _foundUsers[index]["detail"].toString(),
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(57, 64, 74, 1),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Loto-Regular'),
+                                  ),
                                   trailing: CircleAvatar(
                                     radius: 12,
                                     child: Image(
                                         image: AssetImage(_foundUsers[index]
                                             ["categorgyImg"])),
                                   ),
-                              
+                                  onTap: () {
+                                    if (_selectedItems.contains(index)) {
+                                      setState(() {
+                                        _selectedItems
+                                            .removeWhere((val) => val == index);
+                                      });
+                                    }
+                                  },
                                   onLongPress: () {
                                     if (!_selectedItems.contains(index)) {
                                       setState(() {
@@ -220,7 +254,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                     }
                                   },
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 5,
                                 ),
                               ],
@@ -243,6 +277,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                     color: Theme.of(context).primaryColor,
                     onPress: () {
                       // Navigator.pushNamed(context, RoutesName.ChooseService);
+                      showExitPopup(context);
                     }),
               ],
             ),
@@ -251,4 +286,38 @@ class _CoachListSelectedState extends State<CoachListSelected> {
       ),
     );
   }
+
+  //notification invitation send
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 170,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text("Send invite ", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, fontFamily: 'Loto-Regular'),),
+                  SizedBox(height: 28,),
+                  const Text("Send invitation to all the coaches", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, fontFamily: 'Loto-Regular'),),
+                   SizedBox(height: 28,),
+                  const SizedBox(height: 15),
+                  RoundButton(
+                    loading: false,
+                    title: 'Okay',
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Theme.of(context).primaryColor,
+                    onPress: () {
+                          Navigator.of(context).pop();
+                        },
+                    ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
 }
