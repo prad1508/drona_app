@@ -129,8 +129,9 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length.toString(),
+                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
                 style: TextStyle(color: Colors.black),
+               
               )
             ],
           ),

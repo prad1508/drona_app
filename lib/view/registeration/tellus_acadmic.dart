@@ -225,12 +225,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
+          width: 700,
           alignment: Alignment.center,
           child: Column(
             children: <Widget>[
                 MultiSelectDialogField(
+                dialogWidth:MediaQuery.of(context).size.width * 2,
+                dialogHeight: MediaQuery.of(context).size.width * 0.7,
                 items: _items,
-                title: Text("Select Category"),
+                title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),

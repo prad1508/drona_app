@@ -18,8 +18,10 @@ class RoutesName {
   static const String ChooseService = 'ChooseService_screen';
   static const String DetailFilled = 'DetailFilled_screen';
   static const String WelcomeScreen = 'WelcomeScreen_screen';
-  static const String EditProfile = 'EditProfile_screen';
+  static const String CreateProfile = 'CreateProfile_screen';
   static const String CoachListSelected = 'CoachListSelected_screen';
   static const String ViewProfilenew = 'ViewProfilenew_screen';
-
+  static const String CreateBatch = 'CreateBatch_screen';
+  static const String BatchList = 'BatchList_screen';
+  static const String BatchDetail = 'BatchDetail_Screen';
 }

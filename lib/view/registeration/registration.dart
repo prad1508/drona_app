@@ -156,12 +156,14 @@ class _RegistrationState extends State<Registration> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'owner',
                         groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
                         label: 'Owner ',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'owner+inst',
                         groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
@@ -210,18 +212,21 @@ class _RegistrationState extends State<Registration> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Male ',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Female',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),

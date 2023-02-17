@@ -1,12 +1,14 @@
 
-import 'package:drona/view/profile/view_profile.dart';
-import 'package:drona/view/registeration/detail_filled.dart';
-import 'package:drona/view/registeration/otp.dart';
-import 'package:drona/view/welcome_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:drona/view/batch_details.dart';
 import 'package:flutter/material.dart';
+import '../../view/profile/batch_list.dart';
+import '../../view/profile/view_profile.dart';
+import '../../view/registeration/detail_filled.dart';
+import '../../view/registeration/otp.dart';
+import '../../view/welcome_screen.dart';
 import '../../view/coach_listselected.dart';
-import '../../view/profile/edit_proile.dart';
+import '../../view/create_batch.dart';
+import '../../view/profile/create_proile.dart';
 import '../../view/registeration/acadmic_setup.dart';
 import '../../view/registeration/choose _service.dart';
 import '../../view/registeration/registration.dart';
@@ -44,12 +46,19 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const DetailFilled());
       case RoutesName.WelcomeScreen:
         return MaterialPageRoute(builder: (BuildContext context) => const WelcomeScreen());
-      case RoutesName.EditProfile:
-        return MaterialPageRoute(builder: (BuildContext context) => const EditProfile());
+      case RoutesName.CreateProfile:
+        return MaterialPageRoute(builder: (BuildContext context) => const CreateProfile());
       case RoutesName.CoachListSelected:
         return MaterialPageRoute(builder: (BuildContext context) => const CoachListSelected());
       case RoutesName.ViewProfilenew:
         return MaterialPageRoute(builder: (BuildContext context) => const ViewProfilenew());
+      case RoutesName.CreateBatch:
+        return MaterialPageRoute(builder: (BuildContext context) => const CreateBatch());
+      case RoutesName.BatchList:
+        return MaterialPageRoute(builder: (BuildContext context) => const BatchList());
+      case RoutesName.BatchDetail:
+        return MaterialPageRoute(builder: (BuildContext context) => const BatchDetail());
+
 
       default:
         return MaterialPageRoute(builder: (_){

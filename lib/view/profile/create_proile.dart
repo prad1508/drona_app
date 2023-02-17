@@ -8,14 +8,14 @@ import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+class CreateProfile extends StatefulWidget {
+  const CreateProfile({super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<CreateProfile> createState() => _CreateProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _CreateProfileState extends State<CreateProfile> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
@@ -137,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Edit Profile',
+            'Create Profile',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -301,18 +301,21 @@ class _EditProfileState extends State<EditProfile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Male ',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Female',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),

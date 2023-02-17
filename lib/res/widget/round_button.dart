@@ -20,7 +20,7 @@ class RoundButton extends StatelessWidget {
      required this.rounded,
      required this.color,
      required this.textColor,
-     
+
   }) : super(key: key);
 
   @override

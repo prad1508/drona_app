@@ -5,7 +5,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
-import 'edit_proile.dart';
+import '../create_batch.dart';
+import 'create_proile.dart';
 
 class ViewProfilenew extends StatefulWidget {
   const ViewProfilenew({super.key});
@@ -61,7 +62,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                            context,
                            MaterialPageRoute(
                              builder: (BuildContext context) =>
-                                 const EditProfile(),
+                                 const CreateProfile(),
                            ),
                          );
               },
@@ -216,19 +217,21 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
-                        
+                        btnColor: Colors.black,
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Male ',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Female',
                       ),
                       CustomRadio<String>(
+                        btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
@@ -317,6 +320,22 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                       ),
                     ),
                   ),
+                  TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: (){
+                                Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const CreateBatch(),
+                                          ),
+                                        );
+                              },
+                              child: const Text('dummy navigate'),
+                            ),
+                  
                   
                 ],
               ),

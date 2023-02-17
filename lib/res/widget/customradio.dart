@@ -4,6 +4,7 @@ class CustomRadio<T> extends StatelessWidget {
   final T value;
   final T? groupValue;
   final String label;
+  final Color btnColor;
   final ValueChanged<T?> onChanged;
 
   const CustomRadio({
@@ -11,6 +12,7 @@ class CustomRadio<T> extends StatelessWidget {
     required this.groupValue,
     required this.label,
     required this.onChanged,
+    required this.btnColor
   });
 
   Widget _labelBtn(BuildContext context) {
@@ -19,10 +21,10 @@ class CustomRadio<T> extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
             width: 1,
-            color: isSelected ? Theme.of(context).primaryColor : Colors.black),
+            color: isSelected ? btnColor.withOpacity(0.1) : Colors.black),
         borderRadius: BorderRadius.all(
           Radius.circular(5)),
-        color: isSelected ? Colors.black : Colors.white,
+        color: isSelected ? btnColor : Colors.white,
       ),
       padding: EdgeInsets.fromLTRB(32, 15, 32, 15),
       child: Column(

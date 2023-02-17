@@ -120,7 +120,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       color: Color.fromRGBO(241, 94, 83, 1),
                       onPress: () {
                        
-                        Navigator.pushNamed(context, RoutesName.EditProfile);
+                        Navigator.pushNamed(context, RoutesName.CreateProfile);
                       }),
               ],
             ),
