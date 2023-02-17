@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
 import '../../res/language/language.dart';
 import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
@@ -14,6 +13,7 @@ import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
 import 'profile/batch_list.dart';
+import 'trainee_phonbook_add.dart';
 
 class BatchDetail extends StatefulWidget {
   const BatchDetail({super.key});
@@ -147,7 +147,15 @@ class _BatchDetailState extends State<BatchDetail> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: TextButton(
-                          onPressed: null,
+                          onPressed: (){
+                            Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const AddPhonebook(),
+                                      ),
+                                    );
+                          },
                           child: Text(
                             'Import From Contact List',
                             style: Theme.of(context).textTheme.bodyMedium,
