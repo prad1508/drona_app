@@ -78,6 +78,93 @@ class _BatchDetailState extends State<BatchDetail> {
    String selectedCategory = 'Tennis';
    String selectedAssignCoach = 'john';
 
+
+
+//Add Trainee In Hockey Batch popup
+  AddTrainee() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 200,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 3,
+                          width: 50,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Enter Manually',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Loto-Regular'),
+                          ),
+                         
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(color: Colors.grey),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: null,
+                          child: Text(
+                            'Enter Manually',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: null,
+                          child: Text(
+                            'Import From Contact List',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -444,7 +531,9 @@ class _BatchDetailState extends State<BatchDetail> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                        
-                    onPress: (){},
+                    onPress: (){
+                      AddTrainee();
+                    },
                   ),
                 ],
               ),
