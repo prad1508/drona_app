@@ -8,7 +8,7 @@ import '../../view/registeration/otp.dart';
 import '../../view/welcome_screen.dart';
 import '../../view/coach_listselected.dart';
 import '../../view/create_batch.dart';
-import '../../view/profile/create_proile.dart';
+import '../../view/profile/create_profile.dart';
 import '../../view/registeration/acadmic_setup.dart';
 import '../../view/registeration/choose _service.dart';
 import '../../view/registeration/registration.dart';

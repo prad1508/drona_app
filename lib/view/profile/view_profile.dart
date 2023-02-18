@@ -6,7 +6,7 @@ import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../create_batch.dart';
-import 'create_proile.dart';
+import 'create_profile.dart';
 
 class ViewProfilenew extends StatefulWidget {
   const ViewProfilenew({super.key});
@@ -217,7 +217,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
-                        btnColor: Colors.black,
+                        btnColor: Colors.black.withOpacity(0.5),
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),

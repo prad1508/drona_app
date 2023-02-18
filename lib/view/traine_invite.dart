@@ -5,6 +5,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
+import 'trainee_profile.dart';
 
 class TrainInvite extends StatefulWidget {
   const TrainInvite({super.key});
@@ -162,7 +163,7 @@ void dataFilter(String enteredKeyword) {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const ViewProfilenew()));
+                                                const Traineeprofile()));
                                   },
                                   onLongPress: () {
                                     if (!_selectedItems.contains(index)) {

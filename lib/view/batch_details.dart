@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/trainne_addmanual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -137,7 +138,15 @@ class _BatchDetailState extends State<BatchDetail> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: TextButton(
-                          onPressed: null,
+                          onPressed: (){
+                            Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const TrainAddManualy(),
+                                      ),
+                                    );
+                          },
                           child: Text(
                             'Enter Manually',
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -186,7 +195,7 @@ class _BatchDetailState extends State<BatchDetail> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Create Batch',
+            'Batch Detail',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
