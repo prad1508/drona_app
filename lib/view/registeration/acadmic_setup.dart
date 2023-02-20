@@ -91,7 +91,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                 ),
                 Container(
                     padding: const EdgeInsets.only(left: 20),
-                    width: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.height * 0.15,
                     child: DropdownButton(
                         isExpanded: true,
                         elevation: 1,

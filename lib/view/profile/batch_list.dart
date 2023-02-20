@@ -3,8 +3,11 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../batch_details.dart';
+import 'batch_list.dart';
+
 
 class BatchList extends StatefulWidget {
   const BatchList({super.key});
@@ -14,6 +17,9 @@ class BatchList extends StatefulWidget {
 }
 
 class _BatchListState extends State<BatchList> {
+  //multi language support
+  final FlutterLocalization _localization = FlutterLocalization.instance;
+
   List<int> _selectedItems = <int>[];
 
   final List<Map<String, dynamic>> _allUsers = [
@@ -44,6 +50,8 @@ class _BatchListState extends State<BatchList> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: _localization.supportedLocales,
+      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -63,7 +71,7 @@ class _BatchListState extends State<BatchList> {
             ],
           ),
           title: Text(
-            'Batch List',
+            AppLocale.batchList.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -207,7 +215,7 @@ class _BatchListState extends State<BatchList> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Continue',
+                    title: AppLocale.Continue.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
