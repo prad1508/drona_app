@@ -16,9 +16,6 @@ class ViewProfilenew extends StatefulWidget {
 }
 
 class _ViewProfilenewState extends State<ViewProfilenew> {
- //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -38,8 +35,6 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

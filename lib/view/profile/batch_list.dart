@@ -14,9 +14,6 @@ class BatchList extends StatefulWidget {
 }
 
 class _BatchListState extends State<BatchList> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   List<int> _selectedItems = <int>[];
 
   final List<Map<String, dynamic>> _allUsers = [
@@ -47,8 +44,6 @@ class _BatchListState extends State<BatchList> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -60,7 +55,9 @@ class _BatchListState extends State<BatchList> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
+                _selectedItems.length == 0
+                    ? ''
+                    : _selectedItems.length.toString(),
                 style: TextStyle(color: Colors.black),
               )
             ],
@@ -148,8 +145,14 @@ class _BatchListState extends State<BatchList> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Chip(
-                                          backgroundColor: Color.fromARGB(255, 237, 244, 240),
-                                          label:  Text( _foundUsers[index]['level'], style: TextStyle(fontSize: 12, color: Colors.greenAccent),),
+                                          backgroundColor: Color.fromARGB(
+                                              255, 237, 244, 240),
+                                          label: Text(
+                                            _foundUsers[index]['level'],
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.greenAccent),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -209,13 +212,13 @@ class _BatchListState extends State<BatchList> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () {
-                     Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (BuildContext context) =>
-                                     const BatchDetail(),
-                               ),
-                             );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const BatchDetail(),
+                        ),
+                      );
                     }),
               ],
             ),

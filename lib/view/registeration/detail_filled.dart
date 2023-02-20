@@ -72,15 +72,22 @@ class _TellusAcadmicState extends State<DetailFilled> {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Details for Owner Coach',
+                    child: Text(AppLocale.title13.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(AppLocale.services.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                     height: 110,
                     child:  MyHomePage(),
@@ -149,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   dialogWidth:MediaQuery.of(context).size.width * 2,
                   dialogHeight: MediaQuery.of(context).size.width * 0.7,
                 items: _items,
-                 title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
+                 title: Text(AppLocale.title15.getString(context), style: TextStyle(fontSize: 15),),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -158,12 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 1,
                   ),
                 ),
+                
                 buttonIcon: Icon(
                   Icons.pets,
                   color: Colors.blue,
                 ),
-                buttonText: Text(
-                  "Choose your Business Category",
+                buttonText: Text(AppLocale.title15.getString(context),
                   style: TextStyle(
                     fontSize: 16,
                   ),

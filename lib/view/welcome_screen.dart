@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
+import '../res/language/language.dart';
 import '../res/widget/circle_withtext.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
@@ -30,8 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'CONGRATULATION',
+                Text(AppLocale.congratulation.getString(context),
                   style: TextStyle(
                       color: Color.fromRGBO(254, 194, 89, 1),
                       fontSize: 25,
@@ -49,8 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'Your',
+                 Text(AppLocale.your.getString(context),
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -65,8 +65,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontFamily: 'poppin',
                       fontWeight: FontWeight.w600),
                 ),
-                const Text(
-                  'Is Now Registered',
+                Text(AppLocale.title14.getString(context),
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -108,13 +107,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-          
-                const CircleWidthtext(numb: 1, label: 'Create batch', color: Colors.white),
-                const CircleWidthtext(numb: 2, label: 'Add Trainee in created batch', color: Colors.white),
+              //CircleWidthtext(numb: 1, label: AppLocale.addCoach.getString(context), color: Colors.white),
+              CircleWidthtext(numb: 1, label: AppLocale.createBatch.getString(context), color: Colors.white),
+              CircleWidthtext(numb: 2, label: AppLocale.title16.getString(context), color: Colors.white),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
                 RoundButton(
                       loading: false,
-                      title: 'Proceed here to Create Batch',
+                      title: AppLocale.title17.getString(context),
+                      // title: AppLocale.title18.getString(context),
                       textColor: Colors.white,
                       rounded: true,
                       color: Color.fromRGBO(241, 94, 83, 1),

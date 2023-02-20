@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
@@ -16,9 +15,6 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -126,8 +122,6 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

@@ -26,9 +26,6 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final TextEditingController otpvalue1 = TextEditingController();
   final TextEditingController otpvalue2 = TextEditingController();
   final TextEditingController otpvalue3 = TextEditingController();
@@ -39,8 +36,6 @@ class _OtpPageState extends State<OtpPage> {
   Widget build(BuildContext context) {
     final Width = MediaQuery.of(context).size.width * 0.8 / 5;
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -73,7 +68,7 @@ class _OtpPageState extends State<OtpPage> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Enter OTP',
+                      AppLocale.enterOtp.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -83,7 +78,7 @@ class _OtpPageState extends State<OtpPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('An 4 digit code has been sent to ',
+                      Text(AppLocale.title8.getString(context),
                           style: TextStyle(
                               color: Color.fromARGB(255, 81, 81, 81),
                               fontSize: 16,
@@ -224,29 +219,27 @@ class _OtpPageState extends State<OtpPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Didn’t Receive OTP?',
+                        AppLocale.title9.getString(context),
                         style: TextStyle(fontSize: 14),
                       ),
                       TextButton(
-                                 
-                                  onPressed: (){
-                                    Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    TellusAcadmic(),
-                                              ),
-                                            );
-                                  },
-                                  child: Text(
-                        'Resend OTP',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  TellusAcadmic(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          AppLocale.resendOtp.getString(context),
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor),
+                        ),
                       ),
-                                ),
-                      
                     ],
                   ),
                   // TextButton(

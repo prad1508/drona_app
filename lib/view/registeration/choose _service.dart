@@ -17,14 +17,10 @@ class ChooseService extends StatefulWidget {
 }
 
 class _ChooseServiceState extends State<ChooseService> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
   @override
   Widget build(BuildContext context) {
     final Width = MediaQuery.of(context).size.width * 0.8 / 5;
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -57,7 +53,7 @@ class _ChooseServiceState extends State<ChooseService> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Choose Your Service Offerings',
+                      AppLocale.title12.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -73,8 +69,9 @@ class _ChooseServiceState extends State<ChooseService> {
                         children: List.generate(choices.length, (index) {
                           return Center(
                             child: InkWell(
-                              child:
-                                  SelectCard(choice: choices[index].imageUrl, index: index),
+                              child: SelectCard(
+                                  choice: choices[index].imageUrl,
+                                  index: index),
                               onLongPress: () => print(index),
                             ),
                           );
@@ -132,16 +129,16 @@ class _SelectCardState extends State<SelectCard> {
   @override
   Widget build(BuildContext context) {
     return CustomCheckBox(
-                value: shouldCheck,
-                checkedFillColor: Colors.green,
-                imageUrl: widget.choice,
-                onChanged: (val) {
-                  //do your stuff here
-                  setState(() {
-                    shouldCheck = val;
-                  });
-                },
-              );
+      value: shouldCheck,
+      checkedFillColor: Colors.green,
+      imageUrl: widget.choice,
+      onChanged: (val) {
+        //do your stuff here
+        setState(() {
+          shouldCheck = val;
+        });
+      },
+    );
   }
 }
 

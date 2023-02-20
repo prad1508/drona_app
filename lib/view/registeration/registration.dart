@@ -22,10 +22,6 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-  //custom radio
-  // custum radio call in seprate page
   String? _groupValue = 'owner';
   ValueChanged<String?> _valueChangedHandler() {
     return (value) => setState(() => _groupValue = value!);
@@ -41,18 +37,15 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController FullName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
-  
+
   Future<bool> isValidPasscode(String value) async {
     return await Future.delayed(Duration(seconds: 1),
         () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -85,7 +78,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Tell Us About Yourself',
+                      AppLocale.title6.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -95,7 +88,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'What’s Your Full Name',
+                      AppLocale.title7.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -121,7 +114,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Phone Number',
+                      AppLocale.phoneNumber.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -145,7 +138,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Your Role',
+                      AppLocale.yourRole.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -160,14 +153,14 @@ class _RegistrationState extends State<Registration> {
                         value: 'owner',
                         groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
-                        label: 'Owner ',
+                        label: AppLocale.phoneNumber.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'owner+inst',
                         groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
-                        label: 'Owner + Instructor',
+                        label: AppLocale.OwnerInstructor.getString(context),
                       ),
                     ],
                   ),
@@ -177,7 +170,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Email (Optional)',
+                      AppLocale.emailOptional.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -201,7 +194,7 @@ class _RegistrationState extends State<Registration> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Gender',
+                      AppLocale.gender.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -216,21 +209,21 @@ class _RegistrationState extends State<Registration> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Male ',
+                        label: AppLocale.male.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Female',
+                        label: AppLocale.female.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Other',
+                        label: AppLocale.other.getString(context),
                       ),
                     ],
                   ),
@@ -256,23 +249,23 @@ class _RegistrationState extends State<Registration> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'I Agree To',
+                          AppLocale.iAgree.getString(context),
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
-                          style:
-                              TextButton.styleFrom(padding: EdgeInsets.all(0)),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                          ),
                           onPressed: null,
                           child: Text(
-                            'Terms',
+                            AppLocale.terms.getString(context),
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Theme.of(context).primaryColorLight),
                           ),
                         ),
-                     
                         Text(
-                          '&  ',
+                          AppLocale.and.getString(context),
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
@@ -280,7 +273,7 @@ class _RegistrationState extends State<Registration> {
                               TextButton.styleFrom(padding: EdgeInsets.all(0)),
                           onPressed: null,
                           child: Text(
-                            'privacy policy',
+                            AppLocale.privacyPolicy.getString(context),
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Theme.of(context).primaryColorLight),
@@ -291,7 +284,7 @@ class _RegistrationState extends State<Registration> {
                   ]),
                   RoundButton(
                     loading: false,
-                    title: AppLocale.title3.getString(context),
+                    title: AppLocale.Continue.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: agree == true

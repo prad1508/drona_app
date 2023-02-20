@@ -72,8 +72,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Tell Us About Academy',
+                    child: Text(AppLocale.title10.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -82,8 +81,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Academy Name',
+                    child: Text(AppLocale.academyName.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -108,8 +106,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Location',
+                    child: Text(AppLocale.location.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -119,7 +116,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   TextFormField(
                     controller: address,
                     decoration: InputDecoration(
-                      hintText: 'Address',
+                      hintText: AppLocale.address.getString(context),
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -135,7 +132,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   TextFormField(
                     controller: city,
                     decoration: InputDecoration(
-                      hintText: 'City',
+                      hintText: AppLocale.city.getString(context),
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -151,7 +148,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   TextFormField(
                     controller: state,
                     decoration: InputDecoration(
-                      hintText: 'State',
+                      hintText: AppLocale.state.getString(context),
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -233,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 dialogWidth:MediaQuery.of(context).size.width * 2,
                 dialogHeight: MediaQuery.of(context).size.width * 0.7,
                 items: _items,
-                title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
+                title: Text(AppLocale.title11.getString(context), style: TextStyle(fontSize: 15),),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -246,8 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.pets,
                   color: Colors.blue,
                 ),
-                buttonText: Text(
-                  "Choose your Business Category",
+                buttonText: Text(AppLocale.title11.getString(context),
                   style: TextStyle(
                     fontSize: 16,
                   ),
