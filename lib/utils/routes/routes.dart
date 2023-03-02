@@ -1,10 +1,12 @@
 
 import 'package:drona/view/batch_details.dart';
 import 'package:flutter/material.dart';
+import '../../view/language.dart';
 import '../../view/profile/batch_list.dart';
 import '../../view/profile/view_profile.dart';
 import '../../view/registeration/detail_filled.dart';
 import '../../view/registeration/otp.dart';
+import '../../view/registeration/tellus_acadmic.dart';
 import '../../view/welcome_screen.dart';
 import '../../view/coach_listselected.dart';
 import '../../view/create_batch.dart';
@@ -29,7 +31,11 @@ class Routes {
 
       case RoutesName.layout:
         return MaterialPageRoute(builder: (BuildContext context) => const Layout(selectedIndex: 0,));
-
+      case RoutesName.tellusAcadmic:
+        return MaterialPageRoute(builder: (BuildContext context) => const TellusAcadmic());
+        
+      case RoutesName.language:
+        return MaterialPageRoute(builder: (BuildContext context) => const Language());
       case RoutesName.login:
         return MaterialPageRoute(builder: (BuildContext context) => const LoginView());
       case RoutesName.signUp:
@@ -38,8 +44,6 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const AcadmicSetup());
       case RoutesName.Registration:
         return MaterialPageRoute(builder: (BuildContext context) => const Registration());
-      case RoutesName.OtpPage:
-        return MaterialPageRoute(builder: (BuildContext context) => const OtpPage());
       case RoutesName.ChooseService:
         return MaterialPageRoute(builder: (BuildContext context) => const ChooseService());
       case RoutesName.DetailFilled:

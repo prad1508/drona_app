@@ -37,9 +37,9 @@ class AuthViewModel with ChangeNotifier {
     _myRepo.loginApi(data).then((value){
       setLoading(false);
       final userPreference = Provider.of<UserViewModel>(context , listen: false);
-      userPreference.saveUser(
+      userPreference.saveData(
         UserModel(
-          token: value['token'].toString()
+          data: value['token'].toString()
         )
       );
 

@@ -5,20 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:otp_timer_button/otp_timer_button.dart';
 import '../../res/language/language.dart';
-import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
+import '../../view_model/registration_view_model.dart';
+import '../../view_model/user_view_model.dart';
 import 'tellus_acadmic.dart';
 
 class OtpPage extends StatefulWidget {
+  final Map<String, String> registration;
   const OtpPage({
-    super.key,
+    super.key, required  this.registration,
   });
 
   @override
@@ -26,15 +30,72 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
+  OtpTimerButtonController controller = OtpTimerButtonController();
   final TextEditingController otpvalue1 = TextEditingController();
   final TextEditingController otpvalue2 = TextEditingController();
   final TextEditingController otpvalue3 = TextEditingController();
   final TextEditingController otpvalue4 = TextEditingController();
   final TextEditingController otpvalue5 = TextEditingController();
+  final TextEditingController otpvalue6 = TextEditingController();
+  late String field1, field2, field3, field4, field5, field6;
+  String mobNumber= '';
+
+  @override
+  initState() {
+    mobileNumber();
+  }
+  mobileNumber() async {
+    final prefsData = await SharedPreferences.getInstance();
+    List<String>? items = prefsData.getStringList('registerResponse');
+    setState(() {
+      mobNumber = items![2] + " " + items![3];
+    });
+  }
+ //otp field merge
+ Future<void>otpField(String Field) async{
+     setState(() {
+       field1 = Field;
+     });
+  }
+  Future<void>otpField2(String Field) async{
+     setState(() {
+       field2 = Field;
+     });
+  }
+  Future<void>otpField3(String Field) async{
+     setState(() {
+       field3 = Field;
+     });
+  }
+  Future<void>otpField4(String Field) async{
+     setState(() {
+       field4 = Field;
+     });
+  }
+  Future<void>otpField5(String Field) async{
+     setState(() {
+       field5 = Field;
+     });
+  }
+  Future<void>otpField6(String Field, context) async{
+     setState(() {
+       field6 = Field;
+     });
+  }
+ 
+ //count down timer
+ _requestOtp() {
+    controller.loading();
+    Future.delayed(Duration(seconds: 2), () {
+      controller.startTimer();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final Width = MediaQuery.of(context).size.width * 0.8 / 5;
+    final registration = Provider.of<RegistrationViewModel>(context);
+    final Width = MediaQuery.of(context).size.width * 0.8 / 6;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -92,8 +153,7 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      '+91 9658992342',
+                    child: Text(mobNumber,
                       style: TextStyle(
                           height: 1.7,
                           color: Color.fromARGB(255, 81, 81, 81),
@@ -110,6 +170,10 @@ class _OtpPageState extends State<OtpPage> {
                       Container(
                         width: Width,
                         child: TextFormField(
+                            onChanged: (otpvalue1){
+                              otpField(otpvalue1);
+                            },
+                            textInputAction: TextInputAction.next,
                             controller: otpvalue1,
                             style:
                                 TextStyle(fontSize: 25, fontFamily: 'poppin'),
@@ -129,6 +193,10 @@ class _OtpPageState extends State<OtpPage> {
                       Container(
                         width: Width,
                         child: TextFormField(
+                           onChanged: (otpvalue2){
+                              otpField2(otpvalue2);
+                            },
+                            textInputAction: TextInputAction.next,
                             controller: otpvalue2,
                             style:
                                 TextStyle(fontSize: 25, fontFamily: 'poppin'),
@@ -148,6 +216,10 @@ class _OtpPageState extends State<OtpPage> {
                       Container(
                         width: Width,
                         child: TextFormField(
+                             onChanged: (otpvalue3){
+                              otpField3(otpvalue3);
+                            },
+                            textInputAction: TextInputAction.next,
                             controller: otpvalue3,
                             style:
                                 TextStyle(fontSize: 25, fontFamily: 'poppin'),
@@ -167,7 +239,34 @@ class _OtpPageState extends State<OtpPage> {
                       Container(
                         width: Width,
                         child: TextFormField(
+                           onChanged: (otpvalue4){
+                              otpField4(otpvalue4);
+                            },
+                            textInputAction: TextInputAction.next,
                             controller: otpvalue4,
+                            style:
+                                TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            maxLength: 1,
+                            cursorColor: Theme.of(context).primaryColor,
+                            decoration: InputDecoration(
+                                hintText: "*",
+                                counterText: '',
+                                hintStyle: TextStyle(
+                                    color: Colors.black, fontSize: 20.0))),
+                      ),
+                       SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        width: Width,
+                        child: TextFormField(
+                           onChanged: (otpvalue5){
+                              otpField5(otpvalue5);
+                            },
+                            textInputAction: TextInputAction.next,
+                            controller: otpvalue5,
                             style:
                                 TextStyle(fontSize: 25, fontFamily: 'poppin'),
                             textAlign: TextAlign.center,
@@ -186,7 +285,18 @@ class _OtpPageState extends State<OtpPage> {
                       Container(
                         width: Width,
                         child: TextFormField(
-                            controller: otpvalue5,
+                           onChanged: (otpvalue6){
+                              otpField6(otpvalue6, context);
+
+                               if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty && field5.isEmpty && field6.isEmpty)
+                                  {}
+                                  else{
+                    
+                                    registration.OtpVerify(field1 + field2 + field3 + field4 + field5 + field6, context);
+                                  }
+                            },
+                          
+                            controller: otpvalue6,
                             style:
                                 TextStyle(fontSize: 25, fontFamily: 'poppin'),
                             textAlign: TextAlign.center,
@@ -201,17 +311,7 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      '1:01',
-                      style: TextStyle(
-                        height: 1.7,
-                        color: Colors.black,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
+                  
                   SizedBox(
                     height: 20,
                   ),
@@ -222,36 +322,44 @@ class _OtpPageState extends State<OtpPage> {
                         AppLocale.title9.getString(context),
                         style: TextStyle(fontSize: 14),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  TellusAcadmic(),
-                            ),
-                          );
+                     OtpTimerButton(
+                      buttonType: ButtonType.text_button,
+                      controller: controller,
+                      onPressed:  () {
+                         registration.Register(widget.registration, context);
+                        // ignore: void_checks
+                        return _requestOtp();
+                       
                         },
-                        child: Text(
+                      text: Text(
                           AppLocale.resendOtp.getString(context),
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor),
                         ),
-                      ),
+                      duration: 120,
+                    ),
                     ],
                   ),
-                  // TextButton(
-                  //   style: TextButton.styleFrom(
-                  //     textStyle: const TextStyle(fontSize: 20),
-                  //   ),
-                  //   onPressed: () {
-                  //     print(
-                  //         '${otpvalue1.text}${otpvalue2.text}${otpvalue3.text}${otpvalue4.text}${otpvalue5.text}');
-                  //   },
-                  //   child: const Text('Disabled'),
-                  // ),
+
+                 
+                  TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: (){
+                                Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const TellusAcadmic(),
+                                          ),
+                                        );
+                              },
+                              child: const Text('Disabled'),
+                            ),
+                  
                 ],
               ),
             ),

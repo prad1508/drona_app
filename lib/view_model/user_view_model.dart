@@ -6,21 +6,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier{
 
-  Future<bool> saveUser(UserModel user)async{
-
+  Future<bool> saveToken(UserModel user)async{
     final SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setString('token', user.token.toString());
+    sp.setString('token', user.data.toString());
     notifyListeners();
     return true ;
   }
+
+  //user data
+  Future<bool> saveData(UserModel user)async{
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString('data', user.data.toString());
+    notifyListeners();
+    return true ;
+  }
+
 
   Future<UserModel> getUser()async{
 
     final SharedPreferences sp = await SharedPreferences.getInstance();
     final String? token = sp.getString('token');
-
     return UserModel(
-      token: token.toString()
+      data: token.toString()
     );
   }
 

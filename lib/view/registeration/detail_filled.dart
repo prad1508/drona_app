@@ -12,7 +12,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
 import '../../res/language/language.dart';
-import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';

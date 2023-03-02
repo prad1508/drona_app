@@ -12,17 +12,16 @@ import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
-import 'profile/batch_list.dart';
-import 'trainee_phonbook_add.dart';
 
-class BatchDetail extends StatefulWidget {
-  const BatchDetail({super.key});
+
+class ChooseFacility extends StatefulWidget {
+  const ChooseFacility({super.key});
 
   @override
-  State<BatchDetail> createState() => _BatchDetailState();
+  State<ChooseFacility> createState() => _ChooseFacilityState();
 }
 
-class _BatchDetailState extends State<BatchDetail> {
+class _ChooseFacilityState extends State<ChooseFacility> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
@@ -154,13 +153,7 @@ class _BatchDetailState extends State<BatchDetail> {
                         alignment: Alignment.topLeft,
                         child: TextButton(
                           onPressed: (){
-                            Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const AddPhonebook(),
-                                      ),
-                                    );
+                           
                           },
                           child: Text(AppLocale.title24.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,

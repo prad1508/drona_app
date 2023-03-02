@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../../utils/color.dart' as AppColor;
 
 class AsyncTextFormField extends StatefulWidget {
   final Future<bool> Function(String) validator;
@@ -11,16 +11,18 @@ class AsyncTextFormField extends StatefulWidget {
   final String valueIsEmptyMessage;
   final String valueIsInvalidMessage;
   final dynamic keyboardType;
+  final bool enable;
   const AsyncTextFormField(
-      { Key? key,
-      required this.keyboardType,
+      {Key? key,
       required this.validator,
       required this.validationDebounce,
       required this.controller,
       this.isValidatingMessage = "please wait for the validation to complete",
       this.valueIsEmptyMessage = 'please enter a value',
       this.valueIsInvalidMessage = 'please enter a valid value',
-      this.hintText = ''})
+      this.hintText = '',  
+      this.enable = true,
+      this.keyboardType = TextInputType.name})
       : super(key: key);
 
   @override
@@ -28,24 +30,20 @@ class AsyncTextFormField extends StatefulWidget {
 }
 
 class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
-  late Timer _debounce;
+  Timer? _debounce;
   var isValidating = false;
   var isValid = false;
   var isDirty = false;
   var isWaiting = false;
-  var formBorder = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (isValidating) {
-        
           return widget.isValidatingMessage;
         }
-        if (value!.isEmpty) {
-         
+        if (value?.isEmpty ?? false) {
           return widget.valueIsEmptyMessage;
         }
         if (!isWaiting && !isValid) {
@@ -73,41 +71,33 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
           isValidating = false;
         });
       },
+      enabled: widget.enable,
       textAlign: TextAlign.start,
       controller: widget.controller,
       maxLines: 1,
       textInputAction: TextInputAction.next,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
-                      suffix: SizedBox(height: 20, width: 20, child: _getSuffixIcon()),
-                      hintText: widget.hintText,
-                      contentPadding: EdgeInsets.all(10),
-                      focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide(
-                    color: formBorder != true ? AppColor.successColor :  AppColor.secondryColor,
-                  ),
+        contentPadding: const EdgeInsets.only(left:10, right: 10),
+          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                      border:OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                      ),
-),
-
+        suffix: SizedBox(height: 20, width: 20, child: _getSuffixIcon()), hintText: widget.hintText),
     );
   }
 
   @override
   void dispose() {
-    _debounce.cancel();
+    _debounce?.cancel();
     super.dispose();
   }
 
   void cancelTimer() {
-    if (_debounce.isActive) {
-      _debounce.cancel();
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
     }
   }
 
@@ -128,7 +118,6 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
       );
     } else {
       if (!isValid && isDirty) {
-        print(isValid);
         return Icon(
           Icons.cancel,
           color: Colors.red,

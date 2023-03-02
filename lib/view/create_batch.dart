@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
 import '../../res/language/language.dart';
-import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
@@ -509,13 +507,7 @@ class _CreateBatchState extends State<CreateBatch> {
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: agree == true
-                        ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
-                          }
-                        : () {
-                            print('btn dissabled');
-                          },
+                    onPress: (){},
                   ),
                   SizedBox(
                     height: 15,
@@ -528,13 +520,7 @@ class _CreateBatchState extends State<CreateBatch> {
                     color: agree == true
                         ? Theme.of(context).primaryColor
                         : Theme.of(context).primaryColor.withOpacity(0.5),
-                    onPress: agree == true
-                        ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
-                          }
-                        : () {
-                            print('btn dissabled');
-                          },
+                    onPress: (){},
                   ),
                 ],
               ),
