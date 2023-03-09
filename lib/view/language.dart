@@ -46,7 +46,7 @@ class _LanguageState extends State<Language> {
                   onPressed: () {
                     //English language
                     _localization.translate('en');
-                    Navigator.pushNamed(context, RoutesName.AcadmicSetup);
+                    //Navigator.pushNamed(context, RoutesName.AcadmicSetup);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
@@ -71,7 +71,7 @@ class _LanguageState extends State<Language> {
                   onPressed: () {
                     //hindi language
                     _localization.translate('hi');
-                    Navigator.pushNamed(context, RoutesName.AcadmicSetup);
+                   // Navigator.pushNamed(context, RoutesName.AcadmicSetup);
                   },
                   child: const Text(
                     'Hindi',

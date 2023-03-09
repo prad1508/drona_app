@@ -234,8 +234,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                 print(_groupValue);
                                 print(_genderValue);
 
-                                Navigator.pushNamed(
-                                    context, RoutesName.OtpPage);
+                                // Navigator.pushNamed(
+                                //     context, RoutesName.OtpPage);
                               }
                             : () {
                                 print('btn dissabled');
