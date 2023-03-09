@@ -130,8 +130,7 @@ class _CreateProfileState extends State<CreateProfile> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(
-            'Create Profile',
+          title: Text(AppLocale.createProfile.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -143,8 +142,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {},
-              child: Text(
-                'Skip',
+              child: Text(AppLocale.skip.getString(context),
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -215,8 +213,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Coach\’s Full Name',
+                    child: Text(AppLocale.title19.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -241,8 +238,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Phone Number',
+                    child: Text(AppLocale.phoneNumber.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -267,8 +263,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Invite Code',
+                    child: Text(AppLocale.inviteCode.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -299,21 +294,21 @@ class _CreateProfileState extends State<CreateProfile> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Male ',
+                        label: AppLocale.male.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Female',
+                        label: AppLocale.female.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Other',
+                        label: AppLocale.other.getString(context),
                       ),
                     ],
                   ),
@@ -322,8 +317,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email Id',
+                    child: Text(AppLocale.emailId.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -348,8 +342,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Salary/Month',
+                    child: Text(AppLocale.salaryMonth.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -374,8 +367,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Date of Joining',
+                    child: Text(AppLocale.doj.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -400,7 +392,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   RoundButton(
                       loading: false,
-                      title: 'Add Coach',
+                      title: AppLocale.addCoach.getString(context),
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,

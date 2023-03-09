@@ -1,3 +1,4 @@
+import 'package:drona/view/create_batch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -108,7 +109,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               //CircleWidthtext(numb: 1, label: AppLocale.addCoach.getString(context), color: Colors.white),
-              CircleWidthtext(numb: 1, label: AppLocale.createBatch.getString(context), color: Colors.white),
+              InkWell( child:  CircleWidthtext(numb: 1, label: AppLocale.createBatch.getString(context), color: Colors.white),
+              onTap: (){
+                Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const CreateBatch(),
+                          ),
+                        );
+              },
+              ),
+             
+
               CircleWidthtext(numb: 2, label: AppLocale.title16.getString(context), color: Colors.white),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
                 RoundButton(

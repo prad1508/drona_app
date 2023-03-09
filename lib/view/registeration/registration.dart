@@ -1,18 +1,18 @@
-import 'dart:ffi';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
+import 'package:provider/provider.dart';
 import '../../res/language/language.dart';
-import '../../res/widget/asyntextfield.dart';
-import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
+import '../../res/widget/synctextform.dart';
 import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
+import '../../utils/utils.dart';
+import '../../utils/validation.dart';
+import '../../view_model/registration_view_model.dart';
+import 'otp.dart';
+//import 'package:async_textformfield/async_textformfield.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -22,9 +22,10 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  String? _groupValue = 'owner';
+  bool _validate = false;
+  String? _role = '0';
   ValueChanged<String?> _valueChangedHandler() {
-    return (value) => setState(() => _groupValue = value!);
+    return (value) => setState(() => _role = value!);
   }
 
   String? _genderValue = 'm';
@@ -32,24 +33,23 @@ class _RegistrationState extends State<Registration> {
     return (value) => setState(() => _genderValue = value!);
   }
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final TextEditingController phone = TextEditingController();
   bool value = true;
   bool agree = true;
   final TextEditingController FullName = TextEditingController();
-  final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
-
-  Future<bool> isValidPasscode(String value) async {
-    return await Future.delayed(Duration(seconds: 1),
-        () => value.isNotEmpty && value.toLowerCase() == 'batman');
-  }
 
   @override
   Widget build(BuildContext context) {
+    final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          toolbarHeight: 100,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
@@ -70,7 +70,7 @@ class _RegistrationState extends State<Registration> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.only(left:20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -82,7 +82,7 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Align(
@@ -92,23 +92,18 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    controller: FullName,
-                    decoration: InputDecoration(
+
+                  AsyncTextFormField(
+                      controller: FullName,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().istextField,
+                      keyboardType: TextInputType.name,
                       hintText: 'eg. Ashmit Singh',
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
                     ),
-                  ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -118,21 +113,17 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   AsyncTextFormField(
-                    controller: phone,
-                    keyboardType: TextInputType.number,
-                    validationDebounce: Duration(milliseconds: 500),
-                    validator: isValidPasscode,
-                    hintText: 'eg. 9658992342',
-                    isValidatingMessage:
-                        'Comparing with the hash from a secure server..',
-                    valueIsInvalidMessage: 'Nope, Try harder..',
-                    valueIsEmptyMessage: 'Please valid phone number',
-                  ),
-                  SizedBox(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'eg. 9658992342',
+                    ),
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -142,7 +133,7 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -150,21 +141,21 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: 'owner',
-                        groupValue: _groupValue,
+                        value: '0',
+                        groupValue: _role,
                         onChanged: _valueChangedHandler(),
-                        label: AppLocale.phoneNumber.getString(context),
+                        label: AppLocale.owner.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: 'owner+inst',
-                        groupValue: _groupValue,
+                        value: '1',
+                        groupValue: _role,
                         onChanged: _valueChangedHandler(),
                         label: AppLocale.OwnerInstructor.getString(context),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -174,21 +165,18 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   AsyncTextFormField(
-                    controller: email,
-                    keyboardType: TextInputType.emailAddress,
-                    validationDebounce: Duration(milliseconds: 500),
-                    validator: isValidPasscode,
-                    hintText: 'eg. abc@example.com',
-                    isValidatingMessage:
-                        'Comparing with the hash from a secure server..',
-                    valueIsInvalidMessage: 'Nope, Try harder..',
-                    valueIsEmptyMessage: 'No one sets an empty passcode!',
-                  ),
-                  SizedBox(
+                      controller: email,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isEmailField,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'eg. abc@example.com',
+                    ),
+
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -198,7 +186,7 @@ class _RegistrationState extends State<Registration> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -227,7 +215,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(children: <Widget>[
@@ -242,7 +230,7 @@ class _RegistrationState extends State<Registration> {
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Row(
@@ -254,6 +242,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                         TextButton(
                           style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
                             padding: EdgeInsets.zero,
                           ),
                           onPressed: null,
@@ -283,7 +272,7 @@ class _RegistrationState extends State<Registration> {
                     )
                   ]),
                   RoundButton(
-                    loading: false,
+                    loading: registration.loading,
                     title: AppLocale.Continue.getString(context),
                     textColor: Colors.white,
                     rounded: true,
@@ -292,16 +281,36 @@ class _RegistrationState extends State<Registration> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                            print(FullName.text);
-                            print(phone.text);
-                            print(_groupValue);
-                            print(email.text);
-                            print(_genderValue);
-
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
+                           if(FullName.text.isEmpty){
+                            Utils.flushBarErrorMessage('Fill Full Name', context);
+                           }
+                           if(phone.text.toString().length < 10){
+                             Utils.flushBarErrorMessage('Fill Phone Number', context);
+                           }
+                            else{
+                             Map<String, String> data = {
+                              "name": FullName.text.toString(),
+                              "ccode": '91',
+                              "mobno": phone.text.toString(),
+                              "role": _role.toString(),
+                              "gender": _genderValue.toString(),
+                              "email": email.text.toString()
+                            };
+                         // registration.Register(data, context);
+                          Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          OtpPage(registration: data),
+                                    ),
+                                  );
+                            }
+                            
                           }
                         : () {
-                            print('btn dissabled');
+                            if (kDebugMode) {
+                              print('btn dissabled');
+                            }
                           },
                   ),
                 ],

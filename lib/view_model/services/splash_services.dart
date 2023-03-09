@@ -15,14 +15,14 @@ class SplashServices {
 
     getUserDate().then((value)async{
 
-      print(value.token.toString());
+      print(value.data.toString());
 
-      if(value.token.toString() == 'null' || value.token.toString() == ''){
-        await Future.delayed(const Duration(seconds: 3));
-        Navigator.pushNamed(context, RoutesName.AcadmicSetup);
+      if(value.data.toString() == 'null' || value.data.toString() == ''){
+        await Future.delayed(const Duration(seconds: 1));
+        Navigator.pushNamed(context, RoutesName.language);
       }else {
-        await  Future.delayed(Duration(seconds: 3));
-        Navigator.pushNamed(context, RoutesName.AcadmicSetup);
+        await  Future.delayed(Duration(seconds: 1));
+        Navigator.pushNamed(context, RoutesName.language);
       }
 
     }).onError((error, stackTrace){

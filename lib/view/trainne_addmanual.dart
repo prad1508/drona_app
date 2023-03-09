@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import '../res/language/language.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 
@@ -47,8 +48,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
           
             ],
           ),
-          title: Text(
-            'View Trainee Profile',
+          title: Text(AppLocale.title27.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -82,8 +82,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Full Name',
+                    child: Text(AppLocale.fullName.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -109,8 +108,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                   
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Phone Number',
+                    child: Text(AppLocale.phoneNumber.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -145,8 +143,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                          children: [
                            Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            'Date of Joining',
+                          child: Text(AppLocale.doj.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -176,8 +173,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                       children: [
                         Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            'Date of Joining',
+                          child: Text(AppLocale.dobilling.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -204,12 +200,34 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                     height: 15,
                   ),
            
-                  SizedBox(
-                    height: 15,
-                  ),
+                   Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(AppLocale.fee.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                         SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(         
+                          controller: dobilling,
+                          decoration: InputDecoration(
+                            hintText: '₹ 1000',
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                         SizedBox(
+                          height: 15,
+                        ),
                   RoundButton(
                     loading: false,
-                    title: 'Submit',
+                    title: AppLocale.submit.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
