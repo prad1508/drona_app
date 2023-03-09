@@ -1,16 +1,12 @@
-
-
 class RoutesName {
-
-  static const String splash = 'splash_view' ;
-
+  static const String splash = 'splash_view';
 
   //accounts routes name
-  static const String login = 'login_screen' ;
-  static const String signUp = 'signup_screen' ;
+  static const String login = 'login_screen';
+  static const String signUp = 'signup_screen';
 
   //home screen routes name
-  static const String layout = 'layout_sceen' ;
+  static const String layout = 'layout_sceen';
   //setup acadmic
   static const String AcadmicSetup = 'AcadmicSetup_screen';
   static const String Registration = 'Registration_screen';
@@ -24,4 +20,5 @@ class RoutesName {
   static const String CreateBatch = 'CreateBatch_screen';
   static const String BatchList = 'BatchList_screen';
   static const String BatchDetail = 'BatchDetail_Screen';
+  static const String ChooseProgram = 'ChooseProgram_screen';
 }

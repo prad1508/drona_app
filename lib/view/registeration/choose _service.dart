@@ -84,7 +84,7 @@ class _ChooseServiceState extends State<ChooseService> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        Navigator.pushNamed(context, RoutesName.DetailFilled);
+                        Navigator.pushNamed(context, RoutesName.ChooseProgram);
                       }),
                 ],
               ),

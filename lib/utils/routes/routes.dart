@@ -3,6 +3,9 @@ import 'package:drona/view/batch_details.dart';
 import 'package:flutter/material.dart';
 import '../../view/profile/batch_list.dart';
 import '../../view/profile/view_profile.dart';
+import '../../view/registeration/choose_program.dart';
+import '../../view/registeration/choose_program.dart';
+import '../../view/registeration/choose_program.dart';
 import '../../view/registeration/detail_filled.dart';
 import '../../view/registeration/otp.dart';
 import '../../view/welcome_screen.dart';
@@ -58,6 +61,8 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const BatchList());
       case RoutesName.BatchDetail:
         return MaterialPageRoute(builder: (BuildContext context) => const BatchDetail());
+      case RoutesName.ChooseProgram:
+              return MaterialPageRoute(builder: (BuildContext context) => const ChooseProgram());
 
 
       default:
