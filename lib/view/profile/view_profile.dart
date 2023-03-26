@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
-import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
@@ -17,6 +16,9 @@ class ViewProfilenew extends StatefulWidget {
 }
 
 class _ViewProfilenewState extends State<ViewProfilenew> {
+ //multi language support
+  final FlutterLocalization _localization = FlutterLocalization.instance;
+
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -36,6 +38,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: _localization.supportedLocales,
+      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -45,7 +49,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            AppLocale.viewProfile.getString(context),
+            'View Profile',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -130,7 +134,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.title19.getString(context),
+                    child: Text(
+                      'Coach\’s Full Name',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -156,7 +161,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.phoneNumber.getString(context),
+                    child: Text(
+                      'Phone Number',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -182,7 +188,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.inviteCode.getString(context),
+                    child: Text(
+                      'Invite Code',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -214,21 +221,21 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.male.getString(context),
+                        label: 'Male ',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.female.getString(context),
+                        label: 'Female',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.other.getString(context),
+                        label: 'Other',
                       ),
                     ],
                   ),
@@ -237,7 +244,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.emailId.getString(context),
+                    child: Text(
+                      'Email Id',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -263,7 +271,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.salaryMonth.getString(context),
+                    child: Text(
+                      'Salary/Month',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -289,7 +298,8 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.doj.getString(context),
+                    child: Text(
+                      'Date of Joining',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -310,7 +320,22 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                       ),
                     ),
                   ),
-                
+                  TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: (){
+                                Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const CreateBatch(),
+                                          ),
+                                        );
+                              },
+                              child: const Text('dummy navigate'),
+                            ),
+                  
                   
                 ],
               ),

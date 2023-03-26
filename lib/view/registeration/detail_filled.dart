@@ -1,8 +1,5 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 
 import 'dart:ffi';
 
@@ -78,18 +75,9 @@ class _TellusAcadmicState extends State<DetailFilled> {
                   SizedBox(
                     height: 30,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(AppLocale.services.getString(context),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   SizedBox(
                     height: 110,
-                    child:  MyHomePage(),
+                    child: MyHomePage(),
                   ),
                   RoundButton(
                       loading: false,
@@ -115,8 +103,6 @@ class _TellusAcadmicState extends State<DetailFilled> {
   }
 }
 
-
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
 
@@ -130,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Animal(id: 2, name: "Golf"),
     Animal(id: 3, name: "Tenis"),
     Animal(id: 4, name: "Football"),
-   
   ];
   final _items = _animals
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
@@ -147,6 +132,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          children: <Widget>[
+            MultiSelectDialogField(
+              items: _items,
+              title: Text("Select Category"),
+              selectedColor: Colors.blue,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                border: Border.all(
+                  color: Color.fromARGB(255, 156, 156, 156),
+                  width: 1,)),
         child: Container(
           alignment: Alignment.center,
           child: Column(
@@ -155,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   dialogWidth:MediaQuery.of(context).size.width * 2,
                   dialogHeight: MediaQuery.of(context).size.width * 0.7,
                 items: _items,
-                 title: Text(AppLocale.title15.getString(context), style: TextStyle(fontSize: 15),),
+                 title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
                 selectedColor: Colors.blue,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -164,27 +163,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 1,
                   ),
                 ),
-                
-                buttonIcon: Icon(
-                  Icons.pets,
-                  color: Colors.blue,
-                ),
-                buttonText: Text(AppLocale.title15.getString(context),
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                onConfirm: (results) {
-                   print(results);
-                },
+              ),])),
+              buttonIcon: Icon(
+                Icons.pets,
+                color: Colors.blue,
               ),
-             
-            ],
-          ),
+              buttonText: Text(
+                "Choose your Business Category",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onConfirm: (results) {
+                print(results);
+              },
+            ),
+          ],
         ),
+      ),
     );
   }
 }
+
 class Animal {
   final int id;
   final String name;

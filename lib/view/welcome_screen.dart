@@ -9,6 +9,10 @@ import '../res/widget/circle_withtext.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 
+import '../res/widget/circle_withtext.dart';
+import '../res/widget/round_button.dart';
+import '../utils/routes/routes_name.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -33,7 +37,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(AppLocale.congratulation.getString(context),
+                const Text(
+                  'CONGRATULATION',
                   style: TextStyle(
                       color: Color.fromRGBO(254, 194, 89, 1),
                       fontSize: 25,
@@ -51,7 +56,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                 Text(AppLocale.your.getString(context),
+                const Text(
+                  'Your',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -66,7 +72,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontFamily: 'poppin',
                       fontWeight: FontWeight.w600),
                 ),
-                Text(AppLocale.title14.getString(context),
+                const Text(
+                  'Is Now Registered',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -108,26 +115,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-              //CircleWidthtext(numb: 1, label: AppLocale.addCoach.getString(context), color: Colors.white),
-              InkWell( child:  CircleWidthtext(numb: 1, label: AppLocale.createBatch.getString(context), color: Colors.white),
-              onTap: (){
-                Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const CreateBatch(),
-                          ),
-                        );
-              },
-              ),
-             
-
-              CircleWidthtext(numb: 2, label: AppLocale.title16.getString(context), color: Colors.white),
+          
+                const CircleWidthtext(numb: 1, label: 'Create batch', color: Colors.white),
+                const CircleWidthtext(numb: 2, label: 'Add Trainee in created batch', color: Colors.white),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
                 RoundButton(
                       loading: false,
-                      title: AppLocale.title17.getString(context),
-                      // title: AppLocale.title18.getString(context),
+                      title: 'Proceed here to Create Batch',
                       textColor: Colors.white,
                       rounded: true,
                       color: Color.fromRGBO(241, 94, 83, 1),

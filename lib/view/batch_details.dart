@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import '../../res/language/language.dart';
+import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
@@ -117,7 +118,8 @@ class _BatchDetailState extends State<BatchDetail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(AppLocale.title23.getString(context),
+                          Text(
+                            'Enter Manually',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -145,7 +147,8 @@ class _BatchDetailState extends State<BatchDetail> {
                                       ),
                                     );
                           },
-                          child: Text(AppLocale.enterManually.getString(context),
+                          child: Text(
+                            'Enter Manually',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -162,7 +165,8 @@ class _BatchDetailState extends State<BatchDetail> {
                                       ),
                                     );
                           },
-                          child: Text(AppLocale.title24.getString(context),
+                          child: Text(
+                            'Import From Contact List',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -190,7 +194,8 @@ class _BatchDetailState extends State<BatchDetail> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(AppLocale.batchDetails.getString(context),
+          title: Text(
+            'Batch Detail',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -202,7 +207,8 @@ class _BatchDetailState extends State<BatchDetail> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {},
-              child: Text(AppLocale.skip.getString(context),
+              child: Text(
+                'Skip',
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -222,7 +228,8 @@ class _BatchDetailState extends State<BatchDetail> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchName.getString(context),
+                    child: Text(
+                      'Batch Name',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -249,7 +256,8 @@ class _BatchDetailState extends State<BatchDetail> {
                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppLocale.sendInvite.getString(context), style: Theme.of(context).textTheme.bodyMedium,)  
+                      Text('Services'),
+                     
                     ],
                    ),
                   SizedBox(
@@ -284,7 +292,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.assignCoach.getString(context),
+                    child: Text(
+                      'Assign Coach',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -328,7 +337,7 @@ class _BatchDetailState extends State<BatchDetail> {
                           value: 'beginner',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: AppLocale.Beginner.getString(context),
+                          label: 'Beginner',
                         ),
                         SizedBox(width: 20,),
                         
@@ -340,7 +349,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.fee.getString(context),
+                    child: Text(
+                      'Fee',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -366,7 +376,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.TYOB.getString(context),
+                    child: Text(
+                      'Type of Batch',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -381,7 +392,7 @@ class _BatchDetailState extends State<BatchDetail> {
                         value: 'group',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: AppLocale.coachingGroup.getString(context),
+                        label: 'Coaching Group ',
                       ),
                      
                     ],
@@ -407,7 +418,8 @@ class _BatchDetailState extends State<BatchDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(AppLocale.title21.getString(context),
+                        Text(
+                          'Provide Online Sessions',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -418,7 +430,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.title22.getString(context),
+                    child: Text(
+                      'Online session Url',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -444,7 +457,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchDays.getString(context),
+                    child: Text(
+                      'Batch Days',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -474,7 +488,8 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchTiming.getString(context),
+                    child: Text(
+                      'Batch Timing',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -490,7 +505,7 @@ class _BatchDetailState extends State<BatchDetail> {
                         enabled: false,
                                          controller: FullName,
                                          decoration: InputDecoration(
-                        hintText: AppLocale.from.getString(context),
+                        hintText: 'From',
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -507,7 +522,7 @@ class _BatchDetailState extends State<BatchDetail> {
                       enabled: false,              
                       controller: FullName,
                       decoration: InputDecoration(
-                        hintText: AppLocale.to.getString(context),
+                        hintText: 'To',
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -528,7 +543,7 @@ class _BatchDetailState extends State<BatchDetail> {
                   ),
                   RoundButton(
                     loading: false,
-                    title: AppLocale.addTrainee.getString(context),
+                    title: 'Add Trainee',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,

@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-
 class Language extends StatefulWidget {
   const Language({super.key});
 
@@ -40,14 +39,14 @@ class _LanguageState extends State<Language> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+               Container(
                 width: MediaQuery.of(context).size.width * 1,
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left:20, right: 20),
                 child: OutlinedButton(
                   onPressed: () {
                     //English language
                     _localization.translate('en');
-                    Navigator.pushNamed(context, RoutesName.ChooseProgram);
+                    //Navigator.pushNamed(context, RoutesName.AcadmicSetup);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
@@ -60,23 +59,19 @@ class _LanguageState extends State<Language> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  child: const Text(
-                    'English',
-                    style: TextStyle(color: Colors.black),
+                  child: const Text('English', style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16,),
               Container(
                 width: MediaQuery.of(context).size.width * 1,
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left:20, right: 20),
                 child: OutlinedButton(
                   onPressed: () {
                     //hindi language
                     _localization.translate('hi');
-                    // Navigator.pushNamed(context, RoutesName.AcadmicSetup);
+                   // Navigator.pushNamed(context, RoutesName.AcadmicSetup);
                   },
                   child: const Text(
                     'Hindi',
@@ -95,7 +90,8 @@ class _LanguageState extends State<Language> {
                   ),
                 ),
               ),
-            ],
+             
+              ],
           ),
         ),
       ),

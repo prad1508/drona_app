@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
@@ -15,6 +19,12 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> {
+<<<<<<< Updated upstream
+=======
+  //multi language support
+  final FlutterLocalization _localization = FlutterLocalization.instance;
+
+>>>>>>> Stashed changes
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -122,6 +132,8 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: _localization.supportedLocales,
+      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -130,7 +142,8 @@ class _CreateProfileState extends State<CreateProfile> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(AppLocale.createProfile.getString(context),
+          title: Text(
+            'Create Profile',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -142,7 +155,8 @@ class _CreateProfileState extends State<CreateProfile> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {},
-              child: Text(AppLocale.skip.getString(context),
+              child: Text(
+                'Skip',
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -213,7 +227,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.title19.getString(context),
+                    child: Text(
+                      'Coach\’s Full Name',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -238,7 +253,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.phoneNumber.getString(context),
+                    child: Text(
+                      'Phone Number',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -263,7 +279,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.inviteCode.getString(context),
+                    child: Text(
+                      'Invite Code',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -294,21 +311,21 @@ class _CreateProfileState extends State<CreateProfile> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.male.getString(context),
+                        label: 'Male ',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.female.getString(context),
+                        label: 'Female',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: AppLocale.other.getString(context),
+                        label: 'Other',
                       ),
                     ],
                   ),
@@ -317,7 +334,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.emailId.getString(context),
+                    child: Text(
+                      'Email Id',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -342,7 +360,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.salaryMonth.getString(context),
+                    child: Text(
+                      'Salary/Month',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -367,7 +386,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.doj.getString(context),
+                    child: Text(
+                      'Date of Joining',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -392,7 +412,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   RoundButton(
                       loading: false,
-                      title: AppLocale.addCoach.getString(context),
+                      title: 'Add Coach',
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,

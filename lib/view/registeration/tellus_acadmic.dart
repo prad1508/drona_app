@@ -318,3 +318,84 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
     );
   }
 }
+
+
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  static List<Animal> _animals = [
+    Animal(id: 1, name: "Sports"),
+    Animal(id: 2, name: "Golf"),
+    Animal(id: 3, name: "Tenis"),
+    Animal(id: 4, name: "Football"),
+   
+  ];
+  final _items = _animals
+      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
+      .toList();
+  List<Animal> _selectedAnimals5 = [];
+  final _multiSelectKey = GlobalKey<FormFieldState>();
+
+  @override
+  void initState() {
+    _selectedAnimals5 = _animals;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        child: Container(
+          width: 700,
+          alignment: Alignment.center,
+          child: Column(
+            children: <Widget>[
+                MultiSelectDialogField(
+                dialogWidth:MediaQuery.of(context).size.width * 2,
+                dialogHeight: MediaQuery.of(context).size.width * 0.7,
+                items: _items,
+                title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
+                selectedColor: Colors.blue,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(
+                    color: Color.fromARGB(255, 156, 156, 156),
+                    width: 1,
+                  ),
+                ),
+                buttonIcon: Icon(
+                  Icons.pets,
+                  color: Colors.blue,
+                ),
+                buttonText: Text(
+                  "Choose your Business Category",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                onConfirm: (results) {
+                   print(results);
+                },
+              ),
+             
+            ],
+          ),
+        ),
+    );
+  }
+}
+class Animal {
+  final int id;
+  final String name;
+
+  Animal({
+    required this.id,
+    required this.name,
+  });
+}

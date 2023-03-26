@@ -3,7 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
+<<<<<<< Updated upstream
 import '../res/language/language.dart';
+=======
+>>>>>>> Stashed changes
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 
@@ -136,7 +139,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
               )
             ],
           ),
-          title: Text(AppLocale.coachList.getString(context),
+          title: Text(
+            'Coach List',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -186,9 +190,9 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   child: ListTile(
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
-                      decoration:  InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          hintText: AppLocale.search.getString(context),
+                          hintText: 'Search',
                           border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
@@ -285,7 +289,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: AppLocale.sendInvite.getString(context),
+                    title: 'Send Invite',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,

@@ -3,11 +3,8 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../batch_details.dart';
-import 'batch_list.dart';
-
 
 class BatchList extends StatefulWidget {
   const BatchList({super.key});
@@ -63,15 +60,13 @@ class _BatchListState extends State<BatchList> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length == 0
-                    ? ''
-                    : _selectedItems.length.toString(),
+                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
                 style: TextStyle(color: Colors.black),
               )
             ],
           ),
           title: Text(
-            AppLocale.batchList.getString(context),
+            'Batch List',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -153,14 +148,8 @@ class _BatchListState extends State<BatchList> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Chip(
-                                          backgroundColor: Color.fromARGB(
-                                              255, 237, 244, 240),
-                                          label: Text(
-                                            _foundUsers[index]['level'],
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.greenAccent),
-                                          ),
+                                          backgroundColor: Color.fromARGB(255, 237, 244, 240),
+                                          label:  Text( _foundUsers[index]['level'], style: TextStyle(fontSize: 12, color: Colors.greenAccent),),
                                         ),
                                       ),
                                     ],
@@ -215,18 +204,18 @@ class _BatchListState extends State<BatchList> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: AppLocale.Continue.getString(context),
+                    title: 'Continue',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const BatchDetail(),
-                        ),
-                      );
+                     Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (BuildContext context) =>
+                                     const BatchDetail(),
+                               ),
+                             );
                     }),
               ],
             ),

@@ -2,8 +2,11 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+<<<<<<< Updated upstream
 import 'package:flutter_contacts/flutter_contacts.dart';
 import '../res/language/language.dart';
+=======
+>>>>>>> Stashed changes
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 import 'trainee_profile.dart';
@@ -21,7 +24,6 @@ class _TrainInviteState extends State<TrainInvite> {
 
   List<int> _selectedItems = <int>[];
 
-  List<Contact>? contacts;
 
   @override
   initState() {
@@ -75,7 +77,8 @@ void dataFilter(String enteredKeyword) {
               )
             ],
           ),
-          title: Text( AppLocale.title25.getString(context),
+          title: Text(
+            'Trainee in Hockey Batch',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -124,9 +127,9 @@ void dataFilter(String enteredKeyword) {
                   child: ListTile(
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          hintText:  AppLocale.search.getString(context),
+                          hintText: 'Search',
                           border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
@@ -187,7 +190,7 @@ void dataFilter(String enteredKeyword) {
                 ),
                 RoundButton(
                     loading: false,
-                    title: AppLocale.sendInvite.getString(context),
+                    title: 'Send Invite',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,

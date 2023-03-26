@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import '../res/language/language.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 import 'traine_invite.dart';
@@ -75,7 +74,8 @@ void dataFilter(String enteredKeyword) {
               )
             ],
           ),
-          title: Text(AppLocale.phonebook.getString(context),
+          title: Text(
+            'PhoneBook',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -124,9 +124,9 @@ void dataFilter(String enteredKeyword) {
                   child: ListTile(
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          hintText: AppLocale.search.getString(context),
+                          hintText: 'Search',
                           border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
@@ -187,7 +187,7 @@ void dataFilter(String enteredKeyword) {
                 ),
                 RoundButton(
                     loading: false,
-                    title: AppLocale.add.getString(context),
+                    title: 'Add Contact',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,

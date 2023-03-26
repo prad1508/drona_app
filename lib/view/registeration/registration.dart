@@ -141,15 +141,15 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: '0',
-                        groupValue: _role,
+                        value: 'owner',
+                        groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
                         label: AppLocale.owner.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: '1',
-                        groupValue: _role,
+                        value: 'owner+inst',
+                        groupValue: _groupValue,
                         onChanged: _valueChangedHandler(),
                         label: AppLocale.OwnerInstructor.getString(context),
                       ),

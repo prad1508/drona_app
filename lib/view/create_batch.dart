@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+
 import '../../res/language/language.dart';
+import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
@@ -88,7 +90,8 @@ class _CreateBatchState extends State<CreateBatch> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(AppLocale.createBatch.getString(context),
+          title: Text(
+            'Create Batch',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -100,7 +103,8 @@ class _CreateBatchState extends State<CreateBatch> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {},
-              child: Text(AppLocale.skip.getString(context),
+              child: Text(
+                'Skip',
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -120,7 +124,8 @@ class _CreateBatchState extends State<CreateBatch> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchName.getString(context),
+                    child: Text(
+                      'Batch Name',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -146,9 +151,9 @@ class _CreateBatchState extends State<CreateBatch> {
                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppLocale.sendInvite.getString(context)),
+                      Text('Services'),
                       TextButton(
-                                  child: Text(AppLocale.addCoach.getString(context), style: TextStyle(color: Colors.redAccent),),
+                                  child: const Text('Add Coach', style: TextStyle(color: Colors.redAccent),),
                                   onPressed: (){ 
                                     Navigator.push(
                                               context,
@@ -193,7 +198,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.assignCoach.getString(context),
+                    child: Text(
+                      'Assign Coach',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -237,7 +243,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           value: 'beginner',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: AppLocale.Beginner.getString(context),
+                          label: 'Beginner',
                         ),
                         SizedBox(width: 20,),
                         CustomRadio<String>(
@@ -245,7 +251,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           value: 'intermediate',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: AppLocale.intermediate.getString(context),
+                          label: 'Intermediate',
                         ),
                         SizedBox(width: 20,),
                         CustomRadio<String>(
@@ -253,7 +259,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           value: 'advance',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: AppLocale.advance.getString(context),
+                          label: 'Advance',
                         ),
                          SizedBox(width: 20,),
                         CustomRadio<String>(
@@ -261,7 +267,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           value: 'professional',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: AppLocale.professional.getString(context),
+                          label: 'Professional',
                         ),
                       ],
                     ),
@@ -271,7 +277,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.fee.getString(context),
+                    child: Text(
+                      'Fee',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -296,7 +303,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.TYOB.getString(context),
+                    child: Text(
+                      'Type of Batch',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -311,14 +319,14 @@ class _CreateBatchState extends State<CreateBatch> {
                         value: 'group',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: AppLocale.coachingGroup.getString(context),
+                        label: 'Coaching Group ',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'private',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: AppLocale.coachingGroup.getString(context),
+                        label: 'Coaching Private',
                       ),
                     ],
                   ),
@@ -343,7 +351,8 @@ class _CreateBatchState extends State<CreateBatch> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(AppLocale.title21.getString(context),
+                        Text(
+                          'Provide Online Sessions',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -354,7 +363,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.title22.getString(context),
+                    child: Text(
+                      'Online session Url',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -379,7 +389,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchDays.getString(context),
+                    child: Text(
+                      'Batch Days',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -455,7 +466,8 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.batchTiming.getString(context),
+                    child: Text(
+                      'Batch Timing',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -470,7 +482,7 @@ class _CreateBatchState extends State<CreateBatch> {
                        child: TextFormField(
                                          controller: FullName,
                                          decoration: InputDecoration(
-                        hintText: AppLocale.from.getString(context),
+                        hintText: 'From',
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -486,7 +498,7 @@ class _CreateBatchState extends State<CreateBatch> {
                     child: TextFormField(                   
                       controller: FullName,
                       decoration: InputDecoration(
-                        hintText: AppLocale.to.getString(context),
+                        hintText: 'To',
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -503,11 +515,17 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   RoundButton(
                     loading: false,
-                    title: AppLocale.addTrainee.getString(context),
+                    title: 'Add Trainee',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: (){},
+                    onPress: agree == true
+                        ? () {
+                            Navigator.pushNamed(context, RoutesName.OtpPage);
+                          }
+                        : () {
+                            print('btn dissabled');
+                          },
                   ),
                   SizedBox(
                     height: 15,
@@ -520,7 +538,13 @@ class _CreateBatchState extends State<CreateBatch> {
                     color: agree == true
                         ? Theme.of(context).primaryColor
                         : Theme.of(context).primaryColor.withOpacity(0.5),
-                    onPress: (){},
+                    onPress: agree == true
+                        ? () {
+                            Navigator.pushNamed(context, RoutesName.OtpPage);
+                          }
+                        : () {
+                            print('btn dissabled');
+                          },
                   ),
                 ],
               ),
