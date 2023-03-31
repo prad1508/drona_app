@@ -3,10 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
-<<<<<<< Updated upstream
-import '../res/language/language.dart';
-=======
->>>>>>> Stashed changes
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 

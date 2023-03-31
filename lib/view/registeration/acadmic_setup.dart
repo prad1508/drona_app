@@ -14,7 +14,7 @@ class AcadmicSetup extends StatefulWidget {
 }
 
 class _AcadmicSetupState extends State<AcadmicSetup> {
-   //transltate
+  //transltate
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   TextEditingController reasoncontroller = TextEditingController();
@@ -25,7 +25,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
     ];
     return menuItems;
   }
-   String selectedValue = 'en';
+
+  String selectedValue = 'en';
   @override
   void initState() {
     // TODO: implement initState
@@ -44,14 +45,13 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
   //get selected language
   @override
   getlanguageState() async {
-  
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-   setState(() {
-    if(prefs.getString('lang') == null) return;
-       if(prefs.getString('lang').toString() != null){
-         selectedValue = prefs.getString('lang').toString();
-       }
-      });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (prefs.getString('lang') == null) return;
+      if (prefs.getString('lang').toString() != null) {
+        selectedValue = prefs.getString('lang').toString();
+      }
+    });
   }
 
   @override
@@ -82,32 +82,32 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: 17, height: 1.7),
+                            fontSize: 17,
+                            height: 1.7),
                         textAlign: TextAlign.center)),
                 const SizedBox(
                   height: 40,
                 ),
                 Container(
-                    padding: const EdgeInsets.only(left: 20),
-                    width: MediaQuery.of(context).size.height * 0.3,
-                    child: DropdownButton(
-                        isExpanded: true,
-                        elevation: 1,
-                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                        iconEnabledColor: Colors.black,
-                        style:
-                            const TextStyle(color: Colors.black),
-                        value: selectedValue,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedValue = newValue!;
-                            addlanguageState(newValue);
-                            _localization.translate(selectedValue);
-                          });
-                        },
-                        items: dropdownItems),
-                  ),
-                   const SizedBox(
+                  padding: const EdgeInsets.only(left: 20),
+                  width: MediaQuery.of(context).size.height * 0.3,
+                  child: DropdownButton(
+                      isExpanded: true,
+                      elevation: 1,
+                      dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                      iconEnabledColor: Colors.black,
+                      style: const TextStyle(color: Colors.black),
+                      value: selectedValue,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedValue = newValue!;
+                          addlanguageState(newValue);
+                          _localization.translate(selectedValue);
+                        });
+                      },
+                      items: dropdownItems),
+                ),
+                const SizedBox(
                   height: 40,
                 ),
                 RoundButton(
@@ -116,7 +116,9 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   rounded: true,
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
-                  onPress: () =>  Navigator.pushNamed(context, RoutesName.Registration),
+                  onPress: () =>
+                      Navigator.pushNamed(context, RoutesName.CoachProfileAdd),
+                  //Registration),,
                 ),
                 const SizedBox(
                   height: 24,
@@ -137,7 +139,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                       onPressed: null,
                       child: Text(
                         AppLocale.or.getString(context),
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -163,14 +166,18 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   height: 50,
                   child: Row(
                     children: [
-                      Text(AppLocale.title5.getString(context), style: Theme.of(context).textTheme.bodyMedium,),
+                      Text(
+                        AppLocale.title5.getString(context),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       TextButton(
-                        onPressed: (){
+                        onPressed: () {
                           // Navigator.pushNamed(context, RoutesName.login);
                         },
                         child: Text(
                           AppLocale.login.getString(context),
-                          style: const TextStyle(fontSize: 18, color: Colors.red),
+                          style:
+                              const TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       ),
                     ],

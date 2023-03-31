@@ -1,29 +1,27 @@
 import 'dart:ffi';
 
-import 'package:drona/view/trainne_addmanual.dart';
+import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+
 import '../../res/language/language.dart';
-// import '../../res/widget/asyntextfield.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
-import 'profile/batch_list.dart';
-import 'trainee_phonbook_add.dart';
 
-class BatchDetail extends StatefulWidget {
-  const BatchDetail({super.key});
+class ViewBatchDetails extends StatefulWidget {
+  const ViewBatchDetails({super.key});
 
   @override
-  State<BatchDetail> createState() => _BatchDetailState();
+  State<ViewBatchDetails> createState() => _ViewBatchDetailsState();
 }
 
-class _BatchDetailState extends State<BatchDetail> {
+class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
@@ -70,7 +68,7 @@ class _BatchDetailState extends State<BatchDetail> {
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John"), value: "john"),
+      DropdownMenuItem(child: Text("John Smith"), value: "john"),
       DropdownMenuItem(child: Text("Anil"), value: "anil"),
       DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
@@ -79,106 +77,6 @@ class _BatchDetailState extends State<BatchDetail> {
 
   String selectedCategory = 'Tennis';
   String selectedAssignCoach = 'john';
-
-//Add Trainee In Hockey Batch popup
-  AddTrainee() {
-    showModalBottomSheet<void>(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: 200,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
-                    ),
-                  ),
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 3,
-                          width: 50,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Enter Manually',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Loto-Regular'),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(color: Colors.grey),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const TrainAddManualy(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Enter Manually',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const AddPhonebook(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Import From Contact List',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,26 +91,20 @@ class _BatchDetailState extends State<BatchDetail> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Batch Detail',
+            ' View Batch Details',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.edit,
+                  size: 20,
+                  color: Colors.black,
+                ))
           ],
         ),
         body: SingleChildScrollView(
@@ -235,10 +127,9 @@ class _BatchDetailState extends State<BatchDetail> {
                     height: 10,
                   ),
                   TextFormField(
-                    enabled: false,
                     controller: FullName,
                     decoration: InputDecoration(
-                      hintText: 'eg. Cricket',
+                      hintText: 'Cricket',
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -251,12 +142,7 @@ class _BatchDetailState extends State<BatchDetail> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Services'),
-                    ],
-                  ),
+                  Align(alignment: Alignment.topLeft, child: Text('Services')),
                   SizedBox(
                     height: 10,
                   ),
@@ -268,7 +154,6 @@ class _BatchDetailState extends State<BatchDetail> {
                     ),
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: DropdownButton(
-                        enableFeedback: false,
                         isExpanded: true,
                         elevation: 1,
                         dropdownColor: const Color.fromARGB(255, 255, 255, 255),
@@ -323,20 +208,27 @@ class _BatchDetailState extends State<BatchDetail> {
                   SizedBox(
                     height: 15,
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'What Level?',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   SizedBox(
                     height: 50,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         CustomRadio<String>(
-                          btnColor: Colors.black.withOpacity(0.5),
+                          btnColor: Colors.black,
                           value: 'beginner',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
                           label: 'Beginner',
-                        ),
-                        SizedBox(
-                          width: 20,
                         ),
                       ],
                     ),
@@ -355,7 +247,6 @@ class _BatchDetailState extends State<BatchDetail> {
                     height: 10,
                   ),
                   TextFormField(
-                    enabled: false,
                     controller: FullName,
                     decoration: InputDecoration(
                       hintText: 'e.g. 200',
@@ -385,42 +276,17 @@ class _BatchDetailState extends State<BatchDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomRadio<String>(
-                        btnColor: Colors.black.withOpacity(0.5),
+                        btnColor: Colors.black,
                         value: 'group',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: 'Coaching Group ',
+                        label: 'Coaching Group',
                       ),
                     ],
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  Row(children: <Widget>[
-                    Checkbox(
-                      checkColor: Colors.white,
-                      activeColor: Theme.of(context).primaryColor,
-                      value: value,
-                      onChanged: (value) {
-                        setState(() {
-                          this.value = value!;
-                          agree = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Provide Online Sessions',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    )
-                  ]),
                   SizedBox(
                     width: 15,
                   ),
@@ -435,10 +301,9 @@ class _BatchDetailState extends State<BatchDetail> {
                     height: 10,
                   ),
                   TextFormField(
-                    enabled: false,
                     controller: FullName,
                     decoration: InputDecoration(
-                      hintText: 'e.g. ww.xyz.com',
+                      hintText: 'ww.xyz.com',
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -467,7 +332,7 @@ class _BatchDetailState extends State<BatchDetail> {
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         CustomRadio<String>(
-                          btnColor: Colors.black.withOpacity(0.5),
+                          btnColor: Colors.black,
                           value: 'mon',
                           groupValue: _groupDays,
                           onChanged: _valueChangedDays(),
@@ -475,6 +340,23 @@ class _BatchDetailState extends State<BatchDetail> {
                         ),
                         SizedBox(
                           width: 20,
+                        ),
+                        CustomRadio<String>(
+                          btnColor: Colors.black,
+                          value: 'wed',
+                          groupValue: _groupDays,
+                          onChanged: _valueChangedDays(),
+                          label: 'Wed',
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        CustomRadio<String>(
+                          btnColor: Colors.black,
+                          value: 'fri',
+                          groupValue: _groupDays,
+                          onChanged: _valueChangedDays(),
+                          label: 'Fri',
                         ),
                       ],
                     ),
@@ -498,7 +380,6 @@ class _BatchDetailState extends State<BatchDetail> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          enabled: false,
                           controller: FullName,
                           decoration: InputDecoration(
                             hintText: 'From',
@@ -515,7 +396,6 @@ class _BatchDetailState extends State<BatchDetail> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          enabled: false,
                           controller: FullName,
                           decoration: InputDecoration(
                             hintText: 'To',
@@ -534,18 +414,17 @@ class _BatchDetailState extends State<BatchDetail> {
                   SizedBox(
                     height: 15,
                   ),
+                  RoundButton(
+                      loading: false,
+                      title: 'Add Trainee',
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor,
+                      onPress: () {
+                        Navigator.pushNamed(context, RoutesName.OtpPage);
+                      }),
                   SizedBox(
                     height: 15,
-                  ),
-                  RoundButton(
-                    loading: false,
-                    title: 'Add Trainee',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                    onPress: () {
-                      AddTrainee();
-                    },
                   ),
                 ],
               ),

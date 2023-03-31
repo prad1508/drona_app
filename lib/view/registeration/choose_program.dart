@@ -7,6 +7,7 @@ import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
+import '../../res/widget/customradio.dart';
 
 class ChooseProgram extends StatefulWidget {
   const ChooseProgram({super.key});
@@ -16,6 +17,9 @@ class ChooseProgram extends StatefulWidget {
 }
 
 class _ChooseProgramState extends State<ChooseProgram> {
+  TextEditingController amountController = TextEditingController();
+  TextEditingController feeController = TextEditingController();
+
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
@@ -34,13 +38,11 @@ class _ChooseProgramState extends State<ChooseProgram> {
   bool agree = true;
 
   /// chekbox List
-  String selected = "";
-  List _cartList = [1, 2, 3, 4];
-  var _selectedList;
-  final Set _saved = Set();
-
-  List<bool> checkBoxSelectionList = [];
-  bool isCheck = false;
+  static int _len = 4;
+  List<bool> isChecked = List.generate(_len, (index) => false);
+  String _getTitle() =>
+      "Checkbox Demo : Checked = ${isChecked.where((check) => check == true).length}, Unchecked = ${isChecked.where((check) => check == false).length}";
+  String _title = "Checkbox Demo";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,18 +87,21 @@ class _ChooseProgramState extends State<ChooseProgram> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomRadio<String>(
+                          btnColor: Colors.black,
                           value: 'm',
                           groupValue: _genderValue,
                           onChanged: _genderChangedHandler(),
                           label: 'Male ',
                         ),
                         CustomRadio<String>(
+                          btnColor: Colors.black,
                           value: 'f',
                           groupValue: _genderValue,
                           onChanged: _genderChangedHandler(),
                           label: 'Female',
                         ),
                         CustomRadio<String>(
+                          btnColor: Colors.black,
                           value: 'o',
                           groupValue: _genderValue,
                           onChanged: _genderChangedHandler(),
@@ -106,48 +111,31 @@ class _ChooseProgramState extends State<ChooseProgram> {
                     ),
                     Row(
                       children: [
-                        SizedBox(
-                          height: 50,
-                        ),
                         Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _cartList.length,
-                              itemBuilder: (context, index) {
-                                return CheckboxListTile(
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  title: Text("Advance"),
-                                  value: checkBoxSelectionList[index],
-                                  onChanged: (value) {
-                                    for (int i = 0;
-                                        i < checkBoxSelectionList.length;
-                                        i++) {
-                                      if (i == index) {
-                                        setState(() {
-                                          if (checkBoxSelectionList[i] ==
-                                              false) {
-                                            _saved.remove(_cartList[index]);
-                                            checkBoxSelectionList[i] = true;
-                                            _saved.add(_cartList[index]);
-                                          } else {
-                                            checkBoxSelectionList[i] = false;
-                                            _saved.remove(_cartList[index]);
-                                          }
-                                        });
-                                      } else {
-                                        setState(() {
-                                          checkBoxSelectionList[i] = false;
-                                        });
-                                      }
-                                    }
-                                  },
-                                );
-                                // setState(() {
-                                //   isCheck = value!;
-                                //   agree = value;
-                                // });
-                              }),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                            ),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: _len,
+                                itemBuilder: (context, index) {
+                                  return CheckboxListTile(
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text("Advance"),
+                                    value: isChecked[index],
+                                    onChanged: (checked) {
+                                      setState(() {
+                                        // isCheck = checked!;
+                                        agree = checked!;
+                                        isChecked[index] = checked!;
+                                        _title = _getTitle();
+                                      });
+                                    },
+                                  );
+                                }),
+                          ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,6 +147,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                     child: SizedBox(
                                       width: 150,
                                       child: TextFormField(
+                                        controller: amountController,
                                         onTap: () {},
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
@@ -192,15 +181,13 @@ class _ChooseProgramState extends State<ChooseProgram> {
                             !agree
                                 ? const SizedBox.shrink()
                                 : Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 9, bottom: 80),
                                     child: SizedBox(
                                       width: 150,
                                       child: TextFormField(
-                                        // controller: moNoController,
+                                        controller: feeController,
                                         keyboardType: TextInputType.number,
-
-                                        // FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-
                                         decoration: InputDecoration(
                                           hintText: '  Fee',
                                           contentPadding: EdgeInsets.all(15),
@@ -224,7 +211,6 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                     const EdgeInsets.all(15),
                                                 child: Text('₹/M'),
                                               )),
-                                          //prefixIconColor: Colors.blue.shade900,
                                         ),
                                       ),
                                     ),
@@ -233,11 +219,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 120),
                       child: RoundButton(
                         loading: false,
                         title: AppLocale.title3.getString(context),
@@ -251,8 +234,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                 print(_groupValue);
                                 print(_genderValue);
 
-                                Navigator.pushNamed(
-                                    context, RoutesName.OtpPage);
+                                // Navigator.pushNamed(
+                                //     context, RoutesName.OtpPage);
                               }
                             : () {
                                 print('btn dissabled');

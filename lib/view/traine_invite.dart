@@ -2,11 +2,10 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-<<<<<<< Updated upstream
+
 import 'package:flutter_contacts/flutter_contacts.dart';
 import '../res/language/language.dart';
-=======
->>>>>>> Stashed changes
+
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 import 'trainee_profile.dart';
@@ -23,6 +22,8 @@ class _TrainInviteState extends State<TrainInvite> {
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   List<int> _selectedItems = <int>[];
+
+  List<Contact>? contacts;
 
 
   @override

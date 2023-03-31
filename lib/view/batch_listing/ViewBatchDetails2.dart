@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -12,16 +13,15 @@ import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
-import 'profile/batch_list.dart';
 
-class CreateBatch extends StatefulWidget {
-  const CreateBatch({super.key});
+class ViewBatchDetails2 extends StatefulWidget {
+  const ViewBatchDetails2({super.key});
 
   @override
-  State<CreateBatch> createState() => _CreateBatchState();
+  State<ViewBatchDetails2> createState() => _ViewBatchDetails2State();
 }
 
-class _CreateBatchState extends State<CreateBatch> {
+class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
@@ -57,8 +57,7 @@ class _CreateBatchState extends State<CreateBatch> {
         () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
-
-   List<DropdownMenuItem<String>> get dropdownCategory {
+  List<DropdownMenuItem<String>> get dropdownCategory {
     List<DropdownMenuItem<String>> menuItems = [
       DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
       DropdownMenuItem(child: Text("Golf"), value: "golf"),
@@ -66,16 +65,18 @@ class _CreateBatchState extends State<CreateBatch> {
     ];
     return menuItems;
   }
-   List<DropdownMenuItem<String>> get dropdownAssignCoach {
+
+  List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John"), value: "john"),
+      DropdownMenuItem(child: Text("John"), value: "john Smith"),
       DropdownMenuItem(child: Text("Anil"), value: "anil"),
       DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
     return menuItems;
   }
-   String selectedCategory = 'Tennis';
-   String selectedAssignCoach = 'john';
+
+  String selectedCategory = 'Tennis';
+  String selectedAssignCoach = 'john Smith';
 
   @override
   Widget build(BuildContext context) {
@@ -90,27 +91,12 @@ class _CreateBatchState extends State<CreateBatch> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Create Batch',
+            'Edit Batch Detail',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Material(
@@ -134,7 +120,7 @@ class _CreateBatchState extends State<CreateBatch> {
                   TextFormField(
                     controller: FullName,
                     decoration: InputDecoration(
-                      hintText: 'eg. Cricket',
+                      hintText: ' Cricket',
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -144,53 +130,88 @@ class _CreateBatchState extends State<CreateBatch> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 15,
                   ),
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Services'),
-                      TextButton(
-                                  child: const Text('Add Coach', style: TextStyle(color: Colors.redAccent),),
-                                  onPressed: (){ 
-                                    Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    const BatchList(),
-                                              ),
-                                            );
-                                  },
-                                ),
-                      
-                    ],
-                   ),
+                  Align(alignment: Alignment.topLeft, child: Text('Services')),
                   SizedBox(
                     height: 10,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color:Color.fromARGB(255, 188, 185, 185)),
+                      border:
+                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: DropdownButton(
-                          isExpanded: true,
-                          elevation: 1,
-                          dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                          iconEnabledColor: Colors.black,
-                          style:
-                              const TextStyle(color: Colors.black),
-                          value: selectedCategory,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCategory = newValue!;
-                              
-                              _localization.translate(selectedCategory);
-                            });
-                          },
-                          items: dropdownCategory),
+                        isExpanded: true,
+                        elevation: 1,
+                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                        iconEnabledColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+
+                            _localization.translate(selectedCategory);
+                          });
+                        },
+                        items: dropdownCategory),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Assign Coach',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'Add Coach',
+                          style: TextStyle(color: Colors.redAccent),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const BatchList(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: DropdownButton(
+                        isExpanded: true,
+                        elevation: 1,
+                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                        iconEnabledColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        value: selectedAssignCoach,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedAssignCoach = newValue!;
+
+                            _localization.translate(selectedAssignCoach);
+                          });
+                        },
+                        items: dropdownAssignCoach),
                   ),
                   SizedBox(
                     height: 15,
@@ -198,39 +219,12 @@ class _CreateBatchState extends State<CreateBatch> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Assign Coach',
+                      'What Level?',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   SizedBox(
-                    height: 10,
-                  ),
-           
-                 Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color:Color.fromARGB(255, 188, 185, 185)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: DropdownButton(
-                          isExpanded: true,
-                          elevation: 1,
-                          dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                          iconEnabledColor: Colors.black,
-                          style:
-                              const TextStyle(color: Colors.black),
-                          value: selectedAssignCoach,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedAssignCoach = newValue!;
-                              
-                              _localization.translate(selectedAssignCoach);
-                            });
-                          },
-                          items: dropdownAssignCoach),
-                  ),
-                  SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   SizedBox(
                     height: 50,
@@ -244,7 +238,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedHandler(),
                           label: 'Beginner',
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'intermediate',
@@ -252,7 +248,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedHandler(),
                           label: 'Intermediate',
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'advance',
@@ -260,7 +258,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedHandler(),
                           label: 'Advance',
                         ),
-                         SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'professional',
@@ -287,7 +287,7 @@ class _CreateBatchState extends State<CreateBatch> {
                   TextFormField(
                     controller: FullName,
                     decoration: InputDecoration(
-                      hintText: 'e.g. 200',
+                      hintText: '200',
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -318,7 +318,7 @@ class _CreateBatchState extends State<CreateBatch> {
                         value: 'group',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: 'Coaching Group ',
+                        label: 'Coaching Group',
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
@@ -373,7 +373,7 @@ class _CreateBatchState extends State<CreateBatch> {
                   TextFormField(
                     controller: FullName,
                     decoration: InputDecoration(
-                      hintText: 'e.g. ww.xyz.com',
+                      hintText: 'ww.xyz.com',
                       contentPadding: EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -396,7 +396,7 @@ class _CreateBatchState extends State<CreateBatch> {
                   SizedBox(
                     height: 10,
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 50,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
@@ -408,7 +408,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Mon',
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'tue',
@@ -416,7 +418,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Tue',
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'wed',
@@ -424,7 +428,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Wed',
                         ),
-                         SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'thu',
@@ -432,7 +438,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Thu',
                         ),
-                         SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'fri',
@@ -440,7 +448,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Fri',
                         ),
-                         SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'sat',
@@ -448,7 +458,9 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Sat',
                         ),
-                         SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'sun',
@@ -459,8 +471,7 @@ class _CreateBatchState extends State<CreateBatch> {
                       ],
                     ),
                   ),
-                  
-                   SizedBox(
+                  SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -476,51 +487,220 @@ class _CreateBatchState extends State<CreateBatch> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                       child: TextFormField(
-                                         controller: FullName,
-                                         decoration: InputDecoration(
-                        hintText: 'From',
-                        contentPadding: EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                                         ),
-                                       ),
-                     ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: TextFormField(                   
-                      controller: FullName,
-                      decoration: InputDecoration(
-                        hintText: 'To',
-                        contentPadding: EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: FullName,
+                          decoration: InputDecoration(
+                            hintText: 'From',
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: FullName,
+                          decoration: InputDecoration(
+                            hintText: 'To',
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  ],),
                   SizedBox(
                     height: 15,
                   ),
+                  Row(
+                    children: [
+                      Text(
+                        'Trainee List',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade400,
+                              borderRadius: BorderRadius.circular(80)),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '06',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ListView.separated(
+                    itemCount: 2,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 115,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 0, left: 20),
+                                  child: CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        "assets/images/user_profile.png"),
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Riyaz mohammad",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 24, top: 5),
+                                      child: Text("Male | 34 Year"),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    padding: EdgeInsets.only(),
+                                    decoration: BoxDecoration(
+                                        color: Colors.green.shade100,
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Text(
+                                      "Onboarded",
+                                      style: TextStyle(color: Colors.green),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 20, top: 10, right: 10),
+                                  child: CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage("assets/images/Golf.png")),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 1, left: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.green.shade700,
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Text(
+                                      "Active",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Text(
+                                    "Tenni Batch",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Text("03:00 PM to 05:30 PM"),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 65),
+                                      child: Text(
+                                        " Fee :",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ),
+                                    Text("₹10,000"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      " Due :",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Text("₹30,000"),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        color: Colors.grey,
+                        height: 1,
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 45,
+                  ),
                   RoundButton(
                     loading: false,
-                    title: 'Add Trainee',
+                    title: 'Add More Trainee',
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
+                            Navigator.pushNamed(
+                                context, RoutesName.ViewBatchDetails);
                           }
                         : () {
                             print('btn dissabled');
@@ -531,7 +711,7 @@ class _CreateBatchState extends State<CreateBatch> {
                   ),
                   RoundButton(
                     loading: false,
-                    title: AppLocale.Continue.getString(context),
+                    title: 'Update',
                     textColor: Colors.white,
                     rounded: true,
                     color: agree == true
@@ -539,7 +719,8 @@ class _CreateBatchState extends State<CreateBatch> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
+                            Navigator.pushNamed(
+                                context, RoutesName.ViewBatchDetails);
                           }
                         : () {
                             print('btn dissabled');

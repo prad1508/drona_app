@@ -3,26 +3,24 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 
-class CreateProfile extends StatefulWidget {
-  const CreateProfile({super.key});
+class CoachProfileAdd extends StatefulWidget {
+  const CoachProfileAdd({super.key});
 
   @override
-  State<CreateProfile> createState() => _CreateProfileState();
+  State<CoachProfileAdd> createState() => _CoachProfileAddState();
 }
 
-class _CreateProfileState extends State<CreateProfile> {
+class _CoachProfileAddState extends State<CoachProfileAdd> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
-  final TextEditingController inviteCode = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController salary = TextEditingController();
   final TextEditingController doj = TextEditingController();
@@ -31,6 +29,17 @@ class _CreateProfileState extends State<CreateProfile> {
   ValueChanged<String?> _genderChangedHandler() {
     return (value) => setState(() => _genderValue = value!);
   }
+
+  List<DropdownMenuItem<String>> get dropdownCategory {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
+      DropdownMenuItem(child: Text("Golf"), value: "golf"),
+      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+    ];
+    return menuItems;
+  }
+
+  String selectedCategory = 'Tennis';
 
   //bottomsheet popup
   showcameraoption() {
@@ -138,27 +147,12 @@ class _CreateProfileState extends State<CreateProfile> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Create Profile',
+            'Add Trainee In Tennis Batch',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Material(
@@ -223,32 +217,6 @@ class _CreateProfileState extends State<CreateProfile> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Coach\’s Full Name',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: coachName,
-                    decoration: InputDecoration(
-                      hintText: 'eg. Rakesh Bansal',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
                       'Phone Number',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
@@ -257,7 +225,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: phone,
+                    controller: coachName,
                     decoration: InputDecoration(
                       hintText: 'e.g. 9876521233',
                       contentPadding: const EdgeInsets.all(10),
@@ -275,17 +243,17 @@ class _CreateProfileState extends State<CreateProfile> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Invite Code',
+                      'Full Name',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
-                    controller: inviteCode,
+                    controller: phone,
                     decoration: InputDecoration(
-                      hintText: 'TSC35497841',
+                      hintText: 'Shivendar Singh',
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -326,6 +294,111 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   const SizedBox(
                     height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          "Date Of Birth",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 120, bottom: 15),
+                        child: Text(
+                          "Age",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: coachName,
+                          decoration: InputDecoration(
+                            hintText: '10-01-2022',
+                            suffixIcon: Icon(Icons.calendar_month),
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: coachName,
+                          decoration: InputDecoration(
+                            hintText: 'e.g. 34 Year',
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Guardian's Full Name",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: coachName,
+                          decoration: InputDecoration(
+                            hintText: '10-01-2022',
+                            suffixIcon: Icon(Icons.calendar_month),
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: coachName,
+                          decoration: InputDecoration(
+                            hintText: 'e.g.Vivek Singh',
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: Alignment.topLeft,
@@ -414,12 +487,12 @@ class _CreateProfileState extends State<CreateProfile> {
                       onPress: () {
                         print(coachName);
                         print(phone);
-                        print(inviteCode);
                         print(email);
                         print(salary);
                         print(doj);
                         print(_genderValue);
-                        Navigator.pushNamed(context, RoutesName.CoachListSelected);
+                        Navigator.pushNamed(
+                            context, RoutesName.CoachListSelected);
                       }),
                 ],
               ),
