@@ -57,6 +57,15 @@ class _SessionListState extends State<SessionList> {
       "status": "Cancel",
       "color": Colors.brown
     },
+    {
+      "id": 4,
+      "name": "Karata Batch",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Advance",
+      "detail": "M,W,F - 09:15am to 10:15am",
+      "status": "Cancel",
+      "color": Colors.brown
+    },
   ];
   List<Map<String, dynamic>> _foundUsers = [];
   @override
@@ -82,6 +91,7 @@ class _SessionListState extends State<SessionList> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -111,6 +121,7 @@ class _SessionListState extends State<SessionList> {
           actions: [
             IconButton(
               onPressed: (() {
+                
                Navigator.push(
                          context,
                          MaterialPageRoute(
@@ -157,22 +168,9 @@ class _SessionListState extends State<SessionList> {
                 const SizedBox(
                   height: 15,
                 ),
-                DefaultTabController(
-                    length: 5,
-                    initialIndex: 0,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          TabBar(
-                            indicatorPadding: EdgeInsets.all(10),
-                            isScrollable: true,
-                            labelColor: Colors.black,
-                            labelPadding: EdgeInsets.all(0),
-                            unselectedLabelColor: Colors.grey,
-                            tabs: [
-                              SizedBox(
+                SizedBox(
                                 height: 60,
-                                width: 180,
+                                width: width * 1,
                                 child: TextFormField(
                                   // controller: acadmicName,
                                   keyboardType: TextInputType.name,
@@ -186,20 +184,35 @@ class _SessionListState extends State<SessionList> {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      prefixIcon: Icon(Icons.date_range)),
+                                      prefixIcon: const Icon(Icons.date_range)),
                                 ),
                               ),
+                DefaultTabController(
+                    length: 4,
+                    initialIndex: 0,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          TabBar(
+                            indicatorPadding: const EdgeInsets.all(10),
+                            isScrollable: true,
+                            labelColor: Colors.black,
+                            labelPadding: const EdgeInsets.all(0),
+                            unselectedLabelColor: Colors.grey,
+                            tabs: [
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 10, left: 10),
                                 child: Chip(
-                                  label: Text(
+                                   backgroundColor:
+                                      const Color.fromARGB(255, 242, 242, 242),
+                                  label: const Text(
                                     'All',
                                     style: TextStyle(color: Colors.blue),
                                   ),
                                   avatar: CircleAvatar(
                                     backgroundColor: Colors.blue.shade100,
-                                    child: Text('3'),
+                                    child: Text( _foundUsers.length.toString()),
                                   ),
                                 ),
                               ),
@@ -207,13 +220,13 @@ class _SessionListState extends State<SessionList> {
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
                                   backgroundColor:
-                                      Color.fromARGB(255, 242, 242, 242),
-                                  label: Text(
+                                      const Color.fromARGB(255, 242, 242, 242),
+                                  label: const Text(
                                     'Scheduled',
                                   ),
                                   avatar: CircleAvatar(
                                     backgroundColor: Colors.green.shade100,
-                                    child: Text(
+                                    child: const Text(
                                       '01',
                                     ),
                                   ),
@@ -222,24 +235,28 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                  label: Text(
+                                   backgroundColor:
+                                      const Color.fromARGB(255, 242, 242, 242),
+                                  label: const Text(
                                     'Canceled',
                                   ),
                                   avatar: CircleAvatar(
                                     backgroundColor: Colors.brown.shade100,
-                                    child: Text('01'),
+                                    child: const Text('01'),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                  label: Text(
+                                   backgroundColor:
+                                      const Color.fromARGB(255, 242, 242, 242),
+                                  label: const Text(
                                     'Closed',
                                   ),
                                   avatar: CircleAvatar(
                                     backgroundColor: Colors.redAccent.shade100,
-                                    child: Text('01'),
+                                    child: const Text('01'),
                                   ),
                                 ),
                               ),
@@ -247,13 +264,12 @@ class _SessionListState extends State<SessionList> {
                           ),
                           Container(
                             height: 400,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 border: Border(
                                     top: BorderSide(
                                         color: Colors.grey, width: 0.5))),
                             child: TabBarView(
                               children: <Widget>[
-                                Text('tab 2'),
                                 Column(
                                   children: [
                                     Row(
@@ -398,10 +414,9 @@ class _SessionListState extends State<SessionList> {
                                     ),
                                   ],
                                 ),
-                                Text('tab 2'),
-                                Text('tab 2'),
-                                Text('tab 2'),
-                                Text('tab 2'),
+                                const Text('tab 2'),
+                                const Text('tab 2'),
+                                const Text('tab 2'),
                               ],
                             ),
                           )
@@ -456,6 +471,7 @@ class _SessionListState extends State<SessionList> {
                       Navigator.of(context).pop();
                     },
                   ),
+                   const SizedBox(height: 30),
                 ],
               ),
             ),

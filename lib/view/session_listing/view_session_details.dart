@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -21,7 +23,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   final List<int> _selectedItems = <int>[];
-
+  bool value = false;
   final List<Map<String, dynamic>> _allUsers = [
     {
       "id": 1,
@@ -38,6 +40,46 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
       "proImg": "",
       "categorgyImg": "assets/images/Golf.png",
       "level": "Beginner"
+    },
+    {
+      "id": 2,
+      "name": "Riyaz mohammed",
+      "detail": 'M / 26 / Due :  ₹200',
+      "proImg": "",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Beginner"
+    },
+    {
+      "id": 3,
+      "name": "Riyaz mohammed",
+      "detail": 'M / 26 / Due :  ₹200',
+      "proImg": "",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Beginner"
+    },
+    {
+      "id": 4,
+      "name": "Riyaz mohammed",
+      "detail": 'M / 26 / Due :  ₹200',
+      "proImg": "",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Beginner"
+    },
+     {
+      "id": 5,
+      "name": "Riyaz mohammed",
+      "detail": 'M / 26 / Due :  ₹200',
+      "proImg": "",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Beginner"
+    },
+    {
+      "id": 6,
+      "name": "Riyaz mohammed",
+      "detail": 'M / 26 / Due :  ₹200',
+      "proImg": "",
+      "categorgyImg": "assets/images/Golf.png",
+      "level": "Beginner"
     }
   ];
   List<Map<String, dynamic>> _foundUsers = [];
@@ -47,8 +89,132 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     super.initState();
   }
 
+     //cancel session
+    
+  Future<bool> cancelPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 270,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                                          radius: 18,
+                                          backgroundColor: Colors.redAccent,
+                                          child: Icon(
+                          Icons.close_sharp,
+                          color: Colors.white,
+                          size: 18.0,
+                        )
+                                        ),
+                    
+                  ),
+                  SizedBox(height: 5,),
+                  const Text("Are you sure?"),
+                  const Text(" you want to cancel this session?", style: TextStyle(fontSize: 12,),),
+                   SizedBox(height: 5,),
+                  Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Chip(
+                                      backgroundColor:
+                                          Colors.green.withOpacity(.2),
+                                      label: const Text(
+                                        'Scheduled',
+                                        style: TextStyle(
+                                            color: Colors.green),
+                                      )),
+                                  const CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor:
+                                        Color.fromARGB(255, 217, 217, 217),
+                                    child: Image(
+                                        image: AssetImage(
+                                            'assets/images/tennis.png')),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Cricket Batch',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      height: 2),
+                                ),
+                                Text(
+                                  'Advance -  Tue, 04 Feb 2023 - 09:30 AM to 10:30 AM',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      
+                  const SizedBox(height: 19),
+                  Row(
+                    children: [
+                      
+                     
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                        ),
+                        child:const Text("No",
+                            style: TextStyle(color: Colors.black)
+                            ),
+                      )),
+                       const SizedBox(width: 15),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            exit(0);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent),
+                          child: const Text(
+                            "Yes", style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+              );
+        });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -99,221 +265,319 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                   ),
           ],
         ),
-        body: Material(
-          color: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: const Color.fromARGB(255, 244, 247, 245),
-                    elevation: 1,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Chip(
+        body: SingleChildScrollView(
+          child: Material(
+            color: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: const Color.fromARGB(255, 244, 247, 245),
+                      elevation: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10, bottom: 10, right: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Chip(
+                                      backgroundColor:
+                                          Colors.green.withOpacity(.2),
+                                      label: const Text(
+                                        'Scheduled',
+                                        style: TextStyle(
+                                            color: Colors.green),
+                                      )),
+                                  const CircleAvatar(
+                                    radius: 20,
                                     backgroundColor:
-                                        Colors.greenAccent.withOpacity(.2),
-                                    label: const Text(
-                                      'Scheduled',
-                                      style:
-                                          TextStyle(color: Colors.greenAccent),
-                                    )),
-                                const CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 217, 217, 217),
-                                  child: Image(
-                                      image: AssetImage(
-                                          'assets/images/tennis.png')),
-                                )
-                              ],
+                                        Color.fromARGB(255, 217, 217, 217),
+                                    child: Image(
+                                        image: AssetImage(
+                                            'assets/images/tennis.png')),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Cricket Batch',
-                                style: TextStyle(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Cricket Batch',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      height: 2),
+                                ),
+                                Text(
+                                  'Advance -  Tue, 04 Feb 2023 - 09:30 AM to 10:30 AM',
+                                  style: TextStyle(
                                     color: Colors.black,
                                     fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    height: 2),
-                              ),
-                              Text(
-                                'Advance -  Tue, 04 Feb 2023 - 09:30 AM to 10:30 AM',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
-                Expanded(
-                  child: _foundUsers.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: _foundUsers.length,
-                          itemBuilder: (context, index) {
-                            var nameText = _foundUsers[index]['name'].split(' ');
-                            return Card(
-                            key: ValueKey(_foundUsers[index]["id"]),
-                            elevation: 0,
-                            margin: const EdgeInsets.symmetric(vertical: 0),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  tileColor: (_selectedItems.contains(index))
-                                      ? const Color.fromARGB(255, 218, 218, 219)
-                                          .withOpacity(0.5)
-                                      : Colors.transparent,
-                                  leading: CircleAvatar(
-                                      radius: 20.5,
-                                      backgroundColor: const Color.fromRGBO(
-                                          194, 235, 216, 1),
-                                      child: _selectedItems.contains(index)
-                                          ? const Icon(
-                                              Icons.check,
-                                              color: Color.fromRGBO(
-                                                  71, 192, 136, 1),
-                                              size: 30.0,
-                                            )
-                                          : Text((nameText[0][0].toString() + nameText[1][0].toString()).toUpperCase(),
-                                              style: const TextStyle(fontSize: 14),
-                                            )),
-                                  title: Text(
-                                        _foundUsers[index]['name'],
-                                        style: const TextStyle(
-                                            color:
-                                                Color.fromRGBO(57, 64, 74, 1),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'Loto-Regular'),
-                                      ),
-                                  subtitle: Text(
-                                    _foundUsers[index]["detail"].toString(),
-                                    style: const TextStyle(
-                                        color: Color.fromRGBO(57, 64, 74, 1),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Loto-Regular'),
+                                    fontSize: 13,
                                   ),
-                                  trailing: SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.25,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children:  [
-                                        CircleAvatar(
-                                                                  radius: 13,
-                                                                  backgroundColor: Colors.greenAccent.withOpacity(0.1),
-                                                                  child:  const Text('P', style: TextStyle(color: Colors.greenAccent),)
-                                                                ),
-                                                                
-                                                                CircleAvatar(
-                                                                  radius: 13,
-                                                                  backgroundColor: Colors.redAccent.withOpacity(0.1),
-                                                                  child: const Text('A', style: TextStyle(color: Colors.redAccent))
-                                                                ),
-                                                                CircleAvatar(
-                                                                  radius: 13,
-                                                                  backgroundColor: Colors.blue.withOpacity(0.1),
-                                                                  child: const Text('P', style: TextStyle(color: Colors.blue))
-                                                                ),
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ViewProfilenew()));
-                                  },
-                                  onLongPress: () {
-                                    if (!_selectedItems.contains(index)) {
-                                      setState(() {
-                                        _selectedItems.add(index);
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _selectedItems
-                                            .removeWhere((val) => val == index);
-                                      });
-                                    }
-                                  },
                                 ),
-                                const Divider(
-                                  height: 5,
-                                ),
-                                
                               ],
                             ),
-                          );
-                         }
-                        )
-                      : const Text(
-                          'No results found',
-                          style: TextStyle(fontSize: 24),
+                          ],
                         ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                RoundButton(
-                    loading: false,
-                    title: 'Submit Attendance',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor.withOpacity(0.5),
-                    onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const Layout(
-                            selectedIndex: 0,
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                 Icon(
+                                                    Icons.check_circle,
+                                                    color: Colors.grey,
+                                                    size: 25.0,
+                                                  ),
+                                                  Text('Attendance Pending')
+                                              ],
+                                            ),
+                                             Row(
+                                              children:  [
+                                                  const Text('Mark all present'),
+                                                  Checkbox(
+                                                   value: value,
+                                                   onChanged: (value) {
+                                                     setState(() {
+                                                       this.value = value!;
+                                                       print('checked');
+                                                     });
+                                                   },
+                                                 ), 
+                                              ],
+                                            ),
+                                           
+                                                 
+                                          ],
+                                        ),
+                      ),
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      height: height * .5,
+                      child: _foundUsers.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: _foundUsers.length,
+                              itemBuilder: (context, index) {
+                                var nameText =
+                                    _foundUsers[index]['name'].split(' ');
+                                return Card(
+                                  key: ValueKey(_foundUsers[index]["id"]),
+                                  elevation: 0,
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 0),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        tileColor:
+                                            (_selectedItems.contains(index))
+                                                ? const Color.fromARGB(
+                                                        255, 218, 218, 219)
+                                                    .withOpacity(0.5)
+                                                : Colors.transparent,
+                                        leading: CircleAvatar(
+                                            radius: 20.5,
+                                            backgroundColor:
+                                                const Color.fromRGBO(
+                                                    194, 235, 216, 1),
+                                            child: _selectedItems
+                                                    .contains(index)
+                                                ? const Icon(
+                                                    Icons.check,
+                                                    color: Color.fromRGBO(
+                                                        71, 192, 136, 1),
+                                                    size: 30.0,
+                                                  )
+                                                : Text(
+                                                    (nameText[0][0].toString() +
+                                                            nameText[1][0]
+                                                                .toString())
+                                                        .toUpperCase(),
+                                                    style: const TextStyle(
+                                                        fontSize: 14),
+                                                  )),
+                                        title: Text(
+                                          _foundUsers[index]['name'],
+                                          style: const TextStyle(
+                                              color:
+                                                  Color.fromRGBO(57, 64, 74, 1),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: 'Loto-Regular'),
+                                        ),
+                                        subtitle: Text(
+                                          _foundUsers[index]["detail"]
+                                              .toString(),
+                                          style: const TextStyle(
+                                              color:
+                                                  Color.fromRGBO(57, 64, 74, 1),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: 'Loto-Regular'),
+                                        ),
+                                        trailing: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              CircleAvatar(
+                                                  radius: 13,
+                                                  backgroundColor: Colors
+                                                      .green
+                                                      .withOpacity(0.1),
+                                                  child: const Text(
+                                                    'P',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.green),
+                                                  )),
+                                              CircleAvatar(
+                                                  radius: 13,
+                                                  backgroundColor: Colors
+                                                      .redAccent
+                                                      .withOpacity(0.1),
+                                                  child: const Text('A',
+                                                      style: TextStyle(
+                                                          color: Colors
+                                                              .redAccent))),
+                                              CircleAvatar(
+                                                  radius: 13,
+                                                  backgroundColor: Colors.blue
+                                                      .withOpacity(0.1),
+                                                  child: const Text('L',
+                                                      style: TextStyle(
+                                                          color: Colors.blue))),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ViewProfilenew()));
+                                        },
+                                        onLongPress: () {
+                                          if (!_selectedItems.contains(index)) {
+                                            setState(() {
+                                              _selectedItems.add(index);
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _selectedItems.removeWhere(
+                                                  (val) => val == index);
+                                            });
+                                          }
+                                        },
+                                      ),
+                                      const Divider(
+                                        height: 5,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              })
+                          : const Text(
+                              'No results found',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(44, 98, 163, 243),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Color.fromARGB(44, 98, 163, 243),
+                              child: Icon(
+                                Icons.upload,
+                                color: Colors.blueAccent,
+                                size: 30.0,
+                              )),
+                          Text(
+                            'Click to upload your attachment',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: 10,),
-                    RoundButton(
-                    loading: false,
-                    title: 'Submit Attendance',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Colors.redAccent,
-                    onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const Layout(
-                            selectedIndex: 0,
+                        ],
+                      )),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  RoundButton(
+                      loading: false,
+                      title: 'Submit Attendance',
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor.withOpacity(0.5),
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const Layout(
+                              selectedIndex: 0,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-              ],
+                        );
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RoundButton(
+                      loading: false,
+                      title: 'Cancel Session',
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Colors.redAccent,
+                      onPress: () {
+                        cancelPopup(context);
+                      }),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+
+ 
   }
 }

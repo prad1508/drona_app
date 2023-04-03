@@ -180,6 +180,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                      
                     },
                   ),
+                  const SizedBox(height: 30),
                 ],
               ),
             
