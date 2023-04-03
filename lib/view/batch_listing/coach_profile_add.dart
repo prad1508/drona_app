@@ -7,6 +7,7 @@ import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
+import '../coach_listselected.dart';
 
 class CoachProfileAdd extends StatefulWidget {
   const CoachProfileAdd({super.key});
@@ -541,8 +542,8 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                                   lastDate: DateTime(2101));
                               if (pickeddate != null) {
                                 setState(() {
-                                  _date.text = DateFormat('yyyy-mm-dd')
-                                      .format(pickeddate);
+                                  // _date.text = DateFormat('yyyy-mm-dd')
+                                  //     .format(pickeddate);
                                 });
                               }
                             },
@@ -576,8 +577,8 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                                   lastDate: DateTime(2101));
                               if (pickeddate != null) {
                                 setState(() {
-                                  _date.text = DateFormat('yyyy-mm-dd')
-                                      .format(pickeddate);
+                                  // _date.text = DateFormat('yyyy-mm-dd')
+                                  //     .format(pickeddate);
                                 });
                               }
                             },
