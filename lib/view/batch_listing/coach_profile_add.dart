@@ -7,7 +7,6 @@ import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
-import '../coach_listselected.dart';
 
 class CoachProfileAdd extends StatefulWidget {
   const CoachProfileAdd({super.key});
@@ -19,6 +18,8 @@ class CoachProfileAdd extends StatefulWidget {
 class _CoachProfileAddState extends State<CoachProfileAdd> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
+  final TextEditingController _date = TextEditingController();
+  TextEditingController amountController = TextEditingController();
 
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
@@ -213,7 +214,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     ],
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
@@ -223,7 +224,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: coachName,
@@ -249,7 +250,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: phone,
@@ -266,6 +267,16 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   ),
                   const SizedBox(
                     height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Gender',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,14 +311,14 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.only(bottom: 5),
                         child: Text(
                           "Date Of Birth",
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 120, bottom: 15),
+                        padding: const EdgeInsets.only(right: 120, bottom: 5),
                         child: Text(
                           "Age",
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -353,6 +364,9 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -361,45 +375,60 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: coachName,
-                          decoration: InputDecoration(
-                            hintText: '10-01-2022',
-                            suffixIcon: Icon(Icons.calendar_month),
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
+                      Flexible(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color.fromARGB(255, 188, 185, 185)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: DropdownButton(
+                              isExpanded: true,
+                              elevation: 1,
+                              dropdownColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              iconEnabledColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              value: selectedCategory,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedCategory = newValue!;
+
+                                  _localization.translate(selectedCategory);
+                                });
+                              },
+                              items: dropdownCategory),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: coachName,
-                          decoration: InputDecoration(
-                            hintText: 'e.g.Vivek Singh',
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                      Flexible(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextFormField(
+                            controller: coachName,
+                            decoration: InputDecoration(
+                              hintText: 'e.g.Vivek Singh',
+                              contentPadding: EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
@@ -409,7 +438,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: email,
@@ -430,50 +459,206 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Salary/Month',
+                      'Service',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
-                  TextFormField(
-                    controller: salary,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. ₹200',
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: DropdownButton(
+                        isExpanded: true,
+                        elevation: 1,
+                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                        iconEnabledColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+
+                            _localization.translate(selectedCategory);
+                          });
+                        },
+                        items: dropdownCategory),
                   ),
                   const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Month Of Billing',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 45),
+                        child: Text(
+                          'Date Of Joining',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextField(
+                            controller: _date,
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(Icons.calendar_month),
+                              hintText: '10-01-2022',
+                              contentPadding: EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              DateTime? pickeddate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101));
+                              if (pickeddate != null) {
+                                setState(() {
+                                  _date.text = DateFormat('yyyy-mm-dd')
+                                      .format(pickeddate);
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Flexible(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextField(
+                            controller: _date,
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(Icons.calendar_month),
+                              hintText: '10-12-2022',
+                              contentPadding: EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              DateTime? pickeddate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101));
+                              if (pickeddate != null) {
+                                setState(() {
+                                  _date.text = DateFormat('yyyy-mm-dd')
+                                      .format(pickeddate);
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Date of Joining',
+                      'Batch',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: DropdownButton(
+                        isExpanded: true,
+                        elevation: 1,
+                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                        iconEnabledColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+
+                            _localization.translate(selectedCategory);
+                          });
+                        },
+                        items: dropdownCategory),
+                  ),
+                  SizedBox(
                     height: 15,
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Default Fee/Month',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
-                    controller: doj,
+                    controller: amountController,
+                    onTap: () {},
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      hintText: '28/12/2022',
-                      contentPadding: EdgeInsets.all(10),
+                      hintText: '  500',
+                      contentPadding: EdgeInsets.all(15),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                      prefixIcon: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.blue.shade700,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                              '₹/M',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )),
+                      //prefixIconColor: Colors.blue.shade900,
                     ),
                   ),
                   SizedBox(
@@ -481,7 +666,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   ),
                   RoundButton(
                       loading: false,
-                      title: 'Add Coach',
+                      title: 'Save',
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,
