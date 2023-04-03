@@ -7,10 +7,10 @@ class DashboardViewModel with ChangeNotifier {
 
   final _myRepo = DashboardRepository();
 
-  ApiResponse<DashboardListModel> DataList = ApiResponse.loading();
+  ApiResponse<DashboardListModel> dataList = ApiResponse.loading();
 
   setDataList(ApiResponse<DashboardListModel> response){
-    DataList = response;
+    dataList = response;
     notifyListeners();
   }
 

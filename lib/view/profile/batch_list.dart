@@ -1,10 +1,12 @@
-import 'package:drona/utils/routes/routes_name.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../batch_details.dart';
+import '../layout.dart';
+
 
 class BatchList extends StatefulWidget {
   const BatchList({super.key});
@@ -17,7 +19,7 @@ class _BatchListState extends State<BatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
-  List<int> _selectedItems = <int>[];
+  final List<int> _selectedItems = <int>[];
 
   final List<Map<String, dynamic>> _allUsers = [
     {
@@ -60,20 +62,22 @@ class _BatchListState extends State<BatchList> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
-                style: TextStyle(color: Colors.black),
+                _selectedItems.isEmpty
+                    ? ''
+                    : _selectedItems.length.toString(),
+                style: const TextStyle(color: Colors.black),
               )
             ],
           ),
           title: Text(
-            'Batch List',
+            AppLocale.batchList.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            _selectedItems.length == 0
+            _selectedItems.isEmpty
                 ? IconButton(
                     onPressed: (() {
                       if (kDebugMode) {
@@ -116,7 +120,7 @@ class _BatchListState extends State<BatchList> {
                               children: [
                                 ListTile(
                                   tileColor: (_selectedItems.contains(index))
-                                      ? Color.fromARGB(255, 218, 218, 219)
+                                      ? const Color.fromARGB(255, 218, 218, 219)
                                           .withOpacity(0.5)
                                       : Colors.transparent,
                                   leading: CircleAvatar(
@@ -124,13 +128,13 @@ class _BatchListState extends State<BatchList> {
                                       backgroundColor: const Color.fromRGBO(
                                           194, 235, 216, 1),
                                       child: _selectedItems.contains(index)
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.check,
                                               color: Color.fromRGBO(
                                                   71, 192, 136, 1),
                                               size: 30.0,
                                             )
-                                          : Text(
+                                          : const Text(
                                               'TGH',
                                               style: TextStyle(fontSize: 14),
                                             )),
@@ -148,8 +152,14 @@ class _BatchListState extends State<BatchList> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Chip(
-                                          backgroundColor: Color.fromARGB(255, 237, 244, 240),
-                                          label:  Text( _foundUsers[index]['level'], style: TextStyle(fontSize: 12, color: Colors.greenAccent),),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 237, 244, 240),
+                                          label: Text(
+                                            _foundUsers[index]['level'],
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.greenAccent),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -204,18 +214,18 @@ class _BatchListState extends State<BatchList> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Continue',
+                    title: AppLocale.conts.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () {
-                     Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (BuildContext context) =>
-                                     const BatchDetail(),
-                               ),
-                             );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const Layout(selectedIndex: 0,),
+                        ),
+                      );
                     }),
               ],
             ),

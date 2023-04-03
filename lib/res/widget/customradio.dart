@@ -7,7 +7,7 @@ class CustomRadio<T> extends StatelessWidget {
   final Color btnColor;
   final ValueChanged<T?> onChanged;
 
-  const CustomRadio({
+  const CustomRadio({super.key, 
     required this.value,
     required this.groupValue,
     required this.label,
@@ -22,11 +22,11 @@ class CustomRadio<T> extends StatelessWidget {
         border: Border.all(
             width: 1,
             color: isSelected ? btnColor.withOpacity(0.1) : Colors.black),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(5)),
         color: isSelected ? btnColor : Colors.white,
       ),
-      padding: EdgeInsets.fromLTRB(32, 15, 32, 15),
+      padding: const EdgeInsets.fromLTRB(32, 15, 32, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -1,13 +1,9 @@
-import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
 import 'package:flutter_contacts/flutter_contacts.dart';
 import '../res/language/language.dart';
-
 import '../res/widget/round_button.dart';
-import '../utils/routes/routes_name.dart';
 import 'trainee_profile.dart';
 
 class TrainInvite extends StatefulWidget {
@@ -21,10 +17,9 @@ class _TrainInviteState extends State<TrainInvite> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
-  List<int> _selectedItems = <int>[];
+  final List<int> _selectedItems = <int>[];
 
   List<Contact>? contacts;
-
 
   @override
   initState() {
@@ -37,7 +32,7 @@ class _TrainInviteState extends State<TrainInvite> {
     if (await FlutterContacts.requestPermission()) {
       contacts = await FlutterContacts.getContacts(
           withProperties: true, withPhoto: true);
-      setState(() {contacts = this.contacts;});
+      setState(() {contacts = contacts;});
     }
   }
 
@@ -73,20 +68,19 @@ void dataFilter(String enteredKeyword) {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
-                style: TextStyle(color: Colors.black),
+                _selectedItems.isEmpty ? '' : _selectedItems.length.toString(),
+                style: const TextStyle(color: Colors.black),
               )
             ],
           ),
-          title: Text(
-            'Trainee in Hockey Batch',
+          title: Text( AppLocale.title25.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            _selectedItems.length == 0
+            _selectedItems.isEmpty
                 ? IconButton(
                     onPressed: (() {
                       if (kDebugMode) {
@@ -128,9 +122,9 @@ void dataFilter(String enteredKeyword) {
                   child: ListTile(
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
-                      decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          hintText: 'Search',
+                      decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          hintText:  AppLocale.search.getString(context),
                           border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
@@ -141,7 +135,7 @@ void dataFilter(String enteredKeyword) {
                 ),
                 Expanded(
                   child: (contacts) == null
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
                 itemCount: contacts!.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -149,7 +143,7 @@ void dataFilter(String enteredKeyword) {
                   String num = (contacts![index].phones.isNotEmpty) ? (contacts![index].phones.first.number) : "--";
                   return ListTile(
                      tileColor: (_selectedItems.contains(index))
-                                      ? Color.fromARGB(255, 218, 218, 219)
+                                      ? const Color.fromARGB(255, 218, 218, 219)
                                           .withOpacity(0.5)
                                       : Colors.transparent,
                       leading: _selectedItems.contains(index) ? const Icon(
@@ -191,7 +185,7 @@ void dataFilter(String enteredKeyword) {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Send Invite',
+                    title: AppLocale.sendInvite.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
@@ -223,7 +217,7 @@ void dataFilter(String enteredKeyword) {
                         fontSize: 18,
                         fontFamily: 'Loto-Regular'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 28,
                   ),
                   const Text(
@@ -233,7 +227,7 @@ void dataFilter(String enteredKeyword) {
                         fontSize: 16,
                         fontFamily: 'Loto-Regular'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 28,
                   ),
                   const SizedBox(height: 15),

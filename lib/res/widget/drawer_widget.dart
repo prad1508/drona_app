@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/theme_provider.dart';
-import '/utils/color.dart';
-import '../../view/registeration/login_view.dart';
 import '../../utils/routes/routes_name.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -25,37 +21,31 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   TextEditingController reasoncontroller = TextEditingController();
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("English"), value: "en"),
-      DropdownMenuItem(child: Text("हिंदी"), value: "hi"),
+      const DropdownMenuItem(value: "en", child: Text("English")),
+      const DropdownMenuItem(value: "hi", child: Text("हिंदी")),
     ];
     return menuItems;
   }
    String selectedValue = 'en';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getlanguageState();
-    String selectedValue = "en";
   }
 
   //setselected language
-  @override
   addlanguageState(lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('lang', lang);
   }
 
   //get selected language
-  @override
   getlanguageState() async {
   
       SharedPreferences prefs = await SharedPreferences.getInstance();
    setState(() {
     if(prefs.getString('lang') == null) return;
-       if(prefs.getString('lang').toString() != null){
-         selectedValue = prefs.getString('lang').toString();
-       }
+       selectedValue = prefs.getString('lang').toString();
       });
   }
 
@@ -72,7 +62,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Row(
@@ -80,7 +70,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image(
-                        image: AssetImage('assets/images/name.png'),
+                        image: const AssetImage('assets/images/name.png'),
                         width: MediaQuery.of(context).size.width * 0.5,
                         height: 60,
                       ),
@@ -88,7 +78,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         onPressed: (() {
                           Navigator.pushNamed(context, RoutesName.login);
                         }),
-                        icon: Icon(
+                        icon: const Icon(
                           FontAwesomeIcons.solidUser,
                         ),
                         color: Theme.of(context).primaryColorDark,
@@ -96,7 +86,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                 ],
@@ -113,7 +103,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Energy Data',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -141,7 +131,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Manage Subscription',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -155,7 +145,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Billing Details',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -169,7 +159,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'BESS Management',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -183,7 +173,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Carban Footprint',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -197,7 +187,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Setting',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
@@ -211,14 +201,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Notification',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},
             ),
 
             Padding(
-              padding: EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20),
               child: Row(
                 children: [
                   Icon(
@@ -227,7 +217,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     size: 15.0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 20),
                     width: MediaQuery.of(context).size.height * 0.3,
                     child: DropdownButton(
                         isExpanded: true,
@@ -265,7 +255,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       title: Text(
                         themeProvider.isDarkTheme ? 'Dark Mode' : 'Light Mode',
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                     onTap: () {
@@ -284,7 +274,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 title: Text(
                   'Logout',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               onTap: () {},

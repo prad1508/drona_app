@@ -1,6 +1,6 @@
 class DashboardListModel {
-  dynamic? totalCount;
-  dynamic? pageCount;
+  dynamic totalCount;
+  dynamic pageCount;
   List<Requests>? requests;
 
   DashboardListModel({this.totalCount, this.pageCount, this.requests});
@@ -11,35 +11,35 @@ class DashboardListModel {
     if (json['requests'] != null) {
       requests = <Requests>[];
       json['requests'].forEach((v) {
-        requests!.add(new Requests.fromJson(v));
+        requests!.add(Requests.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total_count'] = this.totalCount;
-    data['page_count'] = this.pageCount;
-    if (this.requests != null) {
-      data['requests'] = this.requests!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total_count'] = totalCount;
+    data['page_count'] = pageCount;
+    if (requests != null) {
+      data['requests'] = requests!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Requests {
-  dynamic? bessId;
-  dynamic? createdAt;
-  dynamic? iB;
-  dynamic? iR;
-  dynamic? iY;
-  dynamic? kva;
-  dynamic? kvah;
-  dynamic? kwh;
-  dynamic? sequesnceId;
-dynamic? source;
-  dynamic? updatedAt;
-dynamic? vR;
+  dynamic bessId;
+  dynamic createdAt;
+  dynamic iB;
+  dynamic iR;
+  dynamic iY;
+  dynamic kva;
+  dynamic kvah;
+  dynamic kwh;
+  dynamic sequesnceId;
+dynamic source;
+  dynamic updatedAt;
+dynamic vR;
 
   Requests(
       {
@@ -72,19 +72,19 @@ dynamic? vR;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['bess_id'] = this.bessId;
-    data['created_at'] = this.createdAt;
-    data['i_b'] = this.iB;
-    data['i_r'] = this.iR;
-    data['i_y'] = this.iY;
-    data['kva'] = this.kva;
-    data['kvah'] = this.kvah;
-    data['kwh'] = this.kwh;
-    data['sequesnce_id'] = this.sequesnceId;
-    data['source'] = this.source;
-    data['updated_at'] = this.updatedAt;
-    data['v_r'] = this.vR;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['bess_id'] = bessId;
+    data['created_at'] = createdAt;
+    data['i_b'] = iB;
+    data['i_r'] = iR;
+    data['i_y'] = iY;
+    data['kva'] = kva;
+    data['kvah'] = kvah;
+    data['kwh'] = kwh;
+    data['sequesnce_id'] = sequesnceId;
+    data['source'] = source;
+    data['updated_at'] = updatedAt;
+    data['v_r'] = vR;
     return data;
   }
 }
@@ -99,8 +99,8 @@ class Id {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$oid'] = this.oid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$oid'] = oid;
     return data;
   }
 }

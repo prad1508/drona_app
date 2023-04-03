@@ -8,9 +8,9 @@ class PostofficeViewViewModel with ChangeNotifier {
 
   final _myRepo = PostofficeRepository();
 
-  ApiResponse<PostofficeListModel> DataList = ApiResponse.loading();
+  ApiResponse<PostofficeListModel> dataList = ApiResponse.loading();
   setDataList(ApiResponse<PostofficeListModel> response){
-    DataList = response ;
+    dataList = response ;
     notifyListeners();
   }
   Future<void> fetchPostofficeListApi (dynamic data)async{

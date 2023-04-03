@@ -1,10 +1,10 @@
-import '/data/network/BaseApiServices.dart';
-import '/data/network/NetworkApiService.dart';
+import '../data/network/base_apiservices.dart';
+import '../data/network/network_apiservice.dart';
 import '/model/dashboard.dart';
 import '/res/app_url.dart';
 
 class DashboardRepository {
-  BaseApiServices _apiServices = NetworkApiService();
+  final BaseApiServices _apiServices = NetworkApiService();
 
   Future<DashboardListModel> fetchDashboardList() async {
     try {
@@ -12,7 +12,7 @@ class DashboardRepository {
           await _apiServices.getGetApiResponse(AppUrl.dashboardListEndPoint);
       return response = DashboardListModel.fromJson(response);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

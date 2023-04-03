@@ -1,12 +1,10 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/color.dart';
-
 class SettingWidget extends StatefulWidget {
-  final iconColor, title, redirectPage;
+  final Color iconColor;
+  final String title;
+  final dynamic redirectPage;
   final IconData iconName;
   const SettingWidget({super.key, required this.iconColor, required this.iconName, required this.title, required this.redirectPage});
 
@@ -20,7 +18,7 @@ class _SettingWidgetState extends State<SettingWidget> {
     return InkWell(
                       onTap: () {},
                       child: ListTile(
-                        contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                        contentPadding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
                         leading: Container(
                             height: 40,
                             width: 40,
@@ -35,9 +33,11 @@ class _SettingWidgetState extends State<SettingWidget> {
                         title: Text(widget.title),
                         trailing: IconButton(
                           onPressed: (() {
-                            print('folder clicked');
+                            if (kDebugMode) {
+                              print('folder clicked');
+                            }
                           }),
-                          icon: Icon(Icons.arrow_forward_ios),
+                          icon: const Icon(Icons.arrow_forward_ios),
                           iconSize: 18,
                         ),
                       ),

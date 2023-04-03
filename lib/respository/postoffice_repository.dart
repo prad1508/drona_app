@@ -1,11 +1,11 @@
 
+import '../data/network/base_apiservices.dart';
 import '../model/postoffice.dart';
-import '/data/network/BaseApiServices.dart';
-import '/data/network/NetworkApiService.dart';
+import '../data/network/network_apiservice.dart';
 import '/res/app_url.dart';
 
 class PostofficeRepository {
-  BaseApiServices _apiServices = NetworkApiService() ;
+  final BaseApiServices _apiServices = NetworkApiService() ;
 
   Future<PostofficeListModel> fetchPostofficeListApi(data)async{
     try{
@@ -13,7 +13,7 @@ class PostofficeRepository {
       return response = PostofficeListModel.fromJson(response[0]);
       
     }catch(e){
-      throw e ;
+      rethrow ;
     }
   }
 

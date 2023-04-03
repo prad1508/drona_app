@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -271,8 +272,13 @@ class _AddTraineeList1State extends State<AddTraineeList1> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        Navigator.pushNamed(
-                            context, RoutesName.ViewBatchDetails);
+                        Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const ViewBatchDetails(),
+                                  ),
+                                );
                       }),
                 ],
               ),

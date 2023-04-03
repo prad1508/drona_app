@@ -1,11 +1,6 @@
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../../utils/color.dart';
 
 class ProgressLineWidget extends StatefulWidget {
  final String title;
@@ -25,13 +20,13 @@ class _ProgressLineWidgetState extends State<ProgressLineWidget> {
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            Text(widget.title, style: Theme.of(context).textTheme.bodyText2),
+            Text(widget.title, style: Theme.of(context).textTheme.bodyMedium),
             RichText(
               text: TextSpan(
-                style: TextStyle(height: 2),
+                style: const TextStyle(height: 2),
                 children: <TextSpan>[
-                  TextSpan(text: widget.value.toString(), style: Theme.of(context).textTheme.bodyText2,),
-                  TextSpan(text: '/' + widget.total.toString(), style: Theme.of(context).textTheme.bodyText2),
+                  TextSpan(text: widget.value.toString(), style: Theme.of(context).textTheme.bodyMedium,),
+                  TextSpan(text: '/${widget.total}', style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
             )
@@ -39,7 +34,7 @@ class _ProgressLineWidgetState extends State<ProgressLineWidget> {
           ),
           LinearProgressIndicator(
             color: widget.progcolor,
-                                  backgroundColor: Color.fromARGB(255, 176, 175, 174),
+                                  backgroundColor: const Color.fromARGB(255, 176, 175, 174),
                                   minHeight: 10,
                                   value:  widget.value / widget.total,
                                   semanticsLabel: 'Linear progress indicator',

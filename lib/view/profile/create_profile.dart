@@ -1,13 +1,15 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-
-
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../layout.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -17,9 +19,6 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -32,6 +31,26 @@ class _CreateProfileState extends State<CreateProfile> {
     return (value) => setState(() => _genderValue = value!);
   }
 
+//profille image picke
+ File?  imgFile;
+  final imgPicker = ImagePicker();
+  
+  void openCamera() async {
+    var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      imgFile = File(imgCamera!.path);
+    });
+    Navigator.of(context).pop();
+  }
+ 
+  void openGallery() async {
+    var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imgFile = File(imgGallery!.path);
+    });
+    Navigator.of(context).pop();
+  }
+ 
   //bottomsheet popup
   showcameraoption() {
     showModalBottomSheet<void>(
@@ -45,18 +64,18 @@ class _CreateProfileState extends State<CreateProfile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 200,
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(30.0),
                       topLeft: Radius.circular(30.0),
                     ),
                   ),
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
                       Center(
@@ -69,7 +88,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Profile Picture',
                             style: TextStyle(
                                 fontSize: 16,
@@ -78,25 +97,28 @@ class _CreateProfileState extends State<CreateProfile> {
                           ),
                           IconButton(
                             onPressed: (() {
-                              print('folder clicked');
+                              setState(() {
+                                imgFile = null;
+                                Navigator.pop(context);
+                              });
                             }),
-                            icon: Icon(Icons.delete_outline),
+                            icon: const Icon(Icons.delete_outline),
                             color: Colors.black,
                             iconSize: 30,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Divider(color: Colors.grey),
-                      SizedBox(
+                      const Divider(color: Colors.grey),
+                      const SizedBox(
                         height: 5,
                       ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: TextButton(
-                          onPressed: null,
+                          onPressed: openCamera,
                           child: Text(
                             'Camera',
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -106,7 +128,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: TextButton(
-                          onPressed: null,
+                          onPressed: openGallery,
                           child: Text(
                             'Gallery',
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -127,8 +149,6 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -137,8 +157,7 @@ class _CreateProfileState extends State<CreateProfile> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(
-            'Create Profile',
+          title: Text(AppLocale.createProfile.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -149,9 +168,16 @@ class _CreateProfileState extends State<CreateProfile> {
               style: TextButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20),
               ),
-              onPressed: () {},
-              child: Text(
-                'Skip',
+              onPressed: () {
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const Layout(selectedIndex: 0,),
+                          ),
+                        );
+              },
+              child: Text(AppLocale.skip.getString(context),
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -184,11 +210,11 @@ class _CreateProfileState extends State<CreateProfile> {
                               CircleAvatar(
                                 backgroundColor: Colors.grey[500],
                                 radius: 70,
-                                child: const CircleAvatar(
+                                child: CircleAvatar(
                                   radius: 65,
                                   backgroundColor: Colors.white,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/user_profile.png'),
+                                  backgroundImage: imgFile == null ? const AssetImage(
+                                      'assets/images/user_profile.png') : FileImage(imgFile!)  as ImageProvider ,
                                 ),
                               ),
                               Positioned(
@@ -222,8 +248,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Coach\’s Full Name',
+                    child: Text(AppLocale.title19.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -248,8 +273,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Phone Number',
+                    child: Text(AppLocale.phoneNumber.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -272,29 +296,28 @@ class _CreateProfileState extends State<CreateProfile> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Invite Code',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: inviteCode,
-                    decoration: InputDecoration(
-                      hintText: 'TSC35497841',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: Text(AppLocale.inviteCode.getString(context),
+                  //     style: Theme.of(context).textTheme.bodyMedium,
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // TextFormField(
+                  //   controller: inviteCode,
+                  //   decoration: InputDecoration(
+                  //     hintText: 'TSC35497841',
+                  //     contentPadding: const EdgeInsets.all(10),
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(5.0),
+                  //       borderSide: BorderSide(
+                  //         color: Theme.of(context).primaryColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -306,21 +329,21 @@ class _CreateProfileState extends State<CreateProfile> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Male ',
+                        label: AppLocale.male.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Female',
+                        label: AppLocale.female.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Other',
+                        label: AppLocale.other.getString(context),
                       ),
                     ],
                   ),
@@ -329,8 +352,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email Id',
+                    child: Text(AppLocale.emailId.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -355,19 +377,18 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Salary/Month',
+                    child: Text(AppLocale.salaryMonth.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: salary,
                     decoration: InputDecoration(
                       hintText: 'e.g. ₹200',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -381,8 +402,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Date of Joining',
+                    child: Text(AppLocale.doj.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -393,7 +413,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     controller: doj,
                     decoration: InputDecoration(
                       hintText: '28/12/2022',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -402,24 +422,17 @@ class _CreateProfileState extends State<CreateProfile> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(
                       loading: false,
-                      title: 'Add Coach',
+                      title: AppLocale.addCoach.getString(context),
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        print(coachName);
-                        print(phone);
-                        print(inviteCode);
-                        print(email);
-                        print(salary);
-                        print(doj);
-                        print(_genderValue);
-                        Navigator.pushNamed(context, RoutesName.CoachListSelected);
+                        Navigator.pushNamed(context, RoutesName.coachListSelected);
                       }),
                 ],
               ),

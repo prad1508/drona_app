@@ -1,18 +1,18 @@
-import 'dart:ffi';
 
+import 'dart:io';
+
+import 'package:drona/view/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
 import '../../res/language/language.dart';
-import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
-import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
+import 'home_screen.dart';
 import 'profile/batch_list.dart';
+import 'profile/create_profile.dart';
+import 'trainee_phonbook_add.dart';
+import 'trainne_addmanual.dart';
+
 
 class CreateBatch extends StatefulWidget {
   const CreateBatch({super.key});
@@ -36,10 +36,6 @@ class _CreateBatchState extends State<CreateBatch> {
     return (value) => setState(() => _groupBatch = value!);
   }
 
-  String? _genderValue = 'beginner';
-  ValueChanged<String?> _genderChangedHandler() {
-    return (value) => setState(() => _genderValue = value!);
-  }
 
   String? _groupDays = 'mon';
   ValueChanged<String?> _valueChangedDays() {
@@ -48,34 +44,35 @@ class _CreateBatchState extends State<CreateBatch> {
 
   bool value = true;
   bool agree = true;
-  final TextEditingController FullName = TextEditingController();
+  final TextEditingController fullName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
 
   Future<bool> isValidPasscode(String value) async {
-    return await Future.delayed(Duration(seconds: 1),
+    return await Future.delayed(const Duration(seconds: 1),
         () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
 
    List<DropdownMenuItem<String>> get dropdownCategory {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
-      DropdownMenuItem(child: Text("Golf"), value: "golf"),
-      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+      const DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
+      const DropdownMenuItem(value: "golf", child: Text("Golf")),
+      const DropdownMenuItem(value: "cricket", child: Text("Cricket")),
     ];
     return menuItems;
   }
    List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John"), value: "john"),
-      DropdownMenuItem(child: Text("Anil"), value: "anil"),
-      DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
+      const DropdownMenuItem(value: "john", child: Text("John")),
+      const DropdownMenuItem(value: "anil", child: Text("Anil")),
+      const DropdownMenuItem(value: "ravi", child: Text("Ravi")),
     ];
     return menuItems;
   }
    String selectedCategory = 'Tennis';
    String selectedAssignCoach = 'john';
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +86,7 @@ class _CreateBatchState extends State<CreateBatch> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(
-            'Create Batch',
+          title: Text(AppLocale.createBatch.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -101,9 +97,16 @@ class _CreateBatchState extends State<CreateBatch> {
               style: TextButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20),
               ),
-              onPressed: () {},
-              child: Text(
-                'Skip',
+              onPressed: () {
+                Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const Layout(selectedIndex: 0,),
+                          ),
+                        );
+              },
+              child: Text(AppLocale.skip.getString(context),
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -116,26 +119,25 @@ class _CreateBatchState extends State<CreateBatch> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Name',
+                    child: Text(AppLocale.batchName.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
-                    controller: FullName,
+                    controller: fullName,
                     decoration: InputDecoration(
                       hintText: 'eg. Cricket',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -144,21 +146,21 @@ class _CreateBatchState extends State<CreateBatch> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                   const SizedBox(
                     height: 15,
                   ),
                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Services'),
+                      Text(AppLocale.sendInvite.getString(context)),
                       TextButton(
-                                  child: const Text('Add Coach', style: TextStyle(color: Colors.redAccent),),
+                                  child: Text(AppLocale.addCoach.getString(context), style: const TextStyle(color: Colors.redAccent),),
                                   onPressed: (){ 
                                     Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (BuildContext context) =>
-                                                    const BatchList(),
+                                                    const CreateProfile(),
                                               ),
                                             );
                                   },
@@ -166,15 +168,15 @@ class _CreateBatchState extends State<CreateBatch> {
                       
                     ],
                    ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color:Color.fromARGB(255, 188, 185, 185)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(color:const Color.fromARGB(255, 188, 185, 185)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: DropdownButton(
                           isExpanded: true,
                           elevation: 1,
@@ -192,26 +194,25 @@ class _CreateBatchState extends State<CreateBatch> {
                           },
                           items: dropdownCategory),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Assign Coach',
+                    child: Text(AppLocale.assignCoach.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
            
                  Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color:Color.fromARGB(255, 188, 185, 185)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(color:const Color.fromARGB(255, 188, 185, 185)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: DropdownButton(
                           isExpanded: true,
                           elevation: 1,
@@ -229,7 +230,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           },
                           items: dropdownAssignCoach),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SizedBox(
@@ -242,53 +243,52 @@ class _CreateBatchState extends State<CreateBatch> {
                           value: 'beginner',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: 'Beginner',
+                          label: AppLocale.beginner.getString(context),
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'intermediate',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: 'Intermediate',
+                          label: AppLocale.intermediate.getString(context),
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'advance',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: 'Advance',
+                          label: AppLocale.advance.getString(context),
                         ),
-                         SizedBox(width: 20,),
+                         const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'professional',
                           groupValue: _groupLevel,
                           onChanged: _valueChangedHandler(),
-                          label: 'Professional',
+                          label: AppLocale.professional.getString(context),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Fee',
+                    child: Text(AppLocale.fee.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
-                    controller: FullName,
+                    controller: fullName,
                     decoration: InputDecoration(
                       hintText: 'e.g. 200',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -297,17 +297,16 @@ class _CreateBatchState extends State<CreateBatch> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Type of Batch',
+                    child: Text(AppLocale.tYOB.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -318,18 +317,18 @@ class _CreateBatchState extends State<CreateBatch> {
                         value: 'group',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: 'Coaching Group ',
+                        label: AppLocale.coachingGroup.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'private',
                         groupValue: _groupBatch,
                         onChanged: _valueChangedBatch(),
-                        label: 'Coaching Private',
+                        label: AppLocale.coachingGroup.getString(context),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(children: <Widget>[
@@ -344,37 +343,35 @@ class _CreateBatchState extends State<CreateBatch> {
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          'Provide Online Sessions',
+                        Text(AppLocale.title21.getString(context),
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     )
                   ]),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Online session Url',
+                    child: Text(AppLocale.title22.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
-                    controller: FullName,
+                    controller: fullName,
                     decoration: InputDecoration(
                       hintText: 'e.g. ww.xyz.com',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -383,17 +380,16 @@ class _CreateBatchState extends State<CreateBatch> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Days',
+                    child: Text(AppLocale.batchDays.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                    SizedBox(
@@ -408,7 +404,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Mon',
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'tue',
@@ -416,7 +412,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Tue',
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'wed',
@@ -424,7 +420,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Wed',
                         ),
-                         SizedBox(width: 20,),
+                         const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'thu',
@@ -432,7 +428,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Thu',
                         ),
-                         SizedBox(width: 20,),
+                         const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'fri',
@@ -440,7 +436,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Fri',
                         ),
-                         SizedBox(width: 20,),
+                         const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'sat',
@@ -448,7 +444,7 @@ class _CreateBatchState extends State<CreateBatch> {
                           onChanged: _valueChangedDays(),
                           label: 'Sat',
                         ),
-                         SizedBox(width: 20,),
+                         const SizedBox(width: 20,),
                         CustomRadio<String>(
                           btnColor: Colors.black,
                           value: 'sun',
@@ -460,29 +456,28 @@ class _CreateBatchState extends State<CreateBatch> {
                     ),
                   ),
                   
-                   SizedBox(
+                   const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Timing',
+                    child: Text(AppLocale.batchTiming.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     Container(
+                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                        child: TextFormField(
-                                         controller: FullName,
+                                         controller: fullName,
                                          decoration: InputDecoration(
-                        hintText: 'From',
-                        contentPadding: EdgeInsets.all(10),
+                        hintText: AppLocale.from.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: BorderSide(
@@ -492,13 +487,13 @@ class _CreateBatchState extends State<CreateBatch> {
                                          ),
                                        ),
                      ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: TextFormField(                   
-                      controller: FullName,
+                      controller: fullName,
                       decoration: InputDecoration(
-                        hintText: 'To',
-                        contentPadding: EdgeInsets.all(10),
+                        hintText: AppLocale.to.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: BorderSide(
@@ -509,41 +504,39 @@ class _CreateBatchState extends State<CreateBatch> {
                     ),
                   ),
                   ],),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(
                     loading: false,
-                    title: 'Add Trainee',
+                    title: AppLocale.addTrainee.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: agree == true
-                        ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
-                          }
-                        : () {
-                            print('btn dissabled');
-                          },
+                    onPress: (){
+                      addTrainee();
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(
                     loading: false,
-                    title: AppLocale.Continue.getString(context),
+                    title: AppLocale.addBatch.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: agree == true
                         ? Theme.of(context).primaryColor
                         : Theme.of(context).primaryColor.withOpacity(0.5),
-                    onPress: agree == true
-                        ? () {
-                            Navigator.pushNamed(context, RoutesName.OtpPage);
-                          }
-                        : () {
-                            print('btn dissabled');
-                          },
+                    onPress: (){
+                      Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const BatchList(),
+                                ),
+                              );
+                    },
                   ),
                 ],
               ),
@@ -553,4 +546,105 @@ class _CreateBatchState extends State<CreateBatch> {
       ),
     );
   }
+
+  
+//Add Trainee In Hockey Batch popup
+  addTrainee() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 200,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 3,
+                          width: 50,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      const SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(AppLocale.title23.getString(context),
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Loto-Regular'),
+                          ),
+                         
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(color: Colors.grey),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const TrainAddManualy(),
+                                      ),
+                                    );
+                          },
+                          child: Text(AppLocale.enterManually.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const AddPhonebook(),
+                                      ),
+                                    );
+                          },
+                          child: Text(AppLocale.title24.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

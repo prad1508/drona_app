@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
+import '../res/language/language.dart';
 import '../res/widget/round_button.dart';
-import '../utils/routes/routes_name.dart';
 
 class CoachListSelected extends StatefulWidget {
   const CoachListSelected({super.key});
@@ -17,7 +17,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
-  List<int> _selectedItems = <int>[];
+  final List<int> _selectedItems = <int>[];
 
   final List<Map<String, dynamic>> _allUsers = [
     {
@@ -129,14 +129,13 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               Text(
-                _selectedItems.length == 0 ? '' : _selectedItems.length.toString(),
-                style: TextStyle(color: Colors.black),
+                _selectedItems.isEmpty ? '' : _selectedItems.length.toString(),
+                style: const TextStyle(color: Colors.black),
                
               )
             ],
           ),
-          title: Text(
-            'Coach List',
+          title: Text(AppLocale.coachList.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -186,9 +185,9 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   child: ListTile(
                     title: TextField(
                       onChanged: (value) => dataFilter(value),
-                      decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          hintText: 'Search',
+                      decoration:  InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                          hintText: AppLocale.search.getString(context),
                           border: InputBorder.none),
                     ),
                     trailing: const Icon(Icons.search),
@@ -209,7 +208,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                               children: [
                                 ListTile(
                                   tileColor: (_selectedItems.contains(index))
-                                      ? Color.fromARGB(255, 218, 218, 219)
+                                      ? const Color.fromARGB(255, 218, 218, 219)
                                           .withOpacity(0.5)
                                       : Colors.transparent,
                                   leading: CircleAvatar(
@@ -285,7 +284,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Send Invite',
+                    title: AppLocale.sendInvite.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
@@ -319,7 +318,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                         fontSize: 18,
                         fontFamily: 'Loto-Regular'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 28,
                   ),
                   const Text(
@@ -329,7 +328,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                         fontSize: 16,
                         fontFamily: 'Loto-Regular'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 28,
                   ),
                   const SizedBox(height: 15),

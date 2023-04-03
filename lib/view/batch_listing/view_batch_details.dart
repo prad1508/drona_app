@@ -421,7 +421,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        Navigator.pushNamed(context, RoutesName.OtpPage);
+                       
                       }),
                   SizedBox(
                     height: 15,

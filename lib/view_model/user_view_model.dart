@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import '/model/user_model.dart';
-import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier{
