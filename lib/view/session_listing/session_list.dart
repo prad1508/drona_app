@@ -1,3 +1,4 @@
+import 'package:drona/view/session_listing/view_detailsclosed.dart';
 import 'package:drona/view/session_listing/view_session_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../layout.dart';
 import '../profile/view_profile.dart';
 import '../traine_invite.dart';
 import 'create_session_details.dart';
+import 'session_detailcancel.dart';
 
 class SessionList extends StatefulWidget {
   const SessionList({super.key});
@@ -56,16 +58,8 @@ class _SessionListState extends State<SessionList> {
       "detail": "M,W,F - 09:15am to 10:15am",
       "status": "Cancel",
       "color": Colors.brown
-    },
-    {
-      "id": 4,
-      "name": "Karata Batch",
-      "categorgyImg": "assets/images/Golf.png",
-      "level": "Advance",
-      "detail": "M,W,F - 09:15am to 10:15am",
-      "status": "Cancel",
-      "color": Colors.brown
-    },
+    }
+    
   ];
   List<Map<String, dynamic>> _foundUsers = [];
   @override
@@ -121,14 +115,12 @@ class _SessionListState extends State<SessionList> {
           actions: [
             IconButton(
               onPressed: (() {
-                
-               Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                           builder: (BuildContext context) =>
-                               const SessionalDetails(),
-                         ),
-                       );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SessionalDetails(),
+                  ),
+                );
               }),
               icon: const Icon(Icons.add),
               iconSize: 25,
@@ -169,42 +161,46 @@ class _SessionListState extends State<SessionList> {
                   height: 15,
                 ),
                 SizedBox(
-                                height: 60,
-                                width: width * 1,
-                                child: TextFormField(
-                                  // controller: acadmicName,
-                                  keyboardType: TextInputType.name,
-                                  decoration: InputDecoration(
-                                      hintText: 'Jan 2022 to Mar 2023',
-                                      contentPadding: const EdgeInsets.all(10),
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        borderSide: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                      prefixIcon: const Icon(Icons.date_range)),
-                                ),
-                              ),
+                  height: 60,
+                  width: width * 1,
+                  child: TextFormField(
+                    // controller: acadmicName,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                        hintText: 'Jan 2022 to Mar 2023',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        prefixIcon: const Icon(Icons.date_range)),
+                  ),
+                ),
                 DefaultTabController(
                     length: 4,
                     initialIndex: 0,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          TabBar(
-                            indicatorPadding: const EdgeInsets.all(10),
-                            isScrollable: true,
-                            labelColor: Colors.black,
-                            labelPadding: const EdgeInsets.all(0),
-                            unselectedLabelColor: Colors.grey,
-                            tabs: [
+                           TabBar(
+                           
+                                        indicator: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(25.0)),
+                                        labelColor: Colors.white,
+                                        unselectedLabelColor: Colors.black,
+
+                                        labelPadding: EdgeInsets.all(0),
+                                       
+                                        tabs: [
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 10, left: 10),
                                 child: Chip(
-                                   backgroundColor:
+                                  backgroundColor:
                                       const Color.fromARGB(255, 242, 242, 242),
                                   label: const Text(
                                     'All',
@@ -212,7 +208,7 @@ class _SessionListState extends State<SessionList> {
                                   ),
                                   avatar: CircleAvatar(
                                     backgroundColor: Colors.blue.shade100,
-                                    child: Text( _foundUsers.length.toString()),
+                                    child: Text(_foundUsers.length.toString()),
                                   ),
                                 ),
                               ),
@@ -235,7 +231,7 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                   backgroundColor:
+                                  backgroundColor:
                                       const Color.fromARGB(255, 242, 242, 242),
                                   label: const Text(
                                     'Canceled',
@@ -249,7 +245,7 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                   backgroundColor:
+                                  backgroundColor:
                                       const Color.fromARGB(255, 242, 242, 242),
                                   label: const Text(
                                     'Closed',
@@ -261,7 +257,9 @@ class _SessionListState extends State<SessionList> {
                                 ),
                               ),
                             ],
-                          ),
+                          
+                                      ),
+                         
                           Container(
                             height: 400,
                             decoration: const BoxDecoration(
@@ -376,11 +374,32 @@ class _SessionListState extends State<SessionList> {
                                                                     "categorgyImg"])),
                                                       ),
                                                       onTap: () {
+                                                        if( _foundUsers[index]["status"].toString() == 'Scheduled'){
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
                                                                         const ViewSessionalDetails()));
+                                                        }
+                                                        else if( _foundUsers[index]["status"].toString() == 'Closed'){
+                                                            Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (BuildContext context) =>
+                                                                            const ViewDetailClosed(),
+                                                                      ),
+                                                                    );
+                                                        }
+                                                        else if(_foundUsers[index]["status"].toString() == 'Cancel'){
+                                                          Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (BuildContext context) =>
+                                                                            const SessionDetailCancel(),
+                                                                      ),
+                                                                    );
+                                                          
+                                                        }
                                                       },
                                                       onLongPress: () {
                                                         if (!_selectedItems
@@ -471,7 +490,7 @@ class _SessionListState extends State<SessionList> {
                       Navigator.of(context).pop();
                     },
                   ),
-                   const SizedBox(height: 30),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

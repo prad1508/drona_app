@@ -28,10 +28,10 @@ class _LayoutState extends State<Layout> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const Text('Attendence'),
+    const SessionList(),
     const Text(''),
     const ViewBatchDetails(),
-    const SessionList()
+    const Text('Members')
   ];
 
   
