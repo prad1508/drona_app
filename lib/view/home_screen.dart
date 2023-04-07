@@ -3,6 +3,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import '../res/language/language.dart';
 import '../res/widget/dashboard_card.dart';
 import '../res/widget/drawer_widget.dart';
+import 'main_menu.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -126,7 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 182,
                                   width: 20,
                                   child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      const MainMenu(),
+                                                ),
+                                              );
+                                    },
                                     elevation: 2.0,
                                     fillColor: Colors.white,
                                     padding: const EdgeInsets.all(4),
