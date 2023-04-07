@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/batch_listing/coach_profile_add.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John "), value: "john"),
+      DropdownMenuItem(child: Text("John"), value: "john"),
       DropdownMenuItem(child: Text("Anil"), value: "anil"),
       DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
@@ -77,7 +78,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   }
 
   String selectedCategory = 'Tennis';
-  String selectedAssignCoach = 'john Smith';
+  String selectedAssignCoach = 'john';
 
   @override
   Widget build(BuildContext context) {
@@ -533,13 +534,13 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                           Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const ViewBatchDetails(),
-                                     ),
-                                   );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const CoachProfileAdd(),
+                              ),
+                            );
                           }
                         : () {
                             print('btn dissabled');
@@ -558,13 +559,13 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                           Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const ViewBatchDetails(),
-                                     ),
-                                   );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const CoachProfileAdd(),
+                              ),
+                            );
                           }
                         : () {
                             print('btn dissabled');

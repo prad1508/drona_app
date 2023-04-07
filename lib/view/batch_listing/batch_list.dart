@@ -332,8 +332,8 @@ class _BatchListsState extends State<BatchLists> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () { 
-                      Navigator.pushNamed(context, RoutesName.AddTraineeList);
-                      showExitPopup(context);
+                      Navigator.pushNamed(context, RoutesName.AddTraineeList1);
+                      //showExitPopup(context);
                     }),
               ],
             ),

@@ -1,3 +1,4 @@
+import 'package:drona/view/batch_listing/coach_add_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
@@ -697,7 +698,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                                  context,
                                  MaterialPageRoute(
                                    builder: (BuildContext context) =>
-                                       const CoachListSelected(),
+                                       const CoachAddProfile(),
                                  ),
                                );
                       }),

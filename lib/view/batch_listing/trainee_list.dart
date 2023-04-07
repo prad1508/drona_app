@@ -215,7 +215,7 @@ class _TraineeListState extends State<TraineeList> {
                                             .withOpacity(0.2),
                                         onPress: () {
                                           Navigator.pushNamed(context,
-                                              RoutesName.ViewBatchDetails1);
+                                              RoutesName.CreateBatchListing);
                                         }),
                                   ),
                                 ),

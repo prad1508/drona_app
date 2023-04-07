@@ -1,4 +1,5 @@
 import 'package:drona/utils/utils.dart';
+import 'package:drona/view/batch_listing/add_batch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
@@ -634,9 +635,14 @@ class _AddCoachProfileState extends State<AddCoachProfile> {
                         print(email);
                         print(salary);
                         print(doj);
-                        print(_genderValue);
-                        Navigator.pushNamed(
-                            context, RoutesName.AddBatch);
+                        print(_genderValue);Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const AddBatch(),
+                                    ),
+                                  );
+                        
                       }),
                 ],
               ),

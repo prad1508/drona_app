@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:drona/view/batch_listing/create_batch_listing.dart';
+import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -421,7 +423,14 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                       
+                         Navigator.push(
+                                     context,
+                                     MaterialPageRoute(
+                                       builder: (BuildContext context) =>
+                                           const                        CreateBatchListing
+(),
+                                     ),
+                                   );
                       }),
                   SizedBox(
                     height: 15,

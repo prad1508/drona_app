@@ -76,7 +76,10 @@ class _TraineeAddOptionsState extends State<TraineeAddOptions> {
                                 child: Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, RoutesName.TraineeList);
+                                        },
                                         child: Text(
                                           'Enter Manually',
                                           style: Theme.of(context)

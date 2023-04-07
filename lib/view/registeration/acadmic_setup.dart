@@ -12,7 +12,7 @@ class AcadmicSetup extends StatefulWidget {
 }
 
 class _AcadmicSetupState extends State<AcadmicSetup> {
-   //transltate
+  //transltate
   final FlutterLocalization _localization = FlutterLocalization.instance;
   @override
   Widget build(BuildContext context) {
@@ -42,12 +42,13 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: 17, height: 1.7),
+                            fontSize: 17,
+                            height: 1.7),
                         textAlign: TextAlign.center)),
                 const SizedBox(
                   height: 40,
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 RoundButton(
@@ -56,7 +57,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   rounded: true,
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
-                  onPress: () =>  Navigator.pushNamed(context, RoutesName.registration),
+                  onPress: () => Navigator.pushNamed(
+                      context, RoutesName.ViewBatchDetails1),
                 ),
                 const SizedBox(
                   height: 24,
@@ -77,7 +79,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                       onPressed: null,
                       child: Text(
                         AppLocale.or.getString(context),
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -103,15 +106,19 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   height: 50,
                   child: Row(
                     children: [
-                      Text(AppLocale.title5.getString(context), style: Theme.of(context).textTheme.bodyMedium,),
+                      Text(
+                        AppLocale.title5.getString(context),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       TextButton(
-                        onPressed: (){
+                        onPressed: () {
                           // Navigator.pushNamed(context, RoutesName.login);
                           Navigator.pushNamed(context, RoutesName.layout);
                         },
                         child: Text(
                           AppLocale.login.getString(context),
-                          style: const TextStyle(fontSize: 18, color: Colors.red),
+                          style:
+                              const TextStyle(fontSize: 18, color: Colors.red),
                         ),
                       ),
                     ],

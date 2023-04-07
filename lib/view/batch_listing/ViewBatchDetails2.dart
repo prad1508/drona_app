@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
@@ -704,7 +705,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                                      context,
                                      MaterialPageRoute(
                                        builder: (BuildContext context) =>
-                                           const ViewBatchDetails(),
+                                           const ViewBatchDetails1(),
                                      ),
                                    );
                           }
@@ -729,7 +730,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                                      context,
                                      MaterialPageRoute(
                                        builder: (BuildContext context) =>
-                                           const ViewBatchDetails(),
+                                           const ViewBatchDetails1(),
                                      ),
                                    );
                           }
