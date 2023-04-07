@@ -700,7 +700,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.ViewBatchDetails);
+                                context, RoutesName.AddBatch);
                           }
                         : () {
                             print('btn dissabled');
@@ -720,7 +720,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.ViewBatchDetails);
+                                context, RoutesName.AddBatch);
                           }
                         : () {
                             print('btn dissabled');

@@ -68,7 +68,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John Smith"), value: "john"),
+      DropdownMenuItem(child: Text("John"), value: "john"),
       DropdownMenuItem(child: Text("Anil"), value: "anil"),
       DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
@@ -421,7 +421,8 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        Navigator.pushNamed(context, RoutesName.OtpPage);
+                        Navigator.pushNamed(
+                            context, RoutesName.ViewBatchDetails1);
                       }),
                   SizedBox(
                     height: 15,

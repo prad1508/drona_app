@@ -2,10 +2,15 @@ import 'package:drona/view/batch_details.dart';
 import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:drona/view/batch_listing/ViewBatchDetails2.dart';
 import 'package:drona/view/batch_listing/add_batch.dart';
+import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/batch_listing/add_trainee_list.dart';
 import 'package:drona/view/batch_listing/add_trainee_list1.dart';
+import 'package:drona/view/batch_listing/batch_list.dart';
+import 'package:drona/view/batch_listing/coach_add_profile.dart';
 import 'package:drona/view/batch_listing/coach_profile_add.dart';
 import 'package:drona/view/batch_listing/create_batch_listing.dart';
+import 'package:drona/view/batch_listing/trainee_add_options.dart';
+import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:flutter/material.dart';
 import '../../view/language.dart';
@@ -122,14 +127,28 @@ class Routes {
             builder: (BuildContext context) => const AddBatch());
       case RoutesName.AddTraineeList:
         return MaterialPageRoute(
-            builder: (BuildContext context) => AddTraineeList(
-                  ));
+            builder: (BuildContext context) => AddTraineeList());
       case RoutesName.AddTraineeList1:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AddTraineeList1());
       case RoutesName.CoachProfileAdd:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CoachProfileAdd());
+      case RoutesName.CoachAddProfile:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const CoachAddProfile());
+      case RoutesName.AddCoachProfile:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const AddCoachProfile());
+      case RoutesName.BatchLists:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const BatchLists());
+      case RoutesName.TraineeList:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TraineeList());
+      case RoutesName.TraineeAddOptions:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TraineeAddOptions());
 
       default:
         return MaterialPageRoute(builder: (_) {

@@ -68,7 +68,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John  "), value: "john"),
+      DropdownMenuItem(child: Text("John "), value: "john"),
       DropdownMenuItem(child: Text("Anil"), value: "anil"),
       DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];

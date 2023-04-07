@@ -24,14 +24,18 @@ class RoutesName {
   static const String BatchDetail = 'BatchDetail_Screen';
   static const String ChooseProgram = 'ChooseProgram_screen';
 
-  /// Batch Listing 
+  /// Batch Listing
   static const String CreateBatchListing = 'CreateBatchListing_screen';
   static const String ViewBatchDetails = 'ViewBatchDetails_screen';
   static const String ViewBatchDetails1 = 'ViewBatchDetails1_screen';
   static const String ViewBatchDetails2 = 'ViewBatchDetails2_screen';
   static const String AddBatch = 'AddBatch_screen';
-    static const String AddTraineeList = 'AddTraineeList_screen';
-    static const String AddTraineeList1 = 'AddTraineeList1_screen';
-    static const String CoachProfileAdd
- = 'CoachProfileAdd_screen';
+  static const String AddTraineeList = 'AddTraineeList_screen';
+  static const String AddTraineeList1 = 'AddTraineeList1_screen';
+  static const String CoachProfileAdd = 'CoachProfileAdd_screen';
+  static const String CoachAddProfile = 'CoachAddProfile_screen';
+  static const String AddCoachProfile = 'AddCoachProfile_screen';
+  static const String BatchLists = 'BatchLists_screen';
+  static const String TraineeList = 'TraineeList_screen';
+  static const String TraineeAddOptions = 'TraineeAddOptions_screen';
 }

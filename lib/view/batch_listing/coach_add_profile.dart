@@ -9,14 +9,14 @@ import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import 'package:intl/intl.dart';
 
-class CoachProfileAdd extends StatefulWidget {
-  const CoachProfileAdd({super.key});
+class CoachAddProfile extends StatefulWidget {
+  const CoachAddProfile({super.key});
 
   @override
-  State<CoachProfileAdd> createState() => _CoachProfileAddState();
+  State<CoachAddProfile> createState() => _CoachAddProfileState();
 }
 
-class _CoachProfileAddState extends State<CoachProfileAdd> {
+class _CoachAddProfileState extends State<CoachAddProfile> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   final TextEditingController _date = TextEditingController();
@@ -42,99 +42,30 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
     return menuItems;
   }
 
+  List<DropdownMenuItem<String>> get dropdownBatchCategory {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(
+          child: Text("Tennis Batch Evening"), value: "Tennis Batch Evening"),
+      DropdownMenuItem(child: Text("Golf"), value: "golf"),
+      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+    ];
+    return menuItems;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownCategorys {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Father"), value: "Father"),
+      DropdownMenuItem(child: Text("Golf"), value: "golf"),
+      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+    ];
+    return menuItems;
+  }
+
   String selectedCategory = 'Tennis';
+  String selectedCategorys = 'Father';
+  String selectedBatchCategorys = 'Tennis Batch Evening';
 
   //bottomsheet popup
-  showcameraoption() {
-    showModalBottomSheet<void>(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: 200,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
-                    ),
-                  ),
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 3,
-                          width: 50,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Profile Picture',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Loto-Regular'),
-                          ),
-                          IconButton(
-                            onPressed: (() {
-                              print('folder clicked');
-                            }),
-                            icon: Icon(Icons.delete_outline),
-                            color: Colors.black,
-                            iconSize: 30,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(color: Colors.grey),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: null,
-                          child: Text(
-                            'Camera',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: null,
-                          child: Text(
-                            'Gallery',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,53 +97,17 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: SizedBox(
-                          height: 120,
-                          width: 120,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            fit: StackFit.expand,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.grey[500],
-                                radius: 70,
-                                child: const CircleAvatar(
-                                  radius: 65,
-                                  backgroundColor: Colors.white,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/user_profile.png'),
-                                ),
-                              ),
-                              Positioned(
-                                  top: -5,
-                                  right: -10,
-                                  height: 182,
-                                  width: 40,
-                                  child: RawMaterialButton(
-                                    onPressed: showcameraoption,
-                                    elevation: 2.0,
-                                    fillColor: Theme.of(context).primaryColor,
-                                    padding: const EdgeInsets.all(10),
-
-                                    // padding: EdgeInsets.all(1.0),
-                                    shape: const CircleBorder(
-                                        side: BorderSide(
-                                            color: Colors.white, width: 2)),
-
-                                    child: Image.asset(
-                                        'assets/images/add_a_photo.png',
-                                        fit: BoxFit.contain),
-                                  )),
-                            ],
-                          ),
-                        ),
+                  Container(
+                    child: SizedBox(
+                      height: 120,
+                      width: 120,
+                      child: const CircleAvatar(
+                        radius: 65,
+                        backgroundColor: Colors.white,
+                        backgroundImage:
+                            AssetImage('assets/images/user_profile.png'),
                       ),
-                    ],
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
@@ -230,7 +125,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   TextFormField(
                     controller: coachName,
                     decoration: InputDecoration(
-                      hintText: 'e.g. 9876521233',
+                      hintText: '9876521233',
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -288,20 +183,6 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
                         label: 'Male ',
-                      ),
-                      CustomRadio<String>(
-                        btnColor: Colors.black,
-                        value: 'f',
-                        groupValue: _genderValue,
-                        onChanged: _genderChangedHandler(),
-                        label: 'Female',
-                      ),
-                      CustomRadio<String>(
-                        btnColor: Colors.black,
-                        value: 'o',
-                        groupValue: _genderValue,
-                        onChanged: _genderChangedHandler(),
-                        label: 'Other',
                       ),
                     ],
                   ),
@@ -367,7 +248,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                         child: TextFormField(
                           controller: coachName,
                           decoration: InputDecoration(
-                            hintText: 'e.g. 34 Year',
+                            hintText: '34 Year',
                             contentPadding: EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
@@ -404,7 +285,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                                 color: Color.fromARGB(255, 188, 185, 185)),
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: DropdownButton(
                               isExpanded: true,
                               elevation: 1,
@@ -412,15 +293,15 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                                   const Color.fromARGB(255, 255, 255, 255),
                               iconEnabledColor: Colors.black,
                               style: const TextStyle(color: Colors.black),
-                              value: selectedCategory,
+                              value: selectedCategorys,
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  selectedCategory = newValue!;
+                                  selectedCategorys = newValue!;
 
                                   _localization.translate(selectedCategory);
                                 });
                               },
-                              items: dropdownCategory),
+                              items: dropdownCategorys),
                         ),
                       ),
                       Flexible(
@@ -429,7 +310,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                           child: TextFormField(
                             controller: coachName,
                             decoration: InputDecoration(
-                              hintText: 'e.g.Vivek Singh',
+                              hintText: 'Vivek Singh',
                               contentPadding: EdgeInsets.all(10),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -459,7 +340,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   TextFormField(
                     controller: email,
                     decoration: InputDecoration(
-                      hintText: 'e.g. xyz@email.com',
+                      hintText: 'xyz@email.com',
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -628,15 +509,15 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                         dropdownColor: const Color.fromARGB(255, 255, 255, 255),
                         iconEnabledColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
-                        value: selectedCategory,
+                        value: selectedBatchCategorys,
                         onChanged: (String? newValue) {
                           setState(() {
-                            selectedCategory = newValue!;
+                            selectedBatchCategorys = newValue!;
 
-                            _localization.translate(selectedCategory);
+                            _localization.translate(selectedBatchCategorys);
                           });
                         },
-                        items: dropdownCategory),
+                        items: dropdownBatchCategory),
                   ),
                   SizedBox(
                     height: 15,
@@ -657,13 +538,14 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: '  500',
+                      hintStyle: Theme.of(context).textTheme.bodyMedium,
                       contentPadding: EdgeInsets.all(15),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       prefixIcon: Container(
                           decoration: BoxDecoration(
-                              color: Colors.blue.shade700,
+                              color: Colors.grey,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   bottomLeft: Radius.circular(10))),
@@ -680,22 +562,22 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                   SizedBox(
                     height: 15,
                   ),
-                  RoundButton(
-                      loading: false,
-                      title: 'Save',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                        print(coachName);
-                        print(phone);
-                        print(email);
-                        print(salary);
-                        print(doj);
-                        print(_genderValue);
-                        Navigator.pushNamed(
-                            context, RoutesName.CoachListSelected);
-                      }),
+                  // RoundButton(
+                  //     loading: false,
+                  //     title: 'Save',
+                  //     textColor: Colors.white,
+                  //     rounded: true,
+                  //     color: Theme.of(context).primaryColor,
+                  //     onPress: () {
+                  //       print(coachName);
+                  //       print(phone);
+                  //       print(email);
+                  //       print(salary);
+                  //       print(doj);
+                  //       print(_genderValue);
+                  //       Navigator.pushNamed(
+                  //           context, RoutesName.CoachListSelected);
+                  //     }),
                 ],
               ),
             ),

@@ -117,7 +117,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
                   onPress: () =>
-                      Navigator.pushNamed(context, RoutesName.CoachProfileAdd),
+                      Navigator.pushNamed(context, RoutesName.BatchLists),
                   //Registration),,
                 ),
                 const SizedBox(

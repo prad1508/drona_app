@@ -272,7 +272,7 @@ class _AddTraineeList1State extends State<AddTraineeList1> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         Navigator.pushNamed(
-                            context, RoutesName.ViewBatchDetails);
+                            context, RoutesName.CoachProfileAdd);
                       }),
                 ],
               ),
