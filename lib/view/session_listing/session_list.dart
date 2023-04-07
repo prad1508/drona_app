@@ -185,16 +185,21 @@ class _SessionListState extends State<SessionList> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                            TabBar(
-                           
-                                        indicator: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(25.0)),
+                                      indicatorPadding : EdgeInsets.zero,
+                                      dividerColor: Colors.transparent,
+                                      indicatorColor: Colors.transparent,
+                                      indicator:ShapeDecoration(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(100.0)
+                                              ),
+                                              color: Colors.blue,
+                                            ),
+                                      
                                         labelColor: Colors.white,
                                         unselectedLabelColor: Colors.black,
-
-                                        labelPadding: EdgeInsets.all(0),
-                                       
+                                        isScrollable: true,
+                                        labelPadding: EdgeInsets.zero,
+                                        
                                         tabs: [
                               Padding(
                                 padding:
