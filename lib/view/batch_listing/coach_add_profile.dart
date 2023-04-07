@@ -562,22 +562,22 @@ class _CoachAddProfileState extends State<CoachAddProfile> {
                   SizedBox(
                     height: 15,
                   ),
-                  // RoundButton(
-                  //     loading: false,
-                  //     title: 'Save',
-                  //     textColor: Colors.white,
-                  //     rounded: true,
-                  //     color: Theme.of(context).primaryColor,
-                  //     onPress: () {
-                  //       print(coachName);
-                  //       print(phone);
-                  //       print(email);
-                  //       print(salary);
-                  //       print(doj);
-                  //       print(_genderValue);
-                  //       Navigator.pushNamed(
-                  //           context, RoutesName.CoachListSelected);
-                  //     }),
+                  RoundButton(
+                      loading: false,
+                      title: 'Save',
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor,
+                      onPress: () {
+                        print(coachName);
+                        print(phone);
+                        print(email);
+                        print(salary);
+                        print(doj);
+                        print(_genderValue);
+                        Navigator.pushNamed(
+                            context, RoutesName.AddTraineeList1);
+                      }),
                 ],
               ),
             ),

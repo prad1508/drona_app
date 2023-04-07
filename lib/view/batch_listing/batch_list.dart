@@ -1,3 +1,4 @@
+import 'package:drona/utils/routes/routes_name.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -324,16 +325,16 @@ class _BatchListsState extends State<BatchLists> {
                 const SizedBox(
                   height: 15,
                 ),
-                // RoundButton(
-                //     loading: false,
-                //     title: 'Send Invite',
-                //     textColor: Colors.white,
-                //     rounded: true,
-                //     color: Theme.of(context).primaryColor,
-                //     onPress: () {
-                //       // Navigator.pushNamed(context, RoutesName.ChooseService);
-                //       showExitPopup(context);
-                //     }),
+                RoundButton(
+                    loading: false,
+                    title: 'Send Invite',
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Theme.of(context).primaryColor,
+                    onPress: () { 
+                      Navigator.pushNamed(context, RoutesName.AddTraineeList);
+                      showExitPopup(context);
+                    }),
               ],
             ),
           ),

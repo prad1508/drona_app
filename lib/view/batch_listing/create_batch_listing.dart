@@ -533,7 +533,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.ViewBatchDetails);
+                                context, RoutesName.CoachProfileAdd);
                           }
                         : () {
                             print('btn dissabled');
@@ -553,7 +553,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.ViewBatchDetails);
+                                context, RoutesName.CoachProfileAdd);
                           }
                         : () {
                             print('btn dissabled');

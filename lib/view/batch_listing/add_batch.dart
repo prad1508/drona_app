@@ -533,7 +533,7 @@ class _AddBatchState extends State<AddBatch> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.AddTraineeList);
+                                context, RoutesName.TraineeAddOptions);
                           }
                         : () {
                             print('btn dissabled');
@@ -553,7 +553,7 @@ class _AddBatchState extends State<AddBatch> {
                     onPress: agree == true
                         ? () {
                             Navigator.pushNamed(
-                                context, RoutesName.AddTraineeList);
+                                context, RoutesName.TraineeAddOptions);
                           }
                         : () {
                             print('btn dissabled');

@@ -635,8 +635,8 @@ class _AddCoachProfileState extends State<AddCoachProfile> {
                         print(salary);
                         print(doj);
                         print(_genderValue);
-                        // Navigator.pushNamed(
-                        //     context, RoutesName.CoachListSelected);
+                        Navigator.pushNamed(
+                            context, RoutesName.AddBatch);
                       }),
                 ],
               ),

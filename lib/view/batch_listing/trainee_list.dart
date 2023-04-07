@@ -229,7 +229,7 @@ class _TraineeListState extends State<TraineeList> {
                                       color: Theme.of(context).primaryColor,
                                       onPress: () {
                                         Navigator.pushNamed(context,
-                                            RoutesName.ViewBatchDetails1);
+                                            RoutesName.CreateBatchListing);
                                       }),
                                 ),
                                 SizedBox(

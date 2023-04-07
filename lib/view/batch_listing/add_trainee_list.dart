@@ -275,8 +275,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         showAlertDialog(context);
-                        // Navigator.pushNamed(
-                        //     context, RoutesName.AddTraineeList1);
+                         Navigator.pushNamed(
+                             context, RoutesName.AddCoachProfile);
                       }),
                 ],
               ),
