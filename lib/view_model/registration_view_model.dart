@@ -1,17 +1,15 @@
 import 'dart:convert';
 
-import 'package:drona/view_model/user_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
-import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/registeration/choose_program.dart';
+import '../view/registeration/detail_filled.dart';
 import '../view/registeration/otp.dart';
-import '/data/response/api_response.dart';
-import '/model/registration_model.dart';
+import '../view/welcome_screen.dart';
 import '/respository/registration_repository.dart';
 
 class RegistrationViewModel with ChangeNotifier {
@@ -20,7 +18,7 @@ class RegistrationViewModel with ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
-  bool _signUpLoading = false;
+  final bool _signUpLoading = false;
   bool get signUpLoading => _signUpLoading;
 
   setLoading(bool value) {
@@ -28,14 +26,20 @@ class RegistrationViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> Register(dynamic data, BuildContext context) async {
+  //setUid 
+   String _uid = '';
+   String get uid => _uid;
+   setUid(String value) {
+    _uid = value;
+    notifyListeners();
+  }
+
+  Future<void> register(dynamic data, BuildContext context) async {
     setLoading(true);
 
     _myRepo.fetchRegistrationListApi(data).then((value) async {
       setLoading(false);
       final prefs = await SharedPreferences.getInstance();
-      final userPreference = Provider.of<UserViewModel>(context, listen: false);
-
       prefs.setStringList('registerResponse', <String>[
         value['data']['name'],
         value['data']['email'],
@@ -61,17 +65,18 @@ class RegistrationViewModel with ChangeNotifier {
   }
  
   //////////////otp verify ////////////////////////////////////
-  Future<void> OtpVerify(dynamic otp, BuildContext context) async {
+  Future<void> otpVerify(dynamic otp, BuildContext context) async {
     if (kDebugMode) {
       print(otp);
     }
     final prefsData = await SharedPreferences.getInstance();
     List<String>? items = prefsData.getStringList('registerResponse');
-     Map data = {'ccode': items![2], 'mobno': items![3], 'otp': otp.toString()};
+     Map data = {'ccode': items![2].toString(), 'mobno': items[3].toString(), 'otp': otp.toString()};
     _myRepo.fetchOtpListApi(data).then((value) async {
+      
       prefsData.setString('token', value['token']);
       if (kDebugMode) {
-        print(value['token']);
+        print("token ${value['token']}");
       }
       setLoading(false);
       Utils.flushBarErrorMessage('Otp Verify Successfully', context);
@@ -82,7 +87,97 @@ class RegistrationViewModel with ChangeNotifier {
     });
   }
 
- 
+  
+   //////////////Basic Details ////////////////////////////////////
+  Future<void> basicDetails(dynamic data, BuildContext context, uid, acadmicName) async {
+    setLoading(true);
+     setUid(uid);
+    _myRepo.basicDetailsListApi(data).then((value) async {
+
+      setLoading(false);
+      final prefsData = await SharedPreferences.getInstance();
+    prefsData.setString('acadmicName', acadmicName);
+      Utils.flushBarErrorMessage('Basic Details update Successfully', context);
+      Navigator.pushNamed(context, RoutesName.chooseService);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+  //////////////Service Post ////////////////////////////////////
+  Future<void> servicePost(dynamic data, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+    _myRepo.servicePostListApi(data).then((value) async {
+
+      setLoading(false);
+      Utils.flushBarErrorMessage('Services update Successfully', context);
+      Navigator.pushNamed(context, RoutesName.chooseFacility);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+  //////////////add facility ////////////////////////////////////
+  Future<void> facilityePost(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _myRepo.facilityePostListApi(data).then((value) async {
+
+      setLoading(false);
+      Utils.flushBarErrorMessage('Facilty Sved Successfully', context);        
+      Navigator.pushNamed(context, RoutesName.chooseprogram);     
+    
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+//////////////program Save ////////////////////////////////////
+  Future<void> programPost(dynamic data, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+    _myRepo.programPostListApi(data).then((value) async {
+
+      setLoading(false);
+      Utils.flushBarErrorMessage('Program update Successfully', context);
+      //Navigator.pushNamed(context, RoutesName.detailFilled);
+      Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      const DetailFilled(),
+                ),
+              );
+    }).onError((error, stackTrace) {
+      setLoading(false);
+    
+   //    var newerror = jsonDecode(error.toString()) ;
+       
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+  //////////////////////Details for owner /////////////////////////////////////
+  Future<void> detailsOwner(dynamic data, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+    _myRepo.detailsOwnerPostListApi(data).then((value) async {
+
+      setLoading(false);
+      Utils.flushBarErrorMessage('Save Successfully', context);
+       Navigator.pushNamed(context, RoutesName.welcomeScreen);
+     
+    }).onError((error, stackTrace) {
+      setLoading(false);
+    
+   //    var newerror = jsonDecode(error.toString()) ;
+       
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+  
+
 }
 
 

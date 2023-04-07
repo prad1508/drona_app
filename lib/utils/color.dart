@@ -8,7 +8,7 @@ final ThemeData themeDataLight =  ThemeData(
     primaryColor: const Color.fromRGBO(42, 98, 184, 1),
     primaryColorDark:const Color.fromARGB(255, 0, 0, 0),
     primaryColorLight: Colors.orangeAccent,
-    secondaryHeaderColor: Color.fromARGB(255, 0, 0, 0),
+    secondaryHeaderColor: const Color.fromARGB(255, 0, 0, 0),
     scaffoldBackgroundColor: Colors.white,  
     textTheme: const TextTheme(
           titleLarge: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(13, 30, 57, 1), fontFamily: 'poppin'),
@@ -25,11 +25,11 @@ final ThemeData themeDataLight =  ThemeData(
 
 final ThemeData themeDataDark = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color.fromARGB(255, 28, 27, 27),
+    primaryColor: const Color.fromARGB(255, 28, 27, 27),
     primaryColorDark: Colors.teal,
-    primaryColorLight: Color.fromARGB(255, 157, 156, 156),
+    primaryColorLight: const Color.fromARGB(255, 157, 156, 156),
     scaffoldBackgroundColor: Colors.black,  
-    secondaryHeaderColor: Color.fromARGB(255, 255, 255, 255),
+    secondaryHeaderColor: const Color.fromARGB(255, 255, 255, 255),
      textTheme: const TextTheme(
           titleLarge: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 255, 255, 1), fontFamily: 'poppin'),
           titleMedium: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 255, 255, 1), fontFamily: 'poppin'),
@@ -37,7 +37,7 @@ final ThemeData themeDataDark = ThemeData(
           bodyMedium:  TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 255, 255, 1), fontFamily: 'Loto-Regular'),  
           bodySmall: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 255, 255, 1), fontFamily: 'Loto-Regular'),
         ),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
       color: Colors.white,
       ),
 );

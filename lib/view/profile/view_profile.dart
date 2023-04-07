@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
+import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
-import '../../res/widget/round_button.dart';
-import '../../utils/routes/routes_name.dart';
-import '../create_batch.dart';
 import 'create_profile.dart';
 
 class ViewProfilenew extends StatefulWidget {
@@ -16,9 +13,6 @@ class ViewProfilenew extends StatefulWidget {
 }
 
 class _ViewProfilenewState extends State<ViewProfilenew> {
- //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -32,14 +26,11 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -49,7 +40,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'View Profile',
+            AppLocale.viewProfile.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -134,8 +125,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Coach\’s Full Name',
+                    child: Text(AppLocale.title19.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -161,8 +151,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Phone Number',
+                    child: Text(AppLocale.phoneNumber.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -188,12 +177,11 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Invite Code',
+                    child: Text(AppLocale.inviteCode.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
@@ -221,21 +209,21 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                         value: 'm',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Male ',
+                        label: AppLocale.male.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'f',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Female',
+                        label: AppLocale.female.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
                         value: 'o',
                         groupValue: _genderValue,
                         onChanged: _genderChangedHandler(),
-                        label: 'Other',
+                        label: AppLocale.other.getString(context),
                       ),
                     ],
                   ),
@@ -244,8 +232,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email Id',
+                    child: Text(AppLocale.emailId.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -271,12 +258,11 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Salary/Month',
+                    child: Text(AppLocale.salaryMonth.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
@@ -284,7 +270,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                     controller: salary,
                     decoration: InputDecoration(
                       hintText: 'e.g. ₹200',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -298,8 +284,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Date of Joining',
+                    child: Text(AppLocale.doj.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -311,7 +296,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                     controller: doj,
                     decoration: InputDecoration(
                       hintText: '28/12/2022',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -320,22 +305,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                       ),
                     ),
                   ),
-                  TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 20),
-                              ),
-                              onPressed: (){
-                                Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                const CreateBatch(),
-                                          ),
-                                        );
-                              },
-                              child: const Text('dummy navigate'),
-                            ),
-                  
+                
                   
                 ],
               ),

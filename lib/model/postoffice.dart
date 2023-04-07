@@ -11,17 +11,17 @@ class PostofficeListModel {
     if (json['PostOffice'] != null) {
       postOffice = <PostOffice>[];
       json['PostOffice'].forEach((v) {
-        postOffice!.add(new PostOffice.fromJson(v));
+        postOffice!.add(PostOffice.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Message'] = this.message;
-    data['Status'] = this.status;
-    if (this.postOffice != null) {
-      data['PostOffice'] = this.postOffice!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Message'] = message;
+    data['Status'] = status;
+    if (postOffice != null) {
+      data['PostOffice'] = postOffice!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -29,7 +29,7 @@ class PostofficeListModel {
 
 class PostOffice {
   String? name;
-  Null? description;
+  String? description;
   String? branchType;
   String? deliveryStatus;
   String? circle;
@@ -71,19 +71,19 @@ class PostOffice {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Name'] = this.name;
-    data['Description'] = this.description;
-    data['BranchType'] = this.branchType;
-    data['DeliveryStatus'] = this.deliveryStatus;
-    data['Circle'] = this.circle;
-    data['District'] = this.district;
-    data['Division'] = this.division;
-    data['Region'] = this.region;
-    data['Block'] = this.block;
-    data['State'] = this.state;
-    data['Country'] = this.country;
-    data['Pincode'] = this.pincode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Name'] = name;
+    data['Description'] = description;
+    data['BranchType'] = branchType;
+    data['DeliveryStatus'] = deliveryStatus;
+    data['Circle'] = circle;
+    data['District'] = district;
+    data['Division'] = division;
+    data['Region'] = region;
+    data['Block'] = block;
+    data['State'] = state;
+    data['Country'] = country;
+    data['Pincode'] = pincode;
     return data;
   }
 }

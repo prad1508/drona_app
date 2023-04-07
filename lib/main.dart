@@ -1,10 +1,11 @@
 import 'package:drona/view_model/dashboard_view_model.dart';
+import 'package:drona/view_model/facility_view_model.dart';
 import 'package:drona/view_model/registration_view_model.dart';
+import 'package:drona/view_model/service_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:drona/utils/color.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import '../res/language/language.dart';
-import '/utils/color.dart' as themeColor;
 import '/utils/routes/routes.dart';
 import '/utils/routes/routes_name.dart';
 import '/view_model/auth_view_model.dart';
@@ -12,7 +13,10 @@ import '/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'utils/theme_provider.dart';
+import 'view_model/category_view_model.dart';
+import 'view_model/myservices_view_model.dart';
 import 'view_model/postoffice_view_model.dart';
+import 'view_model/program_view_model.dart';
 
 
 void main() {
@@ -21,14 +25,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-      body: AppTranslate(),
-    ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+        ),
+        home: const AppTranslate());
   }
 }
 
@@ -46,8 +51,8 @@ class _AppTranslateState extends State<AppTranslate> {
   void initState() {
     _localization.init(
       mapLocales: [
-        const MapLocale('en', AppLocale.EN),
-        const MapLocale('hi', AppLocale.HI),
+        const MapLocale('en', AppLocale.en),
+        const MapLocale('hi', AppLocale.hi),
       ],
       initLanguageCode: 'en',
     );
@@ -69,6 +74,12 @@ class _AppTranslateState extends State<AppTranslate> {
           ChangeNotifierProvider(create: (_) =>DashboardViewModel()),
           ChangeNotifierProvider(create: (_) =>RegistrationViewModel()),
           ChangeNotifierProvider(create: (_) =>PostofficeViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>CategoryViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>ServiceViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>FacilityViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>ProgramViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>MyservicesViewViewModel()),
+          
         ],
       
       child: Consumer<ThemeProvider>(

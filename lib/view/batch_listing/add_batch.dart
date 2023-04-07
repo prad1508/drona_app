@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -532,8 +533,13 @@ class _AddBatchState extends State<AddBatch> {
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                            Navigator.pushNamed(
-                                context, RoutesName.TraineeAddOptions);
+                           Navigator.push(
+                                     context,
+                                     MaterialPageRoute(
+                                       builder: (BuildContext context) =>
+                                           const ViewBatchDetails(),
+                                     ),
+                                   );
                           }
                         : () {
                             print('btn dissabled');
@@ -552,8 +558,14 @@ class _AddBatchState extends State<AddBatch> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                            Navigator.pushNamed(
-                                context, RoutesName.TraineeAddOptions);
+                          Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const ViewBatchDetails(),
+                                    ),
+                                  );
+                           
                           }
                         : () {
                             print('btn dissabled');

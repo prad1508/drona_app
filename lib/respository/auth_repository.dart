@@ -1,12 +1,10 @@
-import 'dart:convert';
 
-import 'package:http/http.dart';
-import '/data/network/BaseApiServices.dart';
-import '/data/network/NetworkApiService.dart';
+import '../data/network/base_apiservices.dart';
+import '../data/network/network_apiservice.dart';
 import '/res/app_url.dart';
 
 class AuthRepository {
-  BaseApiServices _apiServices = NetworkApiService();
+  final BaseApiServices _apiServices = NetworkApiService();
 
   Future<dynamic> loginApi(dynamic data) async {
     try {
@@ -14,7 +12,7 @@ class AuthRepository {
           await _apiServices.getPostApiResponse(AppUrl.loginEndPint, data);
       return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -24,7 +22,7 @@ class AuthRepository {
           AppUrl.registerApiEndPoint, data);
       return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

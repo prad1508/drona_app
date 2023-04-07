@@ -1,27 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-
-import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/services.dart';
+
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/response/status.dart';
 import '../../res/language/language.dart';
-import '../../res/widget/customTextField.dart';
-import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
+import '../../res/widget/progress_pills.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/synctextform.dart';
-import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
+import '../../utils/utils.dart';
 import '../../utils/validation.dart';
+import '../../view_model/category_view_model.dart';
 import '../../view_model/postoffice_view_model.dart';
+import '../../view_model/registration_view_model.dart';
 
 class TellusAcadmic extends StatefulWidget {
   const TellusAcadmic({super.key});
@@ -31,285 +25,437 @@ class TellusAcadmic extends StatefulWidget {
 }
 
 class _TellusAcadmicState extends State<TellusAcadmic> {
-  PostofficeViewViewModel postofficeViewViewModel = PostofficeViewViewModel();
   //multi language support
 
   final FlutterLocalization _localization = FlutterLocalization.instance;
   bool payDate = false;
+  String addressAsign = '';
+  String stateAssign = '';
+  String cityAssign = '';
+  String pinAsign = '';
   final TextEditingController acadmicName = TextEditingController();
   final TextEditingController address = TextEditingController();
+
   final TextEditingController state = TextEditingController();
   final TextEditingController city = TextEditingController();
   final TextEditingController pincode = TextEditingController();
-
-  dynamic _foundUsers = [];
-  List<int> _selectedItems = <int>[];
+  final TextEditingController pincodedata = TextEditingController();
   late int selectPin;
+
+  CategoryViewViewModel categoryViewViewModel = CategoryViewViewModel();
+
   @override
-  initState() {
-    mobileNumber();
+  void initState() {
+    categoryViewViewModel.fetchCategoryListApi();
+    super.initState();
   }
 
-  
-  mobileNumber() async {
-    final prefsData = await SharedPreferences.getInstance();
-    List<String>? items = prefsData.getStringList('registerResponse');
-    String? token = prefsData.getString('token');
-    print(token);
-    setState(() {
-      token = token!;
-    });
+  Future<bool> _onWillPop() async {
+    return false;
   }
-  void pinFilter(String enteredKeyword) {
-        postofficeViewViewModel.fetchPostofficeListApi(enteredKeyword);
-  
+
+//billig date dropdown
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "1", child: Text("1 of every month")),
+      const DropdownMenuItem(value: "5", child: Text("5 of every month")),
+      const DropdownMenuItem(value: "7", child: Text("7 of every month")),
+      const DropdownMenuItem(value: "10", child: Text("10 of every month")),
+      const DropdownMenuItem(value: "15", child: Text("15 of every month")),
+    ];
+    return menuItems;
   }
+
+  String selectedValue = "5";
+
+//category select dropdown
+  String selectedValue2 = "euu6ogdz3h6lzinf29jk";
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+    final registration = Provider.of<RegistrationViewModel>(context);
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: MaterialApp(
+        supportedLocales: _localization.supportedLocales,
+        localizationsDelegates: _localization.localizationsDelegates,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {},
+            ),
+            title: Row(
+              children: [
+                ProgressPills(
+                    number: 7,
+                    active: 2,
+                    color: Theme.of(context).primaryColorLight),
+              ],
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
-          title: Row(
-            children: [
-              progressPills(
-                  number: 7,
-                  active: 2,
-                  color: Theme.of(context).primaryColorLight),
-            ],
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Material(
-            color: Colors.white,
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      AppLocale.title10.getString(context),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      AppLocale.academyName.getString(context),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  AsyncTextFormField(
-                    controller: acadmicName,
-                    validationDebounce: const Duration(milliseconds: 500),
-                    validator: Validation().istextField,
-                    keyboardType: TextInputType.name,
-                    hintText: 'eg. Sun Academy',
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      AppLocale.location.getString(context),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                 
-                  Container(
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: ListTile(
-                      contentPadding:EdgeInsets.zero,
-                      title:  TextField(
-                        
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) => pinFilter(value),
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 10),
-                            hintText: 'Pin Search', border: InputBorder.none),
+          body: SingleChildScrollView(
+            child: Material(
+              color: Colors.white,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        AppLocale.title10.getString(context),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      trailing: const Icon(Icons.search)
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ChangeNotifierProvider<PostofficeViewViewModel>(
-                    create: (BuildContext context) => postofficeViewViewModel,
-                    child: Consumer<PostofficeViewViewModel>(
-                        builder: (context, value, _) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: value.DataList.data != null ? ListView.builder(
-                          itemCount: value.DataList.data!.postOffice!.length,
-                          itemBuilder: (context, index) => Card(
-                              key: ValueKey(value
-                                    .DataList.data!.postOffice![index].name!),
-                              color: Color.fromARGB(255, 238, 238, 236),
-                              elevation: 0,
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Name: ${value
-                                          .DataList.data!.postOffice![index].name!}',
-                                            style: const TextStyle(fontSize: 14),
-                                          ),
-                                          Text(
-                                            ', Block: ${value
-                                          .DataList.data!.postOffice![index].block!},',
-                                            style: const TextStyle(fontSize: 14),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'State: ${value
-                                          .DataList.data!.postOffice![index].state!}',
-                                            style: const TextStyle(fontSize: 14),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    print(_selectedItems);
-                                    if (!_selectedItems.contains(index)) {
-                                      setState(() {
-                                        _selectedItems.add(index);
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _selectedItems
-                                            .removeWhere((val) => val == index);
-                                      });
-                                    }
-                                  },
-                                ),
-                              )),
-                        ) : Container(),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AsyncTextFormField(
-                    controller: address,
-                    validationDebounce: const Duration(milliseconds: 500),
-                    validator: Validation().istextField,
-                    keyboardType: TextInputType.name,
-                    hintText: AppLocale.address.getString(context),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  AsyncTextFormField(
-                    controller: city,
-                    validationDebounce: const Duration(milliseconds: 500),
-                    validator: Validation().istextField,
-                    keyboardType: TextInputType.name,
-                    hintText: AppLocale.city.getString(context),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  AsyncTextFormField(
-                    controller: state,
-                    validationDebounce: const Duration(milliseconds: 500),
-                    validator: Validation().istextField,
-                    keyboardType: TextInputType.name,
-                    hintText: AppLocale.state.getString(context),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocale.billingDate.getString(context),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        AppLocale.academyName.getString(context),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 20),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            payDate = !payDate;
-                          });
-                        },
-                        child: Text(
-                          AppLocale.editDate.getString(context),
-                          style: const TextStyle(
-                              color: Color.fromRGBO(253, 104, 93, 1),
-                              fontSize: 13),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: acadmicName,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: 'eg. Sun Academy',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  AsyncTextFormField(
-                    enable: payDate,
-                    controller: acadmicName,
-                    validationDebounce: const Duration(milliseconds: 500),
-                    validator: Validation().istextField,
-                    keyboardType: TextInputType.name,
-                    hintText: AppLocale.title30.getString(context),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  RoundButton(
-                      loading: false,
-                      title: AppLocale.Continue.getString(context),
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                        print(acadmicName.text);
-                        print(address.text);
-                        print(city.text);
-                        print(state.text);
-
-                        Navigator.pushNamed(context, RoutesName.ChooseService);
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocale.location.getString(context),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () {
+                            dialog(context);
+                          },
+                          child: Text(
+                            AppLocale.pickupLoctaion.getString(context),
+                            style: const TextStyle(
+                                color: Color.fromRGBO(253, 104, 93, 1),
+                                fontSize: 13),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: pincodedata
+                        ..text = pinAsign.toString()
+                        ..selection = TextSelection(
+                            baseOffset: pinAsign.length,
+                            extentOffset: pinAsign.length),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(
+                          6,
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: AppLocale.pincode.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          pinAsign = '';
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          pinAsign = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: address
+                        ..text = addressAsign.toString()
+                        ..selection = TextSelection(
+                            baseOffset: addressAsign.length,
+                            extentOffset: addressAsign.length),
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: AppLocale.address.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          addressAsign = '';
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          addressAsign = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: city
+                        ..text = cityAssign.toString()
+                        ..selection = TextSelection(
+                            baseOffset: cityAssign.length,
+                            extentOffset: cityAssign.length),
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: AppLocale.city.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          cityAssign = '';
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          cityAssign = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: state
+                        ..text = stateAssign.toString()
+                        ..selection = TextSelection(
+                            baseOffset: stateAssign.length,
+                            extentOffset: stateAssign.length),
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: AppLocale.state.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          stateAssign = '';
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          stateAssign = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        children: [
+                          Text(
+                            AppLocale.title32.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const Icon(
+                            Icons.info_outline_rounded,
+                            color: Colors.grey,
+                            size: 15.0,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ChangeNotifierProvider<CategoryViewViewModel>(
+                      create: (BuildContext context) => categoryViewViewModel,
+                      child: Consumer<CategoryViewViewModel>(
+                          builder: (context, value, _) {
+                        try {
+                          List<DropdownMenuItem<String>> categoryList =
+                              List.generate(
+                                  value.dataList.data?.data?.length ?? 0,
+                                  (index) {
+                            return DropdownMenuItem(
+                                value: value.dataList.data?.data?[index].uid
+                                    .toString(),
+                                child: Text(value
+                                        .dataList.data?.data?[index].name
+                                        .toString() ??
+                                    ''));
+                          });
+                          return Container(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color:
+                                      const Color.fromARGB(255, 218, 216, 216)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: DropdownButton(
+                                isExpanded: true,
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                value: selectedValue2,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedValue2 = newValue!;
+                                  });
+                                },
+                                items: categoryList),
+                          );
+                        } on SocketException catch (_) {
+                          rethrow;
+                        }
                       }),
-                ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocale.billingDate.getString(context),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              payDate = !payDate;
+                            });
+                          },
+                          child: Text(
+                            AppLocale.editDate.getString(context),
+                            style: const TextStyle(
+                                color: Color.fromRGBO(253, 104, 93, 1),
+                                fontSize: 13),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: const Color.fromARGB(255, 218, 216, 216)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: DropdownButton(
+                          isExpanded: true,
+                          underline:
+                              DropdownButtonHideUnderline(child: Container()),
+                          value: selectedValue,
+                          onChanged: payDate == true
+                              ? (String? newValue) {
+                                  setState(() {
+                                    selectedValue = newValue!;
+                                  });
+                                }
+                              : null,
+                          items: dropdownItems),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    RoundButton(
+                        loading: false,
+                        title: AppLocale.conts.getString(context),
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: Theme.of(context).primaryColor,
+                        onPress: () {
+                          if (acadmicName.text.isEmpty) {
+                            Utils.flushBarErrorMessage(
+                                'Fill Academy Name', context);
+                          }
+                          if (pincodedata.text.isEmpty) {
+                            Utils.flushBarErrorMessage(
+                                'Fill Pin Code', context);
+                          }
+                          if (address.text.isEmpty) {
+                            Utils.flushBarErrorMessage('Fill Address', context);
+                          }
+                          if (city.text.isEmpty) {
+                            Utils.flushBarErrorMessage('Fill City', context);
+                          }
+                          if (state.text.isEmpty) {
+                            Utils.flushBarErrorMessage('Fill State', context);
+                          } else {
+                            Map<String, String> data = {
+                              "academyname": acadmicName.text.toString(),
+                              "busscategoryid": selectedValue2.toString(),
+                              "address": address.text.toString(),
+                              "city": city.text.toString(),
+                              "state": state.text.toString(),
+                              "pincode": pincodedata.text.toString(),
+                              "billing_date": selectedValue.toString(),
+                            };
+                            registration.basicDetails(
+                                data, context, selectedValue2, acadmicName.text.toString());
+                          }
+                        }),
+                  ],
+                ),
               ),
             ),
           ),
@@ -317,85 +463,169 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
       ),
     );
   }
-}
 
+//bottom sheet
+  dialog(BuildContext context) {
+    PostofficeViewViewModel postofficeViewViewModel = PostofficeViewViewModel();
+    void pinFilter(String enteredKeyword) {
+      postofficeViewViewModel.fetchPostofficeListApi(enteredKeyword);
+    }
 
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  static List<Animal> _animals = [
-    Animal(id: 1, name: "Sports"),
-    Animal(id: 2, name: "Golf"),
-    Animal(id: 3, name: "Tenis"),
-    Animal(id: 4, name: "Football"),
-   
-  ];
-  final _items = _animals
-      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-      .toList();
-  List<Animal> _selectedAnimals5 = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
-
-  @override
-  void initState() {
-    _selectedAnimals5 = _animals;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Container(
-          width: 700,
-          alignment: Alignment.center,
-          child: Column(
-            children: <Widget>[
-                MultiSelectDialogField(
-                dialogWidth:MediaQuery.of(context).size.width * 2,
-                dialogHeight: MediaQuery.of(context).size.width * 0.7,
-                items: _items,
-                title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
-                selectedColor: Colors.blue,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.all(
-                    color: Color.fromARGB(255, 156, 156, 156),
-                    width: 1,
-                  ),
-                ),
-                buttonIcon: Icon(
-                  Icons.pets,
-                  color: Colors.blue,
-                ),
-                buttonText: Text(
-                  "Choose your Business Category",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                onConfirm: (results) {
-                   print(results);
-                },
-              ),
-             
-            ],
-          ),
+    showModalBottomSheet<void>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30.0),
+          topLeft: Radius.circular(30.0),
         ),
+      ),
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (BuildContext context) {
+        return Material(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Container(
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Container(
+                        height: 3,
+                        width: 50,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                    const Divider(),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(
+                          6,
+                        ),
+                      ],
+                      onChanged: (value) => pinFilter(value),
+                      decoration: InputDecoration(
+                        suffixIcon: const Icon(
+                          Icons.search,
+                        ),
+                        hintText: AppLocale.pincode.getString(context),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ChangeNotifierProvider<PostofficeViewViewModel>(
+                      create: (BuildContext context) => postofficeViewViewModel,
+                      child: Consumer<PostofficeViewViewModel>(
+                          builder: (context, value, _) {
+                        if (value.dataList.status! == Status.completed) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: value.dataList.data?.postOffice?.isNotEmpty ?? false
+                                ? ListView.builder(
+                                    itemCount: value.dataList.data?.postOffice
+                                            ?.length ??
+                                        0,
+                                    itemBuilder: (context, index) => Card(
+                                        key: ValueKey(value.dataList.data!
+                                            .postOffice?[index].name),
+                                        color: const Color.fromARGB(
+                                            255, 238, 238, 236),
+                                        elevation: 0,
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Address: ${value.dataList.data?.postOffice?[index].name}',
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                    Text(
+                                                      ', City: ${value.dataList.data?.postOffice?[index].block},',
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'State: ${value.dataList.data?.postOffice?[index].state}',
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                pinAsign = value
+                                                        .dataList
+                                                        .data
+                                                        ?.postOffice?[index]
+                                                        .pincode
+                                                        ?.toString() ??
+                                                    '';
+                                                addressAsign = value
+                                                        .dataList
+                                                        .data
+                                                        ?.postOffice?[index]
+                                                        .name
+                                                        ?.toString() ??
+                                                    '';
+                                                cityAssign = value
+                                                        .dataList
+                                                        .data
+                                                        ?.postOffice?[index]
+                                                        .district
+                                                        ?.toString() ??
+                                                    '';
+                                                stateAssign = value
+                                                        .dataList
+                                                        .data
+                                                        ?.postOffice?[index]
+                                                        .state
+                                                        ?.toString() ??
+                                                    '';
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        )),
+                                  )
+                                : Text('Data Not Found'),
+                          );
+                        }
+
+                        return Container();
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
-}
-class Animal {
-  final int id;
-  final String name;
-
-  Animal({
-    required this.id,
-    required this.name,
-  });
 }

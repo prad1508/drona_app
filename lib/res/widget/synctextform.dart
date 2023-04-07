@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 class AsyncTextFormField extends StatefulWidget {
   final Future<bool> Function(String) validator;
   final Duration validationDebounce;
@@ -12,9 +12,7 @@ class AsyncTextFormField extends StatefulWidget {
   final String valueIsInvalidMessage;
   final dynamic keyboardType;
   final bool enable;
-  const AsyncTextFormField(
-      {Key? key,
-      required this.validator,
+  const AsyncTextFormField({ required this.validator,
       required this.validationDebounce,
       required this.controller,
       this.isValidatingMessage = "please wait for the validation to complete",
@@ -22,11 +20,10 @@ class AsyncTextFormField extends StatefulWidget {
       this.valueIsInvalidMessage = 'please enter a valid value',
       this.hintText = '',  
       this.enable = true,
-      this.keyboardType = TextInputType.name})
-      : super(key: key);
+      this.keyboardType = TextInputType.name, super.key});
 
   @override
-  _AsyncTextFormFieldState createState() => _AsyncTextFormFieldState();
+  State<AsyncTextFormField> createState() => _AsyncTextFormFieldState();
 }
 
 class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
@@ -56,7 +53,9 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
         if (text.isEmpty) {
           setState(() {
             isValid = false;
-            print('is empty');
+            if (kDebugMode) {
+              print('is empty');
+            }
           });
           cancelTimer();
           return;
@@ -66,7 +65,6 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
         _debounce = Timer(widget.validationDebounce, () async {
           isWaiting = false;
           isValid = await validate(text);
-          print(isValid);
           setState(() {});
           isValidating = false;
         });
@@ -112,19 +110,19 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
 
   Widget _getSuffixIcon() {
     if (isValidating) {
-      return CircularProgressIndicator(
+      return const CircularProgressIndicator(
         strokeWidth: 2.0,
         valueColor: AlwaysStoppedAnimation(Colors.blue),
       );
     } else {
       if (!isValid && isDirty) {
-        return Icon(
+        return const Icon(
           Icons.cancel,
           color: Colors.red,
           size: 20,
         );
       } else if (isValid) {
-        return Icon(
+        return const Icon(
           Icons.check_circle,
           color: Colors.green,
           size: 20,

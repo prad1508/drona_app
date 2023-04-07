@@ -1,11 +1,6 @@
-import 'package:drona/view/profile/view_profile.dart';
-import 'package:drona/view/trainee_phonbook_add.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import '../res/widget/round_button.dart';
-import '../utils/routes/routes_name.dart';
 
 class Editprofile extends StatefulWidget {
   const Editprofile({super.key});
@@ -87,14 +82,14 @@ class _EditprofileState extends State<Editprofile> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     controller: fullName,
                     decoration: InputDecoration(
                       hintText: 'Sidhant Mishra',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -103,7 +98,7 @@ class _EditprofileState extends State<Editprofile> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                   const SizedBox(
                     height: 15,
                   ),
                   
@@ -115,14 +110,14 @@ class _EditprofileState extends State<Editprofile> {
                     ),
                   ),
               
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     controller: phone,
                     decoration: InputDecoration(
                       hintText: '+91 7683548734',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -131,7 +126,7 @@ class _EditprofileState extends State<Editprofile> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                  
@@ -139,7 +134,7 @@ class _EditprofileState extends State<Editprofile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     Container(
+                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                        child: Column(
                          children: [
@@ -150,14 +145,14 @@ class _EditprofileState extends State<Editprofile> {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                            TextFormField(
                                              controller: doj,
                                              decoration: InputDecoration(
                           
-                            contentPadding: EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               borderSide: BorderSide(
@@ -169,7 +164,7 @@ class _EditprofileState extends State<Editprofile> {
                          ],
                        ),
                      ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: Column(
                       
@@ -181,13 +176,13 @@ class _EditprofileState extends State<Editprofile> {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
-                         SizedBox(
+                         const SizedBox(
                           height: 10,
                         ),
                         TextFormField(         
                           controller: dobilling,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               borderSide: BorderSide(
@@ -200,11 +195,11 @@ class _EditprofileState extends State<Editprofile> {
                     ),
                   ),
                   ],),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
            
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(

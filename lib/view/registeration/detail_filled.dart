@@ -1,21 +1,15 @@
-import 'package:drona/view/registeration/tellus_acadmic.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../res/language/language.dart';
-import '../../res/widget/customTextField.dart';
-import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
+import '../../res/widget/datefield.dart';
+import '../../res/widget/progress_pills.dart';
 import '../../res/widget/round_button.dart';
-import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
+import '../../view_model/myservices_view_model.dart';
+import '../../view_model/registration_view_model.dart';
 
 class DetailFilled extends StatefulWidget {
   const DetailFilled({super.key});
@@ -27,14 +21,20 @@ class DetailFilled extends StatefulWidget {
 class _TellusAcadmicState extends State<DetailFilled> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
-
-  final TextEditingController acadmicName = TextEditingController();
-  final TextEditingController address = TextEditingController();
-  final TextEditingController state = TextEditingController();
-  final TextEditingController city = TextEditingController();
+  MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
+  final TextEditingController dob = TextEditingController();
+ List<Myservices> _selectedAnimals2 = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myservicesViewViewModel.fetchMyservicesListApi();
+    _selectedAnimals2.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
+   final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -43,12 +43,12 @@ class _TellusAcadmicState extends State<DetailFilled> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Row(
             children: [
-              progressPills(
+              ProgressPills(
                   number: 7,
                   active: 6,
                   color: Theme.of(context).primaryColorLight),
@@ -62,47 +62,144 @@ class _TellusAcadmicState extends State<DetailFilled> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Text(AppLocale.title13.getString(context),
+                    child: Text(
+                      AppLocale.title13.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.services.getString(context),
+                    child: Text(
+                      AppLocale.services.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
+                  ChangeNotifierProvider<MyservicesViewViewModel>(
+                      create: (context) => myservicesViewViewModel,
+                      child: Consumer<MyservicesViewViewModel>(
+                        builder: (context, value, child) {
+                          
+                          final List<Myservices> myservices = List.generate(
+                              value.dataList.data?.services?.length ?? 0,
+                              (index) => Myservices(
+                                  serviceuid: value.dataList.data
+                                          ?.services?[index].uid
+                                          ?.toString() ??
+                                      '',
+                                  servicename: value.dataList.data
+                                          ?.services?[index].serviceName
+                                          ?.toString() ??
+                                      ''));
+                          final items = myservices
+                              .map((myservices) => MultiSelectItem<Myservices>(
+                                  myservices, myservices.servicename))
+                              .toList();
+                          // providerCreate.updateServicesList(items);
+                          return MultiSelectDialogField(
+                            dialogWidth: MediaQuery.of(context).size.width * 2,
+                            dialogHeight:
+                                MediaQuery.of(context).size.width * 0.7,
+                            items: items,
+                            title: Text(
+                              AppLocale.title15.getString(context),
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                            selectedColor: Colors.blue,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
+                              border: Border.all(
+                                color: const Color.fromARGB(255, 156, 156, 156),
+                                width: 1,
+                              ),
+                            ),
+                            buttonIcon: const Icon(
+                              Icons.pets,
+                              color: Colors.blue,
+                            ),
+                            buttonText: Text(
+                              AppLocale.title15.getString(context),
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            onConfirm: (results) {
+                               _selectedAnimals2 = results;
+                            },
+                           
+                          );
+                        },
+                      )),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width *1,
+                        height: 60,
+                        child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: _selectedAnimals2.length,
+                                itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right:10),
+                                  child: Chip(label: Text(_selectedAnimals2[index].servicename.toString())),
+                                );
+                            }
+                             ),
+                      ),
+                           
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.dob.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                
+                  DatePicker(controller: dob, hintText: AppLocale.dob.getString(context)),
 
-                  SizedBox(
-                    height: 110,
-                    child: MyHomePage(),
+                  const SizedBox(
+                    height: 15,
                   ),
                   RoundButton(
                       loading: false,
-                      title: AppLocale.Continue.getString(context),
+                      title: AppLocale.conts.getString(context),
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        print(acadmicName.text);
-                        print(address.text);
-                        print(city.text);
-                        print(state.text);
-
-                        Navigator.pushNamed(context, RoutesName.WelcomeScreen);
+                       
+                          List servicesUid = List.generate(
+                                    _selectedAnimals2.length,
+                                    (index) {
+                                  return {
+                                      'service_uid':
+                                          _selectedAnimals2[index].serviceuid.toString(),
+                                    };
+                                });
+                       Map data =  {
+                                 "dob": dob.text,
+                                 "services":servicesUid
+                                 };   
+                                 print(data);  
+                                 registration.detailsOwner(data, context);           
                       }),
                 ],
               ),
@@ -114,108 +211,12 @@ class _TellusAcadmicState extends State<DetailFilled> {
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key? key}) : super(key: key);
+class Myservices {
+  final String serviceuid;
+  final String servicename;
 
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   static List<Animal> _animals = [
-//     Animal(id: 1, name: "Sports"),
-//     Animal(id: 2, name: "Golf"),
-//     Animal(id: 3, name: "Tenis"),
-//     Animal(id: 4, name: "Football"),
-//   ];
-//   final _items = _animals
-//       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-//       .toList();
-//   List<Animal> _selectedAnimals5 = [];
-//   final _multiSelectKey = GlobalKey<FormFieldState>();
-
-//   @override
-//   void initState() {
-//     _selectedAnimals5 = _animals;
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SingleChildScrollView(
-
-//       child: Container(
-//         alignment: Alignment.center,
-//         child: Column(
-//           children: <Widget>[
-//             MultiSelectDialogField(
-//               items: _items,
-//               title: Text("Select Category"),
-//               selectedColor: Colors.blue,
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5)),
-//                 border: Border.all(
-//                   color: Color.fromARGB(255, 156, 156, 156),
-//                   width: 1,)),
-//         child: Container(
-//           alignment: Alignment.center,
-//           child: Column(
-//             children: <Widget>[
-//                 MultiSelectDialogField(
-//                   dialogWidth:MediaQuery.of(context).size.width * 2,
-//                   dialogHeight: MediaQuery.of(context).size.width * 0.7,
-//                 items: _items,
-//                  title: Text("Choose Your Business Category", style: TextStyle(fontSize: 15),),
-//                 selectedColor: Colors.blue,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.all(Radius.circular(5)),
-//                   border: Border.all(
-//                     color: Color.fromARGB(255, 156, 156, 156),
-//                     width: 1,
-//                   ),
-//                 ),
-                
-//                 buttonIcon: Icon(
-//                   Icons.pets,
-//                   color: Colors.blue,
-//                 ),
-//                 buttonText: Text(AppLocale.title15.getString(context),
-//                   style: TextStyle(
-//                     fontSize: 16,
-//                   ),
-//                 ),
-//                 onConfirm: (results) {
-//                    print(results);
-//                 },
-//               ),])),
-//               buttonIcon: Icon(
-//                 Icons.pets,
-//                 color: Colors.blue,
-// >>>>>>> Stashed changes
-//               ),
-//               buttonText: Text(
-//                 "Choose your Business Category",
-//                 style: TextStyle(
-//                   fontSize: 16,
-//                 ),
-//               ),
-//               onConfirm: (results) {
-//                 print(results);
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class Animal {
-//   final int id;
-//   final String name;
-
-//   Animal({
-//     required this.id,
-//     required this.name,
-//   });
-// }
+  Myservices({
+    required this.serviceuid,
+    required this.servicename,
+  });
+}

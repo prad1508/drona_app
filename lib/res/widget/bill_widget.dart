@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../../utils/color.dart';
 
 class TrackWidget extends StatefulWidget {
   final IconData logo;
@@ -16,7 +13,7 @@ class TrackWidget extends StatefulWidget {
 class _TrackWidgetState extends State<TrackWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.only(bottom: 20),
+    return Padding(padding: const EdgeInsets.only(bottom: 20),
       child: ListTile(
                       leading: Icon(
                         widget.logo,

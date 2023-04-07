@@ -19,22 +19,21 @@ class NetworkApiService extends BaseApiServices {
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
+
     return responseJson;
   }
 
-    @override
-  Future getPostApiResponse(
-    String url,
-    dynamic data,
-  ) async {
+  @override
+  Future getPostApiResponse(String url, dynamic data) async {
     dynamic responseJson;
     try {
-      Map<String, String> headerData = {"Content-Type": "application/json"};
-      Response response = await post(
-        Uri.parse(url),
-        headers: headerData,
-        body: jsonEncode(data),
-      ).timeout(Duration(seconds: 10));
+      Response response = await post(Uri.parse(url),
+       headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+       body: data)
+          .timeout(Duration(seconds: 120));
 
       responseJson = returnResponse(response);
     } on SocketException {
@@ -43,8 +42,6 @@ class NetworkApiService extends BaseApiServices {
 
     return responseJson;
   }
-
-
 
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {

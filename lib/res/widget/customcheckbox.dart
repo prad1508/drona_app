@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 class CustomCheckBox extends StatefulWidget {
-  final bool value;
+   final bool value;
   final ValueChanged<bool> onChanged;
   final Color checkedFillColor;
   final Color uncheckedFillColor;
   final Color checkedIconColor;
   final String imageUrl;
-  const CustomCheckBox({
-    Key? key,
+  final String name;
+  const CustomCheckBox({super.key, 
     required this.value,
     required this.onChanged,
     this.checkedIconColor = Colors.white,
     this.checkedFillColor = Colors.transparent, 
     this.uncheckedFillColor = Colors.white, 
-    required String this.imageUrl,
+    required this.imageUrl,
+    required this.name
     
-  }) : super(key: key);
+  });
 
   @override
-  _CustomCheckBoxState createState() => _CustomCheckBoxState();
+  State<CustomCheckBox> createState() => _CustomCheckBoxState();
 }
 
 class _CustomCheckBoxState extends State<CustomCheckBox> {
@@ -48,13 +49,10 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
 
   Widget _buildIcon() {
     late Color borderColor;
-    late Color iconColor;
-    late IconData iconData;
 
     switch (_status) {
       case CheckStatus.checked:
         borderColor = widget.checkedFillColor;
-        iconColor = widget.checkedIconColor;
         break;
       case CheckStatus.unchecked:
         borderColor = widget.uncheckedFillColor;
@@ -62,55 +60,64 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
     }
 
     return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 222, 220, 220),
-        border: Border.all(width: 2, color: borderColor),
-        borderRadius: BorderRadius.all(Radius.circular(100)),
-      ),
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 30,
-        child: Image(
-          image: AssetImage(widget.imageUrl),
-          height: 300,
-        ),
-      ),
-    );
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 222, 220, 220),
+            border: Border.all(width: 2, color: borderColor),
+            borderRadius: const BorderRadius.all(Radius.circular(100)),
+          ),
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 30,
+            child: Image(
+              image: NetworkImage(widget.imageUrl),
+              height: 300,
+            ),
+          ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Container(
-          child: IconButton(
-            iconSize: 80,
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStatePropertyAll<Color>(Colors.transparent),
-              iconColor: MaterialStatePropertyAll<Color>(Colors.transparent),
-            ),
-            icon: _buildIcon(),
-            onPressed: () => widget.onChanged(!_checked),
-           
-          ),
-        ),
-        _status == CheckStatus.checked
-            ? Positioned(
-                left: 52,
-                top: 60,
-                child: CircleAvatar(
-                  radius: 10,
-                  backgroundColor: widget.checkedFillColor,
-                  child: Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 15.0,
-                  ),
+        Stack(
+          children: [
+            SizedBox(
+              height: 70,
+              width: 70,
+              child: IconButton(
+                iconSize: 80,
+                style: const ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll<Color>(Colors.transparent),
+                  iconColor: MaterialStatePropertyAll<Color>(Colors.transparent),
                 ),
-              )
-            : Column()
+                icon: _buildIcon(),
+                onPressed: () => widget.onChanged(!_checked),
+               
+              ),
+            ),
+            _status == CheckStatus.checked
+                ? Positioned(
+                    left: 40,
+                    top: 42,
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: widget.checkedFillColor,
+                      child: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 15.0,
+                      ),
+                    ),
+                  )
+                : Column(),
+               
+          ],
+        ),
+         Text(widget.name, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+     
       ],
     );
   }

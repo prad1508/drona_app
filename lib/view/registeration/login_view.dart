@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../res/widget/customTextField.dart';
-import '../../res/widget/passwordField.dart';
+import '../../res/widget/custom_textfield.dart';
+import '../../res/widget/password_field.dart';
 import '../../res/widget/round_button.dart';
 import '/utils/routes/routes_name.dart';
 import '/utils/utils.dart';
@@ -54,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
               height: height * .1,
             ),
             const Align(
-              child: Text('NeoEnergy', style: LoginHeaderStyle),
+              child: Text('NeoEnergy', style: loginHeaderStyle),
             ),
             SizedBox(
               height: height * .02,

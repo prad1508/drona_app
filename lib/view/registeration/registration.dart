@@ -4,14 +4,12 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
+import '../../res/widget/progress_pills.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/synctextform.dart';
-import '../../utils/routes/routes_name.dart';
 import '../../utils/utils.dart';
 import '../../utils/validation.dart';
 import '../../view_model/registration_view_model.dart';
-import 'otp.dart';
 //import 'package:async_textformfield/async_textformfield.dart';
 
 class Registration extends StatefulWidget {
@@ -22,7 +20,6 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  bool _validate = false;
   String? _role = '0';
   ValueChanged<String?> _valueChangedHandler() {
     return (value) => setState(() => _role = value!);
@@ -36,9 +33,9 @@ class _RegistrationState extends State<Registration> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController phone = TextEditingController();
-  bool value = true;
-  bool agree = true;
-  final TextEditingController FullName = TextEditingController();
+  bool value = false;
+  bool agree = false;
+  final TextEditingController fullName = TextEditingController();
   final TextEditingController email = TextEditingController();
 
   @override
@@ -51,12 +48,12 @@ class _RegistrationState extends State<Registration> {
         appBar: AppBar(
           toolbarHeight: 100,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Row(
             children: [
-              progressPills(
+              ProgressPills(
                   number: 7,
                   active: 0,
                   color: Theme.of(context).primaryColorLight),
@@ -95,14 +92,21 @@ class _RegistrationState extends State<Registration> {
                   const SizedBox(
                     height: 15,
                   ),
-
-                  AsyncTextFormField(
-                      controller: FullName,
-                      validationDebounce: const Duration(milliseconds: 500),
-                      validator: Validation().istextField,
-                      keyboardType: TextInputType.name,
-                      hintText: 'eg. Ashmit Singh',
+                  TextFormField(
+                    controller: fullName,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                     hintText: 'eg. Ashmit Singh',
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ),
+                  ),
+                 
                   const SizedBox(
                     height: 15,
                   ),
@@ -141,17 +145,17 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: 'owner',
+                        value: '0',
                         groupValue: _role,
                         onChanged: _valueChangedHandler(),
                         label: AppLocale.owner.getString(context),
                       ),
                       CustomRadio<String>(
                         btnColor: Colors.black,
-                        value: 'owner+inst',
+                        value: '1',
                         groupValue: _role,
                         onChanged: _valueChangedHandler(),
-                        label: AppLocale.OwnerInstructor.getString(context),
+                        label: AppLocale.ownerInstructor.getString(context),
                       ),
                     ],
                   ),
@@ -259,7 +263,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                         TextButton(
                           style:
-                              TextButton.styleFrom(padding: EdgeInsets.all(0)),
+                              TextButton.styleFrom(padding: const EdgeInsets.all(0)),
                           onPressed: null,
                           child: Text(
                             AppLocale.privacyPolicy.getString(context),
@@ -273,7 +277,7 @@ class _RegistrationState extends State<Registration> {
                   ]),
                   RoundButton(
                     loading: registration.loading,
-                    title: AppLocale.Continue.getString(context),
+                    title: AppLocale.conts.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: agree == true
@@ -281,7 +285,7 @@ class _RegistrationState extends State<Registration> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                           if(FullName.text.isEmpty){
+                           if(fullName.text.isEmpty){
                             Utils.flushBarErrorMessage('Fill Full Name', context);
                            }
                            if(phone.text.toString().length < 10){
@@ -289,21 +293,21 @@ class _RegistrationState extends State<Registration> {
                            }
                             else{
                              Map<String, String> data = {
-                              "name": FullName.text.toString(),
+                              "name": fullName.text.toString(),
                               "ccode": '91',
                               "mobno": phone.text.toString(),
                               "role": _role.toString(),
                               "gender": _genderValue.toString(),
                               "email": email.text.toString()
                             };
-                         // registration.Register(data, context);
-                          Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          OtpPage(registration: data),
-                                    ),
-                                  );
+                          registration.register(data, context);
+                          // Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //             builder: (BuildContext context) =>
+                          //                 OtpPage(registration: data),
+                          //           ),
+                          //         );
                             }
                             
                           }
