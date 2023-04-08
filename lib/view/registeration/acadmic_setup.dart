@@ -58,7 +58,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
                   onPress: () => Navigator.pushNamed(
-                      context, RoutesName.ViewBatchDetails1),
+                      context, RoutesName.registration),
                 ),
                 const SizedBox(
                   height: 24,

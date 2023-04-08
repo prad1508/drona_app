@@ -242,8 +242,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * .8,
+                                   height: MediaQuery.of(context).size.height * .6,
                                     child: TabBarView(
                                       children: <Widget>[
                                         //by level

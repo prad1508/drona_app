@@ -137,7 +137,7 @@ class _TellusAcadmicState extends State<DetailFilled> {
                               ),
                             ),
                             onConfirm: (results) {
-                               //_selectedAnimals2 = results;
+                               _selectedAnimals2 = results;
                             },
                            
                           );

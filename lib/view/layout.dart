@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'batch_listing/add_trainee_list.dart';
+import 'batch_listing/batch_list.dart';
+import 'batch_listing/batchlist_search.dart';
 import 'batch_listing/create_batch_listing.dart';
+import 'batch_listing/trainee_list.dart';
 import 'batch_listing/view_batch_details.dart';
 import 'home_screen.dart';
 import 'session_listing/session_list.dart';
@@ -30,8 +34,8 @@ class _LayoutState extends State<Layout> {
     const HomeScreen(),
     const SessionList(),
     const Text(''),
-    const ViewBatchDetails(),
-    const Text('Members')
+    const SearchBatchList(),
+     AddTraineeList()
   ];
 
   
