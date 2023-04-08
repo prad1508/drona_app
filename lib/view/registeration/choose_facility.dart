@@ -126,7 +126,6 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                           facilityname =
                               value.dataList.data?.inputtextname.toString() ??
                                   '';
-
                           return Row(
                             children: [
                               Text(
@@ -143,7 +142,22 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         }),
                       ),
                     ),
-                    const SizedBox(
+                   const SizedBox(
+                      height: 15,
+                    ),
+                    ChangeNotifierProvider<FacilityViewViewModel>(
+                      create: (BuildContext context) => facilityViewViewModel,
+                      child: Consumer<FacilityViewViewModel>(builder: (
+                        context,
+                        value,
+                        _,
+                      ) {
+                         facilityname =
+                              value.dataList.data?.inputtextname.toString() ??
+                                  '';
+                        return Column(
+                          children: [
+                             const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -157,7 +171,9 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   facilityname,
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ],
@@ -190,18 +206,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    ChangeNotifierProvider<FacilityViewViewModel>(
-                      create: (BuildContext context) => facilityViewViewModel,
-                      child: Consumer<FacilityViewViewModel>(builder: (
-                        context,
-                        value,
-                        _,
-                      ) {
-                        return Column(
-                          children: [
+                    const SizedBox(height: 10,),
                             Align(
                               alignment: Alignment.center,
                               child: Row(
@@ -492,12 +497,12 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                  if (nofacility.text.isEmpty) {
                                   registration.facilityePost(data, context);
                                 } else {
-                                  if (CountSurfaces <=
+                                  if (CountSurfaces ==
                                       int.parse(nofacility.text)) {
                                     registration.facilityePost(data, context);
                                   } else {
                                     Utils.flushBarErrorMessage(
-                                        'Total facility should be less than or equal to ${nofacility.text.toString()}',
+                                        'Total facility should be equal to ${nofacility.text.toString()}',
                                         context);
                                   }
                                 }

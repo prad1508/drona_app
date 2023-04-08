@@ -33,11 +33,12 @@ class _DatePickerState extends State<DatePicker> {
                       ),
                     ),
                      onTap: () async {
+                     var lastDate = DateFormat('yyyy').format(DateTime.now().subtract(Duration(days: 6574,)));
                 var date = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100));
+                    initialDate: DateTime(1990),
+                    firstDate: DateTime(1930),
+                    lastDate: DateTime(int.parse(lastDate)));
                 if (date != null) {
                   widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
                 }

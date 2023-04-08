@@ -10,6 +10,7 @@ import '../../res/widget/progress_pills.dart';
 import '../../res/widget/round_button.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/registration_view_model.dart';
+import 'package:intl/intl.dart';
 
 class DetailFilled extends StatefulWidget {
   const DetailFilled({super.key});
@@ -198,7 +199,6 @@ class _TellusAcadmicState extends State<DetailFilled> {
                                  "dob": dob.text,
                                  "services":servicesUid
                                  };   
-                                 print(data);  
                                  registration.detailsOwner(data, context);           
                       }),
                 ],

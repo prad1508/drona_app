@@ -101,29 +101,37 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
                   onPress: () {},
                 ),
-                SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: Row(
+                Column(
                     children: [
+                      Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocale.title5.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Navigator.pushNamed(context, RoutesName.login);
+                              Navigator.pushNamed(context, RoutesName.layout);
+                            },
+                            child: Text(
+                              AppLocale.login.getString(context),
+                              style:
+                                  const TextStyle(fontSize: 18, color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
                       Text(
-                        AppLocale.title5.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Navigator.pushNamed(context, RoutesName.login);
-                          Navigator.pushNamed(context, RoutesName.layout);
-                        },
-                        child: Text(
-                          AppLocale.login.getString(context),
-                          style:
-                              const TextStyle(fontSize: 18, color: Colors.red),
+                          "${AppLocale.terms.getString(context)}  ${AppLocale.and.getString(context)}  ${AppLocale.condions.getString(context)}",
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ),
+                     
                     ],
                   ),
-                )
+                
+                 
               ],
             ),
           ),

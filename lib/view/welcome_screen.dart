@@ -138,7 +138,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
               CircleWidthtext(numb: int.parse(items[4]) == 0 ? 2 : 3, label: AppLocale.title16.getString(context), color: Colors.white),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
-                int.parse(items[4]) == 0 ?
+                int.parse(items[4]) == 1 ?
                  RoundButton(
                       loading: false,
                       title: AppLocale.addBatch.getString(context),

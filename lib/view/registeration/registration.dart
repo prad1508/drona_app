@@ -126,6 +126,8 @@ class _RegistrationState extends State<Registration> {
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9658992342',
+                      isValidatingMessage: 'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:'Enter a valid 10 digit mobile number'
                     ),
                   const SizedBox(
                     height: 15,
@@ -294,7 +296,7 @@ class _RegistrationState extends State<Registration> {
                             else{
                              Map<String, String> data = {
                               "name": fullName.text.toString(),
-                              "ccode": '91',
+                              "ccode": '+91',
                               "mobno": phone.text.toString(),
                               "role": _role.toString(),
                               "gender": _genderValue.toString(),
