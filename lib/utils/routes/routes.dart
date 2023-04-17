@@ -19,6 +19,7 @@ import '../../view/profile/batch_list.dart';
 import '../../view/profile/view_profile.dart';
 import '../../view/registeration/choose_program.dart';
 import '../../view/registeration/detail_filled.dart';
+import '../../view/registeration/reset_password.dart';
 import '../../view/registeration/tellus_acadmic.dart';
 import '../../view/welcome_screen.dart';
 import '../../view/coach_listselected.dart';
@@ -157,6 +158,8 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const ChooseFacility());
       case RoutesName.chooseprogram:
         return MaterialPageRoute(builder: (BuildContext context) => const ChooseProgram());
+      case RoutesName.resetPassword:
+        return MaterialPageRoute(builder: (BuildContext context) => const ResetPassword());
 
       default:
         return MaterialPageRoute(builder: (_){

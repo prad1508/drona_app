@@ -89,6 +89,7 @@ class _LoginViewState extends State<LoginView> {
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                        hintText: 'XXX-XXX-XXXX',
+                        hintStyle: TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -113,6 +114,7 @@ class _LoginViewState extends State<LoginView> {
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                        hintText: '************',
+                        hintStyle: TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -147,7 +149,10 @@ class _LoginViewState extends State<LoginView> {
                 TextButton(
                   style:
                       TextButton.styleFrom(padding: const EdgeInsets.all(0)),
-                  onPressed: null,
+                  onPressed: (){
+                    Navigator.pushNamed(context, RoutesName.resetPassword);
+                    
+                  },
                   child: Text("Forget password?",
                     style: TextStyle(
                         fontSize: 14,
@@ -201,8 +206,21 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     const Text("Dont Have an Account?"),
-                    const SizedBox(width: 10,),
-                    Text("Signup" , style: TextStyle(color: Theme.of(context).primaryColor),)
+                  
+                  TextButton(
+                  style:
+                      TextButton.styleFrom(padding: const EdgeInsets.all(0)),
+                  onPressed: (){
+                    Navigator.pushNamed(context, RoutesName.registration);
+                    
+                  },
+                  child: Text("Signup",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                )
+                    
                   ],)),
             ],
           ),
