@@ -23,7 +23,7 @@ mixin AppLocale {
   static const String iAgree = 'I Agree To';
   static const String terms = 'terms';
   static const String and = 'and';
-  static const String condions = 'condions';
+  static const String condions = 'Conditions';
   static const String enterOtp = 'Enter OTP';
   static const String privacyPolicy = 'privacy policy';
   static const String title8 = 'title8';

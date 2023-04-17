@@ -112,8 +112,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Navigator.pushNamed(context, RoutesName.login);
-                              Navigator.pushNamed(context, RoutesName.layout);
+                              Navigator.pushNamed(context, RoutesName.login);
+                              //Navigator.pushNamed(context, RoutesName.layout);
                             },
                             child: Text(
                               AppLocale.login.getString(context),
