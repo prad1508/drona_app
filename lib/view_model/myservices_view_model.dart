@@ -21,7 +21,6 @@ class MyservicesViewViewModel with ChangeNotifier {
     setDataList(ApiResponse.loading());
 
     _myRepo.fetchMyservicesListApi().then((value){
-
       setDataList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){

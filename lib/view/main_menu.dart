@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
+
+import '../utils/routes/routes_name.dart';
+import '../view_model/user_view_model.dart';
+import 'profile/create_profile.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -25,6 +30,7 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final userPrefernece = Provider.of<UserViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -157,7 +163,15 @@ class _MainMenuState extends State<MainMenu> {
                       'John Smith',
                     ),
                     trailing: IconButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CreateProfile(),
+                                  ),
+                                );
+                      }),
                       icon: const Icon(Icons.arrow_forward_ios),
                       iconSize: 20,
                     ),
@@ -540,20 +554,27 @@ class _MainMenuState extends State<MainMenu> {
                               iconSize: 20,
                             ),
                           ),
-                          ListTile(
-                            leading: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey.shade100,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Image(
-                                      image: AssetImage(
-                                          'assets/images/logout.png')),
-                                )),
-                            title: const Text(
-                              'Logout',
+                          InkWell(
+                            onTap: (){
+                                userPrefernece.remove(context).then((value) {
+                                Navigator.pushNamed(context, RoutesName.login);
+                            });
+                            },
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor: Colors.grey.shade100,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Image(
+                                        image: AssetImage(
+                                            'assets/images/logout.png')),
+                                  )),
+                              title: const Text(
+                                'Logout',
+                              ),
+                              
                             ),
-                            
                           ),
                         ],
                       ),

@@ -45,6 +45,7 @@ dependencies:
   http: ^0.13.5
   another_flushbar: ^1.12.29
   image_picker: ^0.8.7+1
+  dio: ^5.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

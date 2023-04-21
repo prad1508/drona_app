@@ -1,4 +1,3 @@
-import 'package:drona/view_model/dashboard_view_model.dart';
 import 'package:drona/view_model/facility_view_model.dart';
 import 'package:drona/view_model/registration_view_model.dart';
 import 'package:drona/view_model/service_view_model.dart';
@@ -71,7 +70,6 @@ class _AppTranslateState extends State<AppTranslate> {
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
           ChangeNotifierProvider(create: (_) => UserViewModel()),
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
-          ChangeNotifierProvider(create: (_) =>DashboardViewModel()),
           ChangeNotifierProvider(create: (_) =>RegistrationViewModel()),
           ChangeNotifierProvider(create: (_) =>PostofficeViewViewModel()),
           ChangeNotifierProvider(create: (_) =>CategoryViewViewModel()),

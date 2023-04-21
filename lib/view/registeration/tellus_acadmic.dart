@@ -51,6 +51,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
   }
 
   Future<bool> _onWillPop() async {
+    Navigator.pop(context);
     return false;
   }
 
@@ -85,7 +86,9 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {},
+              onPressed: () {
+                 Navigator.pop(context);
+              },
             ),
             title: Row(
               children: [

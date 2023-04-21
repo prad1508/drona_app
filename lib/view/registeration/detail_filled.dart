@@ -25,6 +25,7 @@ class _TellusAcadmicState extends State<DetailFilled> {
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   final TextEditingController dob = TextEditingController();
  List<Myservices> _selectedAnimals2 = [];
+List items = [];
   @override
   void initState() {
     // TODO: implement initState

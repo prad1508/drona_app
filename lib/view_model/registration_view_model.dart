@@ -66,9 +66,6 @@ class RegistrationViewModel with ChangeNotifier {
  
   //////////////otp verify ////////////////////////////////////
   Future<void> otpVerify(dynamic otp, BuildContext context) async {
-    if (kDebugMode) {
-      print(otp);
-    }
     final prefsData = await SharedPreferences.getInstance();
     List<String>? items = prefsData.getStringList('registerResponse');
      Map data = {'ccode': items![2].toString(), 'mobno': items[3].toString(), 'otp': otp.toString()};

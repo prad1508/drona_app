@@ -28,7 +28,6 @@ import '../../view/profile/create_profile.dart';
 import '../../view/registeration/acadmic_setup.dart';
 import '../../view/registeration/choose_service.dart';
 import '../../view/registeration/registration.dart';
-import '../../view/signp_view.dart';
 import '../../view/registeration/choose_facility.dart';
 import '/utils/routes/routes_name.dart';
 import '/view/layout.dart';
@@ -52,9 +51,7 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const Language());
       case RoutesName.login:
         return MaterialPageRoute(builder: (BuildContext context) => const LoginView());
-      case RoutesName.signUp:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const SignUpView());
+
       case RoutesName.AcadmicSetup:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AcadmicSetup());
@@ -131,7 +128,6 @@ class Routes {
       case RoutesName.TraineeAddOptions:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TraineeAddOptions());
-        return MaterialPageRoute(builder: (BuildContext context) => const SignUpView());
       case RoutesName.acadmicSetup:
         return MaterialPageRoute(builder: (BuildContext context) => const AcadmicSetup());
       case RoutesName.registration:

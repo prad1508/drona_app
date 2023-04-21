@@ -3,4 +3,5 @@ abstract class BaseApiServices {
 
   Future<dynamic> getPostApiResponse(String url, dynamic data);
   Future<dynamic> getPostWithoutApiResponse(String url, dynamic data);
+  Future<dynamic> uploadImageHTTP(String url, dynamic data);
 }

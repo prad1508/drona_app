@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -45,6 +46,67 @@ class _OtpPageState extends State<OtpPage> {
    Future<bool> _onWillPop() async {
     return false; 
   }
+  
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                          Icons.close_rounded,
+                          color: Colors.redAccent,
+                          size: 50.0,
+                        ),
+                    
+                  ),
+                  const Text("Do you want to exit?"),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      
+                     
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                        ),
+                        child:const Text("No",
+                            style: TextStyle(color: Colors.black)
+                            ),
+                      )),
+                       const SizedBox(width: 15),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            exit(0);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent),
+                          child: const Text(
+                            "Yes", style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+              );
+        });
+  }
+
   mobileNumber() async {
     final prefsData = await SharedPreferences.getInstance();
     List<String>? items = prefsData.getStringList('registerResponse');
@@ -132,7 +194,7 @@ class _OtpPageState extends State<OtpPage> {
     final registration = Provider.of<RegistrationViewModel>(context);
     final width = MediaQuery.of(context).size.width * 0.8 / 6;
     return WillPopScope(
-      onWillPop: _onWillPop,
+      onWillPop: () => showExitPopup(context),
       child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -140,7 +202,9 @@ class _OtpPageState extends State<OtpPage> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              showExitPopup(context);
+            },
           ),
           title: Row(
             children: [

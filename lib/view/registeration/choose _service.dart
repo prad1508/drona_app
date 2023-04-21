@@ -28,8 +28,8 @@ RegistrationViewModel registrationViewModel =RegistrationViewModel();
   //Service List
   List serviceList = [];
   List<String> serviceSelected = [];
-  late String catUid;
-  late String userUid;
+  late String catUid = '';
+  late String userUid ='';
   final List<int> _selectedItems = <int>[];
   late Map<String, dynamic> data;
   @override

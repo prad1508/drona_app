@@ -9,6 +9,8 @@ import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../view_model/myservices_view_model.dart';
+import '../../view_model/user_view_model.dart';
 import '../layout.dart';
 
 class CreateProfile extends StatefulWidget {
@@ -25,7 +27,7 @@ class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController email = TextEditingController();
   final TextEditingController salary = TextEditingController();
   final TextEditingController doj = TextEditingController();
-
+  UserViewModel userViewModel = UserViewModel();
   String? _genderValue = 'm';
   ValueChanged<String?> _genderChangedHandler() {
     return (value) => setState(() => _genderValue = value!);
@@ -37,14 +39,20 @@ class _CreateProfileState extends State<CreateProfile> {
   
   void openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
+    userViewModel.fetchouserProfileimg(imgCamera!.path, context);
+    // ignore: use_build_context_synchronously
+
     setState(() {
       imgFile = File(imgCamera!.path);
     });
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
  
   void openGallery() async {
     var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
+    
+     userViewModel.fetchouserProfileimg(imgGallery!.path, context);
     setState(() {
       imgFile = File(imgGallery!.path);
     });
