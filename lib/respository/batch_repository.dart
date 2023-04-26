@@ -15,6 +15,6 @@ class BatchRepository {
     } catch (e) {
       rethrow;
     }
-
    }
+
 }

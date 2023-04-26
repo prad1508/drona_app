@@ -1,13 +1,16 @@
+import 'dart:developer';
 
 import 'package:drona/view/batch_listing/coach_profile_add.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:async';
+import 'dart:math';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
+import '../../view_model/batch_view_model.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
 import '../../view_model/myservices_view_model.dart';
@@ -25,9 +28,10 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
   // custum radio call in seprate page
-  String? _groupLevel = 'beginner';
-  ValueChanged<String?> _valueChangedHandler() {
-    return (value) => setState(() => _groupLevel = value!);
+  String? _programUid;
+  String? _programName;
+  ValueChanged<String?> _valueChangedHandler(value) {
+    return (value) => setState(() => _programUid = value!);
   }
 
   String? _groupBatch = 'group';
@@ -35,35 +39,34 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     return (value) => setState(() => _groupBatch = value!);
   }
 
-
-
   bool value = true;
   bool agree = true;
+
   final TextEditingController batchName = TextEditingController();
-  final TextEditingController batchFrom = TextEditingController();
   final TextEditingController batchTo = TextEditingController();
+  final TextEditingController batchFrom = TextEditingController();
   final TextEditingController fee = TextEditingController();
   final TextEditingController onlineUrl = TextEditingController();
 
   Future<bool> isValidPasscode(String value) async {
-    return await Future.delayed(Duration(seconds: 1),
+    return await Future.delayed(const Duration(seconds: 1),
         () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
   List<DropdownMenuItem<String>> get dropdownCategory {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
-      DropdownMenuItem(child: Text("Golf"), value: "golf"),
-      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+      const DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
+      const DropdownMenuItem(child: Text("Golf"), value: "golf"),
+      const DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
     ];
     return menuItems;
   }
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John"), value: "john"),
-      DropdownMenuItem(child: Text("Anil"), value: "anil"),
-      DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
+      const DropdownMenuItem(child: Text("John"), value: "john"),
+      const DropdownMenuItem(child: Text("Anil"), value: "anil"),
+      const DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
     return menuItems;
   }
@@ -80,12 +83,13 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   bool sat = false;
   bool sun = false;
   List batchDays = [];
-  String selectedService = "";
+  String selectedService = "fymg3n6d8g69cysc4hhr";
   String profileUid = "";
   bool onlineSession = true;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
+  BatchViewViewModel batchViewViewModel = BatchViewViewModel();
   @override
   void initState() {
     // TODO: implement initState
@@ -94,9 +98,30 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     coachlistViewViewModel.fetchCoachlistListApi();
     myProgramViewViewModel.fetchMyProgramListApi('fymg3n6d8g69cysc4hhr');
   }
+  String batchFromdata = '';
+  String batchTodata = '';
+  selectTimeFrom() async {
+    var timepick = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    setState(() {
+      batchFromdata = timepick!.format(context);
+    });
+  }
+   selectTimeTo() async {
+    var timepick = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    setState(() {
+      batchTodata = timepick!.format(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+     final batch = Provider.of<BatchViewViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -119,7 +144,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -131,14 +156,14 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     controller: batchName,
                     decoration: InputDecoration(
                       hintText: 'eg. Cricket',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -147,11 +172,12 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Align(alignment: Alignment.topLeft, child: Text('Services')),
-                  SizedBox(
+                  const Align(
+                      alignment: Alignment.topLeft, child: Text('Services')),
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -166,8 +192,10 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => myservicesViewViewModel,
                         child: Consumer<MyservicesViewViewModel>(
                             builder: (context, value, child) {
-                              selectedService = value.dataList.data?.services?[0].uid
-                                    .toString() ?? '';
+                          // selectedService = value
+                          //         .dataList.data?.services?[0].uid
+                          //         .toString() ??
+                          //     '';
                           List<DropdownMenuItem<String>> dropdownItems =
                               List.generate(
                                   value.dataList.data?.services!.length ?? 0,
@@ -193,7 +221,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               items: dropdownItems);
                         })),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -220,7 +248,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -235,14 +263,20 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
-                             profileUid = value.dataList.data?.data![0].uid.toString() ?? '';
+                          profileUid =
+                              value.dataList.data?.data![0].uid.toString() ??
+                                  '';
                           List<DropdownMenuItem<String>> dropdownItems =
                               List.generate(
                                   value.dataList.data?.data!.length ?? 0,
                                   (index) {
                             return DropdownMenuItem(
-                                value: value.dataList.data?.data![index].uid.toString() ??  '',
-                                child: Text(value.dataList.data?.data![index].name.toString() ??
+                                value: value.dataList.data?.data![index].uid
+                                        .toString() ??
+                                    '',
+                                child: Text(value
+                                        .dataList.data?.data![index].name
+                                        .toString() ??
                                     ''));
                           });
                           return DropdownButton(
@@ -258,79 +292,68 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               items: dropdownItems);
                         })),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-
                   ChangeNotifierProvider<MyProgramViewViewModel>(
-                          create: (BuildContext context) => myProgramViewViewModel,
-                          child: Consumer<MyProgramViewViewModel>(
-                              builder: (context, value, _){
-                                print(value.dataList.data?.data![0].name.toString());
-                                return Column(
-                                  children: [
-                                    Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'What ${value.dataList.data?.data![0].name.toString()}',
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  ],
-                                );
-                                
-                              }),
-                        ),
-                  
-                  SizedBox(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'beginner',
-                          groupValue: _groupLevel,
-                          onChanged: _valueChangedHandler(),
-                          label: 'Beginner',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'intermediate',
-                          groupValue: _groupLevel,
-                          onChanged: _valueChangedHandler(),
-                          label: 'Intermediate',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'advance',
-                          groupValue: _groupLevel,
-                          onChanged: _valueChangedHandler(),
-                          label: 'Advance',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'professional',
-                          groupValue: _groupLevel,
-                          onChanged: _valueChangedHandler(),
-                          label: 'Professional',
-                        ),
-                      ],
-                    ),
+                    create: (BuildContext context) => myProgramViewViewModel,
+                    child: Consumer<MyProgramViewViewModel>(
+                        builder: (context, value, _) {
+                      var uidValue = value
+                          .dataList.data?.data![0].programs![0].uid
+                          .toString();
+                      _programName = value
+                          .dataList.data?.data![0].programs![0].programName
+                          .toString();
+                      return Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'What ${value.dataList.data?.data![0].name.toString()}?',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: value.dataList.data?.data![0]
+                                        .programs?.length ??
+                                    0,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      CustomRadio<String>(
+                                        btnColor: Colors.black,
+                                        value: value.dataList.data?.data![0]
+                                                .programs![index].uid
+                                                .toString() ??
+                                            '',
+                                        groupValue: _programUid,
+                                        onChanged:
+                                            _valueChangedHandler(uidValue),
+                                        label: value.dataList.data?.data![0]
+                                                .programs![index].programName
+                                                .toString() ??
+                                            '',
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      )
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ],
+                      );
+                    }),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -340,14 +363,14 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     controller: fee,
                     decoration: InputDecoration(
                       hintText: 'e.g. 200',
-                      contentPadding: EdgeInsets.all(10),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -356,7 +379,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -366,7 +389,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -388,7 +411,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(children: <Widget>[
@@ -403,7 +426,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Row(
@@ -416,7 +439,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ],
                     )
                   ]),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Align(
@@ -426,7 +449,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
@@ -434,9 +457,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     controller: onlineUrl,
                     decoration: InputDecoration(
                       hintText: 'e.g. ww.xyz.com',
-                      filled: true, 
-                      fillColor:  onlineSession ? Colors.white : Color.fromARGB(255, 228, 228, 228), 
-                      contentPadding: EdgeInsets.all(10),
+                      filled: true,
+                      fillColor: onlineSession
+                          ? Colors.white
+                          : const Color.fromARGB(255, 228, 228, 228),
+                      contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         borderSide: BorderSide(
@@ -445,7 +470,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -455,7 +480,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -470,35 +495,33 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               sun = val;
-                              if(val == true){
-                                 batchDays.add("0");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("0");
+                              } else {
                                 batchDays.remove("0");
                               }
-                             
                             });
                           },
                         ),
-                         SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                         TextCheckBox(
+                        TextCheckBox(
                           value: mon,
                           title: 'Mon',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
                               mon = val;
-                              if(val == true){
-                                 batchDays.add("1");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("1");
+                              } else {
                                 batchDays.remove("1");
                               }
                             });
                           },
                         ),
-                        
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextCheckBox(
@@ -508,15 +531,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               tue = val;
-                              if(val == true){
-                                 batchDays.add("2");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("2");
+                              } else {
                                 batchDays.remove("2");
                               }
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextCheckBox(
@@ -526,15 +549,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               wed = val;
-                              if(val == true){
-                                 batchDays.add("3");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("3");
+                              } else {
                                 batchDays.remove("3");
                               }
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextCheckBox(
@@ -544,15 +567,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               thu = val;
-                              if(val == true){
-                                 batchDays.add("4");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("4");
+                              } else {
                                 batchDays.remove("4");
                               }
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextCheckBox(
@@ -562,15 +585,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               fri = val;
-                              if(val == true){
-                                 batchDays.add("5");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("5");
+                              } else {
                                 batchDays.remove("5");
                               }
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextCheckBox(
@@ -580,19 +603,18 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onChanged: (val) {
                             setState(() {
                               sat = val;
-                              if(val == true){
-                                 batchDays.add("6");
-                              }else{
+                              if (val == true) {
+                                batchDays.add("6");
+                              } else {
                                 batchDays.remove("6");
                               }
                             });
                           },
                         ),
-                       
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -602,7 +624,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -611,10 +633,12 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          controller: batchFrom,
+                          controller: batchFrom
+                            ..text = batchFromdata.toString(),
+                          readOnly: true,
                           decoration: InputDecoration(
                             hintText: 'From',
-                            contentPadding: EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               borderSide: BorderSide(
@@ -622,15 +646,17 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               ),
                             ),
                           ),
+                          onTap: selectTimeFrom,
                         ),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          controller: batchTo,
+                          controller: batchTo..text = batchTodata.toString(),
+                          readOnly: true,
                           decoration: InputDecoration(
                             hintText: 'To',
-                            contentPadding: EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               borderSide: BorderSide(
@@ -638,11 +664,12 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               ),
                             ),
                           ),
+                          onTap: selectTimeTo,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(
@@ -665,7 +692,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             print('btn dissabled');
                           },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RoundButton(
@@ -673,26 +700,25 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     title: 'Continue',
                     textColor: Colors.white,
                     rounded: true,
-                    color:Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                     onPress: () {
-
-                      Map data ={
-                                "service_uid": selectedService,
-                                "batch_name": batchName.text.toString(),
-                                "coach_profile_uid":profileUid,
-                                "program_uid":"ktra479u63bxhzic41j5",
-                                "program_name":_groupLevel.toString(),
-                                "fees":fee.text.toString(),
-                                "type_batch": _groupBatch.toString(),
-                                "provide_online_sessions": onlineSession,
-                                "online_session_url":onlineUrl.text.toString(),
-                                "batch_days":batchDays,
-                                "batch_timing_from": batchFrom.text.toString(),
-                                "batch_timing_to": batchTo.text.toString()
-                            };
+                      Map data = {
+                        "service_uid": selectedService,
+                        "batch_name": batchName.text.toString(),
+                        "coach_profile_uid": profileUid,
+                        "program_uid": _programUid.toString(),
+                        "program_name": _programName.toString(),
+                        "fees": fee.text.toString(),
+                        "type_batch": _groupBatch.toString(),
+                        "provide_online_sessions": onlineSession,
+                        "online_session_url": onlineSession ? onlineUrl.text.toString() : "n/a",
+                        "batch_days": batchDays,
+                        "batch_timing_from": batchFrom.text,
+                        "batch_timing_to": batchTo.text.toString()
+                      };
+                      batch.fetchCreatebatchListApi(data, context);
                       print(data);
-                     
-                          },
+                    },
                   ),
                 ],
               ),

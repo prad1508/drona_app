@@ -1,36 +1,31 @@
-//model class MyProgramListModel
 class MyProgramListModel {
-   String? msg;
+  String? msg;
   List<Data>? data;
 
-  MyProgramListModel({
-       this.msg, 
-       this.data,});
+  MyProgramListModel({this.msg, this.data});
 
-  MyProgramListModel.fromJson(dynamic json) {
+  MyProgramListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     if (json['Data'] != null) {
-      data = [];
+      data = <Data>[];
       json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
- 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['msg'] = msg;
-    if (data != null) {
-      map['Data'] = data!.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['msg'] = this.msg;
+    if (this.data != null) {
+      data['Data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-
 class Data {
-  String? id;
+  String? sId;
   String? uid;
   String? academyUid;
   String? serviceName;
@@ -43,22 +38,24 @@ class Data {
   String? cDate;
   String? cTime;
   String? addedByProfileUid;
-  Data({
-      this.id, 
-      this.uid, 
-      this.academyUid, 
-      this.serviceName, 
-      this.serviceUid, 
-      this.catUid, 
-      this.catName, 
-      this.name, 
-      this.custom, 
-      this.programs, 
-      this.cDate, 
-      this.cTime, 
-      this.addedByProfileUid,});
-  Data.fromJson(dynamic json) {
-    id = json['_id'];
+
+  Data(
+      {this.sId,
+      this.uid,
+      this.academyUid,
+      this.serviceName,
+      this.serviceUid,
+      this.catUid,
+      this.catName,
+      this.name,
+      this.custom,
+      this.programs,
+      this.cDate,
+      this.cTime,
+      this.addedByProfileUid});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
     uid = json['uid'];
     academyUid = json['academy_uid'];
     serviceName = json['service_name'];
@@ -68,64 +65,58 @@ class Data {
     name = json['name'];
     custom = json['custom'];
     if (json['programs'] != null) {
-      programs = [];
+      programs = <Programs>[];
       json['programs'].forEach((v) {
-        programs!.add(Programs.fromJson(v));
+        programs!.add(new Programs.fromJson(v));
       });
     }
     cDate = json['cDate'];
     cTime = json['cTime'];
     addedByProfileUid = json['added_by_profile_uid'];
   }
- 
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['_id'] = id;
-    map['uid'] = uid;
-    map['academy_uid'] = academyUid;
-    map['service_name'] = serviceName;
-    map['service_uid'] = serviceUid;
-    map['cat_uid'] = catUid;
-    map['cat_name'] = catName;
-    map['name'] = name;
-    map['custom'] = custom;
-    if (programs != null) {
-      map['programs'] = programs!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['uid'] = this.uid;
+    data['academy_uid'] = this.academyUid;
+    data['service_name'] = this.serviceName;
+    data['service_uid'] = this.serviceUid;
+    data['cat_uid'] = this.catUid;
+    data['cat_name'] = this.catName;
+    data['name'] = this.name;
+    data['custom'] = this.custom;
+    if (this.programs != null) {
+      data['programs'] = this.programs!.map((v) => v.toJson()).toList();
     }
-    map['cDate'] = cDate;
-    map['cTime'] = cTime;
-    map['added_by_profile_uid'] = addedByProfileUid;
-    return map;
+    data['cDate'] = this.cDate;
+    data['cTime'] = this.cTime;
+    data['added_by_profile_uid'] = this.addedByProfileUid;
+    return data;
   }
-
 }
+
 class Programs {
   String? uid;
   String? programName;
-  String? amount;
-  String? registrationfee;
-  Programs({
-      this.uid, 
-      this.programName, 
-      this.amount, 
-      this.registrationfee,});
+  dynamic? amount;
+  dynamic? registrationfee;
 
-  Programs.fromJson(dynamic json) {
+  Programs({this.uid, this.programName, this.amount, this.registrationfee});
+
+  Programs.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     programName = json['program_name'];
     amount = json['amount'];
     registrationfee = json['registrationfee'];
   }
-  
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['uid'] = uid;
-    map['program_name'] = programName;
-    map['amount'] = amount;
-    map['registrationfee'] = registrationfee;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['uid'] = this.uid;
+    data['program_name'] = this.programName;
+    data['amount'] = this.amount;
+    data['registrationfee'] = this.registrationfee;
+    return data;
   }
-
 }

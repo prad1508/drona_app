@@ -12,12 +12,12 @@ class MyProgramViewViewModel with ChangeNotifier {
   setDataList(ApiResponse<MyProgramListModel> response){
     dataList = response ;
     notifyListeners();
+    
   }
   Future<void> fetchMyProgramListApi (dynamic data)async{
     setDataList(ApiResponse.loading());
-      print('shrikant');
-    _myRepo.fetchMyProgramListApi(data).then((value){
      
+    _myRepo.fetchMyProgramListApi(data).then((value){
       setDataList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){
