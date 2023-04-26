@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 
 import 'utils/theme_provider.dart';
 import 'view_model/category_view_model.dart';
+import 'view_model/coachlist_view_model.dart';
+import 'view_model/myprogram_view_model.dart';
 import 'view_model/myservices_view_model.dart';
 import 'view_model/postoffice_view_model.dart';
 import 'view_model/program_view_model.dart';
@@ -77,7 +79,8 @@ class _AppTranslateState extends State<AppTranslate> {
           ChangeNotifierProvider(create: (_) =>FacilityViewViewModel()),
           ChangeNotifierProvider(create: (_) =>ProgramViewViewModel()),
           ChangeNotifierProvider(create: (_) =>MyservicesViewViewModel()),
-          
+          ChangeNotifierProvider(create: (_) =>CoachlistViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>MyProgramViewViewModel())
         ],
       
       child: Consumer<ThemeProvider>(

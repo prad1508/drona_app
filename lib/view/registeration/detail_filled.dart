@@ -175,7 +175,7 @@ List items = [];
                     height: 10,
                   ),
                 
-                  DatePicker(controller: dob, hintText: AppLocale.dob.getString(context)),
+                  DateOfBirth(controller: dob, hintText: AppLocale.dob.getString(context)),
 
                   const SizedBox(
                     height: 15,

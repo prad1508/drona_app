@@ -1,17 +1,21 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
+import '../../res/widget/datefield.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import 'package:image_picker/image_picker.dart';
-
+import '../../res/widget/synctextform.dart';
+import '../../utils/validation.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../layout.dart';
+// ignore: depend_on_referenced_packages
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -27,16 +31,19 @@ class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController email = TextEditingController();
   final TextEditingController salary = TextEditingController();
   final TextEditingController doj = TextEditingController();
+  final TextEditingController dob = TextEditingController();
+  MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   UserViewModel userViewModel = UserViewModel();
   String? _genderValue = 'm';
+  String userProfile = '';
   ValueChanged<String?> _genderChangedHandler() {
     return (value) => setState(() => _genderValue = value!);
   }
 
 //profille image picke
- File?  imgFile;
+  File? imgFile;
   final imgPicker = ImagePicker();
-  
+  String selectedService = "fymg3n6d8g69cysc4hhr";
   void openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
     userViewModel.fetchouserProfileimg(imgCamera!.path, context);
@@ -48,17 +55,17 @@ class _CreateProfileState extends State<CreateProfile> {
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
- 
+
   void openGallery() async {
     var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
-    
-     userViewModel.fetchouserProfileimg(imgGallery!.path, context);
+
+    userViewModel.fetchouserProfileimg(imgGallery!.path, context);
     setState(() {
       imgFile = File(imgGallery!.path);
     });
     Navigator.of(context).pop();
   }
- 
+
   //bottomsheet popup
   showcameraoption() {
     showModalBottomSheet<void>(
@@ -155,7 +162,15 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myservicesViewViewModel.fetchMyservicesListApi();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserViewModel>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -165,7 +180,8 @@ class _CreateProfileState extends State<CreateProfile> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(AppLocale.createProfile.getString(context),
+          title: Text(
+            AppLocale.createProfile.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -177,15 +193,17 @@ class _CreateProfileState extends State<CreateProfile> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                 Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const Layout(selectedIndex: 0,),
-                          ),
-                        );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const Layout(
+                      selectedIndex: 0,
+                    ),
+                  ),
+                );
               },
-              child: Text(AppLocale.skip.getString(context),
+              child: Text(
+                AppLocale.skip.getString(context),
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 14,
@@ -221,8 +239,10 @@ class _CreateProfileState extends State<CreateProfile> {
                                 child: CircleAvatar(
                                   radius: 65,
                                   backgroundColor: Colors.white,
-                                  backgroundImage: imgFile == null ? const AssetImage(
-                                      'assets/images/user_profile.png') : FileImage(imgFile!)  as ImageProvider ,
+                                  backgroundImage: imgFile == null
+                                      ? const AssetImage(
+                                          'assets/images/user_profile.png')
+                                      : FileImage(imgFile!) as ImageProvider,
                                 ),
                               ),
                               Positioned(
@@ -252,11 +272,35 @@ class _CreateProfileState extends State<CreateProfile> {
                     ],
                   ),
                   const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.phoneNumber.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  AsyncTextFormField(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'eg. 9876521233',
+                      isValidatingMessage:
+                          'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                          'Enter a valid 10 digit mobile number'),
+                  const SizedBox(
                     height: 30,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.title19.getString(context),
+                    child: Text(
+                      AppLocale.title19.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -279,53 +323,22 @@ class _CreateProfileState extends State<CreateProfile> {
                   const SizedBox(
                     height: 15,
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.phoneNumber.getString(context),
+                    child: Text(
+                      AppLocale.dob.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
-                  TextFormField(
-                    controller: phone,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. 9876521233',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // Align(
-                  //   alignment: Alignment.topLeft,
-                  //   child: Text(AppLocale.inviteCode.getString(context),
-                  //     style: Theme.of(context).textTheme.bodyMedium,
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // TextFormField(
-                  //   controller: inviteCode,
-                  //   decoration: InputDecoration(
-                  //     hintText: 'TSC35497841',
-                  //     contentPadding: const EdgeInsets.all(10),
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(5.0),
-                  //       borderSide: BorderSide(
-                  //         color: Theme.of(context).primaryColor,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  DateOfBirth(
+                      controller: dob,
+                      hintText: AppLocale.dob.getString(context)),
                   const SizedBox(
                     height: 15,
                   ),
@@ -360,7 +373,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.emailId.getString(context),
+                    child: Text(
+                      AppLocale.emailId.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -385,7 +399,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.salaryMonth.getString(context),
+                    child: Text(
+                      AppLocale.salaryMonth.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -410,37 +425,94 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text(AppLocale.doj.getString(context),
+                    child: Text(
+                      AppLocale.title33.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    controller: doj,
-                    decoration: InputDecoration(
-                      hintText: '28/12/2022',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1,
+                          color: const Color.fromARGB(255, 218, 216, 216)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: ChangeNotifierProvider<MyservicesViewViewModel>(
+                        create: (context) => myservicesViewViewModel,
+                        child: Consumer<MyservicesViewViewModel>(
+                            builder: (context, value, child) {
+                          List<DropdownMenuItem<String>> dropdownItems =
+                              List.generate(
+                                  value.dataList.data?.services!.length ?? 0,
+                                  (index) {
+                            return DropdownMenuItem(
+                                value: value.dataList.data?.services?[index].uid
+                                    .toString(),
+                                child: Text(value.dataList.data
+                                        ?.services?[index].serviceName
+                                        .toString() ??
+                                    ''));
+                          });
+                          return DropdownButton(
+                              isExpanded: true,
+                              underline: DropdownButtonHideUnderline(
+                                  child: Container()),
+                              value: selectedService,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedService = newValue!;
+                                });
+                              },
+                              items: dropdownItems);
+                        })),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.doj.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
+                  DateOfjoining(
+                      controller: doj,
+                      hintText: 'Doj'),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                 
                   RoundButton(
                       loading: false,
                       title: AppLocale.addCoach.getString(context),
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,
-                      onPress: () {
-                        Navigator.pushNamed(context, RoutesName.coachListSelected);
+                      onPress: () async {
+                         final SharedPreferences sp = await SharedPreferences.getInstance();
+                        Map data ={
+                              "service_uid": selectedService.toString(),
+                              "fullname": coachName.text.toString(),
+                              "ccode":"91",
+                              "mobno":phone.text.toString(),
+                              "gender": _genderValue.toString(),
+                              "email": email.text.toString(),
+                              "salary":salary.text.toString(),
+                              "dateofjoining": doj.text.toString(),
+                              "dob": dob.text.toString(),
+                              "img":sp.getString('uprofile'),
+                              "relation":"self"
+                          };
+                        user.userProfileAdd(data, context);
+                    
                       }),
                 ],
               ),

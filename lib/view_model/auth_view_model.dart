@@ -17,13 +17,14 @@ class AuthViewModel with ChangeNotifier {
 
   final _myRepo = UserRepository();
 
-  bool _loading = false ;
-  bool get loading => _loading ;
-
+  
   bool _signUpLoading = false ;
   bool get signUpLoading => _signUpLoading ;
   late int setupProgress = 0;
   late bool setupFinish =false;
+  bool _loading = false ;
+  bool get loading => _loading ;
+
   setLoading(bool value){
     _loading = value;
     notifyListeners();

@@ -142,6 +142,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
+            _selectedItems.isEmpty ?
             IconButton(
               onPressed: (() {
                 if (kDebugMode) {
@@ -151,7 +152,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
               icon: const Icon(Icons.group_add),
               iconSize: 25,
               color: Colors.black,
-            ),
+            ) :
             IconButton(
               onPressed: (() {
                 if (kDebugMode) {

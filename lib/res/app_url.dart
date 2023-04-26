@@ -11,10 +11,14 @@ class AppUrl {
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
   static var programListEndPoint = '$baseUrl/academy/program/';
+  static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimgtest';
-  //static var ouserProfileimgListEndPoint = 'https://www.wepora.com/Matrimony/api/pages/myfile'; 
+  static var UserprofileAdd = '$baseUrl/academy/coach'; 
+  static var coachlistListEndPoint ='$baseUrl/academy/coach';
+  //batch
+  static var  createbatchListEndPoint = '$baseUrl/academy/batch'; 
   static var userloginEndPint = '$baseUrl/ouser/login';
   static var academyRegistrationTrackEndPint = '$baseUrl/academy';
   static var userLogout = '$baseUrl/ouser/logout';

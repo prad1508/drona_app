@@ -15,6 +15,7 @@ import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
+import '../../view_model/batch_view_model.dart';
 
 class AddBatch extends StatefulWidget {
   const AddBatch({super.key});
@@ -53,6 +54,10 @@ class _AddBatchState extends State<AddBatch> {
   final TextEditingController FullName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
+  final TextEditingController fee = TextEditingController();
+  final TextEditingController onlineSession = TextEditingController();
+  final TextEditingController fromBatch = TextEditingController();
+  final TextEditingController toBatch = TextEditingController();
 
   Future<bool> isValidPasscode(String value) async {
     return await Future.delayed(Duration(seconds: 1),
@@ -76,10 +81,13 @@ class _AddBatchState extends State<AddBatch> {
     ];
     return menuItems;
   }
-
   String selectedCategory = 'Tennis';
   String selectedAssignCoach = 'john Smith';
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -287,7 +295,7 @@ class _AddBatchState extends State<AddBatch> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: FullName,
+                    controller: fee,
                     decoration: InputDecoration(
                       hintText: '200',
                       contentPadding: EdgeInsets.all(10),
@@ -373,7 +381,7 @@ class _AddBatchState extends State<AddBatch> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: FullName,
+                    controller: onlineSession,
                     decoration: InputDecoration(
                       hintText: 'ww.xyz.com',
                       contentPadding: EdgeInsets.all(10),
@@ -492,7 +500,7 @@ class _AddBatchState extends State<AddBatch> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          controller: FullName,
+                          controller: fromBatch,
                           decoration: InputDecoration(
                             hintText: 'From',
                             contentPadding: EdgeInsets.all(10),
@@ -508,7 +516,7 @@ class _AddBatchState extends State<AddBatch> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          controller: FullName,
+                          controller: toBatch,
                           decoration: InputDecoration(
                             hintText: 'To',
                             contentPadding: EdgeInsets.all(10),
@@ -569,7 +577,17 @@ class _AddBatchState extends State<AddBatch> {
                            
                           }
                         : () {
-                            print('btn dissabled');
+                            print(FullName);
+                            print('services');
+                            print(selectedAssignCoach);
+                            print(_groupLevel);
+                            print(fee);
+                            print(_groupBatch);
+                            print(onlineSession);
+                            print(fromBatch);
+                            print(toBatch);
+                           
+
                           },
                   ),
                 ],

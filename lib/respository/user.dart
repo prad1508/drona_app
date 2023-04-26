@@ -49,6 +49,17 @@ class UserRepository {
     }
   }
 
+  //userprofile add
+   Future<dynamic> fetchUserprofileAddListApi(data) async {
+    try {
+      dynamic response =
+          await _apiServices.getPostApiResponse(AppUrl.UserprofileAdd, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
 
 
