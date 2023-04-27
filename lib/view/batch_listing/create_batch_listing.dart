@@ -210,8 +210,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               List.generate(
                                   value.dataList.data?.services!.length ?? 0,
                                   (index) {
-                                    if(value.dataList.data?.services![index].status.toString() == 'active'){
-                                       return  DropdownMenuItem(
+                                 return  DropdownMenuItem(
                                         value: value.dataList.data?.services?[index].uid
                                             .toString(),
                                         child: Text(value.dataList.data
@@ -219,10 +218,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                                 .toString() ??
                                             '')
                                             );
-                                          
-                                    }else{
-                                      return DropdownMenuItem(child: Container(),);
-                                    }
+                                   
                               
                           
                           });
