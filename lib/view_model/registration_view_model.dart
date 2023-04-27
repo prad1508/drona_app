@@ -161,16 +161,13 @@ class RegistrationViewModel with ChangeNotifier {
      setUid(uid);
     _myRepo.detailsOwnerPostListApi(data).then((value) async {
 
-      setLoading(false);
-      Utils.flushBarErrorMessage('Save Successfully', context);
+       setLoading(false);
+       Utils.flushBarErrorMessage(value['msg'], context);
        Navigator.pushNamed(context, RoutesName.welcomeScreen);
-     
+    
     }).onError((error, stackTrace) {
       setLoading(false);
-    
-   //    var newerror = jsonDecode(error.toString()) ;
-       
-      Utils.flushBarErrorMessage(error.toString(), context);
+     Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
   

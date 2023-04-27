@@ -1,11 +1,14 @@
 import 'package:drona/view/create_batch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../res/language/language.dart';
 import '../res/widget/circle_withtext.dart';
 import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
+import '../view_model/academy_view_model.dart';
+import '../view_model/myprofi_view_model.dart';
 import 'profile/create_profile.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -16,47 +19,45 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
- late List<String>items;
- late String acadmicName;
+  MyprofiViewViewModel myprofiViewViewModel = MyprofiViewViewModel();
+  AcademyViewViewModel pacademyViewViewModel = AcademyViewViewModel();
   @override
-   initState(){
+  initState() {
     // TODO: implement initState
     super.initState();
-    detials();
+    myprofiViewViewModel.fetchMyprofiListApi();
+    pacademyViewViewModel.fetchAcademyListApi();
   }
-  detials() async {
-    final prefs = await SharedPreferences.getInstance();
-       setState(() {
-        items = prefs.getStringList('registerResponse')!;
-        acadmicName =  prefs.getString('acadmicName')!;
-        print(items[4]);
-       });
-  }
-  
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg2.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Padding(
+        child: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg2.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: ChangeNotifierProvider<MyprofiViewViewModel>(
+        create: (BuildContext context) => myprofiViewViewModel,
+        child: Consumer<MyprofiViewViewModel>(builder: (context, value, _) {
+          return Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(AppLocale.congratulation.getString(context),
+                Text(
+                  AppLocale.congratulation.getString(context),
                   style: const TextStyle(
                       color: Color.fromRGBO(254, 194, 89, 1),
                       fontSize: 25,
                       fontFamily: 'poppin',
                       fontWeight: FontWeight.w600),
                 ),
-                 Text(items[0].toString(),
+                Text(
+                  value.dataList.data?.data![0].name.toString() ?? '',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
@@ -66,21 +67,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                 Text(AppLocale.your.getString(context),
+                Text(
+                  AppLocale.your.getString(context),
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontFamily: 'poppin',
                       fontWeight: FontWeight.w700),
                 ),
-                Text(acadmicName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontFamily: 'poppin',
-                      fontWeight: FontWeight.w600),
+                ChangeNotifierProvider<AcademyViewViewModel>(
+                  create: (BuildContext context) => pacademyViewViewModel,
+                  child: Consumer<AcademyViewViewModel>(
+                      builder: (context, value, _) {
+                    return Text(
+                      value.dataList.data?.academyname.toString() ?? '',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: 'poppin',
+                          fontWeight: FontWeight.w600),
+                    );
+                  }),
                 ),
-                Text(AppLocale.title14.getString(context),
+                Text(
+                  AppLocale.title14.getString(context),
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -101,7 +111,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         fontWeight: FontWeight.w400),
                     children: <TextSpan>[
                       TextSpan(
-                        text: int.parse(items[4]) == 0 ? '2 steps' : '3 steps',
+                        text: value.dataList.data?.data![0].role!.toInt() == 0
+                            ? '2 steps'
+                            : '3 steps',
                         style: const TextStyle(
                             decoration: TextDecoration.none,
                             color: Colors.white,
@@ -122,67 +134,74 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-               int.parse(items[4]) == 0 ?
-              Column(
-                children: [
-                 CircleWidthtext(numb: 1, label: AppLocale.createBatch.getString(context), color: Colors.white),
-                ]
-              ) :
-              Column(
-                children: [
-                  CircleWidthtext(numb: 1, label: AppLocale.addCoach.getString(context), color: Colors.white),
-                  CircleWidthtext(numb: 2, label: AppLocale.createBatch.getString(context), color: Colors.white),
-                ],
-              ), 
-           
-
-              CircleWidthtext(numb: int.parse(items[4]) == 0 ? 2 : 3, label: AppLocale.title16.getString(context), color: Colors.white),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
-                int.parse(items[4]) == 1 ?
-                 RoundButton(
-                      loading: false,
-                      title: AppLocale.addBatch.getString(context),
-                      // title: AppLocale.title18.getString(context),
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: const Color.fromRGBO(241, 94, 83, 1),
-                      onPress: () {
-                        // Navigator.pushNamed(context, RoutesName.createProfile);
-                       Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                   builder: (BuildContext context) =>
-                                       const CreateBatch(),
-                                 ),
-                               );
-                      }):
-             
-                RoundButton(
-                      loading: false,
-                      title: AppLocale.title17.getString(context),
-                      // title: AppLocale.title18.getString(context),
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: const Color.fromRGBO(241, 94, 83, 1),
-                      onPress: () {
-                        // Navigator.pushNamed(context, RoutesName.createProfile);
-                       Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                   builder: (BuildContext context) =>
-                                       const CreateProfile(),
-                                 ),
-                               );
-                      }),
+                value.dataList.data?.data![0].role!.toInt() == 0
+                    ? Column(children: [
+                        CircleWidthtext(
+                            numb: 1,
+                            label: AppLocale.createBatch.getString(context),
+                            color: Colors.white),
+                      ])
+                    : Column(
+                        children: [
+                          CircleWidthtext(
+                              numb: 1,
+                              label: AppLocale.addCoach.getString(context),
+                              color: Colors.white),
+                          CircleWidthtext(
+                              numb: 2,
+                              label: AppLocale.createBatch.getString(context),
+                              color: Colors.white),
+                        ],
+                      ),
+                CircleWidthtext(
+                    numb: value.dataList.data?.data![0].role!.toInt() == 0
+                        ? 2
+                        : 3,
+                    label: AppLocale.title16.getString(context),
+                    color: Colors.white),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
+                value.dataList.data?.data![0].role!.toInt() == 1
+                    ? RoundButton(
+                        loading: false,
+                        title: AppLocale.addBatch.getString(context),
+                        // title: AppLocale.title18.getString(context),
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: const Color.fromRGBO(241, 94, 83, 1),
+                        onPress: () {
+                          // Navigator.pushNamed(context, RoutesName.createProfile);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const CreateBatch(),
+                            ),
+                          );
+                        })
+                    : RoundButton(
+                        loading: false,
+                        title: AppLocale.title17.getString(context),
+                        // title: AppLocale.title18.getString(context),
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: const Color.fromRGBO(241, 94, 83, 1),
+                        onPress: () {
+                          // Navigator.pushNamed(context, RoutesName.createProfile);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const CreateProfile(),
+                            ),
+                          );
+                        }),
               ],
             ),
-          )),
-    );
-  }
-    @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    detials().dispose();
+          );
+        }),
+      ),
+    ));
   }
 }

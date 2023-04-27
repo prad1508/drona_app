@@ -200,6 +200,7 @@ List items = [];
                                  "dob": dob.text,
                                  "services":servicesUid
                                  };   
+
                                  registration.detailsOwner(data, context);           
                       }),
                 ],

@@ -18,6 +18,7 @@ class BatchViewViewModel with ChangeNotifier {
     _myRepo.fetchCreatebatchListApi(data).then((value){
        setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
+       print(data);
     }).onError((error, stackTrace){
        setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);

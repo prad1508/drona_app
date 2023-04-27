@@ -10,6 +10,7 @@ import 'dart:math';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
+import '../../view_model/academy_view_model.dart';
 import '../../view_model/batch_view_model.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
@@ -29,6 +30,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   //custom radio
   // custum radio call in seprate page
   String? _programUid;
+  String? _programid;
   String? _programName;
   ValueChanged<String?> _valueChangedHandler(value) {
     return (value) => setState(() => _programUid = value!);
@@ -83,10 +85,9 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   bool sat = false;
   bool sun = false;
   List batchDays = [];
-  String selectedService = "fymg3n6d8g69cysc4hhr";
   String profileUid = "";
   bool onlineSession = true;
-  MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
+  AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   BatchViewViewModel batchViewViewModel = BatchViewViewModel();
@@ -94,10 +95,10 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    myservicesViewViewModel.fetchMyservicesListApi();
+    academyViewViewModel.fetchAcademyListApi();
     coachlistViewViewModel.fetchCoachlistListApi();
-    myProgramViewViewModel.fetchMyProgramListApi('fymg3n6d8g69cysc4hhr');
   }
+
   String batchFromdata = '';
   String batchTodata = '';
   selectTimeFrom() async {
@@ -109,7 +110,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
       batchFromdata = timepick!.format(context);
     });
   }
-   selectTimeTo() async {
+
+  selectTimeTo() async {
     var timepick = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -119,9 +121,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     });
   }
 
+  String? selectedService;
+  assignSeviceId(selectedvalue) {
+    myProgramViewViewModel.fetchMyProgramListApi(selectedService);
+    selectedService = selectedService;
+  }
+
   @override
   Widget build(BuildContext context) {
-     final batch = Provider.of<BatchViewViewModel>(context);
+    final batch = Provider.of<BatchViewViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -188,25 +196,35 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           color: const Color.fromARGB(255, 218, 216, 216)),
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
-                    child: ChangeNotifierProvider<MyservicesViewViewModel>(
-                        create: (context) => myservicesViewViewModel,
-                        child: Consumer<MyservicesViewViewModel>(
+                    child: ChangeNotifierProvider<AcademyViewViewModel>(
+                        create: (context) => academyViewViewModel,
+                        child: Consumer<AcademyViewViewModel>(
                             builder: (context, value, child) {
-                          // selectedService = value
-                          //         .dataList.data?.services?[0].uid
-                          //         .toString() ??
-                          //     '';
+
+                          var selectedvalue = value
+                                  .dataList.data?.services?[0].uid
+                                  .toString() ??
+                              '';
+                          assignSeviceId(selectedvalue);
                           List<DropdownMenuItem<String>> dropdownItems =
                               List.generate(
                                   value.dataList.data?.services!.length ?? 0,
                                   (index) {
-                            return DropdownMenuItem(
-                                value: value.dataList.data?.services?[index].uid
-                                    .toString(),
-                                child: Text(value.dataList.data
-                                        ?.services?[index].serviceName
-                                        .toString() ??
-                                    ''));
+                                    if(value.dataList.data?.services![index].status.toString() == 'active'){
+                                       return  DropdownMenuItem(
+                                        value: value.dataList.data?.services?[index].uid
+                                            .toString(),
+                                        child: Text(value.dataList.data
+                                                ?.services?[index].serviceName
+                                                .toString() ??
+                                            '')
+                                            );
+                                          
+                                    }else{
+                                      return DropdownMenuItem(child: Container(),);
+                                    }
+                              
+                          
                           });
                           return DropdownButton(
                               isExpanded: true,
@@ -299,7 +317,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     create: (BuildContext context) => myProgramViewViewModel,
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
-                      var uidValue = value
+                      _programid = value
                           .dataList.data?.data![0].programs![0].uid
                           .toString();
                       _programName = value
@@ -310,7 +328,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'What ${value.dataList.data?.data![0].name.toString()}?',
+                              'What ${value.dataList.data?.data![0].name.toString() ?? ''}?',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -327,6 +345,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                     0,
                                 itemBuilder: (context, index) {
                                   return Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       CustomRadio<String>(
                                         btnColor: Colors.black,
@@ -336,7 +355,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                             '',
                                         groupValue: _programUid,
                                         onChanged:
-                                            _valueChangedHandler(uidValue),
+                                            _valueChangedHandler(_programName),
                                         label: value.dataList.data?.data![0]
                                                 .programs![index].programName
                                                 .toString() ??
@@ -366,19 +385,31 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: fee,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. 200',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  ChangeNotifierProvider<MyProgramViewViewModel>(
+                      create: (BuildContext context) => myProgramViewViewModel,
+                      child: Consumer<MyProgramViewViewModel>(
+                          builder: (context, value, _) {
+                        for (var fee
+                            in value.dataList.data?.data![0].programs! ?? []) {
+                          fee.amount;
+                        }
+                        return TextFormField(
+                          readOnly: true,
+                          controller: fee
+                            ..text = value.dataList.data?.data![0].programs![0]
+                                    .amount ??
+                                '0',
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      })),
                   const SizedBox(
                     height: 15,
                   ),
@@ -678,19 +709,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: agree == true
-                        ? () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const CoachProfileAdd(),
-                              ),
-                            );
-                          }
-                        : () {
-                            print('btn dissabled');
-                          },
+                    onPress: () {},
                   ),
                   const SizedBox(
                     height: 15,
@@ -706,17 +725,18 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "service_uid": selectedService,
                         "batch_name": batchName.text.toString(),
                         "coach_profile_uid": profileUid,
-                        "program_uid": _programUid.toString(),
+                        "program_uid": _programid.toString(),
                         "program_name": _programName.toString(),
                         "fees": fee.text.toString(),
                         "type_batch": _groupBatch.toString(),
                         "provide_online_sessions": onlineSession,
-                        "online_session_url": onlineSession ? onlineUrl.text.toString() : "n/a",
+                        "online_session_url":
+                            onlineSession ? onlineUrl.text.toString() : "n/a",
                         "batch_days": batchDays,
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
                       };
-                      batch.fetchCreatebatchListApi(data, context);
+                        batch.fetchCreatebatchListApi(data, context);
                       print(data);
                     },
                   ),

@@ -17,6 +17,7 @@ class AppUrl {
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimgtest';
   static var UserprofileAdd = '$baseUrl/academy/coach'; 
   static var coachlistListEndPoint ='$baseUrl/academy/coach';
+  static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
   //batch
   static var  createbatchListEndPoint = '$baseUrl/academy/batch'; 
   static var userloginEndPint = '$baseUrl/ouser/login';
