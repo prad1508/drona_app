@@ -1,4 +1,3 @@
-import 'package:drona/view/create_batch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import '../res/widget/round_button.dart';
 import '../utils/routes/routes_name.dart';
 import '../view_model/academy_view_model.dart';
 import '../view_model/myprofi_view_model.dart';
+import 'batch_listing/create_batch_listing.dart';
 import 'profile/create_profile.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -162,7 +162,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                 ),
-                value.dataList.data?.data![0].role!.toInt() == 1
+                value.dataList.data?.data![0].role!.toInt() == 0
                     ? RoundButton(
                         loading: false,
                         title: AppLocale.addBatch.getString(context),
@@ -176,7 +176,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const CreateBatch(),
+                                  const CreateBatchListing(),
                             ),
                           );
                         })

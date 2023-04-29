@@ -3,8 +3,10 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 import '../../res/widget/round_button.dart';
+import '../../view_model/batchList_view_model.dart';
 import 'create_batch_listing.dart';
 class SearchBatchList extends StatefulWidget {
   const SearchBatchList({super.key});
@@ -13,13 +15,14 @@ class SearchBatchList extends StatefulWidget {
   State<SearchBatchList> createState() => _SearchBatchListState();
 }
 
+
 class _SearchBatchListState extends State<SearchBatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
-
+  BatchListViewViewModel  batchListViewViewModel = BatchListViewViewModel();
   List<int> _selectedItems = <int>[];
 
-  final List<Map<String, dynamic>> _allUsers = [
+  List<Map<String, dynamic>> _foundUsers = [
     {
       "id": 1,
       "name": "Tennis Batch",
@@ -35,19 +38,18 @@ class _SearchBatchListState extends State<SearchBatchList> {
       "categorgyImg": "assets/images/Golf.png"
     },
   ];
-  List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
-    _foundUsers = _allUsers;
     super.initState();
+    batchListViewViewModel.fetchBatchListListApi();
   }
 
   void dataFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
-      results = _allUsers;
+      results = _foundUsers;
     } else {
-      results = _allUsers
+      results = _foundUsers
           .where((user) =>
               user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
@@ -108,7 +110,12 @@ class _SearchBatchListState extends State<SearchBatchList> {
           color: Colors.white,
           child: Container(
             padding: const EdgeInsets.all(20),
-            child: Column(
+            child: ChangeNotifierProvider<BatchListViewViewModel>(
+        create: (BuildContext context) => batchListViewViewModel,
+        child: Consumer<BatchListViewViewModel>(
+            builder: (context, value, _){
+            
+              return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -291,8 +298,11 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 ),
                
               ],
-            ),
-          ),
+            );
+            }),
+      ),
+            
+             ),
         ),
       ),
     );

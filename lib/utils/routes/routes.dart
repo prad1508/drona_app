@@ -23,7 +23,6 @@ import '../../view/registeration/reset_password.dart';
 import '../../view/registeration/tellus_acadmic.dart';
 import '../../view/welcome_screen.dart';
 import '../../view/coach_listselected.dart';
-import '../../view/create_batch.dart';
 import '../../view/profile/create_profile.dart';
 import '../../view/registeration/acadmic_setup.dart';
 import '../../view/registeration/choose_service.dart';
@@ -79,7 +78,7 @@ class Routes {
             builder: (BuildContext context) => const ViewProfilenew());
       case RoutesName.CreateBatch:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const CreateBatch());
+            builder: (BuildContext context) => const CreateBatchListing());
       case RoutesName.BatchList:
         return MaterialPageRoute(
             builder: (BuildContext context) => const BatchList());
@@ -144,8 +143,6 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const CoachListSelected());
       case RoutesName.viewProfilenew:
         return MaterialPageRoute(builder: (BuildContext context) => const ViewProfilenew());
-      case RoutesName.createBatch:
-        return MaterialPageRoute(builder: (BuildContext context) => const CreateBatch());
       case RoutesName.batchList:
         return MaterialPageRoute(builder: (BuildContext context) => const BatchList());
       case RoutesName.batchDetail:

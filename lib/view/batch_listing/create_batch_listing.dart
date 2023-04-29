@@ -733,7 +733,6 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "batch_timing_to": batchTo.text.toString()
                       };
                         batch.fetchCreatebatchListApi(data, context);
-                      print(data);
                     },
                   ),
                 ],
