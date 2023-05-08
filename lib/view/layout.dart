@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'batch_listing/ViewBatchDetails2.dart';
 import 'batch_listing/add_trainee_list.dart';
 import 'batch_listing/batch_list.dart';
 import 'batch_listing/batchlist_search.dart';
@@ -35,7 +37,8 @@ class _LayoutState extends State<Layout> {
     const SessionList(),
     const Text(''),
     const SearchBatchList(),
-     AddTraineeList()
+    AddTraineeList()
+
   ];
 
   
@@ -49,7 +52,7 @@ class _LayoutState extends State<Layout> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.center,
                     child: Icon(
                           Icons.close_rounded,
@@ -109,7 +112,7 @@ class _LayoutState extends State<Layout> {
         ),
         floatingActionButton: CircleAvatar(
             radius: 40,
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             child: FloatingActionButton(
               onPressed: () {},
               elevation: 0,

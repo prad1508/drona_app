@@ -4,6 +4,7 @@ import '../res/language/language.dart';
 import '../res/widget/dashboard_card.dart';
 import '../res/widget/drawer_widget.dart';
 import 'main_menu.dart';
+import 'trainee_listing/trainee_listing.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -160,14 +161,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          DashboardCard(
+                        children: [
+                          InkWell(
+                            onTap: (){
+                               Navigator.push(
+                                         context,
+                                         MaterialPageRoute(
+                                           builder: (BuildContext context) =>
+                                               const Trainee_Listing(),
+                                         ),
+                                       );
+                            },
+                          child:DashboardCard(
                               color: Colors.blueAccent,
                               icon: Icons.group_outlined,
                               title: 'Total Trainee',
                               subtitle: '23 Onboarded',
                               count: '54',
                               line: .54),
+                          ),
                           DashboardCard(
                               color: Color.fromARGB(255, 7, 3, 244),
                               icon: Icons.currency_rupee_outlined,

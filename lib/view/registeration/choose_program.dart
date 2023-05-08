@@ -2300,8 +2300,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                               color: Theme.of(context)
                                                   .primaryColor,
                                               onPress: () async {
-                                               
-                                                registration.programPost(data, context);
+                                               registration.programPost(data, context);
                                               },
                                             ),
                   ]),

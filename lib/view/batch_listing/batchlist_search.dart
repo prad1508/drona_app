@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:drona/utils/routes/routes_name.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
@@ -5,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
+import '../../res/app_url.dart';
 import '../../res/widget/round_button.dart';
 import '../../view_model/batchList_view_model.dart';
 import 'create_batch_listing.dart';
+
 class SearchBatchList extends StatefulWidget {
   const SearchBatchList({super.key});
 
@@ -15,29 +19,13 @@ class SearchBatchList extends StatefulWidget {
   State<SearchBatchList> createState() => _SearchBatchListState();
 }
 
-
 class _SearchBatchListState extends State<SearchBatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
-  BatchListViewViewModel  batchListViewViewModel = BatchListViewViewModel();
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
   List<int> _selectedItems = <int>[];
-
-  List<Map<String, dynamic>> _foundUsers = [
-    {
-      "id": 1,
-      "name": "Tennis Batch",
-      "detail": 'Male, +9199555296811',
-      "proImg": "assets/images/Golf.png",
-      "categorgyImg": "assets/images/Golf.png"
-    },
-    {
-      "id": 2,
-      "name": "Tennis Batch night with lihghts...",
-      "detail": 'Male, +9188555296811',
-      "proImg": "assets/images/Golf.png",
-      "categorgyImg": "assets/images/Golf.png"
-    },
-  ];
+  bool notFound = false;
+  List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
     super.initState();
@@ -47,16 +35,19 @@ class _SearchBatchListState extends State<SearchBatchList> {
   void dataFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
-      results = _foundUsers;
+      setState(() {
+        notFound = false;
+      });
     } else {
       results = _foundUsers
           .where((user) =>
               user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
+      setState(() {
+        notFound = results.isEmpty;
+        _foundUsers = results;
+      });
     }
-    setState(() {
-      _foundUsers = results;
-    });
   }
 
   @override
@@ -92,13 +83,13 @@ class _SearchBatchListState extends State<SearchBatchList> {
           actions: [
             IconButton(
               onPressed: (() {
-               Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                           builder: (BuildContext context) =>
-                               const CreateBatchListing(),
-                         ),
-                       );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        const CreateBatchListing(),
+                  ),
+                );
               }),
               icon: const Icon(Icons.add),
               iconSize: 25,
@@ -109,200 +100,222 @@ class _SearchBatchListState extends State<SearchBatchList> {
         body: Material(
           color: Colors.white,
           child: Container(
-            padding: const EdgeInsets.all(20),
-            child: ChangeNotifierProvider<BatchListViewViewModel>(
-        create: (BuildContext context) => batchListViewViewModel,
-        child: Consumer<BatchListViewViewModel>(
-            builder: (context, value, _){
-            
-              return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 55,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey)),
-                      child: Image.asset(
-                        "assets/images/menu.png",
-                        height: 20,
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                          side: BorderSide(
-                            color: Color.fromARGB(255, 197, 196, 196),
-                          ),
-                        ),
-                        elevation: 0,
-                        child: ListTile(
-                          title: TextField(
-                            onChanged: (value) => dataFilter(value),
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 0.0),
-                                hintText: 'Search',
-                                border: InputBorder.none),
-                          ),
-                          trailing: const Icon(Icons.search),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        height: 55,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.grey)),
+                        child: Image.asset(
+                          "assets/images/menu.png",
+                          height: 20,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-               
-                const SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: _foundUsers.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: _foundUsers.length,
-                          itemBuilder: (context, index) => Card(
-                            key: ValueKey(_foundUsers[index]["id"]),
-                            elevation: 0,
-                            margin: const EdgeInsets.symmetric(vertical: 0),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  tileColor: (_selectedItems.contains(index))
-                                      ? Color.fromARGB(255, 218, 218, 219)
-                                          .withOpacity(0.5)
-                                      : Colors.transparent,
-                                  leading: CircleAvatar(
-                                      radius: 20.5,
-                                      backgroundColor: const Color.fromRGBO(
-                                          194, 235, 216, 1),
-                                      child: _selectedItems.contains(index)
-                                          ? const Icon(
-                                              Icons.check,
-                                              color: Color.fromRGBO(
-                                                  71, 192, 136, 1),
-                                              size: 30.0,
-                                            )
-                                          : Image(
-                                              image: AssetImage(
-                                                  _foundUsers[index]
-                                                      ["proImg"]))),
-                                  title: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          _foundUsers[index]['name'],
-                                          style: const TextStyle(
-                                              color:
-                                                  Color.fromRGBO(57, 64, 74, 1),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: 'Loto-Regular'),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 5),
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 23,
-                                          width: 23,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Text("06"),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  subtitle: Column(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 25),
-                                        child: Text(
-                                          _foundUsers[index]["detail"]
-                                              .toString(),
-                                          style: const TextStyle(
-                                              color:
-                                                  Color.fromRGBO(57, 64, 74, 1),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'Loto-Regular'),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text("Coach Name:",
-                                              style: TextStyle(
-                                                  color: Colors.black)),
-                                          Text(
-                                            "John Smith",
-                                            style: TextStyle(),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  trailing: Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: Colors.green.shade700,
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: Text(
-                                      "Active",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ViewProfilenew()));
-                                  },
-                                  onLongPress: () {
-                                    if (!_selectedItems.contains(index)) {
-                                      setState(() {
-                                        _selectedItems.add(index);
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _selectedItems
-                                            .removeWhere((val) => val == index);
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Divider(
-                                  height: 5,
-                                ),
-                              ],
+                      Expanded(
+                        child: Card(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                            side: BorderSide(
+                              color: Color.fromARGB(255, 197, 196, 196),
                             ),
                           ),
-                        )
-                      : const Text(
-                          'No results found',
-                          style: TextStyle(fontSize: 24),
+                          elevation: 0,
+                          child: ListTile(
+                            title: TextField(
+                              onChanged: (searchData) => dataFilter(searchData),
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 0.0),
+                                  hintText: 'Search',
+                                  border: InputBorder.none),
+                            ),
+                            trailing: const Icon(Icons.search),
+                          ),
                         ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-               
-              ],
-            );
-            }),
-      ),
-            
-             ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ChangeNotifierProvider<BatchListViewViewModel>(
+                      create: (BuildContext context) => batchListViewViewModel,
+                      child: Consumer<BatchListViewViewModel>(
+                          builder: (context, value, Widget) {
+                        if (_foundUsers.isEmpty) {
+                          _foundUsers = List.generate(
+                              value.dataList.data?.data!.length ?? 0, (index) {
+                            return {
+                              "name":
+                                  value.dataList.data?.data![index].batchName,
+                              "detail": '${value.dataList.data?.data![index].programName}, ${value.dataList.data?.data![index].batchTimingFrom} to ${value.dataList.data?.data![index].batchTimingTo}',
+                              "batchImg": value.dataList.data?.data![index].serviceIconname,
+                              "coach_name":
+                                  value.dataList.data?.data![index].coachName,
+                              "status" : value.dataList.data?.data![index].status
+                            };
+                          });
+                        }
+
+                        return Expanded(
+                          child: notFound
+                              ? Text(
+                                  'No results found',
+                                  style: TextStyle(fontSize: 24),
+                                )
+                              : ListView.builder(
+                                  itemCount: _foundUsers.length,
+                                  itemBuilder: (context, index) => Card(
+                                    key: ValueKey(_foundUsers[index]["id"]),
+                                    elevation: 0,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 0),
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          tileColor:
+                                              (_selectedItems.contains(index))
+                                                  ? Color.fromARGB(
+                                                          255, 218, 218, 219)
+                                                      .withOpacity(0.5)
+                                                  : Colors.transparent,
+                                          leading: CircleAvatar(
+                                              radius: 20.5,
+                                              backgroundColor:
+                                                  const Color.fromRGBO(
+                                                      194, 235, 216, 1),
+                                              child: _selectedItems
+                                                      .contains(index)
+                                                  ? const Icon(
+                                                      Icons.check,
+                                                      color: Color.fromRGBO(
+                                                          71, 192, 136, 1),
+                                                      size: 30.0,
+                                                    )
+                                                  : Image(
+                                                      image: NetworkImage(AppUrl.imageListendPoint + 
+                                                          _foundUsers[index]
+                                                              ["batchImg"]))),
+                                          title: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  _foundUsers[index]['name'],
+                                                  style: const TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          57, 64, 74, 1),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily:
+                                                          'Loto-Regular'),
+                                                ),
+                                              ),
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //       left: 5),
+                                              //   child: Container(
+                                              //     alignment: Alignment.center,
+                                              //     height: 23,
+                                              //     width: 23,
+                                              //     decoration: BoxDecoration(
+                                              //         color: Colors.grey,
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 20)),
+                                              //     child: Text("06"),
+                                              //   ),
+                                              // ),
+                                            ],
+                                          ),
+                                          subtitle: Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 25),
+                                                child: Text(
+                                                  _foundUsers[index]["detail"]
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          57, 64, 74, 1),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily:
+                                                          'Loto-Regular'),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Text("Coach Name:",
+                                                      style: TextStyle(
+                                                          color: Colors.black)),
+                                                  Text(
+                                                    _foundUsers[index]
+                                                        ["coach_name"],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: Container(
+                                            alignment: Alignment.center,
+                                            height: 30,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(71, 192, 136, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Text( _foundUsers[index]['status'],
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ViewProfilenew()));
+                                          },
+                                          onLongPress: () {
+                                            if (!_selectedItems
+                                                .contains(index)) {
+                                              setState(() {
+                                                _selectedItems.add(index);
+                                              });
+                                            } else {
+                                              setState(() {
+                                                _selectedItems.removeWhere(
+                                                    (val) => val == index);
+                                              });
+                                            }
+                                          },
+                                        ),
+                                        const Divider(
+                                          height: 5,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                        );
+                      })),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              )),
         ),
       ),
     );

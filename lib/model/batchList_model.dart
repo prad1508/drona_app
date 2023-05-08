@@ -34,6 +34,8 @@ class BatchListListModel {
 class Data {
   String? sId;
   String? uid;
+  String? coachProfileUid;
+  String? coachName;
   String? serviceUid;
   String? serviceName;
   String? serviceIconname;
@@ -45,7 +47,7 @@ class Data {
   String? programUid;
   String? academyUid;
   String? programName;
-  String? fees;
+  dynamic ? fees;
   String? cdd;
   String? cmm;
   String? cyy;
@@ -57,6 +59,8 @@ class Data {
   Data(
       {this.sId,
       this.uid,
+      this.coachProfileUid,
+      this.coachName,
       this.serviceUid,
       this.serviceName,
       this.serviceIconname,
@@ -80,6 +84,8 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     uid = json['uid'];
+    coachProfileUid = json['coach_profile_uid'];
+    coachName = json['coach_name'];
     serviceUid = json['service_uid'];
     serviceName = json['service_name'];
     serviceIconname = json['service_iconname'];
@@ -105,6 +111,8 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['uid'] = this.uid;
+    data['coach_profile_uid'] = this.coachProfileUid;
+    data['coach_name'] = this.coachName;
     data['service_uid'] = this.serviceUid;
     data['service_name'] = this.serviceName;
     data['service_iconname'] = this.serviceIconname;

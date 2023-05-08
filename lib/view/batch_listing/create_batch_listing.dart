@@ -101,6 +101,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   String batchFromdata = '';
   String batchTodata = '';
+  List activeServiceValue =[];
+ List<DropdownMenuItem<String>> activeServices = [];
   selectTimeFrom() async {
     var timepick = await showTimePicker(
       context: context,
@@ -200,28 +202,19 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => academyViewViewModel,
                         child: Consumer<AcademyViewViewModel>(
                             builder: (context, value, child) {
-
-                          var selectedvalue = value
-                                  .dataList.data?.services?[0].uid
-                                  .toString() ??
-                              '';
-                          assignSeviceId(selectedvalue);
-                          List<DropdownMenuItem<String>> dropdownItems =
-                              List.generate(
-                                  value.dataList.data?.services!.length ?? 0,
-                                  (index) {
-                                 return  DropdownMenuItem(
-                                        value: value.dataList.data?.services?[index].uid
-                                            .toString(),
-                                        child: Text(value.dataList.data
-                                                ?.services?[index].serviceName
-                                                .toString() ??
-                                            '')
-                                            );
-                                   
-                              
-                          
-                          });
+                              activeServiceValue.clear();
+                              activeServices.clear();
+                           for(var i = 0; i < value.dataList.data!.services!.length; i++)   
+                           {
+                                if(value.dataList.data!.services![i].status.toString() == 'active'){
+                                 activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
+                                 activeServices.add( DropdownMenuItem(
+                                              value:  value.dataList.data!.services![i].uid.toString(),
+                                               child: Text(value.dataList.data!.services![i].serviceName.toString())
+                                                  ));
+                              }
+                       }
+                           assignSeviceId(activeServiceValue[0]);
                           return DropdownButton(
                               isExpanded: true,
                               underline: DropdownButtonHideUnderline(
@@ -232,7 +225,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                   selectedService = newValue!;
                                 });
                               },
-                              items: dropdownItems);
+                              items: activeServices);
                         })),
                   ),
                   const SizedBox(
@@ -314,7 +307,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
                       _programid = value
-                          .dataList.data?.data![0].programs![0].uid
+                          .dataList.data?.data![0].uid
                           .toString();
                       _programName = value
                           .dataList.data?.data![0].programs![0].programName
@@ -323,15 +316,18 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'What ${value.dataList.data?.data![0].name.toString() ?? ''}?',
+                            child:  (value.dataList.data?.data![0].name ?? '').isNotEmpty ? Text(
+                              'What ${value.dataList.data?.data![0].name.toString()}',
                               style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                            ): Container(),
                           ),
-                          const SizedBox(
+                          (value.dataList.data?.data![0]
+                                        .programs)?.isNotEmpty ?? false ? SizedBox(
                             height: 15,
-                          ),
-                          SizedBox(
+                          ): 
+                          Container(),
+                         (value.dataList.data?.data![0]
+                                        .programs)?.isNotEmpty ?? false ? SizedBox(
                             height: 50,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -343,7 +339,9 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      CustomRadio<String>(
+                                      value.dataList.data?.data![0]
+                                                .programs![index].amount
+                                                .toString() == '0' ? Container() : CustomRadio<String>(
                                         btnColor: Colors.black,
                                         value: value.dataList.data?.data![0]
                                                 .programs![index].uid
@@ -363,7 +361,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                     ],
                                   );
                                 }),
-                          ),
+                          ): Container(),
                         ],
                       );
                     }),
@@ -732,7 +730,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
                       };
-                        batch.fetchCreatebatchListApi(data, context);
+                       batch.fetchCreatebatchListApi(data, context);
                     },
                   ),
                 ],

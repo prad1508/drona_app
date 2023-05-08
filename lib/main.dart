@@ -10,8 +10,8 @@ import '/utils/routes/routes_name.dart';
 import '/view_model/auth_view_model.dart';
 import '/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
-
 import 'utils/theme_provider.dart';
+import 'view_model/batchList_view_model.dart';
 import 'view_model/batch_view_model.dart';
 import 'view_model/category_view_model.dart';
 import 'view_model/coachlist_view_model.dart';
@@ -82,7 +82,10 @@ class _AppTranslateState extends State<AppTranslate> {
           ChangeNotifierProvider(create: (_) =>MyservicesViewViewModel()),
           ChangeNotifierProvider(create: (_) =>CoachlistViewViewModel()),
           ChangeNotifierProvider(create: (_) =>MyProgramViewViewModel()),
+          ChangeNotifierProvider(create: (_) =>BatchListViewViewModel()),
           ChangeNotifierProvider(create: (_) =>BatchViewViewModel())
+
+          
         ],
       
       child: Consumer<ThemeProvider>(
