@@ -589,15 +589,9 @@ class _ViewBatchDetails1State extends State<ViewBatchDetails1> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const                        ViewBatchDetails
-(),
-                                     ),
-                                   );
-                      }),
+                      
+                      }
+                      ),
                   SizedBox(
                     height: 15,
                   ),

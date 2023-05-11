@@ -5,7 +5,6 @@ import 'package:drona/view/batch_listing/ViewBatchDetails2.dart';
 import 'package:drona/view/batch_listing/add_batch.dart';
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/batch_listing/add_trainee_list.dart';
-import 'package:drona/view/batch_listing/add_trainee_list1.dart';
 import 'package:drona/view/batch_listing/batch_list.dart';
 import 'package:drona/view/batch_listing/coach_add_profile.dart';
 import 'package:drona/view/batch_listing/coach_profile_add.dart';
@@ -91,9 +90,6 @@ class Routes {
       case RoutesName.CreateBatchListing:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CreateBatchListing());
-      case RoutesName.ViewBatchDetails:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const ViewBatchDetails());
       case RoutesName.ViewBatchDetails1:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ViewBatchDetails1());
@@ -106,9 +102,6 @@ class Routes {
       case RoutesName.AddTraineeList:
         return MaterialPageRoute(
             builder: (BuildContext context) => AddTraineeList());
-      case RoutesName.AddTraineeList1:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const AddTraineeList1());
       case RoutesName.CoachProfileAdd:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CoachProfileAdd());

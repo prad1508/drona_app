@@ -9,8 +9,11 @@ import 'package:provider/provider.dart';
 
 import '../../res/app_url.dart';
 import '../../res/widget/round_button.dart';
+import '../../view_model/academy_view_model.dart';
 import '../../view_model/batchList_view_model.dart';
+import '../../view_model/myprogram_view_model.dart';
 import 'create_batch_listing.dart';
+import 'view_batch_details.dart';
 
 class SearchBatchList extends StatefulWidget {
   const SearchBatchList({super.key});
@@ -23,6 +26,8 @@ class _SearchBatchListState extends State<SearchBatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+  AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
+  MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   List<int> _selectedItems = <int>[];
   bool notFound = false;
   List<Map<String, dynamic>> _foundUsers = [];
@@ -30,6 +35,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
   initState() {
     super.initState();
     batchListViewViewModel.fetchBatchListListApi();
+    academyViewViewModel.fetchAcademyListApi();
   }
 
   void dataFilter(String enteredKeyword) {
@@ -48,6 +54,122 @@ class _SearchBatchListState extends State<SearchBatchList> {
         _foundUsers = results;
       });
     }
+  }
+ 
+
+  //bottomsheet popup
+  showFilter() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+          AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
+          academyViewViewModel.fetchAcademyListApi();
+          List<DropdownMenuItem<String>>  activeServices = [];
+          String? selectedService;
+          assignSeviceId(selectedServiceValue) {
+            myProgramViewViewModel.fetchMyProgramListApi(selectedService);
+            selectedService = selectedServiceValue;
+          }
+
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 200,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 3,
+                          width: 50,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Filters',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Loto-Regular'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(color: Colors.grey),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Align(
+                      alignment: Alignment.topLeft, child: Text('Services')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1,
+                          color: const Color.fromARGB(255, 218, 216, 216)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: ChangeNotifierProvider<AcademyViewViewModel>(
+                        create: (context) => academyViewViewModel,
+                        child: Consumer<AcademyViewViewModel>(
+                            builder: (context, value, child) {
+                            assignSeviceId(value.dataList.data?.services![0].uid.toString() ?? '');
+                            activeServices = List.generate(
+                              value.dataList.data?.services?.length ?? 0, 
+                              (index)  {
+                               return DropdownMenuItem(
+                                              value:  value.dataList.data!.services![index].uid.toString(),
+                                               child: Text(value.dataList.data!.services![index].serviceName.toString())
+                                                  );
+                            });
+                       
+                          return DropdownButton(
+                              style: const TextStyle(fontSize: 14,color: Colors.black),
+                              isExpanded: true,
+                              underline: DropdownButtonHideUnderline(
+                                  child: Container()),
+                              value: selectedService,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedService = newValue!;
+                                });
+                              },
+                              items: activeServices);
+                        })),
+                  ),
+                   
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -69,7 +191,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 _selectedItems.length == 0
                     ? ''
                     : _selectedItems.length.toString(),
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               )
             ],
           ),
@@ -107,17 +229,17 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 children: [
                   Row(
                     children: [
-                      Container(
+                     InkWell(
+                      onTap: showFilter,
+                      child:Container(
                         alignment: Alignment.center,
                         height: 55,
                         width: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: Colors.grey)),
-                        child: Image.asset(
-                          "assets/images/menu.png",
-                          height: 20,
-                        ),
+                        child: const Icon( Icons.filter_list, ),
+                      ),
                       ),
                       Expanded(
                         child: Card(
@@ -151,7 +273,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                   ChangeNotifierProvider<BatchListViewViewModel>(
                       create: (BuildContext context) => batchListViewViewModel,
                       child: Consumer<BatchListViewViewModel>(
-                          builder: (context, value, Widget) {
+                          builder: (context, value, _) {
                         if (_foundUsers.isEmpty) {
                           _foundUsers = List.generate(
                               value.dataList.data?.data!.length ?? 0, (index) {
@@ -169,7 +291,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
 
                         return Expanded(
                           child: notFound
-                              ? Text(
+                              ? const Text(
                                   'No results found',
                                   style: TextStyle(fontSize: 24),
                                 )
@@ -185,7 +307,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                         ListTile(
                                           tileColor:
                                               (_selectedItems.contains(index))
-                                                  ? Color.fromARGB(
+                                                  ? const Color.fromARGB(
                                                           255, 218, 218, 219)
                                                       .withOpacity(0.5)
                                                   : Colors.transparent,
@@ -221,21 +343,6 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                                           'Loto-Regular'),
                                                 ),
                                               ),
-                                              // Padding(
-                                              //   padding: const EdgeInsets.only(
-                                              //       left: 5),
-                                              //   child: Container(
-                                              //     alignment: Alignment.center,
-                                              //     height: 23,
-                                              //     width: 23,
-                                              //     decoration: BoxDecoration(
-                                              //         color: Colors.grey,
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 20)),
-                                              //     child: Text("06"),
-                                              //   ),
-                                              // ),
                                             ],
                                           ),
                                           subtitle: Column(
@@ -278,7 +385,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                                 borderRadius:
                                                     BorderRadius.circular(5)),
                                             child: Text( _foundUsers[index]['status'],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white),
                                             ),
                                           ),
@@ -286,7 +393,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ViewProfilenew()));
+                                                         ViewBatchDetails(ListIndex: index)));
                                           },
                                           onLongPress: () {
                                             if (!_selectedItems

@@ -6,6 +6,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/widget/round_button.dart';
+import '../../utils/utils.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/registration_view_model.dart';
 
@@ -20,8 +21,8 @@ class _NewPasswordState extends State<NewPassword> {
    //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
-  final TextEditingController dob = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController newPassword = TextEditingController();
+  final TextEditingController oldPassword= TextEditingController();
 
 
     //cancel session
@@ -137,7 +138,7 @@ class _NewPasswordState extends State<NewPassword> {
                       height: 15,
                     ),
                    TextFormField(
-                      controller: _emailController,
+                      controller: newPassword,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                        hintText: 'XXX-XXX-XXXX',
@@ -156,7 +157,7 @@ class _NewPasswordState extends State<NewPassword> {
                   ),
                    Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Current Password",
+                      child: Text("Confirm Password",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -164,7 +165,7 @@ class _NewPasswordState extends State<NewPassword> {
                       height: 15,
                     ),
                    TextFormField(
-                      controller: _emailController,
+                      controller: oldPassword,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                        hintText: 'XXX-XXX-XXXX',
@@ -189,8 +190,22 @@ class _NewPasswordState extends State<NewPassword> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        successPopup(context);
+                       
+                        if( oldPassword.text.toString().isEmpty){
+                          Utils.flushBarErrorMessage('Please fill field', context);
+                        }
+                        else if(newPassword.text.length > 5){
+                            registration.verifynewPassword(newPassword.text.toString(), context);
+                        }
+                        else if(oldPassword.text.toString() == newPassword.text.toString()){
+                           Utils.flushBarErrorMessage('Password shoud be more than 5 latter', context);
+                        }
+                        else{
+                           Utils.flushBarErrorMessage('Confirm password does not match', context);
+                        }
+                        
                       }),
+
                 ],
               ),
             ),

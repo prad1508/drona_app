@@ -1,8 +1,12 @@
 class AppUrl {
-  static var baseUrl = 'http://apidrona.moozetech.in';
+  static var baseUrl = 'https://apidrona.moozetech.in';
 
   static var registrationListEndPoint = '$baseUrl/ouser/getstarteddev'; 
+  static var forgetPasswordListEndPoint = '$baseUrl/ouser/forgetpassword';
   static var otpListEndPoint = '$baseUrl/ouser/verifyotp';
+  static var resetotpVerify = '$baseUrl/ouser/passresetverifyotp';
+  static var verifynewPassword = '$baseUrl/ouser/setnewpassword';
+  
   static var postofficeListEndPoint = 'https://api.postalpincode.in/pincode/';
   static var categoryListEndPoint = '$baseUrl/academy/cat';
   static var basicDetailsListEndPoint = '$baseUrl/academy/basicdetail';
@@ -20,7 +24,7 @@ class AppUrl {
   static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
   //batch
   static var  createbatchListEndPoint = '$baseUrl/academy/batch'; 
-  static var batchListListEndPoint = '$baseUrl//academy/batch';
+  static var batchListListEndPoint = '$baseUrl/academy/batch';
   static var userloginEndPint = '$baseUrl/ouser/login';
   static var academyRegistrationTrackEndPint = '$baseUrl/academy';
   static var userLogout = '$baseUrl/ouser/logout';

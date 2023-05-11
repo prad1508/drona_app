@@ -10,6 +10,8 @@ import '../../res/widget/progress_pills.dart';
 import '../../view_model/registration_view_model.dart';
 import 'new_password.dart';
 
+
+
 class ForgetOtp extends StatefulWidget {
   const ForgetOtp({super.key});
 
@@ -122,16 +124,11 @@ class _ForgetOtpState extends State<ForgetOtp> {
   Widget build(BuildContext context) {
     final registration = Provider.of<RegistrationViewModel>(context);
     final width = MediaQuery.of(context).size.width * 0.8 / 6;
-    return MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Scaffold(
+    return  Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        foregroundColor: Colors.black,
         toolbarHeight: 80,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
-        ),
         title: Text(
                       AppLocale.enterOtp.getString(context),
                       style: Theme.of(context).textTheme.titleMedium,
@@ -167,7 +164,7 @@ class _ForgetOtpState extends State<ForgetOtp> {
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: Text('+91 9658992342',
+                    child: Text(registration.mobno,
                       style: const TextStyle(
                           height: 1.7,
                           color: Color.fromARGB(255, 81, 81, 81),
@@ -319,7 +316,7 @@ class _ForgetOtpState extends State<ForgetOtp> {
                                if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty && field5.isEmpty && field6.isEmpty)
                                   {}
                                   else{
-                                   registration.otpVerify(field1 + field2 + field3 + field4 + field5 + field6, context);
+                                   registration.resetotpVerify(field1 + field2 + field3 + field4 + field5 + field6, context);
                                   }
                             },
                           
@@ -369,31 +366,12 @@ class _ForgetOtpState extends State<ForgetOtp> {
                     ),
                     ],
                   ),
-      
-                 TextButton(
-                             style: TextButton.styleFrom(
-                               textStyle: const TextStyle(fontSize: 20),
-                             ),
-                               onPressed: () {
-                                   Navigator.push(
-                                             context,
-                                             MaterialPageRoute(
-                                               builder: (BuildContext context) =>
-                                                   const NewPassword(),
-                                             ),
-                                           );
-                                },
-                             child: const Text('skip'),
-                           ),
-                 
-                  
                   
                 ],
               ),
             ),
           ),
         ),
-    ),
     );
   }
 }

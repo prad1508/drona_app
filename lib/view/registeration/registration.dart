@@ -303,13 +303,6 @@ class _RegistrationState extends State<Registration> {
                               "email": email.text.toString()
                             };
                           registration.register(data, context);
-                          // Navigator.push(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //             builder: (BuildContext context) =>
-                          //                 OtpPage(registration: data),
-                          //           ),
-                          //         );
                             }
                             
                           }

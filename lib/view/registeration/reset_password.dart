@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
-
-import '../../res/language/language.dart';
+import '../../res/widget/synctextform.dart';
 import '../../res/widget/round_button.dart';
-import '../../utils/routes/routes_name.dart';
+import '../../utils/utils.dart';
+import '../../utils/validation.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/registration_view_model.dart';
-import 'forget_otp.dart';
-import 'otp.dart';
+
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -20,14 +18,14 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-    //multi language support
+  //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
-  final TextEditingController dob = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
-   final registration = Provider.of<RegistrationViewModel>(context);
+    final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -40,7 +38,10 @@ class _ResetPasswordState extends State<ResetPassword> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title:const Text('Reset Password', style: TextStyle(fontSize: 18),),
+          title: const Text(
+            'Reset Password',
+            style: TextStyle(fontSize: 18),
+          ),
           centerTitle: true,
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
@@ -57,32 +58,28 @@ class _ResetPasswordState extends State<ResetPassword> {
                 children: [
                   const Align(
                     alignment: Alignment.center,
-                    child: Text('Please Enter Your Phone Number To Receive a Verification Code',
-                      style: TextStyle(fontSize: 16, fontFamily:  'Loto-Regular'),
+                    child: Text(
+                      'Please Enter Your Phone Number To Receive a Verification Code',
+                      style:
+                          TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
                     ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                   TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                       hintText: 'XXX-XXX-XXXX',
-                        hintStyle: TextStyle(fontSize: 12),
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
+                  AsyncTextFormField(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'XXX-XXX-XXXX',
+                      isValidatingMessage:
+                          'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                          'Enter a valid 10 digit mobile number'),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .4,
                   ),
-                  
                   RoundButton(
                       loading: false,
                       title: 'Send',
@@ -90,14 +87,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      ForgetOtp(),
-                ),
-              );
+                        if(phone.text.toString().length == 10)
+                         {
+                           Map<String, String> data = {
+                          "mobno": phone.text.toString(),
+                        };
+                        registration.forgetPassword(data, context);
+                         }
+                         else{
+                           Utils.flushBarErrorMessage('Password shoud be 10 latter', context);
+                         }
                       }),
+
                 ],
               ),
             ),

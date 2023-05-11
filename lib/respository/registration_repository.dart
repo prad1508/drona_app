@@ -85,6 +85,39 @@ class RegistrationRepository {
     }
   }  
 
+    //forget password
+  Future<dynamic> forgetPasswordListApi(dynamic data) async {
+    try {
+      dynamic response =
+          await _apiServices.getPostWithoutApiResponse(AppUrl.forgetPasswordListEndPoint, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  } 
+   //forget verify
+  Future<dynamic> resetotpVerifyListApi(dynamic data) async {
+    try {
+      dynamic response =
+          await _apiServices.getPostWithoutApiResponse(AppUrl.resetotpVerify, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  } 
+   //forget verify
+  Future<dynamic> verifynewPasswordListApi(dynamic data) async {
+    try {
+      dynamic response =
+          await _apiServices.getPostApiResponse(AppUrl.verifynewPassword, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  } 
+
+  
+
 }
 
 

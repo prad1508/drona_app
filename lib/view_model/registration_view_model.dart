@@ -1,16 +1,22 @@
 import 'dart:convert';
 
+import 'package:drona/view_model/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
+import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 import '../view/registeration/choose_program.dart';
 import '../view/registeration/detail_filled.dart';
+import '../view/registeration/forget_otp.dart';
+import '../view/registeration/new_password.dart';
 import '../view/registeration/otp.dart';
 import '../view/welcome_screen.dart';
 import '/respository/registration_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationViewModel with ChangeNotifier {
   final _myRepo = RegistrationRepository();
@@ -31,6 +37,22 @@ class RegistrationViewModel with ChangeNotifier {
    String get uid => _uid;
    setUid(String value) {
     _uid = value;
+    notifyListeners();
+  }
+
+  //setMobile 
+   String _mobno = '';
+   String get mobno => _mobno;
+   setMobno(String value) {
+    _mobno = value;
+    notifyListeners();
+  }
+
+  //setforgettoken
+   String _prToken = '';
+   String get prToken => _prToken;
+   setPrToken(String value) {
+    _prToken = value;
     notifyListeners();
   }
 
@@ -165,6 +187,66 @@ class RegistrationViewModel with ChangeNotifier {
        Utils.flushBarErrorMessage(value['msg'], context);
        Navigator.pushNamed(context, RoutesName.welcomeScreen);
     
+    }).onError((error, stackTrace) {
+      setLoading(false);
+     Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+  //////////////////////forget password /////////////////////////////////////
+  Future<void> forgetPassword(dynamic data, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+    _myRepo.forgetPasswordListApi(data).then((value) async {
+
+       setLoading(false);
+       Utils.flushBarErrorMessage(value['msg'], context);
+       setMobno(value['data'] ['mobno']);
+       Navigator.push(
+                 context,
+                 MaterialPageRoute(
+                   builder: (BuildContext context) =>
+                       const ForgetOtp(),
+                 ),
+               );
+    }).onError((error, stackTrace) {
+      setLoading(false);
+     Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+  //////////////////////forget password /////////////////////////////////////
+  Future<void> resetotpVerify(dynamic Otpdata, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+     Map data = {'mobno': '8109355407', 'otp': Otpdata.toString()};
+    _myRepo.resetotpVerifyListApi(data).then((value) async {
+       setLoading(false);
+       setPrToken( value['prtoken']);
+        final userPreference = Provider.of<UserViewModel>(context , listen: false);
+       userPreference.saveToken(UserModel(data: value['prtoken'].toString()));
+       Utils.flushBarErrorMessage(value['msg'], context);
+       Navigator.push(
+                                             context,
+                                             MaterialPageRoute(
+                                               builder: (BuildContext context) =>
+                                                   const NewPassword(),
+                                             ),
+                                           );
+    }).onError((error, stackTrace) {
+      setLoading(false);
+     Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+  
+//////////////////////Set New password /////////////////////////////////////
+  Future<void> verifynewPassword(dynamic newPass, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+     Map data = {'newpassword': newPass.toString(), 'prtoken': _prToken.toString()};
+    _myRepo.verifynewPasswordListApi(data).then((value) async {
+       setLoading(false);
+       Utils.flushBarErrorMessage(value['msg'], context);
+        Navigator.pushNamed(context, RoutesName.login);
     }).onError((error, stackTrace) {
       setLoading(false);
      Utils.flushBarErrorMessage(error.toString(), context);

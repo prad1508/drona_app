@@ -54,6 +54,9 @@ class Data {
   String? status;
   String? batchTimingFrom;
   String? batchTimingTo;
+  String? onlineSessionUrl;
+  bool? provideOnlineSessions;
+  List? batchDaysShort;
   List<String>? batchDays;
 
   Data(
@@ -79,6 +82,9 @@ class Data {
       this.status,
       this.batchTimingFrom,
       this.batchTimingTo,
+      this.onlineSessionUrl,
+      this.provideOnlineSessions,
+      this.batchDaysShort,
       this.batchDays});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -104,6 +110,9 @@ class Data {
     status = json['status'];
     batchTimingFrom = json['batch_timing_from'];
     batchTimingTo = json['batch_timing_to'];
+    onlineSessionUrl = json['online_session_url'];
+    provideOnlineSessions = json['provide_online_sessions'];
+    batchDaysShort = json['batch_days_short'];
     batchDays = json['batch_days'].cast<String>();
   }
 
@@ -131,6 +140,9 @@ class Data {
     data['status'] = this.status;
     data['batch_timing_from'] = this.batchTimingFrom;
     data['batch_timing_to'] = this.batchTimingTo;
+    data['online_session_url'] = this.onlineSessionUrl;
+    data['provide_online_sessions'] = this.provideOnlineSessions;
+    data['batch_days_short'] = this.batchDaysShort;
     data['batch_days'] = this.batchDays;
     return data;
   }

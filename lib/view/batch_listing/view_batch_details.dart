@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/customTextField.dart';
@@ -15,9 +16,11 @@ import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
+import '../../view_model/batchList_view_model.dart';
 
 class ViewBatchDetails extends StatefulWidget {
-  const ViewBatchDetails({super.key});
+  final int ListIndex;
+  const ViewBatchDetails({super.key, required this.ListIndex});
 
   @override
   State<ViewBatchDetails> createState() => _ViewBatchDetailsState();
@@ -26,6 +29,13 @@ class ViewBatchDetails extends StatefulWidget {
 class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+  @override
+  initState() {
+    super.initState();
+    batchListViewViewModel.fetchBatchListListApi();
+  }
+
   //custom radio
   // custum radio call in seprate page
   String? _groupLevel = 'beginner';
@@ -50,29 +60,33 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
 
   bool value = true;
   bool agree = true;
-  final TextEditingController FullName = TextEditingController();
+  final TextEditingController BatchName = TextEditingController();
+  final TextEditingController service = TextEditingController();
+  final TextEditingController assignCoach = TextEditingController();
+  final TextEditingController fee = TextEditingController();
+  final TextEditingController onlineUrl = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
 
   Future<bool> isValidPasscode(String value) async {
-    return await Future.delayed(Duration(seconds: 1),
+    return await Future.delayed(const Duration(seconds: 1),
         () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
   List<DropdownMenuItem<String>> get dropdownCategory {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
-      DropdownMenuItem(child: Text("Golf"), value: "golf"),
-      DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+      const DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
+      const DropdownMenuItem(child: Text("Golf"), value: "golf"),
+      const DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
     ];
     return menuItems;
   }
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("John"), value: "john"),
-      DropdownMenuItem(child: Text("Anil"), value: "anil"),
-      DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
+      const DropdownMenuItem(child: Text("John"), value: "john"),
+      const DropdownMenuItem(child: Text("Anil"), value: "anil"),
+      const DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
     ];
     return menuItems;
   }
@@ -102,7 +116,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
           actions: [
             IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.edit,
                   size: 20,
                   color: Colors.black,
@@ -113,329 +127,298 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Name',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: FullName,
-                    decoration: InputDecoration(
-                      hintText: 'Cricket',
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(alignment: Alignment.topLeft, child: Text('Services')),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: DropdownButton(
-                        isExpanded: true,
-                        elevation: 1,
-                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                        iconEnabledColor: Colors.black,
-                        style: const TextStyle(color: Colors.black),
-                        value: selectedCategory,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCategory = newValue!;
-
-                            _localization.translate(selectedCategory);
-                          });
-                        },
-                        items: dropdownCategory),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Assign Coach',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Color.fromARGB(255, 188, 185, 185)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: DropdownButton(
-                        isExpanded: true,
-                        elevation: 1,
-                        dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                        iconEnabledColor: Colors.black,
-                        style: const TextStyle(color: Colors.black),
-                        value: selectedAssignCoach,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedAssignCoach = newValue!;
-
-                            _localization.translate(selectedAssignCoach);
-                          });
-                        },
-                        items: dropdownAssignCoach),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'What Level?',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'beginner',
-                          groupValue: _groupLevel,
-                          onChanged: _valueChangedHandler(),
-                          label: 'Beginner',
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Fee',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: FullName,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. 200',
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Type of Batch',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.all(20),
+              child: ChangeNotifierProvider<BatchListViewViewModel>(
+                create: (BuildContext context) => batchListViewViewModel,
+                child: Consumer<BatchListViewViewModel>(
+                    builder: (context, value, _) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CustomRadio<String>(
-                        btnColor: Colors.black,
-                        value: 'group',
-                        groupValue: _groupBatch,
-                        onChanged: _valueChangedBatch(),
-                        label: 'Coaching Group',
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Online session Url',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: FullName,
-                    decoration: InputDecoration(
-                      hintText: 'ww.xyz.com',
-                      contentPadding: EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Batch Name',
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Days',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'mon',
-                          groupValue: _groupDays,
-                          onChanged: _valueChangedDays(),
-                          label: 'Mon',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'wed',
-                          groupValue: _groupDays,
-                          onChanged: _valueChangedDays(),
-                          label: 'Wed',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'fri',
-                          groupValue: _groupDays,
-                          onChanged: _valueChangedDays(),
-                          label: 'Fri',
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Timing',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: FullName,
-                          decoration: InputDecoration(
-                            hintText: 'From',
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        enabled: false,
+                        controller: BatchName
+                          ..text = value.dataList.data?.data![widget.ListIndex]
+                                  .batchName
+                                  .toString() ??
+                              '',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: FullName,
-                          decoration: InputDecoration(
-                            hintText: 'To',
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text('Services')),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        enabled: false,
+                        controller: service
+                          ..text = value.dataList.data?.data![widget.ListIndex]
+                                  .serviceName
+                                  .toString() ??
+                              '',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Assign Coach',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        enabled: false,
+                        controller: assignCoach
+                          ..text = value.dataList.data?.data![widget.ListIndex]
+                                  .coachName
+                                  .toString() ??
+                              '',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'What Level?',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black.withOpacity(0.5),
+                              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                          child: Text(value.dataList.data
+                                  ?.data![widget.ListIndex].programName
+                                  .toString() ??
+                              ''),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Fee',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        enabled: false,
+                        controller: fee
+                          ..text = value
+                                  .dataList.data?.data![widget.ListIndex].fees
+                                  .toString() ??
+                              '',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Type of Batch',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black.withOpacity(0.5),
+                              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                          child: Text(value.dataList.data
+                                  ?.data![widget.ListIndex].programName
+                                  .toString() ??
+                              ''),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Online session Url',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                       enabled: false,
+                        controller: onlineUrl..text = value.dataList.data?.data![widget.ListIndex]
+                                  .onlineSessionUrl
+                                  .toString() ??
+                              '',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Batch Days',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                     
+                      SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: value.dataList.data?.data![widget.ListIndex].batchDaysShort?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black.withOpacity(0.5),
+                                  padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                          child: Text(value.dataList.data?.data![widget.ListIndex].batchDaysShort![index] ?? ''),
+                        ),
+                        SizedBox(width: 10,)
+                              ],
+                            );
+                          }
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Batch Timing',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                       TextFormField(
+                        enabled: false,
+                        controller: fee..text = value.dataList.data!.data![widget.ListIndex].batchTimingFrom.toString() + ' to ' + value.dataList.data!.data![widget.ListIndex].batchTimingTo.toString(),
+                        decoration: InputDecoration(
+                          suffixIcon: const Icon(Icons.access_time),
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      RoundButton(
+                          loading: false,
+                          title: 'Add Trainee',
+                          textColor: Colors.white,
+                          rounded: true,
+                          color: Theme.of(context).primaryColor,
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const CreateBatchListing(),
+                              ),
+                            );
+                          }),
+                      const SizedBox(
+                        height: 15,
+                      ),
                     ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  RoundButton(
-                      loading: false,
-                      title: 'Add Trainee',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                         Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const                        CreateBatchListing
-(),
-                                     ),
-                                   );
-                      }),
-                  SizedBox(
-                    height: 15,
-                  ),
-                ],
+                  );
+                }),
               ),
             ),
           ),

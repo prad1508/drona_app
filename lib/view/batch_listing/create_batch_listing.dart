@@ -25,7 +25,7 @@ class CreateBatchListing extends StatefulWidget {
 }
 
 class _CreateBatchListingState extends State<CreateBatchListing> {
-  //multi language support
+  //multi language support 
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
   // custum radio call in seprate page
