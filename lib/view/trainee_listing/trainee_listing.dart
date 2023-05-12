@@ -3,6 +3,7 @@
 import 'package:drona/res/widget/Trainee_Listing_Class/batch_name.dart';
 import 'package:drona/res/widget/Trainee_Listing_Class/filter_trainee_list.dart';
 import 'package:drona/res/widget/Trainee_Listing_Class/option_btn.dart';
+import 'package:drona/res/widget/Trainee_Listing_Class/trainee_listing_profile.dart';
 import 'package:drona/view/trainee_listing/ledger.dart';
 import 'package:drona/view/trainee_listing/record_payment.dart';
 import 'package:flutter/material.dart';
@@ -43,67 +44,68 @@ class _Trainee_ListingState extends State<Trainee_Listing> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              SizedBox(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            height: 36,
-                            width: 48,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Color(0xffDFE1E4))),
-                            child: SizedBox(
-                              width: 12,
-                              height: 8,
-                              child: InkWell(
-                                  child: Icon(
-                                    Icons.filter_list,
-                                    color: Color(0xff39404A),
-                                  ),
-                                  onTap: () {
-                                    bottomsheet(context);
-                                  }),
-                            )),
-                        Container(
-                          width: 282,
+        child: Column(
+          children: [
+            SizedBox(
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 25.0, right: 25.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
                           height: 36,
+                          width: 48,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(color: Color(0xffDFE1E4))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: UnderlineInputBorder(
-                                    borderSide: BorderSide.none),
-                                enabledBorder: InputBorder.none,
-                                hintText: 'Search',
-                                hintStyle: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.normal),
-                                suffixIcon: Icon(Icons.search,
-                                    color: Colors.grey.shade800),
-                              ),
+                          child: SizedBox(
+                            width: 12,
+                            height: 8,
+                            child: InkWell(
+                                child: Icon(
+                                  Icons.filter_list,
+                                  color: Color(0xff39404A),
+                                ),
+                                onTap: () {
+                                  bottomsheet(context);
+                                }),
+                          )),
+                      Container(
+                        width: 282,
+                        height: 36,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Color(0xffDFE1E4))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              enabledBorder: InputBorder.none,
+                              hintText: 'Search',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey.shade500,
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.normal),
+                              suffixIcon: Icon(Icons.search,
+                                  color: Colors.grey.shade800),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 28),
-            ],
-          ),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              child: Trainee_Listing_Profile(),
+            )
+          ],
         ),
       ),
     );

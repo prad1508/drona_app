@@ -25,23 +25,16 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  int _currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.selectedIndex;
-  }
+  int pageIndex = 0;
 
-  final List<Widget> _widgetOptions = <Widget>[
+  final pages = [
     const HomeScreen(),
     const SessionList(),
-    const Text(''),
     const SearchBatchList(),
     AddTraineeList()
-
   ];
 
-  
+
   Future<bool> showExitPopup(context) async {
     return await showDialog(
         context: context,
@@ -108,12 +101,13 @@ class _LayoutState extends State<Layout> {
       onWillPop: () => showExitPopup(context),
       child: Scaffold(
         body: Center(
-          child: _widgetOptions.elementAt(_currentIndex),
+          child: pages[pageIndex],
         ),
         floatingActionButton: CircleAvatar(
             radius: 40,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             child: FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
               onPressed: () {},
               elevation: 0,
               tooltip: 'Create',
@@ -121,50 +115,119 @@ class _LayoutState extends State<Layout> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: buildMyNavBar(context)
         
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard_rounded,
-                size: 20,
-              ),
-              label: 'Home',
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon:  Icon(Icons.calendar_today_rounded),
-          
-              label: 'Attendence',
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon:  Icon(null),
-              label: '',
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.wallet_membership,
-                size: 24,
-              ),
-              label: 'Batches',
-              backgroundColor: Colors.white,
-            ),
-    
-            BottomNavigationBarItem(
-              icon: Icon(Icons.group_outlined,
-                size: 22,
-              ),
-              label: 'Members',
-              backgroundColor: Colors.white,
-            ),
-          ],
-          currentIndex: _currentIndex,
-          selectedItemColor: Theme.of(context).primaryColor,
-          unselectedItemColor: Colors.black,
-          onTap: (index) => setState(() => _currentIndex = index),
-          
         ),
-         ),
+    );
+  }
+  Container buildMyNavBar(BuildContext context) {
+    return Container(
+      height: 70,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    pageIndex = 0;
+                  });
+                },
+                icon: pageIndex == 0
+                    ?  Icon(
+                        Icons.dashboard_rounded,
+                        size: 24,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : const Icon(
+                        Icons.space_dashboard_outlined,
+                        size: 24,
+                        color: Color.fromARGB(255, 109, 109, 109),
+                      ),
+              ),
+              pageIndex == 0 ? const Text('Home', style: TextStyle(height: .5, fontSize: 12),) : const Text('Home', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    pageIndex = 1;
+                  });
+                },
+                icon: pageIndex == 1
+                    ?  Icon(
+                        Icons.calendar_today,
+                        size: 24,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : const Icon(
+                        Icons.calendar_today_outlined,
+                        size: 24,
+                       color: Color.fromARGB(255, 109, 109, 109),
+                      ),
+              ),
+                 pageIndex == 1 ? const Text('Attendence', style: TextStyle(height: .5, fontSize: 12),) : const Text('Attendence', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12), ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    pageIndex = 2;
+                  });
+                },
+                icon: pageIndex == 2
+                    ?  Icon(
+                        Icons.wallet,
+                        color: Theme.of(context).primaryColor,
+                        size: 24,
+                      )
+                    :  const Icon(
+                        Icons.wallet_membership,
+                        color: Color.fromARGB(255, 109, 109, 109),
+                        size: 24,
+                        
+                      ),
+              ),
+               pageIndex == 2 ? const Text('Batches', style: TextStyle(height: .5, fontSize: 12),) : const Text('Batches', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    pageIndex = 3;
+                  });
+                },
+                icon: pageIndex == 3
+                    ? Icon(
+                        Icons.group,
+                        color: Theme.of(context).primaryColor,
+                        size: 24,
+                      )
+                    : const Icon(
+                        Icons.group_outlined,
+                        color: Color.fromARGB(255, 109, 109, 109),
+                        size: 24,
+                      ),
+              ),
+               pageIndex == 3 ? const Text('Members', style: TextStyle(height: .5, fontSize: 12),) : const Text('Members', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

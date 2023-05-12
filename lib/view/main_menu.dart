@@ -3,10 +3,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
-
+import 'package:drona/view/coach_listing/coach_listing.dart';
 import '../utils/routes/routes_name.dart';
 import '../view_model/user_view_model.dart';
+import 'batch_listing/batchlist_search.dart';
 import 'profile/create_profile.dart';
+import 'session_listing/session_list.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -168,7 +170,7 @@ class _MainMenuState extends State<MainMenu> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        CreateProfile(),
+                                        const CreateProfile(),
                                   ),
                                 );
                       }),
@@ -202,6 +204,15 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const SearchBatchList(),
+                                      ),
+                                    );
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -215,13 +226,19 @@ class _MainMenuState extends State<MainMenu> {
                             title: const Text(
                               'Batch Listing',
                             ),
-                            trailing: IconButton(
-                              onPressed: (() {}),
-                              icon: const Icon(Icons.arrow_forward_ios),
-                              iconSize: 20,
-                            ),
+                            trailing: const Icon(Icons.arrow_forward_ios, size: 20,),
+                             
                           ),
                           ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const SessionList(),
+                                        ),
+                                      );
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -235,11 +252,7 @@ class _MainMenuState extends State<MainMenu> {
                             title: const Text(
                               'Session listing',
                             ),
-                            trailing: IconButton(
-                              onPressed: (() {}),
-                              icon: const Icon(Icons.arrow_forward_ios),
-                              iconSize: 20,
-                            ),
+                            trailing: const Icon(Icons.arrow_forward_ios, size: 20,),
                           ),
                         ],
                       ),
@@ -354,7 +367,14 @@ class _MainMenuState extends State<MainMenu> {
                               'Record Payment',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                                 Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Coach_Listing()),
+                                );
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
