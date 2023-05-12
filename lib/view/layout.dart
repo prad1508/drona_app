@@ -34,7 +34,6 @@ class _LayoutState extends State<Layout> {
     AddTraineeList()
   ];
 
-
   Future<bool> showExitPopup(context) async {
     return await showDialog(
         context: context,
@@ -48,18 +47,15 @@ class _LayoutState extends State<Layout> {
                   const Align(
                     alignment: Alignment.center,
                     child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.redAccent,
-                          size: 50.0,
-                        ),
-                    
+                      Icons.close_rounded,
+                      color: Colors.redAccent,
+                      size: 50.0,
+                    ),
                   ),
                   const Text("Do you want to exit?"),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      
-                     
                       Expanded(
                           child: ElevatedButton(
                         onPressed: () {
@@ -68,11 +64,10 @@ class _LayoutState extends State<Layout> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                         ),
-                        child:const Text("No",
-                            style: TextStyle(color: Colors.black)
-                            ),
+                        child: const Text("No",
+                            style: TextStyle(color: Colors.black)),
                       )),
-                       const SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -81,7 +76,8 @@ class _LayoutState extends State<Layout> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent),
                           child: const Text(
-                            "Yes", style: TextStyle(color: Colors.white),
+                            "Yes",
+                            style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -91,7 +87,7 @@ class _LayoutState extends State<Layout> {
                 ],
               ),
             ),
-              );
+          );
         });
   }
 
@@ -100,10 +96,10 @@ class _LayoutState extends State<Layout> {
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: Scaffold(
-        body: Center(
-          child: pages[pageIndex],
-        ),
-        floatingActionButton: CircleAvatar(
+          body: Center(
+            child: pages[pageIndex],
+          ),
+          floatingActionButton: CircleAvatar(
             radius: 40,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             child: FloatingActionButton(
@@ -112,14 +108,14 @@ class _LayoutState extends State<Layout> {
               elevation: 0,
               tooltip: 'Create',
               child: const Icon(Icons.add),
+            ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: buildMyNavBar(context)
-        
-        ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: buildMyNavBar(context)),
     );
   }
+
   Container buildMyNavBar(BuildContext context) {
     return Container(
       height: 70,
@@ -139,7 +135,7 @@ class _LayoutState extends State<Layout> {
                   });
                 },
                 icon: pageIndex == 0
-                    ?  Icon(
+                    ? Icon(
                         Icons.dashboard_rounded,
                         size: 24,
                         color: Theme.of(context).primaryColor,
@@ -147,10 +143,21 @@ class _LayoutState extends State<Layout> {
                     : const Icon(
                         Icons.space_dashboard_outlined,
                         size: 24,
-                        color: Color.fromARGB(255, 109, 109, 109),
+                        color: Color.fromARGB(255, 153, 160, 171),
                       ),
               ),
-              pageIndex == 0 ? const Text('Home', style: TextStyle(height: .5, fontSize: 12),) : const Text('Home', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+              pageIndex == 0
+                  ? const Text(
+                      'Home',
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                  : const Text(
+                      'Home',
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
             ],
           ),
           Column(
@@ -163,7 +170,7 @@ class _LayoutState extends State<Layout> {
                   });
                 },
                 icon: pageIndex == 1
-                    ?  Icon(
+                    ? Icon(
                         Icons.calendar_today,
                         size: 24,
                         color: Theme.of(context).primaryColor,
@@ -171,10 +178,21 @@ class _LayoutState extends State<Layout> {
                     : const Icon(
                         Icons.calendar_today_outlined,
                         size: 24,
-                       color: Color.fromARGB(255, 109, 109, 109),
+                        color: Color.fromARGB(255, 153, 160, 171),
                       ),
               ),
-                 pageIndex == 1 ? const Text('Attendence', style: TextStyle(height: .5, fontSize: 12),) : const Text('Attendence', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12), ),
+              pageIndex == 1
+                  ? const Text(
+                      'Attendence',
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                  : const Text(
+                      'Attendence',
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
             ],
           ),
           Column(
@@ -187,19 +205,29 @@ class _LayoutState extends State<Layout> {
                   });
                 },
                 icon: pageIndex == 2
-                    ?  Icon(
+                    ? Icon(
                         Icons.wallet,
                         color: Theme.of(context).primaryColor,
                         size: 24,
                       )
-                    :  const Icon(
+                    : const Icon(
                         Icons.wallet_membership,
-                        color: Color.fromARGB(255, 109, 109, 109),
+                        color: Color.fromARGB(255, 153, 160, 171),
                         size: 24,
-                        
                       ),
               ),
-               pageIndex == 2 ? const Text('Batches', style: TextStyle(height: .5, fontSize: 12),) : const Text('Batches', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+              pageIndex == 2
+                  ? const Text(
+                      'Batches',
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                  : const Text(
+                      'Batches',
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
             ],
           ),
           Column(
@@ -219,11 +247,22 @@ class _LayoutState extends State<Layout> {
                       )
                     : const Icon(
                         Icons.group_outlined,
-                        color: Color.fromARGB(255, 109, 109, 109),
+                        color: Color.fromARGB(255, 153, 160, 171),
                         size: 24,
                       ),
               ),
-               pageIndex == 3 ? const Text('Members', style: TextStyle(height: .5, fontSize: 12),) : const Text('Members', style: TextStyle(height: .5, color: Color.fromARGB(255, 109, 109, 109), fontSize: 12),),
+              pageIndex == 3
+                  ? const Text(
+                      'Members',
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                  : const Text(
+                      'Members',
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
             ],
           ),
         ],

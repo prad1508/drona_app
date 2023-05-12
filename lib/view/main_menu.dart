@@ -9,6 +9,7 @@ import '../view_model/user_view_model.dart';
 import 'batch_listing/batchlist_search.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
+import 'trainee_listing/trainee_listing.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -304,6 +305,15 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const Trainee_Listing(),
+                                        ),
+                                      );
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -317,11 +327,8 @@ class _MainMenuState extends State<MainMenu> {
                             title: const Text(
                               'Mark by traniee',
                             ),
-                            trailing: IconButton(
-                              onPressed: (() {}),
-                              icon: const Icon(Icons.arrow_forward_ios),
-                              iconSize: 20,
-                            ),
+                            trailing: Icon(Icons.arrow_forward_ios, size:20),
+                             
                           ),
                         ],
                       ),

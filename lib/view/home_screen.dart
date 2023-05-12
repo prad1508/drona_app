@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                          ),
                                        );
                             },
-                          child:DashboardCard(
+                          child:const DashboardCard(
                               color: Colors.blueAccent,
                               icon: Icons.group_outlined,
                               title: 'Total Trainee',
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               count: '54',
                               line: .54),
                           ),
-                          DashboardCard(
+                          const DashboardCard(
                               color: Color.fromARGB(255, 7, 3, 244),
                               icon: Icons.currency_rupee_outlined,
                               title: 'Free Paid',
@@ -350,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: 'Loto-Regular',
                                   height: 1)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -441,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: 'Loto-Regular',
                                   height: 1)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -532,7 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: 'Loto-Regular',
                                   height: 1)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(

@@ -25,12 +25,14 @@ class SessionList extends StatefulWidget {
 
 enum Status { sheduled, close, cancel }
 
-class _SessionListState extends State<SessionList> {
+class _SessionListState extends State<SessionList>
+    with SingleTickerProviderStateMixin {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   final List<int> _selectedItems = <int>[];
-
+  late TabController _controller;
+  int _selectedIndex = 0;
   final List<Map<String, dynamic>> _allUsers = [
     {
       "id": 1,
@@ -59,13 +61,19 @@ class _SessionListState extends State<SessionList> {
       "status": "Cancel",
       "color": Colors.brown
     }
-    
   ];
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
     _foundUsers = _allUsers;
     super.initState();
+
+    _controller = TabController(length: 4, vsync: this);
+    _controller.addListener(() {
+      setState(() {
+        _selectedIndex = _controller.index;
+      });
+    });
   }
 
   void dataFilter(String enteredKeyword) {
@@ -184,35 +192,32 @@ class _SessionListState extends State<SessionList> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                           TabBar(
-                                      indicatorPadding : EdgeInsets.zero,
-                                      dividerColor: Colors.transparent,
-                                      indicatorColor: Colors.transparent,
-                                      indicator:ShapeDecoration(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(100.0)
-                                              ),
-                                              color: Colors.blue,
-                                            ),
-                                      
-                                        labelColor: Colors.white,
-                                        unselectedLabelColor: Colors.black,
-                                        isScrollable: true,
-                                        labelPadding: EdgeInsets.zero,
-                                        
-                                        tabs: [
+                          TabBar(
+                            controller: _controller,
+                            indicatorPadding: EdgeInsets.zero,
+                            dividerColor: Colors.transparent,
+                            indicatorColor: Colors.transparent,
+                            labelColor: Colors.white,
+                            unselectedLabelColor: Colors.black,
+                            isScrollable: true,
+                            labelPadding: EdgeInsets.zero,
+                            tabs: [
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 10, left: 10),
                                 child: Chip(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 242, 242, 242),
+                                  backgroundColor: _controller.index != 0
+                                      ? const Color.fromARGB(255, 242, 242, 242)
+                                      : Colors.blue.shade100,
                                   label: const Text(
                                     'All',
                                     style: TextStyle(color: Colors.blue),
                                   ),
                                   avatar: CircleAvatar(
-                                    backgroundColor: Colors.blue.shade100,
+                                    backgroundColor: _controller.index != 0
+                                        ? Colors.blue.shade100
+                                        : const Color.fromARGB(
+                                            255, 242, 242, 242),
                                     child: Text(_foundUsers.length.toString()),
                                   ),
                                 ),
@@ -220,13 +225,17 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 242, 242, 242),
+                                  backgroundColor: _controller.index != 1
+                                      ? const Color.fromARGB(255, 242, 242, 242)
+                                      : Colors.green.shade100,
                                   label: const Text(
                                     'Scheduled',
                                   ),
                                   avatar: CircleAvatar(
-                                    backgroundColor: Colors.green.shade100,
+                                    backgroundColor: _controller.index != 1
+                                        ? Colors.green.shade100
+                                        : const Color.fromARGB(
+                                            255, 242, 242, 242),
                                     child: const Text(
                                       '01',
                                     ),
@@ -236,13 +245,17 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 242, 242, 242),
+                                  backgroundColor: _controller.index != 2
+                                      ? const Color.fromARGB(255, 242, 242, 242)
+                                      : Colors.brown.shade100,
                                   label: const Text(
                                     'Canceled',
                                   ),
                                   avatar: CircleAvatar(
-                                    backgroundColor: Colors.brown.shade100,
+                                    backgroundColor: _controller.index != 2
+                                        ? Colors.brown.shade100
+                                        : const Color.fromARGB(
+                                            255, 242, 242, 242),
                                     child: const Text('01'),
                                   ),
                                 ),
@@ -250,21 +263,23 @@ class _SessionListState extends State<SessionList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Chip(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 242, 242, 242),
+                                  backgroundColor: _controller.index != 3
+                                      ? const Color.fromARGB(255, 242, 242, 242)
+                                      : Colors.redAccent.shade100,
                                   label: const Text(
                                     'Closed',
                                   ),
                                   avatar: CircleAvatar(
-                                    backgroundColor: Colors.redAccent.shade100,
+                                    backgroundColor: _controller.index != 3
+                                        ? Colors.redAccent.shade100
+                                        : const Color.fromARGB(
+                                            255, 242, 242, 242),
                                     child: const Text('01'),
                                   ),
                                 ),
                               ),
                             ],
-                          
-                                      ),
-                         
+                          ),
                           Container(
                             height: 400,
                             decoration: const BoxDecoration(
@@ -272,6 +287,7 @@ class _SessionListState extends State<SessionList> {
                                     top: BorderSide(
                                         color: Colors.grey, width: 0.5))),
                             child: TabBarView(
+                              controller: _controller,
                               children: <Widget>[
                                 Column(
                                   children: [
@@ -379,31 +395,41 @@ class _SessionListState extends State<SessionList> {
                                                                     "categorgyImg"])),
                                                       ),
                                                       onTap: () {
-                                                        if( _foundUsers[index]["status"].toString() == 'Scheduled'){
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const ViewSessionalDetails()));
-                                                        }
-                                                        else if( _foundUsers[index]["status"].toString() == 'Closed'){
-                                                            Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (BuildContext context) =>
-                                                                            const ViewDetailClosed(),
-                                                                      ),
-                                                                    );
-                                                        }
-                                                        else if(_foundUsers[index]["status"].toString() == 'Cancel'){
+                                                        if (_foundUsers[index]
+                                                                    ["status"]
+                                                                .toString() ==
+                                                            'Scheduled') {
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const ViewSessionalDetails()));
+                                                        } else if (_foundUsers[
+                                                                        index]
+                                                                    ["status"]
+                                                                .toString() ==
+                                                            'Closed') {
                                                           Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (BuildContext context) =>
-                                                                            const SessionDetailCancel(),
-                                                                      ),
-                                                                    );
-                                                          
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  const ViewDetailClosed(),
+                                                            ),
+                                                          );
+                                                        } else if (_foundUsers[
+                                                                        index]
+                                                                    ["status"]
+                                                                .toString() ==
+                                                            'Cancel') {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  const SessionDetailCancel(),
+                                                            ),
+                                                          );
                                                         }
                                                       },
                                                       onLongPress: () {
@@ -439,8 +465,8 @@ class _SessionListState extends State<SessionList> {
                                   ],
                                 ),
                                 const Text('tab 2'),
-                                const Text('tab 2'),
-                                const Text('tab 2'),
+                                const Text('tab 3'),
+                                const Text('tab 4'),
                               ],
                             ),
                           )
