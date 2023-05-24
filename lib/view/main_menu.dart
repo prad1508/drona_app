@@ -1,3 +1,4 @@
+import 'package:drona/view/academy/academy_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
 import '../utils/routes/routes_name.dart';
 import '../view_model/user_view_model.dart';
+//import 'acedamy/academy_setting.dart';
 import 'batch_listing/batchlist_search.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
@@ -71,8 +73,7 @@ class _MainMenuState extends State<MainMenu> {
                       color: const Color.fromARGB(255, 244, 247, 245),
                       elevation: 1,
                       child: Padding(
-                        padding:
-                            const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -80,7 +81,8 @@ class _MainMenuState extends State<MainMenu> {
                               padding: const EdgeInsets.only(left: 10),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
@@ -168,12 +170,12 @@ class _MainMenuState extends State<MainMenu> {
                     trailing: IconButton(
                       onPressed: (() {
                         Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const CreateProfile(),
-                                  ),
-                                );
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const CreateProfile(),
+                          ),
+                        );
                       }),
                       icon: const Icon(Icons.arrow_forward_ios),
                       iconSize: 20,
@@ -205,14 +207,14 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const SearchBatchList(),
-                                      ),
-                                    );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const SearchBatchList(),
+                                ),
+                              );
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -220,25 +222,28 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/batchlist.png'),
-                                          width: 15,),
+                                    image: AssetImage(
+                                        'assets/images/batchlist.png'),
+                                    width: 15,
+                                  ),
                                 )),
                             title: const Text(
                               'Batch Listing',
                             ),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 20,),
-                             
+                            trailing: const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
                           ),
                           ListTile(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              const SessionList(),
-                                        ),
-                                      );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const SessionList(),
+                                ),
+                              );
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -246,14 +251,18 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/sessionlist.png'),
-                                          width: 15,),
+                                    image: AssetImage(
+                                        'assets/images/sessionlist.png'),
+                                    width: 15,
+                                  ),
                                 )),
                             title: const Text(
                               'Session listing',
                             ),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 20,),
+                            trailing: const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),
@@ -291,9 +300,10 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/matchbatch.png'),
-                                          width: 15,),
+                                    image: AssetImage(
+                                        'assets/images/matchbatch.png'),
+                                    width: 15,
+                                  ),
                                 )),
                             title: const Text(
                               'Mark by batch',
@@ -305,14 +315,14 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              const Trainee_Listing(),
-                                        ),
-                                      );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const Trainee_Listing(),
+                                ),
+                              );
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -320,15 +330,15 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/matchtrinee.png'),
-                                          width: 18,),
+                                    image: AssetImage(
+                                        'assets/images/matchtrinee.png'),
+                                    width: 18,
+                                  ),
                                 )),
                             title: const Text(
                               'Mark by traniee',
                             ),
-                            trailing: Icon(Icons.arrow_forward_ios, size:20),
-                             
+                            trailing: Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                         ],
                       ),
@@ -366,16 +376,17 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/matchbatch.png'),
-                                          width: 15,),
+                                    image: AssetImage(
+                                        'assets/images/matchbatch.png'),
+                                    width: 15,
+                                  ),
                                 )),
                             title: const Text(
                               'Record Payment',
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                 Navigator.push(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -393,9 +404,10 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/rupee.png'),
-                                          width: 10,),
+                                    image:
+                                        AssetImage('assets/images/rupee.png'),
+                                    width: 10,
+                                  ),
                                 )),
                             title: const Text(
                               'Adjust Fee',
@@ -440,11 +452,12 @@ class _MainMenuState extends State<MainMenu> {
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
                                 child: const Padding(
-                                  padding: EdgeInsets.only(left:10.0),
+                                  padding: EdgeInsets.only(left: 10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/atten_report.png'),
-                                          width: 20,),
+                                    image: AssetImage(
+                                        'assets/images/atten_report.png'),
+                                    width: 20,
+                                  ),
                                 )),
                             title: const Text(
                               'Attendance reports',
@@ -462,9 +475,10 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/finance.png'),
-                                          width: 20,),
+                                    image:
+                                        AssetImage('assets/images/finance.png'),
+                                    width: 20,
+                                  ),
                                 )),
                             title: const Text(
                               'Finance reports',
@@ -476,6 +490,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
+                            onTap: () {},
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -489,7 +504,15 @@ class _MainMenuState extends State<MainMenu> {
                               'Academy reports',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const academy_setting(),
+                                  ),
+                                );
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
@@ -498,7 +521,7 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                   ),
-                   const SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Card(
@@ -528,11 +551,12 @@ class _MainMenuState extends State<MainMenu> {
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
                                 child: const Padding(
-                                  padding: EdgeInsets.only(left:10.0),
+                                  padding: EdgeInsets.only(left: 10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/g_translate.png'),
-                                          width: 20,),
+                                    image: AssetImage(
+                                        'assets/images/g_translate.png'),
+                                    width: 20,
+                                  ),
                                 )),
                             title: const Text(
                               'choose language',
@@ -550,8 +574,8 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          'assets/images/info.png')),
+                                      image:
+                                          AssetImage('assets/images/info.png')),
                                 )),
                             title: const Text(
                               'About',
@@ -582,10 +606,10 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           InkWell(
-                            onTap: (){
-                                userPrefernece.remove(context).then((value) {
+                            onTap: () {
+                              userPrefernece.remove(context).then((value) {
                                 Navigator.pushNamed(context, RoutesName.login);
-                            });
+                              });
                             },
                             child: ListTile(
                               leading: CircleAvatar(
@@ -600,17 +624,19 @@ class _MainMenuState extends State<MainMenu> {
                               title: const Text(
                                 'Logout',
                               ),
-                              
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Center(
-                    child: Image(image: AssetImage('assets/images/logo2.png'),
-                    width: 150,
+                    child: Image(
+                      image: AssetImage('assets/images/logo2.png'),
+                      width: 150,
                     ),
                   )
                 ],

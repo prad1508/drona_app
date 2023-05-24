@@ -1,18 +1,8 @@
 import 'package:drona/view/session_listing/view_detailsclosed.dart';
 import 'package:drona/view/session_listing/view_session_details.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_contacts/contact.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
-import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
-import '../layout.dart';
-import '../profile/view_profile.dart';
-import '../traine_invite.dart';
 import 'create_session_details.dart';
 import 'session_detailcancel.dart';
 
@@ -29,7 +19,6 @@ class _SessionListState extends State<SessionList>
     with SingleTickerProviderStateMixin {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
-
   final List<int> _selectedItems = <int>[];
   late TabController _controller;
   int _selectedIndex = 0;
@@ -45,7 +34,7 @@ class _SessionListState extends State<SessionList>
     },
     {
       "id": 2,
-      "name": "Tenis Batch",
+      "name": "Tenis Batch  controller: _controller,",
       "categorgyImg": "assets/images/tennis.png",
       "level": "Advance",
       "detail": "M,W,F - 09:15am to 10:15am",
