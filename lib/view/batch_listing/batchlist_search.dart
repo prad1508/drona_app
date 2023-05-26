@@ -22,6 +22,7 @@ class SearchBatchList extends StatefulWidget {
   State<SearchBatchList> createState() => _SearchBatchListState();
 }
 
+
 class _SearchBatchListState extends State<SearchBatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;

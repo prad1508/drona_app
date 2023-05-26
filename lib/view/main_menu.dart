@@ -9,6 +9,7 @@ import '../utils/routes/routes_name.dart';
 import '../view_model/user_view_model.dart';
 //import 'acedamy/academy_setting.dart';
 import 'batch_listing/batchlist_search.dart';
+import 'coach_listselected.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
 import 'trainee_listing/trainee_listing.dart';
@@ -413,7 +414,15 @@ class _MainMenuState extends State<MainMenu> {
                               'Adjust Fee',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                                Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                 CoachListSelected(),
+                                          ),
+                                        );
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
