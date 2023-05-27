@@ -125,13 +125,13 @@ class _BatchDetailState extends State<BatchDetail> {
                         alignment: Alignment.topLeft,
                         child: TextButton(
                           onPressed: (){
-                            Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const TrainAddManualy(),
-                                      ),
-                                    );
+                            // Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //             builder: (BuildContext context) =>
+                            //                 const TrainAddManualy(),
+                            //           ),
+                            //         );
                           },
                           child: Text(AppLocale.enterManually.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,

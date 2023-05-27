@@ -254,6 +254,21 @@ class RegistrationViewModel with ChangeNotifier {
   }
   
 
+  //////////////////////add trainee onboarding /////////////////////////////////////
+  Future<void> addTrainee(dynamic newPass, BuildContext context) async {
+    setLoading(true);
+     setUid(uid);
+     Map data = {'newpassword': newPass.toString(), 'prtoken': _prToken.toString()};
+    _myRepo.verifynewPasswordListApi(data).then((value) async {
+       setLoading(false);
+       Utils.flushBarErrorMessage(value['msg'], context);
+        Navigator.pushNamed(context, RoutesName.login);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+     Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
 }
 
 

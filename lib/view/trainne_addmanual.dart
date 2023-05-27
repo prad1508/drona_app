@@ -1,11 +1,17 @@
 import 'package:drona/view/trainee_phonbook_add.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 import '../res/language/language.dart';
+import '../res/widget/datefield.dart';
 import '../res/widget/round_button.dart';
+import '../res/widget/synctextform.dart';
+import '../utils/validation.dart';
+import '../view_model/registration_view_model.dart';
 
 class TrainAddManualy extends StatefulWidget {
-  const TrainAddManualy({super.key});
+  final String batchId;
+  const TrainAddManualy({super.key, required this.batchId});
 
   @override
   State<TrainAddManualy> createState() => _TrainAddManualyState();
@@ -18,6 +24,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
+  final TextEditingController fee = TextEditingController();
   
 
 
@@ -28,6 +35,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
 
   @override
   Widget build(BuildContext context) {
+     final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -112,19 +120,16 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: phone,
-                    decoration: InputDecoration(
-                      hintText: '+91 7683548734',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  AsyncTextFormField(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'eg. 9876521233',
+                      isValidatingMessage:
+                          'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                          'Enter a valid 10 digit mobile number'),
                   const SizedBox(
                     height: 15,
                   ),
@@ -146,19 +151,9 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                         const SizedBox(
                           height: 10,
                         ),
-                           TextFormField(
-                                             controller: doj,
-                                             decoration: InputDecoration(
-                          
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                                             ),
-                                           ),
+                           DateOfjoining(
+                      controller: doj,
+                      hintText: 'Doj'),
                          ],
                        ),
                      ),
@@ -176,18 +171,9 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                          const SizedBox(
                           height: 10,
                         ),
-                        TextFormField(         
-                          controller: dobilling,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
+                        DateOfjoining(
+                      controller: dobilling,
+                      hintText: 'Date of Billing'),
                       ],
                     ),
                   ),
@@ -206,7 +192,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           height: 10,
                         ),
                         TextFormField(         
-                          controller: dobilling,
+                          controller: fee,
                           decoration: InputDecoration(
                             hintText: '₹ 1000',
                             contentPadding: const EdgeInsets.all(10),
@@ -229,7 +215,12 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                     color: Theme.of(context).primaryColor,
                        
                     onPress: (){
-                     
+                      print(widget.batchId);
+                      print(fullName.text);
+                      print(phone.text);
+                      print(doj.text);
+                      print(dobilling.text);
+                      print(fee.text);
                     },
                   ),
                 ],

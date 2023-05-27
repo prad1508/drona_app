@@ -17,6 +17,7 @@ import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
 import '../../view_model/batchList_view_model.dart';
+import '../trainne_addmanual.dart';
 
 class ViewBatchDetails extends StatefulWidget {
   final int ListIndex;
@@ -93,7 +94,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
 
   String selectedCategory = 'Tennis';
   String selectedAssignCoach = 'john';
-
+  String batchUid = '';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -132,6 +133,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                 create: (BuildContext context) => batchListViewViewModel,
                 child: Consumer<BatchListViewViewModel>(
                     builder: (context, value, _) {
+                    batchUid =  value.dataList.data!.data![0].uid.toString();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -409,7 +411,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    const CreateBatchListing(),
+                                     TrainAddManualy(batchId: batchUid),
                               ),
                             );
                           }),

@@ -13,6 +13,7 @@ import 'coach_listselected.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
 import 'trainee_listing/trainee_listing.dart';
+import 'trainne_addmanual.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -472,7 +473,9 @@ class _MainMenuState extends State<MainMenu> {
                               'Attendance reports',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                               
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
