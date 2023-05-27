@@ -4,6 +4,8 @@ import 'package:drona/res/widget/Academy_Listing/academy_details_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../res/widget/customradio.dart';
+
 class Academy_Detail_Page extends StatefulWidget {
   const Academy_Detail_Page({super.key});
 
@@ -12,6 +14,31 @@ class Academy_Detail_Page extends StatefulWidget {
 }
 
 class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
+
+  Map<String, bool> values = {
+    'MO': false,
+    'TU': false,
+    'WE': false,
+    'TH': false,
+    'FR': false,
+    'ST': false,
+    'SU': false,
+  };
+
+  ValueChanged<String?> Working_Days(String key) {
+    return (value) => setState(() {
+      value == 'false'? 'true': 'false';
+
+      if(value == 'true'){
+        values[key] = false;
+        // print(values);
+      }else{
+        values[key] = true;
+        // print(values);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -467,7 +494,32 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
               ),
               SizedBox(height: 4),
               //Custom Radio Button asing here;
-
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.92,
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //CheckButton for Months selection;
+                    Expanded(
+                      child: ListView(scrollDirection: Axis.horizontal, children: values.keys.map((String key){
+                        return Row(
+                          children: [
+                            CustomRadio(
+                                value: values[key].toString(),
+                                groupValue: 'false',
+                                label: key,
+                                onChanged: Working_Days(key),
+                                btnColor: Colors.black),
+                            SizedBox(width: 10)
+                          ],
+                        );
+                      }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 16),
               Text(
                 "Academy Joining Date",

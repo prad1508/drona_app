@@ -16,7 +16,7 @@ class CustomRadio<T> extends StatelessWidget {
   });
 
   Widget _labelBtn(BuildContext context) {
-    final bool isSelected = value == groupValue;
+    final bool isSelected = value != groupValue;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(

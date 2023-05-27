@@ -417,7 +417,7 @@ class _ChooseFacilityPageState extends State<ChooseFacilityPage> {
                               child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
+                                  children: [
                                     SizedBox(
                                         width: 40,
                                         height: 40,

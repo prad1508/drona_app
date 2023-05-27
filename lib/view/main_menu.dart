@@ -1,4 +1,5 @@
 import 'package:drona/view/academy/academy_setting.dart';
+import 'package:drona/view/academy/billing_invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -9,7 +10,6 @@ import '../utils/routes/routes_name.dart';
 import '../view_model/user_view_model.dart';
 //import 'acedamy/academy_setting.dart';
 import 'batch_listing/batchlist_search.dart';
-import 'coach_listselected.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
 import 'trainee_listing/trainee_listing.dart';
@@ -414,15 +414,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Adjust Fee',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {
-                                Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                 CoachListSelected(),
-                                          ),
-                                        );
-                              }),
+                              onPressed: (() {}),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),

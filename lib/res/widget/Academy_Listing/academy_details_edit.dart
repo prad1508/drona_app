@@ -13,10 +13,29 @@ class Edit_Academy_Detail extends StatefulWidget {
 }
 
 class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
-  List<String> W_Days = ["MO", "TU", "WE", "TH", "FR", "ST", "SU"];
-  String? Days = 'm';
-  ValueChanged<String?> Working_Days() {
-    return (value) => setState(() => Days = value!);
+
+  Map<String, bool> values = {
+    'MO': false,
+    'TU': false,
+    'WE': false,
+    'TH': false,
+    'FR': false,
+    'ST': false,
+    'SU': false,
+  };
+
+  ValueChanged<String?> Working_Days(String key) {
+    return (value) => setState(() {
+      value == 'false'? 'true': 'false';
+
+      if(value == 'true'){
+        values[key] = false;
+        // print(values);
+      }else{
+        values[key] = true;
+        // print(values);
+      }
+    });
   }
 
   @override
@@ -477,57 +496,20 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                   children: [
                     //CheckButton for Months selection;
                     Expanded(
-                      child:
-                          ListView(scrollDirection: Axis.horizontal, children: [
-                        CustomRadio(
-                            value: 'm',
-                            groupValue: Days,
-                            label: W_Days[0],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 't',
-                            groupValue: Days,
-                            label: W_Days[1],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 'w',
-                            groupValue: Days,
-                            label: W_Days[2],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 'th',
-                            groupValue: Days,
-                            label: W_Days[3],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 'f',
-                            groupValue: Days,
-                            label: W_Days[4],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 'sat',
-                            groupValue: Days,
-                            label: W_Days[5],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                        SizedBox(width: 10),
-                        CustomRadio(
-                            value: 'sun',
-                            groupValue: Days,
-                            label: W_Days[6],
-                            onChanged: Working_Days(),
-                            btnColor: Colors.black),
-                      ]),
+                      child: ListView(scrollDirection: Axis.horizontal, children: values.keys.map((String key){
+                        return Row(
+                          children: [
+                            CustomRadio(
+                                value: values[key].toString(),
+                                groupValue: 'false',
+                                label: key,
+                                onChanged: Working_Days(key),
+                                btnColor: Colors.black),
+                            SizedBox(width: 10)
+                          ],
+                        );
+                      }).toList(),
+                        ),
                     ),
                   ],
                 ),

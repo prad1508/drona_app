@@ -39,7 +39,6 @@ class _Bank_DetailsState extends State<Bank_Details> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 24.0, right: 24.0, top: 10, bottom: 10),
