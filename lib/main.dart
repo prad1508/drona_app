@@ -1,6 +1,7 @@
 import 'package:drona/view_model/facility_view_model.dart';
 import 'package:drona/view_model/registration_view_model.dart';
 import 'package:drona/view_model/service_view_model.dart';
+import 'package:drona/view_model/session_view_model.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:drona/utils/color.dart';
@@ -84,6 +85,7 @@ class _AppTranslateState extends State<AppTranslate> {
         ChangeNotifierProvider(create: (_) => MyProgramViewViewModel()),
         ChangeNotifierProvider(create: (_) => BatchListViewViewModel()),
         ChangeNotifierProvider(create: (_) => BatchViewViewModel()),
+        ChangeNotifierProvider(create: (_) => SessionViewViewModel()),
         ChangeNotifierProvider(create: (_) => TraineeViewModel())
       ],
       child: Consumer<ThemeProvider>(

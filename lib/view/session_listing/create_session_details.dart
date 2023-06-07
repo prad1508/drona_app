@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
+import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
+import '../../view_model/batchList_view_model.dart';
+import '../../view_model/session_view_model.dart';
 import '../trainee_phonbook_add.dart';
 
 class SessionalDetails extends StatefulWidget {
@@ -16,26 +20,55 @@ class SessionalDetails extends StatefulWidget {
 
 class _SessionalDetailsState extends State<SessionalDetails> {
   //multi language support
+
   final FlutterLocalization _localization = FlutterLocalization.instance;
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController doj = TextEditingController();
-  final TextEditingController dobilling = TextEditingController();
-  final TextEditingController phone = TextEditingController();
-  
+  final TextEditingController dateschedule = TextEditingController();
+  final TextEditingController onlinesessionurl = TextEditingController();
+  final TextEditingController fromBatch = TextEditingController();
+  final TextEditingController toBatch = TextEditingController();
 
+
+
+  List<int> _selectedItems = <int>[];
+  bool notFound = false;
+  List<Map<String, dynamic>> _foundUsers = [];
 
   @override
   initState() {
+    batchListViewViewModel.fetchBatchListListApi();
+
     super.initState();
   }
 
+
+  List<DropdownMenuItem<String>> get batchnames {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text('John'), value: "john"),
+      DropdownMenuItem(child: Text("Anil"), value: "anil"),
+      DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
+    ];
+    return menuItems;
+  }
+
+  List<DropdownMenuItem<String>> batchname = [];
+
+
+  String selectedAssignCoach = 'john';
+
+
   @override
   Widget build(BuildContext context) {
+
+      final session = Provider.of<SessionViewViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: Row(
@@ -59,131 +92,204 @@ class _SessionalDetailsState extends State<SessionalDetails> {
           color: Colors.white,
           child: Container(
             padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Schedule Batch',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: fullName,
-                    decoration: InputDecoration(
-                      hintText: 'Cricket batch',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                   const SizedBox(
-                    height: 15,
-                  ),
-                  
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Online Session URL',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-              
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    //controller: phone,
-                    decoration: InputDecoration(
-                      hintText: 'Zoom.com/session/264415201014',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                
-                   Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('Date',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                         const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(         
-                          controller: dobilling,
-                          decoration: InputDecoration(
-                            hintText: '04-02-2023',
-                            suffixIcon: Icon(Icons.date_range_outlined),
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+              child:
+
+
+              ChangeNotifierProvider<BatchListViewViewModel>(
+                  create: (BuildContext context) => batchListViewViewModel,
+                  child: Consumer<BatchListViewViewModel>(
+                      builder: (context, value, _) {
+                         print("value --${value.dataList.data?.data?[0].uid}");
+                        if (_foundUsers.isEmpty) {
+                          _foundUsers = List.generate(
+                              value.dataList.data?.data!.length ?? 0, (index) {
+                            return {
+                              "batchName":
+                              value.dataList.data?.data![index].batchName,
+                              "id":
+                              value.dataList.data?.data![index].uid,
+                            };
+                          });
+                          print('name is -------------- ${_foundUsers[0]['batchName']}');
+                          print('name is -------------- ${_foundUsers[1]['batchName']}');
+                          print('name is -------------- ${_foundUsers[0]['id']}');
+                          print('name is -------------- ${_foundUsers[1]['id']}');
+
+                        }
+
+                        return
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text('Schedule Batch',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                    height: 15,
-                  ),
-                
-                   Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('Time',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                         const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(         
-                          controller: dobilling,
-                          decoration: InputDecoration(
-                            hintText: '09:30  AM to 10:30 AM',
-                            suffixIcon: Icon(Icons.watch_later,),
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
-                          ),
-                        ),
-                         const SizedBox(
-                          height: 15,
-                        ),
-                  RoundButton(
-                    loading: false,
-                    title: 'Create Session',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                       
-                    onPress: (){
-                     
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            
+
+                              /// batch name dropdown
+                              Container(
+                                decoration: BoxDecoration(
+                                  border:
+                                  Border.all(color: Color.fromARGB(255, 188, 185, 185)),
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: DropdownButton(
+                                    isExpanded: true,
+                                    elevation: 1,
+                                    dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                                    iconEnabledColor: Colors.black,
+                                    style: const TextStyle(color: Colors.black),
+                                    value: selectedAssignCoach,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedAssignCoach = newValue!;
+
+                                        _localization.translate(selectedAssignCoach);
+                                      });
+                                    },
+                                    items:batchnames ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text('Online Session URL',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: onlinesessionurl,
+                                decoration: InputDecoration(
+                                  hintText: 'Zoom.com/session/264415201014',
+                                  contentPadding: const EdgeInsets.all(10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text('Date',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: dateschedule,
+                                decoration: InputDecoration(
+                                  hintText: '04-02-2023',
+                                  suffixIcon: Icon(Icons.date_range_outlined),
+                                  contentPadding: const EdgeInsets.all(10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text('Time',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    child: TextFormField(
+                                      controller: fromBatch,
+                                      decoration: InputDecoration(
+                                        hintText: 'From',
+                                        contentPadding: EdgeInsets.all(10),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          borderSide: BorderSide(
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    child: TextFormField(
+                                      controller: toBatch,
+                                      decoration: InputDecoration(
+                                        hintText: 'To',
+                                        contentPadding: EdgeInsets.all(10),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          borderSide: BorderSide(
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              RoundButton(
+                                loading: false,
+                                title: 'Create Session',
+                                textColor: Colors.white,
+                                rounded: true,
+                                color: Theme.of(context).primaryColor,
+
+                                onPress: (){
+
+                                  Map data =  {
+                                    "batch_uid":"9kx4dktrsthb18v39u8e",
+                                    "provide_online_sessions":false,
+                                    "online_session_url":onlinesessionurl.text,
+                                    "batch_timing_from":fromBatch.text,
+                                    "batch_timing_to":toBatch.text,
+                                    "sdate":dateschedule.text
+                                  };
+                                  session.fetchCreateSessionListApi(data, context);
+                                },
+                              ),
+                              const SizedBox(height: 30),
+                            ],
+                          );
+
+                      })),
+
             ),
         ),
       ),

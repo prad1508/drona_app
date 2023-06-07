@@ -80,6 +80,7 @@ class TraineeViewModel with ChangeNotifier {
     }).onError((error, stackTrace) {
       setDataList(ApiResponse.error(error.toString()));
       print("api  trainne search list not success");
+      print("error${ApiResponse.error(error.toString())}");
     });
   }
 }

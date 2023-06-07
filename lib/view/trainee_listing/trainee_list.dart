@@ -144,22 +144,22 @@ class _TraineeNewListState extends State<TraineeNewList> {
                       create: (BuildContext context) => traineeViewModel,
                       child: Consumer<TraineeViewModel>(
                           builder: (context, value, _) {
-                        // if (_foundUsers.isEmpty) {
-                        //   _foundUsers = List.generate(
-                        //       value.dataList.data?.data.length ?? 0, (index) {
-                        //     return {
-                        //       "name":
-                        //           value.dataList.data?.data[index].traineeName,
-                        //       "img": value.dataList.data?.data[index]
-                        //           .traineeProfileUid,
-                        //       // "gender":
-                        //       //     value.dataList.data?.data![index].,
-                        //       "userid": value
-                        //           .dataList.data?.data[index].traineeUserid
-                        //     };
-                        //   });
-                        // }
-                        //
+                        if (_foundUsers.isEmpty) {
+                          _foundUsers = List.generate(
+                              value.dataList.data?.data.length ?? 0, (index) {
+                            return {
+                              "name":
+                                  value.dataList.data?.data[index].traineeName,
+                              "img": value
+                                  .dataList.data?.data[index].traineeProfileUid,
+                              // "gender":
+                              //     value.dataList.data?.data![index].,
+                              "userid":
+                                  value.dataList.data?.data[index].traineeUserid
+                            };
+                          });
+                        }
+
                         // return Expanded(
                         //   child: notFound
                         //       ? const Text(
@@ -170,105 +170,107 @@ class _TraineeNewListState extends State<TraineeNewList> {
                         //           itemCount: _foundUsers.length,
                         //           itemBuilder: (context, index) {
                         //             print("_foundUsers==${_foundUsers.length}");
-                        //
-                        //            return Card(
-                        //             key: ValueKey(_foundUsers[index]["id"]),
-                        //             elevation: 0,
-                        //             margin:
-                        //                 const EdgeInsets.symmetric(vertical: 0),
-                        //             child: Column(
-                        //               children: [
-                        //                 ListTile(
-                        //                   tileColor:
-                        //                       (_selectedItems.contains(index))
-                        //                           ? const Color.fromARGB(
-                        //                                   255, 218, 218, 219)
-                        //                               .withOpacity(0.5)
-                        //                           : Colors.transparent,
-                        //                   leading: CircleAvatar(
-                        //                       radius: 20.5,
-                        //                       backgroundColor:
-                        //                           const Color.fromRGBO(
-                        //                               194, 235, 216, 1),
-                        //                       child: _selectedItems
-                        //                               .contains(index)
-                        //                           ? const Icon(
-                        //                               Icons.check,
-                        //                               color: Color.fromRGBO(
-                        //                                   71, 192, 136, 1),
-                        //                               size: 30.0,
-                        //                             )
-                        //                           : Image(
-                        //                               image: NetworkImage(AppUrl
-                        //                                       .imageListendPoint +
-                        //                                   _foundUsers[index]
-                        //                                       ["img"]))),
-                        //                   title: Row(
-                        //                     children: [
-                        //                       Expanded(
-                        //                         child: Text(
-                        //                           _foundUsers[index]['name'],
-                        //                           style: const TextStyle(
-                        //                               color: Color.fromRGBO(
-                        //                                   57, 64, 74, 1),
-                        //                               fontSize: 14,
-                        //                               fontWeight:
-                        //                                   FontWeight.w700,
-                        //                               fontFamily:
-                        //                                   'Loto-Regular'),
+
+                        //             return Card(
+                        //               key: ValueKey(_foundUsers[index]["id"]),
+                        //               elevation: 0,
+                        //               margin: const EdgeInsets.symmetric(
+                        //                   vertical: 0),
+                        //               child: Column(
+                        //                 children: [
+                        //                   ListTile(
+                        //                     tileColor:
+                        //                         (_selectedItems.contains(index))
+                        //                             ? const Color.fromARGB(
+                        //                                     255, 218, 218, 219)
+                        //                                 .withOpacity(0.5)
+                        //                             : Colors.transparent,
+                        //                     leading: CircleAvatar(
+                        //                         radius: 20.5,
+                        //                         backgroundColor:
+                        //                             const Color.fromRGBO(
+                        //                                 194, 235, 216, 1),
+                        //                         child: _selectedItems
+                        //                                 .contains(index)
+                        //                             ? const Icon(
+                        //                                 Icons.check,
+                        //                                 color: Color.fromRGBO(
+                        //                                     71, 192, 136, 1),
+                        //                                 size: 30.0,
+                        //                               )
+                        //                             : Image(
+                        //                                 image: NetworkImage(AppUrl
+                        //                                         .imageListendPoint +
+                        //                                     _foundUsers[index]
+                        //                                         ["img"]))),
+                        //                     title: Row(
+                        //                       children: [
+                        //                         Expanded(
+                        //                           child: Text(
+                        //                             _foundUsers[index]['name'],
+                        //                             style: const TextStyle(
+                        //                                 color: Color.fromRGBO(
+                        //                                     57, 64, 74, 1),
+                        //                                 fontSize: 14,
+                        //                                 fontWeight:
+                        //                                     FontWeight.w700,
+                        //                                 fontFamily:
+                        //                                     'Loto-Regular'),
+                        //                           ),
                         //                         ),
-                        //                       ),
-                        //                     ],
+                        //                       ],
+                        //                     ),
+                        //                     // subtitle: Column(
+                        //                     //   children: [
+                        //                     //     _foundUsers[index]['name'],                                            ],
+                        //                     // ),
+
+                        //                     // subtitle: Padding(
+                        //                     //   padding: const EdgeInsets.only(
+                        //                     //       right: 25),
+                        //                     //   child: Text(
+                        //                     //     _foundUsers[index]['gender'] +
+                        //                     //         ", " +
+                        //                     //         _foundUsers[index]['userid'],
+                        //                     //     style: const TextStyle(
+                        //                     //         color: Color.fromRGBO(
+                        //                     //             57, 64, 74, 1),
+                        //                     //         fontSize: 12,
+                        //                     //         fontWeight: FontWeight.w400,
+                        //                     //         fontFamily: 'Loto-Regular'),
+                        //                     //   ),
+                        //                     // ),
+                        //                     //         trailing: CircleAvatar(
+                        //                     //   radius: 12,
+                        //                     //   child: Image(
+                        //                     //       image: AssetImage(_foundUsers[index]
+                        //                     //           ["categorgyImg"])),
+                        //                     // ),
+                        //                     onTap: () {},
+                        //                     onLongPress: () {
+                        //                       if (!_selectedItems
+                        //                           .contains(index)) {
+                        //                         setState(() {
+                        //                           _selectedItems.add(index);
+                        //                         });
+                        //                       } else {
+                        //                         setState(() {
+                        //                           _selectedItems.removeWhere(
+                        //                               (val) => val == index);
+                        //                         });
+                        //                       }
+                        //                     },
                         //                   ),
-                        //                   // subtitle: Column(
-                        //                   //   children: [
-                        //                   //     _foundUsers[index]['name'],                                            ],
-                        //                   // ),
-                        //
-                        //                   // subtitle: Padding(
-                        //                   //   padding: const EdgeInsets.only(
-                        //                   //       right: 25),
-                        //                   //   child: Text(
-                        //                   //     _foundUsers[index]['gender'] +
-                        //                   //         ", " +
-                        //                   //         _foundUsers[index]['userid'],
-                        //                   //     style: const TextStyle(
-                        //                   //         color: Color.fromRGBO(
-                        //                   //             57, 64, 74, 1),
-                        //                   //         fontSize: 12,
-                        //                   //         fontWeight: FontWeight.w400,
-                        //                   //         fontFamily: 'Loto-Regular'),
-                        //                   //   ),
-                        //                   // ),
-                        //                   //         trailing: CircleAvatar(
-                        //                   //   radius: 12,
-                        //                   //   child: Image(
-                        //                   //       image: AssetImage(_foundUsers[index]
-                        //                   //           ["categorgyImg"])),
-                        //                   // ),
-                        //                   onTap: () {},
-                        //                   onLongPress: () {
-                        //                     if (!_selectedItems
-                        //                         .contains(index)) {
-                        //                       setState(() {
-                        //                         _selectedItems.add(index);
-                        //                       });
-                        //                     } else {
-                        //                       setState(() {
-                        //                         _selectedItems.removeWhere(
-                        //                             (val) => val == index);
-                        //                       });
-                        //                     }
-                        //                   },
-                        //                 ),
-                        //                 const Divider(
-                        //                   height: 5,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           );}
-                        //         ),
+                        //                   const Divider(
+                        //                     height: 5,
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             );
+                        //           }),
                         // );
+                        // //
+                        //
                         return Expanded(
                           child: ListView.builder(
                               itemCount:
@@ -317,42 +319,44 @@ class _TraineeNewListState extends State<TraineeNewList> {
                                               fontWeight: FontWeight.w700,
                                               fontFamily: 'Loto-Regular'),
                                         ),
-                                        subtitle: Row(children: [
-                                          // Text(
-                                          //   "Joining Date: ${traineeViewModel.dataList.data!.data[index].}",
-                                          //   textAlign: TextAlign.start,
-                                          // ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Colors.black26,
-                                          ),
-                                          Text(
-                                            "Billing Date${traineeViewModel.dataList.data!.data[index].cdd}/${traineeViewModel.dataList.data!.data[index].cmm}",
-                                            textAlign: TextAlign.start,
-                                          ),
-                                        ]),
-
-                                        // subtitle: Padding(
-                                        //   padding: const EdgeInsets.only(
-                                        //       right: 25),
-                                        //   child: Text(
-                                        //     _foundUsers[index]['gender'] +
-                                        //         ", " +
-                                        //         _foundUsers[index]['userid'],
-                                        //     style: const TextStyle(
-                                        //         color: Color.fromRGBO(
-                                        //             57, 64, 74, 1),
-                                        //         fontSize: 12,
-                                        //         fontWeight: FontWeight.w400,
-                                        //         fontFamily: 'Loto-Regular'),
-                                        //   ),
-                                        // ),
-                                        //         trailing: CircleAvatar(
-                                        //   radius: 12,
-                                        //   child: Image(
-                                        //       image: AssetImage(_foundUsers[index]
-                                        //           ["categorgyImg"])),
-                                        // ),
+                                        subtitle: Column(
+                                          children: [
+                                            Row(children: [
+                                              Text(
+                                                "+${traineeViewModel.dataList.data!.data[index].traineeUserid}",
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 3),
+                                                height: 12,
+                                                width: 1,
+                                                color: Colors.black54,
+                                              ),
+                                              Text(
+                                                "₹${traineeViewModel.dataList.data!.data[index].fees.toString()}",
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ]),
+                                            Row(children: [
+                                              Text(
+                                                "Joining Date: ${traineeViewModel.dataList.data!.data[index].dateOfJoining}",
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 3),
+                                                height: 12,
+                                                width: 1,
+                                                color: Colors.black54,
+                                              ),
+                                              Text(
+                                                "Billing Date${traineeViewModel.dataList.data!.data[index].monthOfBilling}",
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ]),
+                                          ],
+                                        ),
                                         onTap: () {},
                                         onLongPress: () {
                                           if (!_selectedItems.contains(index)) {

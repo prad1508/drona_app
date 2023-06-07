@@ -74,6 +74,9 @@ class Datum {
   String cdd;
   String cmm;
   String cyy;
+  int fees;
+  String dateOfJoining;
+  String monthOfBilling;
 
   Datum({
     required this.id,
@@ -89,6 +92,9 @@ class Datum {
     required this.cdd,
     required this.cmm,
     required this.cyy,
+    required this.fees,
+    required this.dateOfJoining,
+    required this.monthOfBilling,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -105,6 +111,9 @@ class Datum {
         cdd: json["cdd"],
         cmm: json["cmm"],
         cyy: json["cyy"],
+        fees: json["fees"],
+        dateOfJoining: json["date_of_joining"],
+        monthOfBilling: json["month_of_billing"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,5 +130,8 @@ class Datum {
         "cdd": cdd,
         "cmm": cmm,
         "cyy": cyy,
+        "fees": fees,
+        "date_of_joining": dateOfJoining,
+        "month_of_billing": monthOfBilling,
       };
 }

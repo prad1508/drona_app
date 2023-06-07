@@ -67,7 +67,7 @@ class _RegistrationState extends State<Registration> {
           child: Material(
             color: Colors.white,
             child: Container(
-              padding: const EdgeInsets.only(left:20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +96,7 @@ class _RegistrationState extends State<Registration> {
                     controller: fullName,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
-                     hintText: 'eg. Ashmit Singh',
+                      hintText: 'eg. Ashmit Singh',
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -106,7 +106,6 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
                   ),
-                 
                   const SizedBox(
                     height: 15,
                   ),
@@ -126,9 +125,10 @@ class _RegistrationState extends State<Registration> {
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9658992342',
-                      isValidatingMessage: 'Enter a valid 10 digit mobile number',
-                      valueIsInvalidMessage:'Enter a valid 10 digit mobile number'
-                    ),
+                      isValidatingMessage:
+                          'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                          'Enter a valid 10 digit mobile number'),
                   const SizedBox(
                     height: 15,
                   ),
@@ -175,13 +175,12 @@ class _RegistrationState extends State<Registration> {
                     height: 15,
                   ),
                   AsyncTextFormField(
-                      controller: email,
-                      validationDebounce: const Duration(milliseconds: 500),
-                      validator: Validation().isEmailField,
-                      keyboardType: TextInputType.emailAddress,
-                      hintText: 'eg. abc@example.com',
-                    ),
-
+                    controller: email,
+                    validationDebounce: const Duration(milliseconds: 500),
+                    validator: Validation().isEmailField,
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: 'eg. abc@example.com',
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -264,8 +263,8 @@ class _RegistrationState extends State<Registration> {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
-                          style:
-                              TextButton.styleFrom(padding: const EdgeInsets.all(0)),
+                          style: TextButton.styleFrom(
+                              padding: const EdgeInsets.all(0)),
                           onPressed: null,
                           child: Text(
                             AppLocale.privacyPolicy.getString(context),
@@ -287,28 +286,27 @@ class _RegistrationState extends State<Registration> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                           if(fullName.text.isEmpty){
-                            Utils.flushBarErrorMessage('Fill Full Name', context);
-                           }
-                           else if(phone.text.toString().length < 10){
-                             Utils.flushBarErrorMessage('Fill Phone Number', context);
-                           }
-                           else if(phone.text.toString().length > 10)
-                             {
-                               Utils.flushBarErrorMessage('Please Check Phone Number', context);
-                             }
-                            else{
-                             Map<String, String> data = {
-                              "name": fullName.text.toString(),
-                              "ccode": '91',
-                              "mobno": phone.text.toString(),
-                              "role": _role.toString(),
-                              "gender": _genderValue.toString(),
-                              "email": email.text.toString()
-                            };
-                          registration.register(data, context);
+                            if (fullName.text.isEmpty) {
+                              Utils.flushBarErrorMessage(
+                                  'Fill Full Name', context);
+                            } else if (phone.text.toString().length < 10) {
+                              Utils.flushBarErrorMessage(
+                                  'Fill Phone Number', context);
+                            } else if (phone.text.toString().length > 10) {
+                              Utils.flushBarErrorMessage(
+                                  'Please Check Phone Number', context);
+                            } else {
+                              print("_role==$_role");
+                              Map<String, String> data = {
+                                "name": fullName.text.toString(),
+                                "ccode": '91',
+                                "mobno": phone.text.toString(),
+                                "role": _role.toString(),
+                                "gender": _genderValue.toString(),
+                                "email": email.text.toString()
+                              };
+                              registration.register(data, context);
                             }
-                            
                           }
                         : () {
                             if (kDebugMode) {

@@ -10,6 +10,7 @@ import '../res/widget/round_button.dart';
 import '../res/widget/synctextform.dart';
 import '../utils/validation.dart';
 import '../view_model/registration_view_model.dart';
+import 'package:intl/intl.dart';
 
 class TrainAddManualy extends StatefulWidget {
   String batchId;
@@ -31,10 +32,11 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
   final TextEditingController phone = TextEditingController();
   final TextEditingController fee = TextEditingController();
   final TextEditingController age = TextEditingController();
-  String? _genderValue = 'm';
+  String? _genderValue = 'male';
   ValueChanged<String?> _genderChangedHandler() {
     return (value) => setState(() => _genderValue = value!);
   }
+
   @override
   initState() {
     super.initState();
@@ -90,8 +92,6 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
-
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -140,8 +140,8 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                 const SizedBox(
                   height: 15,
                 ),
-                /// add gender
 
+                /// add gender
 
                 Align(
                   alignment: Alignment.topLeft,
@@ -158,21 +158,21 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                   children: [
                     CustomRadio<String>(
                       btnColor: Colors.black,
-                      value: 'm',
+                      value: 'male',
                       groupValue: _genderValue,
                       onChanged: _genderChangedHandler(),
                       label: 'Male ',
                     ),
                     CustomRadio<String>(
                       btnColor: Colors.black,
-                      value: 'f',
+                      value: 'female',
                       groupValue: _genderValue,
                       onChanged: _genderChangedHandler(),
                       label: 'Female',
                     ),
                     CustomRadio<String>(
                       btnColor: Colors.black,
-                      value: 'o',
+                      value: 'other',
                       groupValue: _genderValue,
                       onChanged: _genderChangedHandler(),
                       label: 'Other',
@@ -201,7 +201,37 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           const SizedBox(
                             height: 10,
                           ),
-                          DateOfjoining(controller: dob, hintText: 'Dob'),
+                          TextFormField(
+                            readOnly: true,
+                            controller: dob,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              suffixIcon: const Icon(
+                                Icons.calendar_month,
+                                size: 30.0,
+                              ),
+                              hintText: "Dob",
+                              contentPadding: const EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              var date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1930),
+                                lastDate: DateTime.now(),
+                              );
+                              if (date != null) {
+                                dob.text =
+                                    DateFormat('dd-MM-yyyy').format(date);
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -232,7 +262,6 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -242,8 +271,6 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                 const SizedBox(
                   height: 15,
                 ),
-
-
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,7 +289,37 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           const SizedBox(
                             height: 10,
                           ),
-                          DateOfjoining(controller: doj, hintText: 'Doj'),
+                          TextFormField(
+                            readOnly: true,
+                            controller: doj,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              suffixIcon: const Icon(
+                                Icons.calendar_month,
+                                size: 30.0,
+                              ),
+                              hintText: "Doj",
+                              contentPadding: const EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              var date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1930),
+                                lastDate: DateTime.now(),
+                              );
+                              if (date != null) {
+                                doj.text =
+                                    DateFormat('dd-MM-yyyy').format(date);
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -273,7 +330,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                            "Month of Billing",
+                              "Month of Billing",
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -281,9 +338,8 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                             height: 10,
                           ),
                           YearMonthPicker(
-                          controller: dobilling,
-                          hintText: 'Month of Billing'
-                        ),
+                              controller: dobilling,
+                              hintText: 'Month of Billing'),
                           // DateOfjoining(
                           //     controller: dobilling,
                           //     hintText: 'Month of Billing'),
@@ -343,14 +399,14 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                       "gender": _genderValue,
                       "fees": fee.text,
                       "dateofjoining": doj.text,
-                      "age":age.text,
-                      "dob":dob.text,
+                      "age": age.text,
+                      "dob": dob.text,
                       "monthofbilling": dobilling.text,
                       "img": "izf5azt0sy2iurz.jpeg",
                       "relation": "self"
                     };
                     print(data);
-                     traineeViewModel.fetchTraineeAddListApi(data, context);
+                    traineeViewModel.fetchTraineeAddListApi(data, context);
                   },
                 ),
               ],

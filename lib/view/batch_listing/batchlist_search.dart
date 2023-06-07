@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:drona/utils/routes/routes_name.dart';
+import 'package:drona/view/layout.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_url.dart';
+import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/batchList_view_model.dart';
@@ -30,6 +32,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   List<int> _selectedItems = <int>[];
   bool notFound = false;
+  bool agree = false;
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
@@ -226,126 +229,115 @@ class _SearchBatchListState extends State<SearchBatchList> {
             ),
           ],
         ),
-        body: Material(
-          color: Colors.white,
-          child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // Row(
-                  //   children: [
-                  //    InkWell(
-                  //     onTap: showFilter,
-                  //     child:Container(
-                  //       alignment: Alignment.center,
-                  //       height: 55,
-                  //       width: 60,
-                  //       decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.circular(5),
-                  //           border: Border.all(color: Colors.grey)),
-                  //       child: const Icon( Icons.filter_list, ),
-                  //     ),
-                  //     ),
-                  //     Expanded(
-                  //       child: Card(
-                  //         shape: const RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.all(
-                  //             Radius.circular(5),
-                  //           ),
-                  //           side: BorderSide(
-                  //             color: Color.fromARGB(255, 197, 196, 196),
-                  //           ),
-                  //         ),
-                  //         elevation: 0,
-                  //         child: ListTile(
-                  //           title: TextField(
-                  //             onChanged: (searchData) => dataFilter(searchData),
-                  //             decoration: const InputDecoration(
-                  //                 contentPadding:
-                  //                     EdgeInsets.symmetric(vertical: 0.0),
-                  //                 hintText: 'Search',
-                  //                 border: InputBorder.none),
-                  //           ),
-                  //           trailing: const Icon(Icons.search),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  ChangeNotifierProvider<BatchListViewViewModel>(
-                      create: (BuildContext context) => batchListViewViewModel,
-                      child: Consumer<BatchListViewViewModel>(
-                          builder: (context, value, _) {
-                        // print(
-                        //     "value --${value.dataList.data?.data?[0].}");
-                        if (_foundUsers.isEmpty) {
-                          _foundUsers = List.generate(
-                              value.dataList.data?.data!.length ?? 0, (index) {
-                            return {
-                              "batchName":
-                                  value.dataList.data?.data![index].batchName,
-                              "name":
-                                  "${value.dataList.data?.data![index].batchName![0].characters.first.toUpperCase()}${value.dataList.data?.data![index].batchName!.characters.last.toUpperCase()}",
-                              "detail":
-                                  '${value.dataList.data?.data![index].batchDaysShort!.join(",").characters} - ${value.dataList.data?.data![index].batchTimingFrom} to ${value.dataList.data?.data![index].batchTimingTo}',
-                              "batchImg": value
-                                  .dataList.data?.data![index].serviceIconname,
-                              "coach_name":
-                                  value.dataList.data?.data![index].coachName,
-                              "status": value.dataList.data?.data![index].status
-                            };
-                          });
-                        }
+        body: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // Row(
+                //   children: [
+                //    InkWell(
+                //     onTap: showFilter,
+                //     child:Container(
+                //       alignment: Alignment.center,
+                //       height: 55,
+                //       width: 60,
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(5),
+                //           border: Border.all(color: Colors.grey)),
+                //       child: const Icon( Icons.filter_list, ),
+                //     ),
+                //     ),
+                //     Expanded(
+                //       child: Card(
+                //         shape: const RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.all(
+                //             Radius.circular(5),
+                //           ),
+                //           side: BorderSide(
+                //             color: Color.fromARGB(255, 197, 196, 196),
+                //           ),
+                //         ),
+                //         elevation: 0,
+                //         child: ListTile(
+                //           title: TextField(
+                //             onChanged: (searchData) => dataFilter(searchData),
+                //             decoration: const InputDecoration(
+                //                 contentPadding:
+                //                     EdgeInsets.symmetric(vertical: 0.0),
+                //                 hintText: 'Search',
+                //                 border: InputBorder.none),
+                //           ),
+                //           trailing: const Icon(Icons.search),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                ChangeNotifierProvider<BatchListViewViewModel>(
+                    create: (BuildContext context) => batchListViewViewModel,
+                    child: Consumer<BatchListViewViewModel>(
+                        builder: (context, value, _) {
+                      // print(
+                      //     "value --${value.dataList.data?.data?[0].}");
+                      if (_foundUsers.isEmpty) {
+                        _foundUsers = List.generate(
+                            value.dataList.data?.data!.length ?? 0, (index) {
+                          return {
+                            "batchName":
+                                value.dataList.data?.data![index].batchName,
+                            "name":
+                                "${value.dataList.data?.data![index].batchName![0].characters.first.toUpperCase()}${value.dataList.data?.data![index].batchName!.characters.last.toUpperCase()}",
+                            "detail":
+                                '${value.dataList.data?.data![index].batchDaysShort!.join(",").characters} - ${value.dataList.data?.data![index].batchTimingFrom} to ${value.dataList.data?.data![index].batchTimingTo}',
+                            "batchImg": value
+                                .dataList.data?.data![index].serviceIconname,
+                            "coach_name":
+                                value.dataList.data?.data![index].coachName,
+                            "status": value.dataList.data?.data![index].status
+                          };
+                        });
+                      }
 
-                        return Expanded(
-                          child: notFound
-                              ? const Text(
-                                  'No results found',
-                                  style: TextStyle(fontSize: 24),
-                                )
-                              : ListView.builder(
-                                  itemCount: _foundUsers.length,
-                                  itemBuilder: (context, index) => Card(
-                                    key: ValueKey(_foundUsers[index]["id"]),
-                                    elevation: 0,
-                                    margin:
-                                        const EdgeInsets.symmetric(vertical: 0),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          tileColor:
-                                              (_selectedItems.contains(index))
-                                                  ? const Color.fromARGB(
-                                                          255, 218, 218, 219)
-                                                      .withOpacity(0.5)
-                                                  : Colors.transparent,
-                                          leading: Expanded(
-                                            child: CircleAvatar(
-                                              radius: 20,
-                                              backgroundColor:
-                                                  Colors.lightBlue.shade100,
-                                              child: Text(
-                                                _foundUsers[index]['name'],
-                                                style: const TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        57, 64, 74, 1),
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: 'Loto-Regular'),
-                                              ),
-                                            ),
-                                          ),
-                                          title: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  _foundUsers[index]
-                                                      ['batchName'],
+                      return Expanded(
+                        child: notFound
+                            ? const Text(
+                                'No results found',
+                                style: TextStyle(fontSize: 24),
+                              )
+                            : ListView.builder(
+                                itemCount: _foundUsers.length,
+                                itemBuilder: (context, index) => Card(
+                                  key: ValueKey(_foundUsers[index]["id"]),
+                                  elevation: 0,
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 0),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        tileColor:
+                                            (_selectedItems.contains(index))
+                                                ? const Color.fromARGB(
+                                                        255, 218, 218, 219)
+                                                    .withOpacity(0.5)
+                                                : Colors.transparent,
+                                        leading: CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor:
+                                              Colors.lightBlue.shade100,
+                                          child: _selectedItems.contains(index)
+                                              ? const Icon(
+                                                  Icons.check,
+                                                  color: Color.fromRGBO(
+                                                      71, 192, 136, 1),
+                                                  size: 30.0,
+                                                )
+                                              : Text(
+                                                  _foundUsers[index]['name'],
                                                   style: const TextStyle(
                                                       color: Color.fromRGBO(
                                                           57, 64, 74, 1),
@@ -355,92 +347,107 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                                       fontFamily:
                                                           'Loto-Regular'),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                _foundUsers[index]["detail"]
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        57, 64, 74, 1),
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Loto-Regular'),
-                                              ),
-                                              // Row(
-                                              //   children: [
-                                              //     const Text("Coach Name:",
-                                              //         style: TextStyle(
-                                              //             color: Colors.black)),
-                                              //     Text(
-                                              //       _foundUsers[index]
-                                              //           ["coach_name"],
-                                              //     ),
-                                              //   ],
-                                              // ),
-                                            ],
-                                          ),
-                                          trailing: CircleAvatar(
-                                              radius: 20.5,
-                                              backgroundColor:
-                                                  const Color.fromRGBO(
-                                                      194, 235, 216, 1),
-                                              child: _selectedItems
-                                                      .contains(index)
-                                                  ? const Icon(
-                                                      Icons.check,
-                                                      color: Color.fromRGBO(
-                                                          71, 192, 136, 1),
-                                                      size: 30.0,
-                                                    )
-                                                  : Image(
-                                                      image: NetworkImage(AppUrl
-                                                              .imageListendPoint +
-                                                          _foundUsers[index]
-                                                              ["batchImg"]))),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ViewBatchDetails(
-                                                            ListIndex: index)));
-                                          },
-                                          onLongPress: () {
-                                            if (!_selectedItems
-                                                .contains(index)) {
-                                              setState(() {
-                                                _selectedItems.add(index);
-                                              });
-                                            } else {
-                                              setState(() {
-                                                _selectedItems.removeWhere(
-                                                    (val) => val == index);
-                                              });
-                                            }
-                                          },
                                         ),
-                                        const Divider(
-                                          height: 5,
+                                        title: Row(
+                                          children: [
+                                            Text(
+                                              _foundUsers[index]['batchName'],
+                                              style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      57, 64, 74, 1),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Loto-Regular'),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                        subtitle: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _foundUsers[index]["detail"]
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      57, 64, 74, 1),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Loto-Regular'),
+                                            ),
+                                            // Row(
+                                            //   children: [
+                                            //     const Text("Coach Name:",
+                                            //         style: TextStyle(
+                                            //             color: Colors.black)),
+                                            //     Text(
+                                            //       _foundUsers[index]
+                                            //           ["coach_name"],
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                          ],
+                                        ),
+                                        trailing: CircleAvatar(
+                                            radius: 20.5,
+                                            backgroundColor:
+                                                const Color.fromRGBO(
+                                                    194, 235, 216, 1),
+                                            child: Image(
+                                                image: NetworkImage(
+                                                    AppUrl.imageListendPoint +
+                                                        _foundUsers[index]
+                                                            ["batchImg"]))),
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ViewBatchDetails(
+                                                          ListIndex: index)));
+                                        },
+                                        onLongPress: () {
+                                          if (!_selectedItems.contains(index)) {
+                                            setState(() {
+                                              _selectedItems.add(index);
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _selectedItems.removeWhere(
+                                                  (val) => val == index);
+                                            });
+                                          }
+                                        },
+                                      ),
+                                      const Divider(
+                                        height: 5,
+                                        thickness: 1,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                        );
-                      })),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                ],
-              )),
-        ),
+                              ),
+                      );
+                    })),
+                const SizedBox(
+                  height: 15,
+                ),
+
+                RoundButton(
+                    loading: false,
+                    title: AppLocale.conts.getString(context),
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Theme.of(context).primaryColor,
+                    onPress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Layout(selectedIndex: 0)));
+                    }),
+              ],
+            )),
       ),
     );
   }
