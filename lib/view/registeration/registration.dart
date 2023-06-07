@@ -290,9 +290,13 @@ class _RegistrationState extends State<Registration> {
                            if(fullName.text.isEmpty){
                             Utils.flushBarErrorMessage('Fill Full Name', context);
                            }
-                           if(phone.text.toString().length < 10){
+                           else if(phone.text.toString().length < 10){
                              Utils.flushBarErrorMessage('Fill Phone Number', context);
                            }
+                           else if(phone.text.toString().length > 10)
+                             {
+                               Utils.flushBarErrorMessage('Please Check Phone Number', context);
+                             }
                             else{
                              Map<String, String> data = {
                               "name": fullName.text.toString(),

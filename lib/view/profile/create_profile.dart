@@ -483,13 +483,10 @@ class _CreateProfileState extends State<CreateProfile> {
                   const SizedBox(
                     height: 15,
                   ),
-                  DateOfjoining(
-                      controller: doj,
-                      hintText: 'Doj'),
+                  DateOfjoining(controller: doj, hintText: 'Doj'),
                   const SizedBox(
                     height: 15,
                   ),
-                 
                   RoundButton(
                       loading: false,
                       title: AppLocale.addCoach.getString(context),
@@ -497,22 +494,23 @@ class _CreateProfileState extends State<CreateProfile> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () async {
-                         final SharedPreferences sp = await SharedPreferences.getInstance();
-                        Map data ={
-                              "service_uid": selectedService.toString(),
-                              "fullname": coachName.text.toString(),
-                              "ccode":"91",
-                              "mobno":phone.text.toString(),
-                              "gender": _genderValue.toString(),
-                              "email": email.text.toString(),
-                              "salary":salary.text.toString(),
-                              "dateofjoining": doj.text.toString(),
-                              "dob": dob.text.toString(),
-                              "img":sp.getString('uprofile'),
-                              "relation":"self"
-                          };
+                        final SharedPreferences sp =
+                            await SharedPreferences.getInstance();
+                        Map data = {
+                          "service_uid": selectedService.toString(),
+                          "fullname": coachName.text.toString(),
+                          "ccode": "91",
+                          "mobno": phone.text.toString(),
+                          "gender": _genderValue.toString(),
+                          "email": email.text.toString(),
+                          "salary": salary.text.toString(),
+                          "dateofjoining": doj.text.toString(),
+                          "dob": dob.text.toString(),
+                          // "img":sp.getString('uprofile'),
+                          "img": imgFile.toString(),
+                          "relation": "self"
+                        };
                         user.userProfileAdd(data, context);
-                    
                       }),
                 ],
               ),

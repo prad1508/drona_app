@@ -16,6 +16,7 @@ import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../profile/create_profile.dart';
+import '../trainne_addmanual.dart';
 
 class CreateBatchListing extends StatefulWidget {
   const CreateBatchListing({super.key});
@@ -25,7 +26,7 @@ class CreateBatchListing extends StatefulWidget {
 }
 
 class _CreateBatchListingState extends State<CreateBatchListing> {
-  //multi language support 
+  //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   //custom radio
   // custum radio call in seprate page
@@ -101,8 +102,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   String batchFromdata = '';
   String batchTodata = '';
-  List activeServiceValue =[];
- List<DropdownMenuItem<String>> activeServices = [];
+  List activeServiceValue = [];
+  List<DropdownMenuItem<String>> activeServices = [];
   selectTimeFrom() async {
     var timepick = await showTimePicker(
       context: context,
@@ -133,6 +134,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   Widget build(BuildContext context) {
     final batch = Provider.of<BatchViewViewModel>(context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       home: Scaffold(
@@ -202,19 +204,26 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => academyViewViewModel,
                         child: Consumer<AcademyViewViewModel>(
                             builder: (context, value, child) {
-                              activeServiceValue.clear();
-                              activeServices.clear();
-                           for(var i = 0; i < value.dataList.data!.services!.length; i++)   
-                           {
-                                if(value.dataList.data!.services![i].status.toString() == 'active'){
-                                 activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
-                                 activeServices.add( DropdownMenuItem(
-                                              value:  value.dataList.data!.services![i].uid.toString(),
-                                               child: Text(value.dataList.data!.services![i].serviceName.toString())
-                                                  ));
-                              }
-                       }
-                           assignSeviceId(activeServiceValue[0]);
+                          activeServiceValue.clear();
+                          activeServices.clear();
+                          for (var i = 0;
+                              i < value.dataList.data!.services!.length;
+                              i++) {
+                            if (value.dataList.data!.services![i].status
+                                    .toString() ==
+                                'active') {
+                              activeServiceValue.add(value
+                                  .dataList.data!.services![i].uid
+                                  .toString());
+                              activeServices.add(DropdownMenuItem(
+                                  value: value.dataList.data!.services![i].uid
+                                      .toString(),
+                                  child: Text(value
+                                      .dataList.data!.services![i].serviceName
+                                      .toString())));
+                            }
+                          }
+                          assignSeviceId(activeServiceValue[0]);
                           return DropdownButton(
                               isExpanded: true,
                               underline: DropdownButtonHideUnderline(
@@ -270,6 +279,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
+                          print("object==${value.dataList.data?.data!.length}");
+
                           profileUid =
                               value.dataList.data?.data![0].uid.toString() ??
                                   '';
@@ -306,62 +317,89 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     create: (BuildContext context) => myProgramViewViewModel,
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
-                      _programid = value
-                          .dataList.data?.data![0].uid
-                          .toString();
+                      _programid = value.dataList.data?.data![0].uid.toString();
                       _programName = value
                           .dataList.data?.data![0].programs![0].programName
                           .toString();
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
-                            child:  (value.dataList.data?.data![0].name ?? '').isNotEmpty ? Text(
-                              'What ${value.dataList.data?.data![0].name.toString()}',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ): Container(),
+                            child: (value.dataList.data?.data![0].name ?? '')
+                                    .isNotEmpty
+                                ? Text(
+                                    'Program',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  )
+                                // 'What ${value.dataList.data?.data![0].name.toString()}',
+
+                                : Container(),
                           ),
-                          (value.dataList.data?.data![0]
-                                        .programs)?.isNotEmpty ?? false ? SizedBox(
-                            height: 15,
-                          ): 
-                          Container(),
-                         (value.dataList.data?.data![0]
-                                        .programs)?.isNotEmpty ?? false ? SizedBox(
-                            height: 50,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: value.dataList.data?.data![0]
-                                        .programs?.length ??
-                                    0,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      value.dataList.data?.data![0]
-                                                .programs![index].amount
-                                                .toString() == '0' ? Container() : CustomRadio<String>(
-                                        btnColor: Colors.black,
-                                        value: value.dataList.data?.data![0]
-                                                .programs![index].uid
-                                                .toString() ??
-                                            '',
-                                        groupValue: _programUid,
-                                        onChanged:
-                                            _valueChangedHandler(_programName),
-                                        label: value.dataList.data?.data![0]
-                                                .programs![index].programName
-                                                .toString() ??
-                                            '',
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      )
-                                    ],
-                                  );
-                                }),
-                          ): Container(),
+                          (value.dataList.data?.data![0].programs)
+                                      ?.isNotEmpty ??
+                                  false
+                              ? SizedBox(
+                                  height: 15,
+                                )
+                              : Container(),
+                          (value.dataList.data?.data![0].programs)
+                                      ?.isNotEmpty ??
+                                  false
+                              ? Container(
+                                  height: 50,
+                                  //color: Colors.amber,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: value.dataList.data?.data![0]
+                                              .programs?.length ??
+                                          0,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            value.dataList.data?.data![0]
+                                                        .programs![index].amount
+                                                        .toString() ==
+                                                    '0'
+                                                ? Container()
+                                                : CustomRadio<String>(
+                                                    btnColor: Colors.black,
+                                                    value: value
+                                                            .dataList
+                                                            .data
+                                                            ?.data![0]
+                                                            .programs![index]
+                                                            .uid
+                                                            .toString() ??
+                                                        '',
+                                                    groupValue: _programUid,
+                                                    onChanged:
+                                                        _valueChangedHandler(
+                                                            _programName),
+                                                    label: value
+                                                            .dataList
+                                                            .data
+                                                            ?.data![0]
+                                                            .programs![index]
+                                                            .programName
+                                                            .toString() ??
+                                                        '',
+                                                  ),
+                                            SizedBox(
+                                              width: 10,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                )
+                              : Container(),
                         ],
                       );
                     }),
@@ -703,7 +741,93 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: () {},
+                    onPress: () {
+                      // showModalBottomSheet<void>(
+                      //   context: context,
+                      //   shape: const RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.vertical(
+                      //       top: Radius.circular(25.0),
+                      //     ),
+                      //   ),
+                      //   builder: (BuildContext context) {
+                      //     return SizedBox(
+                      //       height: 250,
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: <Widget>[
+                      //           SizedBox(
+                      //             height: 15,
+                      //           ),
+                      //           Align(
+                      //               alignment: Alignment.topLeft,
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.only(left: 20),
+                      //                 child: Text(
+                      //                     'Add Trainee In ${batchName.text.toUpperCase()}'),
+                      //               )),
+                      //           SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //           Divider(
+                      //             thickness: 2,
+                      //           ),
+                      //           SizedBox(
+                      //             height: 15,
+                      //           ),
+                      //           Align(
+                      //               alignment: Alignment.topLeft,
+                      //               child: Padding(
+                      //                   padding:
+                      //                       const EdgeInsets.only(left: 10),
+                      //                   child: TextButton(
+                      //                       onPressed: () {
+                      //                         Navigator.push(
+                      //                           context,
+                      //                           MaterialPageRoute(
+                      //                             builder:
+                      //                                 (BuildContext context) =>
+                      //                                     TrainAddManualy(
+                      //                               //  batchId: batchUid,
+
+                      //                               batchId: "batchUid",
+
+                      //                               batchName: batchName.text
+                      //                                   .toString()
+                      //                                   .toUpperCase(),
+                      //                             ),
+                      //                           ),
+                      //                         );
+                      //                       },
+                      //                       child: Text(
+                      //                         'Enter Manually',
+                      //                         style: Theme.of(context)
+                      //                             .textTheme
+                      //                             .bodyMedium,
+                      //                       )))),
+                      //           SizedBox(
+                      //             height: 15,
+                      //           ),
+                      //           Align(
+                      //               alignment: Alignment.topLeft,
+                      //               child: Padding(
+                      //                   padding:
+                      //                       const EdgeInsets.only(left: 10),
+                      //                   child: TextButton(
+                      //                     onPressed: () {},
+                      //                     child: Text(
+                      //                       'Select From Existing Trainees',
+                      //                       style: Theme.of(context)
+                      //                           .textTheme
+                      //                           .bodyMedium,
+                      //                     ),
+                      //                   ))),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      // );
+                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -730,7 +854,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
                       };
-                       batch.fetchCreatebatchListApi(data, context);
+                      batch.fetchCreatebatchListApi(data, context);
                     },
                   ),
                 ],

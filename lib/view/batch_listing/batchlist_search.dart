@@ -55,7 +55,6 @@ class _SearchBatchListState extends State<SearchBatchList> {
       });
     }
   }
- 
 
   //bottomsheet popup
   showFilter() {
@@ -63,14 +62,14 @@ class _SearchBatchListState extends State<SearchBatchList> {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
-          AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
-          academyViewViewModel.fetchAcademyListApi();
-          List<DropdownMenuItem<String>>  activeServices = [];
-          String? selectedService;
-          assignSeviceId(selectedServiceValue) {
-            myProgramViewViewModel.fetchMyProgramListApi(selectedService);
-            selectedService = selectedServiceValue;
-          }
+        AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
+        academyViewViewModel.fetchAcademyListApi();
+        List<DropdownMenuItem<String>> activeServices = [];
+        String? selectedService;
+        assignSeviceId(selectedServiceValue) {
+          myProgramViewViewModel.fetchMyProgramListApi(selectedService);
+          selectedService = selectedServiceValue;
+        }
 
         return Scaffold(
           backgroundColor: Colors.transparent,
@@ -120,47 +119,55 @@ class _SearchBatchListState extends State<SearchBatchList> {
                         height: 5,
                       ),
                       const Align(
-                      alignment: Alignment.topLeft, child: Text('Services')),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1,
-                          color: const Color.fromARGB(255, 218, 216, 216)),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: ChangeNotifierProvider<AcademyViewViewModel>(
-                        create: (context) => academyViewViewModel,
-                        child: Consumer<AcademyViewViewModel>(
-                            builder: (context, value, child) {
-                            assignSeviceId(value.dataList.data?.services![0].uid.toString() ?? '');
-                            activeServices = List.generate(
-                              value.dataList.data?.services?.length ?? 0, 
-                              (index)  {
-                               return DropdownMenuItem(
-                                              value:  value.dataList.data!.services![index].uid.toString(),
-                                               child: Text(value.dataList.data!.services![index].serviceName.toString())
-                                                  );
-                            });
-                       
-                          return DropdownButton(
-                              style: const TextStyle(fontSize: 14,color: Colors.black),
-                              isExpanded: true,
-                              underline: DropdownButtonHideUnderline(
-                                  child: Container()),
-                              value: selectedService,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedService = newValue!;
-                                });
-                              },
-                              items: activeServices);
-                        })),
-                  ),
-                   
+                          alignment: Alignment.topLeft,
+                          child: Text('Services')),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1,
+                              color: const Color.fromARGB(255, 218, 216, 216)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: ChangeNotifierProvider<AcademyViewViewModel>(
+                            create: (context) => academyViewViewModel,
+                            child: Consumer<AcademyViewViewModel>(
+                                builder: (context, value, child) {
+                              assignSeviceId(value
+                                      .dataList.data?.services![0].uid
+                                      .toString() ??
+                                  '');
+                              activeServices = List.generate(
+                                  value.dataList.data?.services?.length ?? 0,
+                                  (index) {
+                                return DropdownMenuItem(
+                                    value: value
+                                        .dataList.data!.services![index].uid
+                                        .toString(),
+                                    child: Text(value.dataList.data!
+                                        .services![index].serviceName
+                                        .toString()));
+                              });
+
+                              return DropdownButton(
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                  isExpanded: true,
+                                  underline: DropdownButtonHideUnderline(
+                                      child: Container()),
+                                  value: selectedService,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedService = newValue!;
+                                    });
+                                  },
+                                  items: activeServices);
+                            })),
+                      ),
                     ],
                   ),
                 )
@@ -227,64 +234,70 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                     InkWell(
-                      onTap: showFilter,
-                      child:Container(
-                        alignment: Alignment.center,
-                        height: 55,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey)),
-                        child: const Icon( Icons.filter_list, ),
-                      ),
-                      ),
-                      Expanded(
-                        child: Card(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                            side: BorderSide(
-                              color: Color.fromARGB(255, 197, 196, 196),
-                            ),
-                          ),
-                          elevation: 0,
-                          child: ListTile(
-                            title: TextField(
-                              onChanged: (searchData) => dataFilter(searchData),
-                              decoration: const InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 0.0),
-                                  hintText: 'Search',
-                                  border: InputBorder.none),
-                            ),
-                            trailing: const Icon(Icons.search),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  // Row(
+                  //   children: [
+                  //    InkWell(
+                  //     onTap: showFilter,
+                  //     child:Container(
+                  //       alignment: Alignment.center,
+                  //       height: 55,
+                  //       width: 60,
+                  //       decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(5),
+                  //           border: Border.all(color: Colors.grey)),
+                  //       child: const Icon( Icons.filter_list, ),
+                  //     ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Card(
+                  //         shape: const RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.all(
+                  //             Radius.circular(5),
+                  //           ),
+                  //           side: BorderSide(
+                  //             color: Color.fromARGB(255, 197, 196, 196),
+                  //           ),
+                  //         ),
+                  //         elevation: 0,
+                  //         child: ListTile(
+                  //           title: TextField(
+                  //             onChanged: (searchData) => dataFilter(searchData),
+                  //             decoration: const InputDecoration(
+                  //                 contentPadding:
+                  //                     EdgeInsets.symmetric(vertical: 0.0),
+                  //                 hintText: 'Search',
+                  //                 border: InputBorder.none),
+                  //           ),
+                  //           trailing: const Icon(Icons.search),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   ChangeNotifierProvider<BatchListViewViewModel>(
                       create: (BuildContext context) => batchListViewViewModel,
                       child: Consumer<BatchListViewViewModel>(
                           builder: (context, value, _) {
+                        // print(
+                        //     "value --${value.dataList.data?.data?[0].}");
                         if (_foundUsers.isEmpty) {
                           _foundUsers = List.generate(
                               value.dataList.data?.data!.length ?? 0, (index) {
                             return {
-                              "name":
+                              "batchName":
                                   value.dataList.data?.data![index].batchName,
-                              "detail": '${value.dataList.data?.data![index].programName}, ${value.dataList.data?.data![index].batchTimingFrom} to ${value.dataList.data?.data![index].batchTimingTo}',
-                              "batchImg": value.dataList.data?.data![index].serviceIconname,
+                              "name":
+                                  "${value.dataList.data?.data![index].batchName![0].characters.first.toUpperCase()}${value.dataList.data?.data![index].batchName!.characters.last.toUpperCase()}",
+                              "detail":
+                                  '${value.dataList.data?.data![index].batchDaysShort!.join(",").characters} - ${value.dataList.data?.data![index].batchTimingFrom} to ${value.dataList.data?.data![index].batchTimingTo}',
+                              "batchImg": value
+                                  .dataList.data?.data![index].serviceIconname,
                               "coach_name":
                                   value.dataList.data?.data![index].coachName,
-                              "status" : value.dataList.data?.data![index].status
+                              "status": value.dataList.data?.data![index].status
                             };
                           });
                         }
@@ -311,28 +324,28 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                                           255, 218, 218, 219)
                                                       .withOpacity(0.5)
                                                   : Colors.transparent,
-                                          leading: CircleAvatar(
-                                              radius: 20.5,
+                                          leading: Expanded(
+                                            child: CircleAvatar(
+                                              radius: 20,
                                               backgroundColor:
-                                                  const Color.fromRGBO(
-                                                      194, 235, 216, 1),
-                                              child: _selectedItems
-                                                      .contains(index)
-                                                  ? const Icon(
-                                                      Icons.check,
-                                                      color: Color.fromRGBO(
-                                                          71, 192, 136, 1),
-                                                      size: 30.0,
-                                                    )
-                                                  : Image(
-                                                      image: NetworkImage(AppUrl.imageListendPoint + 
-                                                          _foundUsers[index]
-                                                              ["batchImg"]))),
+                                                  Colors.lightBlue.shade100,
+                                              child: Text(
+                                                _foundUsers[index]['name'],
+                                                style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        57, 64, 74, 1),
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'Loto-Regular'),
+                                              ),
+                                            ),
+                                          ),
                                           title: Row(
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  _foundUsers[index]['name'],
+                                                  _foundUsers[index]
+                                                      ['batchName'],
                                                   style: const TextStyle(
                                                       color: Color.fromRGBO(
                                                           57, 64, 74, 1),
@@ -346,54 +359,58 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                             ],
                                           ),
                                           subtitle: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 25),
-                                                child: Text(
-                                                  _foundUsers[index]["detail"]
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
-                                                ),
+                                              Text(
+                                                _foundUsers[index]["detail"]
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        57, 64, 74, 1),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Loto-Regular'),
                                               ),
-                                              Row(
-                                                children: [
-                                                  const Text("Coach Name:",
-                                                      style: TextStyle(
-                                                          color: Colors.black)),
-                                                  Text(
-                                                    _foundUsers[index]
-                                                        ["coach_name"],
-                                                  ),
-                                                ],
-                                              ),
+                                              // Row(
+                                              //   children: [
+                                              //     const Text("Coach Name:",
+                                              //         style: TextStyle(
+                                              //             color: Colors.black)),
+                                              //     Text(
+                                              //       _foundUsers[index]
+                                              //           ["coach_name"],
+                                              //     ),
+                                              //   ],
+                                              // ),
                                             ],
                                           ),
-                                          trailing: Container(
-                                            alignment: Alignment.center,
-                                            height: 30,
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(71, 192, 136, 1),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Text( _foundUsers[index]['status'],
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
+                                          trailing: CircleAvatar(
+                                              radius: 20.5,
+                                              backgroundColor:
+                                                  const Color.fromRGBO(
+                                                      194, 235, 216, 1),
+                                              child: _selectedItems
+                                                      .contains(index)
+                                                  ? const Icon(
+                                                      Icons.check,
+                                                      color: Color.fromRGBO(
+                                                          71, 192, 136, 1),
+                                                      size: 30.0,
+                                                    )
+                                                  : Image(
+                                                      image: NetworkImage(AppUrl
+                                                              .imageListendPoint +
+                                                          _foundUsers[index]
+                                                              ["batchImg"]))),
                                           onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                         ViewBatchDetails(ListIndex: index)));
+                                                        ViewBatchDetails(
+                                                            ListIndex: index)));
                                           },
                                           onLongPress: () {
                                             if (!_selectedItems

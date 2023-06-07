@@ -29,7 +29,7 @@ class Validation {
   //sync phone check
   Future<bool> isPhoneField(String value) async {
     return await Future.delayed(const Duration(seconds: 2),
-        () => RegExp(r'^(?:[+0][1-9])?[0-9]{10,12}$').hasMatch(value));
+        () => RegExp(r'^(?:[+0][1-9])?[0-9]{10}$').hasMatch(value));
   }
 }
 

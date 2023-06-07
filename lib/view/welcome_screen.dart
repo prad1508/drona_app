@@ -182,8 +182,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         })
                     : RoundButton(
                         loading: false,
-                        title: AppLocale.title17.getString(context),
-                        // title: AppLocale.title18.getString(context),
+                        // title: AppLocale.title17.getString(context),
+                        title: AppLocale.title18.getString(context),
                         textColor: Colors.white,
                         rounded: true,
                         color: const Color.fromRGBO(241, 94, 83, 1),

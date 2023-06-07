@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:intl/intl.dart';
+
 
 class DateOfBirth extends StatefulWidget {
   final TextEditingController controller;
@@ -69,7 +71,7 @@ class _DateOfjoiningState extends State<DateOfjoining> {
                         Icons.calendar_month,
                         size: 30.0,
                       ),
-                      hintText: 'Dob',
+                      hintText: widget.hintText,
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -83,7 +85,8 @@ class _DateOfjoiningState extends State<DateOfjoining> {
                     context: context,
                     initialDate:DateTime.now(),
                     firstDate: DateTime(1930),
-                    lastDate: DateTime.now());
+                    lastDate: DateTime.now(),
+                );
                 if (date != null) {
                   widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
                 }
@@ -91,3 +94,192 @@ class _DateOfjoiningState extends State<DateOfjoining> {
                   );
   }
 }
+
+
+
+
+class YearMonthPicker extends StatefulWidget {
+  final TextEditingController controller;
+  final String hintText;
+
+  const YearMonthPicker({Key? key, required this.controller, required this.hintText})
+      : super(key: key);
+
+  @override
+  State<YearMonthPicker> createState() => _YearMonthPickerState();
+}
+
+class _YearMonthPickerState extends State<YearMonthPicker> {
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _showYearMonthPicker(BuildContext context) async {
+    final DateTime? picked = await showDialog<DateTime>(
+      context: context,
+      builder: (BuildContext context) {
+        return YearMonthPickerDialog(
+          initialDate: _selectedDate,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+      });
+      widget.controller.text = DateFormat('MM/yyyy').format(picked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      readOnly: true,
+      controller: widget.controller,
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        suffixIcon: const Icon(
+          Icons.calendar_month,
+          size: 30.0,
+        ),
+        hintText: widget.hintText,
+        contentPadding: const EdgeInsets.all(10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
+      onTap: () {
+        _showYearMonthPicker(context);
+      },
+    );
+  }
+}
+
+class YearMonthPickerDialog extends StatefulWidget {
+  final DateTime initialDate;
+
+  const YearMonthPickerDialog({Key? key, required this.initialDate}) : super(key: key);
+
+  @override
+  _YearMonthPickerDialogState createState() => _YearMonthPickerDialogState();
+}
+
+class _YearMonthPickerDialogState extends State<YearMonthPickerDialog> {
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.initialDate;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Select Year and Month'),
+      content: YearMonthPickerWidget(
+        initialDate: _selectedDate,
+        onChanged: (DateTime date) {
+          setState(() {
+            _selectedDate = date;
+          });
+        },
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(_selectedDate);
+          },
+          child: const Text('OK'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+      ],
+    );
+  }
+}
+
+class YearMonthPickerWidget extends StatefulWidget {
+  final DateTime initialDate;
+  final ValueChanged<DateTime> onChanged;
+
+  const YearMonthPickerWidget({
+    Key? key,
+    required this.initialDate,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  _YearMonthPickerWidgetState createState() => _YearMonthPickerWidgetState();
+}
+
+class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.initialDate;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: DropdownButton<int>(
+                value: _selectedDate.month,
+                onChanged: (int? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedDate = DateTime(_selectedDate.year, newValue, _selectedDate.day);
+                    });
+                    widget.onChanged(_selectedDate);
+                  }
+                },
+                items: List<DropdownMenuItem<int>>.generate(
+                  12,
+                      (int index) => DropdownMenuItem<int>(
+                    value: index + 1,
+                    child: Text(DateFormat('MMMM').format(DateTime(2000, index + 1, 1))),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: DropdownButton<int>(
+                value: _selectedDate.year,
+                onChanged: (int? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedDate = DateTime(newValue, _selectedDate.month, _selectedDate.day);
+                    });
+                    widget.onChanged(_selectedDate);
+                  }
+                },
+                items: List<DropdownMenuItem<int>>.generate(
+                  100,
+                      (int index) => DropdownMenuItem<int>(
+                    value: DateTime.now().year - index,
+                    child: Text((DateTime.now().year - index).toString()),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+

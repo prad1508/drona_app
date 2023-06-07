@@ -18,7 +18,7 @@ class CoachListSelected extends StatefulWidget {
 }
 
 class _CoachListSelectedState extends State<CoachListSelected> {
-   //multi language support
+  //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   List<int> _selectedItems = <int>[];
@@ -47,7 +47,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
       });
     }
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -79,27 +79,27 @@ class _CoachListSelectedState extends State<CoachListSelected> {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            _selectedItems.isEmpty ?
-            IconButton(
-              onPressed: (() {
-                if (kDebugMode) {
-                  print('add coach list');
-                }
-              }),
-              icon: const Icon(Icons.group_add),
-              iconSize: 25,
-              color: Colors.black,
-            ) :
-            IconButton(
-              onPressed: (() {
-                if (kDebugMode) {
-                  print('add coach list');
-                }
-              }),
-              icon: const Icon(Icons.delete_outline),
-              iconSize: 25,
-              color: Colors.black,
-            ),
+            _selectedItems.isEmpty
+                ? IconButton(
+                    onPressed: (() {
+                      if (kDebugMode) {
+                        print('add coach list');
+                      }
+                    }),
+                    icon: const Icon(Icons.group_add),
+                    iconSize: 25,
+                    color: Colors.black,
+                  )
+                : IconButton(
+                    onPressed: (() {
+                      if (kDebugMode) {
+                        print('add coach list');
+                      }
+                    }),
+                    icon: const Icon(Icons.delete_outline),
+                    iconSize: 25,
+                    color: Colors.black,
+                  ),
           ],
         ),
         body: Material(
@@ -149,12 +149,11 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                           _foundUsers = List.generate(
                               value.dataList.data?.data!.length ?? 0, (index) {
                             return {
-                              "name":
-                                  value.dataList.data?.data![index].name,
+                              "name": value.dataList.data?.data![index].name,
                               "img": value.dataList.data?.data![index].img,
                               "gender":
                                   value.dataList.data?.data![index].gender,
-                              "userid" : value.dataList.data?.data![index].userid
+                              "userid": value.dataList.data?.data![index].userid
                             };
                           });
                         }
@@ -195,7 +194,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                       size: 30.0,
                                                     )
                                                   : Image(
-                                                      image: NetworkImage(AppUrl.imageListendPoint + 
+                                                      image: NetworkImage(AppUrl
+                                                              .imageListendPoint +
                                                           _foundUsers[index]
                                                               ["img"]))),
                                           title: Row(
@@ -219,26 +219,24 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                             padding: const EdgeInsets.only(
                                                 right: 25),
                                             child: Text(
-                                              _foundUsers[index]['gender'] + ", " + _foundUsers[index]['userid'],
+                                              _foundUsers[index]['gender'] +
+                                                  ", " +
+                                                  _foundUsers[index]['userid'],
                                               style: const TextStyle(
                                                   color: Color.fromRGBO(
                                                       57, 64, 74, 1),
                                                   fontSize: 12,
-                                                  fontWeight:
-                                                      FontWeight.w400,
-                                                  fontFamily:
-                                                      'Loto-Regular'),
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Loto-Regular'),
                                             ),
                                           ),
-                                  //         trailing: CircleAvatar(
-                                  //   radius: 12,
-                                  //   child: Image(
-                                  //       image: AssetImage(_foundUsers[index]
-                                  //           ["categorgyImg"])),
-                                  // ),
-                                          onTap: () {
-                                          
-                                          },
+                                          //         trailing: CircleAvatar(
+                                          //   radius: 12,
+                                          //   child: Image(
+                                          //       image: AssetImage(_foundUsers[index]
+                                          //           ["categorgyImg"])),
+                                          // ),
+                                          onTap: () {},
                                           onLongPress: () {
                                             if (!_selectedItems
                                                 .contains(index)) {

@@ -88,9 +88,12 @@ class _ChooseFacilityState extends State<ChooseFacility> {
   Widget build(BuildContext context) {
     final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
+      debugShowCheckedModeBanner:false,
+      debugShowMaterialGrid: false,
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       home: Scaffold(
+
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(

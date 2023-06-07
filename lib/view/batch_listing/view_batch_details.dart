@@ -98,6 +98,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       home: Scaffold(
@@ -133,7 +134,9 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                 create: (BuildContext context) => batchListViewViewModel,
                 child: Consumer<BatchListViewViewModel>(
                     builder: (context, value, _) {
-                    batchUid =  value.dataList.data!.data![0].uid.toString();
+                  batchUid = value.dataList.data!.data![0].uid.toString();
+
+                  print("object==$batchUid");
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -240,7 +243,8 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black.withOpacity(0.5),
-                              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                              padding:
+                                  const EdgeInsets.fromLTRB(25, 15, 25, 15)),
                           child: Text(value.dataList.data
                                   ?.data![widget.ListIndex].programName
                                   .toString() ??
@@ -296,7 +300,8 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black.withOpacity(0.5),
-                              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                              padding:
+                                  const EdgeInsets.fromLTRB(25, 15, 25, 15)),
                           child: Text(value.dataList.data
                                   ?.data![widget.ListIndex].programName
                                   .toString() ??
@@ -320,8 +325,9 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                         height: 10,
                       ),
                       TextFormField(
-                       enabled: false,
-                        controller: onlineUrl..text = value.dataList.data?.data![widget.ListIndex]
+                        enabled: false,
+                        controller: onlineUrl
+                          ..text = value.dataList.data?.data![widget.ListIndex]
                                   .onlineSessionUrl
                                   .toString() ??
                               '',
@@ -348,27 +354,40 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                       const SizedBox(
                         height: 10,
                       ),
-                     
                       SizedBox(
                         height: 50,
                         child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: value.dataList.data?.data![widget.ListIndex].batchDaysShort?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black.withOpacity(0.5),
-                                  padding: const EdgeInsets.fromLTRB(25, 15, 25, 15)),
-                          child: Text(value.dataList.data?.data![widget.ListIndex].batchDaysShort![index] ?? ''),
-                        ),
-                        SizedBox(width: 10,)
-                              ],
-                            );
-                          }
-                        ),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: value
+                                    .dataList
+                                    .data
+                                    ?.data![widget.ListIndex]
+                                    .batchDaysShort
+                                    ?.length ??
+                                0,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.black.withOpacity(0.5),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            25, 15, 25, 15)),
+                                    child: Text(value
+                                            .dataList
+                                            .data
+                                            ?.data![widget.ListIndex]
+                                            .batchDaysShort![index] ??
+                                        ''),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              );
+                            }),
                       ),
                       const SizedBox(
                         height: 15,
@@ -383,9 +402,16 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                       const SizedBox(
                         height: 10,
                       ),
-                       TextFormField(
+                      TextFormField(
                         enabled: false,
-                        controller: fee..text = value.dataList.data!.data![widget.ListIndex].batchTimingFrom.toString() + ' to ' + value.dataList.data!.data![widget.ListIndex].batchTimingTo.toString(),
+                        controller: fee
+                          ..text = value.dataList.data!.data![widget.ListIndex]
+                                  .batchTimingFrom
+                                  .toString() +
+                              ' to ' +
+                              value.dataList.data!.data![widget.ListIndex]
+                                  .batchTimingTo
+                                  .toString(),
                         decoration: InputDecoration(
                           suffixIcon: const Icon(Icons.access_time),
                           contentPadding: const EdgeInsets.all(10),
@@ -407,12 +433,110 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           rounded: true,
                           color: Theme.of(context).primaryColor,
                           onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                     TrainAddManualy(batchId: batchUid),
+                            // Map<String, dynamic> data = {
+                            //   "batch_uid": "$batchUid",
+                            //   "fullname":
+                            //       "${value.dataList.data?.data![widget.ListIndex].coachName}",
+                            //   "ccode":
+                            //       "${value.dataList.data?.data![widget.ListIndex].cdd}",
+                            //   "mobno":
+                            //       "${value.dataList.data?.data![widget.ListIndex].cmm}",
+                            //   "gender": "male",
+                            //   "fees": 20000,
+                            //   "dateofjoining": "12-04-2023",
+                            //   "monthofbilling": "1",
+                            //   "img": "izf5azt0sy2iurz.jpeg",
+                            //   "relation": "self"
+                            // };
+                            // print("object$data");
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (BuildContext context) =>
+                            //         TrainAddManualy(batchId: batchUid),
+                            //   ),
+                            // );
+                            showModalBottomSheet<void>(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25.0),
+                                ),
                               ),
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height: 250,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: Text(
+                                                'Add Trainee In ${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}'),
+                                          )),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Divider(
+                                        thickness: 2,
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            TrainAddManualy(
+                                                          batchId: batchUid,
+                                                          batchName:
+                                                              "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Enter Manually',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium,
+                                                  )))),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: TextButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  'Select From Existing Trainees',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium,
+                                                ),
+                                              ))),
+                                    ],
+                                  ),
+                                );
+                              },
                             );
                           }),
                       const SizedBox(

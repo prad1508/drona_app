@@ -127,9 +127,9 @@ class _ChooseProgramState extends State<ChooseProgram> {
   Widget build(BuildContext context) {
     final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,
-        debugShowCheckedModeBanner: false,
         home: Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
@@ -279,7 +279,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                             value:
                                                                 bylevelBeginner,
                                                             onChanged: (value) {
-                                                              print(value);
+                                                              print("by level beginner value------+${value}----------");
                                                               setState(() {
                                                                 bylevelBeginner =
                                                                     value!;
@@ -375,7 +375,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                             value:
                                                                 bylevelIntermediate,
                                                             onChanged: (value) {
-                                                              print(value);
+                                                              print("bylevelIntermediate value------+${value}----------");
                                                               setState(() {
                                                                 bylevelIntermediate =
                                                                     value!;
@@ -473,6 +473,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                             onChanged: (value) {
                                                               print(value);
                                                               setState(() {
+                                                                print("bylevelAdvance value------+${value}----------");
                                                                 bylevelAdvance =
                                                                     value!;
                                                               });
@@ -568,6 +569,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                             onChanged: (value) {
                                                               print(value);
                                                               setState(() {
+                                                                print("bylevelprof value------+${value}----------");
                                                                 bylevelprof =
                                                                     value!;
                                                               });
@@ -701,6 +703,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                                               value);
                                                                           setState(
                                                                               () {
+                                                                                print("bylevelBeginner2 value------+${value}----------");
                                                                             bylevelBeginner2 =
                                                                                 value!;
                                                                           });
@@ -1969,11 +1972,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                     itemBuilder:
                                                         (context, index) {
                                                       String checkboxNmae =
-                                                          _groupControllers[
-                                                                  index]
-                                                              .name
-                                                              .text
-                                                              .toString();
+                                                          _groupControllers[index].name.text.toString();
                                                       return Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -2235,38 +2234,16 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                       //by custom
                                                       final customProgramList =
                                                           List.generate(
-                                                              _groupControllers
-                                                                  .length,
-                                                              (index) {
-                                                        return {
-                                                          "program_name":
-                                                              _groupControllers[
-                                                                      index]
-                                                                  .name
-                                                                  .text,
-                                                          "amount":
-                                                              _groupControllers[
-                                                                          index]
-                                                                      .tel
-                                                                      .text
-                                                                      .isEmpty
-                                                                  ? '0'
-                                                                  : _groupControllers[
-                                                                          index]
-                                                                      .tel
-                                                                      .text,
-                                                          "registrationfee":
-                                                              _groupControllers2[
-                                                                          0]
-                                                                      .name
-                                                                      .text
-                                                                      .isEmpty
-                                                                  ? '0'
-                                                                  : _groupControllers2[
-                                                                          0]
-                                                                      .name
-                                                                      .text
-                                                        };
+                                                              _groupControllers.length, (index) {
+
+                                                                    return {
+                                                                      "program_name": _groupControllers[index].name.text,
+                                                                      "amount": _groupControllers[index].tel.text.isEmpty ? '0' : _groupControllers[index].tel.text,
+                                                                      "registrationfee": _groupControllers2[0].name.text.isEmpty ? '0' : _groupControllers2[0].name.text
+                                                                    };
+
+
+
                                                       });
                                                       data = {
                                                         "service_uid": value
@@ -2478,6 +2455,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                             rounded: true,
                             color: Theme.of(context).primaryColor,
                             onPress: () {
+
                               Navigator.pop(context, true);
                             },
                           ),

@@ -49,6 +49,65 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
     categoryViewViewModel.fetchCategoryListApi();
     super.initState();
   }
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: Colors.redAccent,
+                      size: 50.0,
+                    ),
+
+                  ),
+                  const Text("Do you want to exit?"),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+
+
+                      Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                            child:const Text("No",
+                                style: TextStyle(color: Colors.black)
+                            ),
+                          )),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            exit(0);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent),
+                          child: const Text(
+                            "Yes", style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   Future<bool> _onWillPop() async {
     Navigator.pop(context);
@@ -87,7 +146,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
-                 Navigator.pop(context);
+                showExitPopup(context);
               },
             ),
             title: Row(
@@ -453,6 +512,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                               "pincode": pincodedata.text.toString(),
                               "billing_date": selectedValue.toString(),
                             };
+                            print(data);
                             registration.basicDetails(
                                 data, context, selectedValue2, acadmicName.text.toString());
                           }
@@ -486,6 +546,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
       builder: (BuildContext context) {
         return Material(
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             body: Container(
               color: Colors.transparent,
@@ -533,11 +594,14 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                       create: (BuildContext context) => postofficeViewViewModel,
                       child: Consumer<PostofficeViewViewModel>(
                           builder: (context, value, _) {
+
                         if (value.dataList.status! == Status.completed) {
-                          return SizedBox(
+                          return
+                            SizedBox(
                             height: MediaQuery.of(context).size.height * 0.4,
                             child: value.dataList.data?.postOffice?.isNotEmpty ?? false
-                                ? ListView.builder(
+                                ?
+                            ListView.builder(
                                     itemCount: value.dataList.data?.postOffice
                                             ?.length ??
                                         0,
