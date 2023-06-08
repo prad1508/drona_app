@@ -1,7 +1,9 @@
 import 'package:drona/view/session_listing/view_detailsclosed.dart';
 import 'package:drona/view/session_listing/view_session_details.dart';
+import 'package:drona/view_model/session_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 import '../../res/widget/round_button.dart';
 import 'create_session_details.dart';
 import 'session_detailcancel.dart';
@@ -18,6 +20,8 @@ enum Status { sheduled, close, cancel }
 class _SessionListState extends State<SessionList>
     with SingleTickerProviderStateMixin {
   //multi language support
+  SessionViewViewModel sessionViewModel = SessionViewViewModel();
+  Map<String, dynamic> data = {"filter_batch_uid": "", "search": ""};
   final FlutterLocalization _localization = FlutterLocalization.instance;
   final List<int> _selectedItems = <int>[];
   late TabController _controller;
@@ -55,6 +59,7 @@ class _SessionListState extends State<SessionList>
   @override
   initState() {
     _foundUsers = _allUsers;
+    sessionViewModel.fetchSessionListSearchApi(data);
     super.initState();
 
     _controller = TabController(length: 4, vsync: this);
@@ -280,177 +285,181 @@ class _SessionListState extends State<SessionList>
                               children: <Widget>[
                                 Column(
                                   children: [
-                                    Row(
+                                    const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [],
                                     ),
-                                    Expanded(
-                                      child: _foundUsers.isNotEmpty
-                                          ? ListView.builder(
-                                              itemCount: _foundUsers.length,
-                                              itemBuilder: (context, index) =>
-                                                  Card(
-                                                key: ValueKey(
-                                                    _foundUsers[index]["id"]),
-                                                elevation: 0,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 0),
-                                                child: Column(
-                                                  children: [
-                                                    ListTile(
-                                                      tileColor: (_selectedItems
-                                                              .contains(index))
-                                                          ? const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  218,
-                                                                  218,
-                                                                  219)
-                                                              .withOpacity(0.5)
-                                                          : Colors.transparent,
-                                                      title: Row(
-                                                        children: [
-                                                          Text(
-                                                            _foundUsers[index]
-                                                                ['name'],
-                                                            style: const TextStyle(
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        57,
-                                                                        64,
-                                                                        74,
-                                                                        1),
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontFamily:
-                                                                    'Loto-Regular'),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Chip(
-                                                              backgroundColor:
-                                                                  _foundUsers[index]
-                                                                          [
-                                                                          'color']
-                                                                      .withOpacity(
-                                                                          .2),
-                                                              label: Text(
-                                                                _foundUsers[
-                                                                        index]
-                                                                    ["status"],
-                                                                style: TextStyle(
-                                                                    color: _foundUsers[
-                                                                            index]
-                                                                        [
-                                                                        'color']),
-                                                              )),
-                                                        ],
-                                                      ),
-                                                      subtitle: RichText(
-                                                        text: TextSpan(
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text:
-                                                                    "${_foundUsers[index]["level"]} ",
-                                                                style: const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black)),
-                                                            TextSpan(
-                                                                text: _foundUsers[
-                                                                            index]
-                                                                        [
-                                                                        "detail"]
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
+
+
+
+
+
+
+                                      ChangeNotifierProvider<SessionViewViewModel>(
+                                      create: (BuildContext context) => sessionViewModel,
+                                      child: Consumer<SessionViewViewModel>(
+                                      builder: (context, value, _) {
+                                              print("abcd");
+                                           print(value.dataList.status);
+                                           print(value.dataList.data!.data?[0].batch_name);
+                                        // value.dataList.data!.data?.length
+                                        return  Expanded(
+                                          child: ListView.builder(
+                                            itemCount: value.dataList.data?.data?.length,
+                                            itemBuilder: (context, index) =>
+                                                Card(
+                                                  // key: ValueKey(_foundUsers[index]["id"]),
+                                                  elevation: 0,
+                                                  margin:
+                                                  const EdgeInsets.symmetric(vertical: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      ListTile(
+                                                        tileColor: (_selectedItems.contains(index)) ? const Color
+                                                            .fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
+                                                        title: Row(
+                                                          children: [
+                                                             Text('${value.dataList.data!.data?[index].batch_name}',
+                                                              style: const TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                      57,
+                                                                      64,
+                                                                      74,
+                                                                      1),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                                  fontFamily:
+                                                                  'Loto-Regular'),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Chip(
+                                                                backgroundColor:
+                                                                value.dataList.data!.data?[index].status == 'scheduled'? Colors.green  .withOpacity(.2) :
+                                                                value.dataList.data!.data?[index].status =='canceled' ? Colors.red .withOpacity(.2) :Colors.brown
+                                                                    .withOpacity(.2),
+                                                                label: Text('${value.dataList.data!.data?[index].status}',
+                                                                  style: TextStyle(
+                                                                      color: value.dataList.data!.data?[index].status == 'scheduled'? Colors.green  :
+                                                                      value.dataList.data!.data?[index].status =='canceled' ? Colors.red :Colors.brown),
+                                                                )),
                                                           ],
                                                         ),
-                                                      ),
-                                                      trailing: CircleAvatar(
-                                                        radius: 12,
-                                                        child: Image(
-                                                            image: AssetImage(
-                                                                _foundUsers[
-                                                                        index][
-                                                                    "categorgyImg"])),
-                                                      ),
-                                                      onTap: () {
-                                                        if (_foundUsers[index]
-                                                                    ["status"]
-                                                                .toString() ==
-                                                            'Scheduled') {
-                                                          Navigator.of(context).push(
+                                                        subtitle: RichText(
+                                                          text: TextSpan(
+                                                            children: <TextSpan>[
+                                                              TextSpan(
+                                                                  text:
+                                                                  '${value.dataList.data!.data?[index].program_name}' ,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)),
+                                                              TextSpan(
+                                                                  text: _foundUsers[
+                                                                  index]
+                                                                  [
+                                                                  "detail"]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        trailing: CircleAvatar(
+                                                          radius: 12,
+                                                          child: Image(
+                                                              image: AssetImage(
+                                                                  _foundUsers[
+                                                                  index][
+                                                                  "categorgyImg"])),
+                                                        ),
+                                                        onTap: () {
+                                                          if (_foundUsers[index]
+                                                          ["status"]
+                                                              .toString() ==
+                                                              'Scheduled') {
+                                                            Navigator.of(context).push(
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                    const ViewSessionalDetails()));
+                                                          } else if (_foundUsers[
+                                                          index]
+                                                          ["status"]
+                                                              .toString() ==
+                                                              'Closed') {
+                                                            Navigator.push(
+                                                              context,
                                                               MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const ViewSessionalDetails()));
-                                                        } else if (_foundUsers[
-                                                                        index]
-                                                                    ["status"]
-                                                                .toString() ==
-                                                            'Closed') {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  const ViewDetailClosed(),
-                                                            ),
-                                                          );
-                                                        } else if (_foundUsers[
-                                                                        index]
-                                                                    ["status"]
-                                                                .toString() ==
-                                                            'Cancel') {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  const SessionDetailCancel(),
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
-                                                      onLongPress: () {
-                                                        if (!_selectedItems
-                                                            .contains(index)) {
-                                                          setState(() {
-                                                            _selectedItems
-                                                                .add(index);
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            _selectedItems
-                                                                .removeWhere(
-                                                                    (val) =>
-                                                                        val ==
-                                                                        index);
-                                                          });
-                                                        }
-                                                      },
-                                                    ),
-                                                    const Divider(
-                                                      height: 5,
-                                                    ),
-                                                  ],
+                                                                builder: (BuildContext
+                                                                context) =>
+                                                                const ViewDetailClosed(),
+                                                              ),
+                                                            );
+                                                          } else if (_foundUsers[
+                                                          index]
+                                                          ["status"]
+                                                              .toString() ==
+                                                              'Cancel') {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                context) =>
+                                                                const SessionDetailCancel(),
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
+                                                        onLongPress: () {
+                                                          if (!_selectedItems
+                                                              .contains(index)) {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .add(index);
+                                                            });
+                                                          } else {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .removeWhere(
+                                                                      (val) =>
+                                                                  val ==
+                                                                      index);
+                                                            });
+                                                          }
+                                                        },
+                                                      ),
+                                                      const Divider(
+                                                        height: 5,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          : const Text(
-                                              'No results found',
-                                              style: TextStyle(fontSize: 24),
-                                            ),
-                                    ),
+                                          ),
+                                        );
+
+                                      })),
+
+
+                                    // Expanded(
+                                    //   child: _foundUsers.isNotEmpty
+                                    //       ?
+                                    //
+                                    //
+                                    //       : const Text(
+                                    //           'No results found',
+                                    //           style: TextStyle(fontSize: 24),
+                                    //         ),
+                                    // ),
                                   ],
                                 ),
                                 const Text('tab 2'),

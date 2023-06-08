@@ -12,6 +12,8 @@ class AppUrl {
   static var basicDetailsListEndPoint = '$baseUrl/academy/basicdetail';
   static var serviceListEndPoint = '$baseUrl/academy/service/';
   static var imageListendPoint = '$baseUrl/static/service/';
+  static var profileimageListendPoint = '$baseUrl/static/profile/';
+
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
   static var programListEndPoint = '$baseUrl/academy/program/';
@@ -31,4 +33,7 @@ class AppUrl {
 
   static var traineeAddinBatchEndpoint = "$baseUrl/academy/addtraineeinbatch";
   static var traineeListinBatchEndpoint = "$baseUrl/academy/trainee/10/1";
+
+  //session
+  static var createsessionListEndPoint = "$baseUrl/session/create";
 }

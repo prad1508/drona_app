@@ -9,7 +9,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import '../res/language/language.dart';
 import '/utils/routes/routes.dart';
 import '/utils/routes/routes_name.dart';
-import '/view_model/auth_view_model.dart';
+import '/view_model/auth_view_model.dart'; 
 import '/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'utils/theme_provider.dart';

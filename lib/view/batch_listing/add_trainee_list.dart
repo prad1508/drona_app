@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
@@ -275,15 +273,14 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                      //  showAlertDialog(context); 
-                         Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                         AddCoachProfile(),
-                                  ),
-                                );
-                        
+                        //  showAlertDialog(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                AddCoachProfile(),
+                          ),
+                        );
                       }),
                 ],
               ),

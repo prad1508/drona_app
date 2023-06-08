@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:drona/view/batch_listing/create_batch_listing.dart';
 import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:drona/view/profile/batch_list.dart';

@@ -1,20 +1,10 @@
-import 'dart:ffi';
-
 import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
-import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
-import '../../res/language/language.dart';
-import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
-import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
 
 class ViewBatchDetails2 extends StatefulWidget {
   const ViewBatchDetails2({super.key});
@@ -701,13 +691,13 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                           Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const ViewBatchDetails1(),
-                                     ),
-                                   );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const ViewBatchDetails1(),
+                              ),
+                            );
                           }
                         : () {
                             print('btn dissabled');
@@ -726,13 +716,13 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                           Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const ViewBatchDetails1(),
-                                     ),
-                                   );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const ViewBatchDetails1(),
+                              ),
+                            );
                           }
                         : () {
                             print('btn dissabled');

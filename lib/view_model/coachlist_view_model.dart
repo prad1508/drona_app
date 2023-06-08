@@ -17,8 +17,12 @@ class CoachlistViewViewModel with ChangeNotifier {
 
     _myRepo.fetchCoachlistListApi().then((value) {
       setDataList(ApiResponse.completed(value));
+      print("coachlist api succeed");
     }).onError((error, stackTrace) {
       setDataList(ApiResponse.error(error.toString()));
+
+      print("coachlist api  not succeed");
+      print("coachlist error$error");
     });
   }
 }

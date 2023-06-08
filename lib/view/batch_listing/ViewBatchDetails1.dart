@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
@@ -588,10 +586,7 @@ class _ViewBatchDetails1State extends State<ViewBatchDetails1> {
                       textColor: Colors.white,
                       rounded: true,
                       color: Theme.of(context).primaryColor,
-                      onPress: () {
-                      
-                      }
-                      ),
+                      onPress: () {}),
                   SizedBox(
                     height: 15,
                   ),

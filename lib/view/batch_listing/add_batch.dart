@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:drona/view/batch_listing/trainee_add_options.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
@@ -81,6 +79,7 @@ class _AddBatchState extends State<AddBatch> {
     ];
     return menuItems;
   }
+
   String selectedCategory = 'Tennis';
   String selectedAssignCoach = 'john Smith';
   @override
@@ -88,6 +87,7 @@ class _AddBatchState extends State<AddBatch> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -542,13 +542,13 @@ class _AddBatchState extends State<AddBatch> {
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                           Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           const TraineeAddOptions(),
-                                     ),
-                                   );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const TraineeAddOptions(),
+                              ),
+                            );
                           }
                         : () {
                             print('btn dissabled');
@@ -567,14 +567,13 @@ class _AddBatchState extends State<AddBatch> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                          Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const TraineeAddOptions(),
-                                    ),
-                                  );
-                           
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const TraineeAddOptions(),
+                              ),
+                            );
                           }
                         : () {
                             print(FullName);
@@ -586,8 +585,6 @@ class _AddBatchState extends State<AddBatch> {
                             print(onlineSession);
                             print(fromBatch);
                             print(toBatch);
-                           
-
                           },
                   ),
                 ],

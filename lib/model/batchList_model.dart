@@ -47,7 +47,7 @@ class Data {
   String? programUid;
   String? academyUid;
   String? programName;
-  dynamic ? fees;
+  dynamic? fees;
   String? cdd;
   String? cmm;
   String? cyy;

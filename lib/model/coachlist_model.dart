@@ -1,78 +1,74 @@
-//model class CoachlistListModel
 class CoachlistListModel {
-  String? msg;
-  String? academyUid;
-  String? academyName;
-  List<Data>? data;
-
-  CoachlistListModel({this.msg, this.academyUid, this.academyName, this.data});
+  CoachlistListModel({
+    required this.msg,
+    required this.academyUid,
+    required this.academyName,
+    required this.coachlist,
+  });
+  late final String msg;
+  late final String academyUid;
+  late final String academyName;
+  late final List<Coachlist> coachlist;
 
   CoachlistListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     academyUid = json['academy_uid'];
     academyName = json['academy_name'];
-    if (json['Data'] != null) {
-      data = <Data>[];
-      json['Data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    coachlist =
+        List.from(json['coachlist']).map((e) => Coachlist.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg'] = this.msg;
-    data['academy_uid'] = this.academyUid;
-    data['academy_name'] = this.academyName;
-    if (this.data != null) {
-      data['Data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['msg'] = msg;
+    _data['academy_uid'] = academyUid;
+    _data['academy_name'] = academyName;
+    _data['coachlist'] = coachlist.map((e) => e.toJson()).toList();
+    return _data;
   }
 }
 
-class Data {
-  String? sId;
-  String? uid;
-  String? userid;
-  String? name;
-  String? timestamp;
-  String? cDate;
-  String? cTime;
-  String? gender;
-  String? email;
-  int? type;
-  int? role;
-  String? relation;
-  String? academyUid;
-  String? img;
-  bool? imgStatus;
-  String? status;
-  int? salaryMonthly;
-  String? dateOfJoining;
+class Coachlist {
+  Coachlist({
+    required this.uid,
+    required this.userid,
+    required this.name,
+    required this.timestamp,
+    required this.cDate,
+    required this.cTime,
+    required this.gender,
+    required this.email,
+    required this.type,
+    required this.role,
+    required this.relation,
+    required this.academyUid,
+    required this.img,
+    required this.imgStatus,
+    required this.status,
+    required this.salaryMonthly,
+    required this.dateOfJoining,
+    required this.services,
+  });
+  late final String uid;
+  late final String userid;
+  late final String name;
+  late final String timestamp;
+  late final String cDate;
+  late final String cTime;
+  late final String gender;
+  late final String email;
+  late final int type;
+  late final int role;
+  late final String relation;
+  late final String academyUid;
+  late final String img;
+  late final bool imgStatus;
+  late final String status;
+  late final int salaryMonthly;
+  late final String dateOfJoining;
+  late final List<Services> services;
 
-  Data(
-      {this.sId,
-      this.uid,
-      this.userid,
-      this.name,
-      this.timestamp,
-      this.cDate,
-      this.cTime,
-      this.gender,
-      this.email,
-      this.type,
-      this.role,
-      this.relation,
-      this.academyUid,
-      this.img,
-      this.imgStatus,
-      this.status,
-      this.salaryMonthly,
-      this.dateOfJoining});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+  Coachlist.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     userid = json['userid'];
     name = json['name'];
@@ -90,28 +86,55 @@ class Data {
     status = json['status'];
     salaryMonthly = json['salary_monthly'];
     dateOfJoining = json['date_of_joining'];
+    services =
+        List.from(json['services']).map((e) => Services.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['uid'] = this.uid;
-    data['userid'] = this.userid;
-    data['name'] = this.name;
-    data['timestamp'] = this.timestamp;
-    data['cDate'] = this.cDate;
-    data['cTime'] = this.cTime;
-    data['gender'] = this.gender;
-    data['email'] = this.email;
-    data['type'] = this.type;
-    data['role'] = this.role;
-    data['relation'] = this.relation;
-    data['academy_uid'] = this.academyUid;
-    data['img'] = this.img;
-    data['img_status'] = this.imgStatus;
-    data['status'] = this.status;
-    data['salary_monthly'] = this.salaryMonthly;
-    data['date_of_joining'] = this.dateOfJoining;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['uid'] = uid;
+    _data['userid'] = userid;
+    _data['name'] = name;
+    _data['timestamp'] = timestamp;
+    _data['cDate'] = cDate;
+    _data['cTime'] = cTime;
+    _data['gender'] = gender;
+    _data['email'] = email;
+    _data['type'] = type;
+    _data['role'] = role;
+    _data['relation'] = relation;
+    _data['academy_uid'] = academyUid;
+    _data['img'] = img;
+    _data['img_status'] = imgStatus;
+    _data['status'] = status;
+    _data['salary_monthly'] = salaryMonthly;
+    _data['date_of_joining'] = dateOfJoining;
+    _data['services'] = services.map((e) => e.toJson()).toList();
+    return _data;
+  }
+}
+
+class Services {
+  Services({
+    required this.id,
+    required this.serviceName,
+    required this.serviceIconname,
+  });
+  late final String id;
+  late final String serviceName;
+  late final String serviceIconname;
+
+  Services.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    serviceName = json['service_name'];
+    serviceIconname = json['service_iconname'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['_id'] = id;
+    _data['service_name'] = serviceName;
+    _data['service_iconname'] = serviceIconname;
+    return _data;
   }
 }

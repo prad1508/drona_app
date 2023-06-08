@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
-import '../../res/app_url.dart';
-import '../../res/language/language.dart';
+import '../../model/batchList_model.dart';
+
 import '../../res/widget/round_button.dart';
+import '../../utils/utils.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/session_view_model.dart';
 import '../trainee_phonbook_add.dart';
@@ -39,8 +42,37 @@ class _SessionalDetailsState extends State<SessionalDetails> {
   @override
   initState() {
     batchListViewViewModel.fetchBatchListListApi();
-
     super.initState();
+  }
+
+  String? selectedService;
+  assignSeviceId(selectedvalue) {
+    batchListViewViewModel.fetchBatchListListApi();
+    selectedService = selectedService;
+  }
+
+  String batchFromdata = '';
+  String batchTodata = '';
+  List activeServiceValue = [];
+  List<DropdownMenuItem<String>> activeServices = [];
+  selectTimeFrom() async {
+    var timepick = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    setState(() {
+      batchFromdata = timepick!.format(context);
+    });
+  }
+
+  selectTimeTo() async {
+    var timepick = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    setState(() {
+      batchTodata = timepick!.format(context);
+    });
   }
 
 
@@ -63,7 +95,11 @@ class _SessionalDetailsState extends State<SessionalDetails> {
   Widget build(BuildContext context) {
 
       final session = Provider.of<SessionViewViewModel>(context);
-    return MaterialApp(
+      final batch = Provider.of<BatchListViewViewModel>(context);
+
+
+
+      return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
@@ -95,27 +131,56 @@ class _SessionalDetailsState extends State<SessionalDetails> {
               child:
 
 
+
+              //
+              // ChangeNotifierProvider<AcademyViewViewModel>(
+              //     create: (context) => academyViewViewModel,
+              //     child: Consumer<AcademyViewViewModel>(
+              //         builder: (context, value, child) {
+              //           activeServiceValue.clear();
+              //           activeServices.clear();
+              //           for (var i = 0; i < value.dataList.data!.services!.length; i++) {
+              //             if (value.dataList.data!.services![i].status.toString() == 'active') {
+              //               activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
+              //               activeServices.add(DropdownMenuItem(value: value.dataList.data!.services![i].uid.toString(),
+              //                   child: Text(value.dataList.data!.services![i].serviceName.toString())));
+              //             }
+              //           }
+              //           assignSeviceId(activeServiceValue[0]);
+              //           return DropdownButton(
+              //               isExpanded: true,
+              //               underline: DropdownButtonHideUnderline(
+              //                   child: Container()),
+              //               value: selectedService,
+              //               onChanged: (String? newValue) {
+              //                 setState(() {
+              //                   selectedService = newValue!;
+              //                 });
+              //               },
+              //               items: activeServices);
+              //         })),
+
+
+
+
+
+
+
+
+
               ChangeNotifierProvider<BatchListViewViewModel>(
                   create: (BuildContext context) => batchListViewViewModel,
                   child: Consumer<BatchListViewViewModel>(
                       builder: (context, value, _) {
-                         print("value --${value.dataList.data?.data?[0].uid}");
-                        if (_foundUsers.isEmpty) {
-                          _foundUsers = List.generate(
-                              value.dataList.data?.data!.length ?? 0, (index) {
-                            return {
-                              "batchName":
-                              value.dataList.data?.data![index].batchName,
-                              "id":
-                              value.dataList.data?.data![index].uid,
-                            };
-                          });
-                          print('name is -------------- ${_foundUsers[0]['batchName']}');
-                          print('name is -------------- ${_foundUsers[1]['batchName']}');
-                          print('name is -------------- ${_foundUsers[0]['id']}');
-                          print('name is -------------- ${_foundUsers[1]['id']}');
+                        activeServiceValue.clear();
+                        activeServices.clear();
+                                 for (var i = 0; i < value.dataList.data!.data!.length; i++) {
+                               activeServiceValue.add(value.dataList.data!.data![i].uid.toString());
+                              activeServices.add(DropdownMenuItem(value: value.dataList.data!.data![i].uid.toString(),
+                                   child: Text(value.dataList.data!.data![i].batchName.toString())));
 
-                        }
+                           }
+
 
                         return
                           Column(
@@ -146,15 +211,14 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                     dropdownColor: const Color.fromARGB(255, 255, 255, 255),
                                     iconEnabledColor: Colors.black,
                                     style: const TextStyle(color: Colors.black),
-                                    value: selectedAssignCoach,
+                                    value: selectedService,
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        selectedAssignCoach = newValue!;
+                                        selectedService = newValue!;
 
-                                        _localization.translate(selectedAssignCoach);
                                       });
                                     },
-                                    items:batchnames ),
+                                    items:activeServices ),
                               ),
                               const SizedBox(
                                 height: 15,
@@ -229,10 +293,12 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.4,
                                     child: TextFormField(
-                                      controller: fromBatch,
+                                      controller: fromBatch
+                                        ..text = batchFromdata.toString(),
+                                      readOnly: true,
                                       decoration: InputDecoration(
                                         hintText: 'From',
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding: const EdgeInsets.all(10),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(5.0),
                                           borderSide: BorderSide(
@@ -240,15 +306,17 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                           ),
                                         ),
                                       ),
+                                      onTap: selectTimeFrom,
                                     ),
                                   ),
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.4,
                                     child: TextFormField(
-                                      controller: toBatch,
+                                      controller: toBatch..text = batchTodata.toString(),
+                                      readOnly: true,
                                       decoration: InputDecoration(
                                         hintText: 'To',
-                                        contentPadding: EdgeInsets.all(10),
+                                        contentPadding: const EdgeInsets.all(10),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(5.0),
                                           borderSide: BorderSide(
@@ -256,6 +324,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                           ),
                                         ),
                                       ),
+                                      onTap: selectTimeTo,
                                     ),
                                   ),
                                 ],
@@ -273,15 +342,32 @@ class _SessionalDetailsState extends State<SessionalDetails> {
 
                                 onPress: (){
 
-                                  Map data =  {
-                                    "batch_uid":"9kx4dktrsthb18v39u8e",
-                                    "provide_online_sessions":false,
-                                    "online_session_url":onlinesessionurl.text,
-                                    "batch_timing_from":fromBatch.text,
-                                    "batch_timing_to":toBatch.text,
-                                    "sdate":dateschedule.text
-                                  };
-                                  session.fetchCreateSessionListApi(data, context);
+                                 if (fromBatch.text.isEmpty){
+                                Utils.flushBarErrorMessage(
+                                'Please enter Time', context); }
+
+                                else if(toBatch.text.isEmpty)
+                                  {     Utils.flushBarErrorMessage(
+                                        'Please enter Time', context);}
+                                else if(dateschedule.text.isEmpty)
+                                  {
+                                        Utils.flushBarErrorMessage(
+                                        'Please enter Date', context);
+                                  }
+                                  else {
+                                    Map data = {
+                                      "batch_uid": selectedService,
+                                      "provide_online_sessions": "",
+                                      "online_session_url": onlinesessionurl
+                                          .text,
+                                      "batch_timing_from": fromBatch.text,
+                                      "batch_timing_to": toBatch.text,
+                                      "sdate": dateschedule.text
+                                    };
+                                    print(data);
+                                    session.fetchCreateSessionListApi(
+                                        data, context);
+                                  }
                                 },
                               ),
                               const SizedBox(height: 30),

@@ -50,7 +50,8 @@ class _CreateProfileState extends State<CreateProfile> {
     // ignore: use_build_context_synchronously
 
     setState(() {
-      imgFile = File(imgCamera!.path);
+      imgFile = File(imgCamera.path);
+      print("imgFile$imgFile");
     });
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
@@ -61,7 +62,8 @@ class _CreateProfileState extends State<CreateProfile> {
 
     userViewModel.fetchouserProfileimg(imgGallery!.path, context);
     setState(() {
-      imgFile = File(imgGallery!.path);
+      imgFile = File(imgGallery.path);
+      print("imgFile$imgFile");
     });
     Navigator.of(context).pop();
   }

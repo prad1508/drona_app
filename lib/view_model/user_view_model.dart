@@ -72,6 +72,10 @@ class UserViewModel with ChangeNotifier {
       final SharedPreferences sp = await SharedPreferences.getInstance();
       sp.setString('uprofile', value['imgname']);
       // Utils.flushBarErrorMessage(value['msg'], context);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+
+      print("api  not success");
     });
     return true;
   }

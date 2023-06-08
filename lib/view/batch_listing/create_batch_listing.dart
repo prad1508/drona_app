@@ -279,21 +279,22 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
-                          print("object==${value.dataList.data?.data!.length}");
+                          print(
+                              "object==${value.dataList.data?.coachlist.length}");
 
-                          profileUid =
-                              value.dataList.data?.data![0].uid.toString() ??
-                                  '';
+                          profileUid = value.dataList.data?.coachlist[0].uid
+                                  .toString() ??
+                              '';
                           List<DropdownMenuItem<String>> dropdownItems =
                               List.generate(
-                                  value.dataList.data?.data!.length ?? 0,
+                                  value.dataList.data?.coachlist.length ?? 0,
                                   (index) {
                             return DropdownMenuItem(
-                                value: value.dataList.data?.data![index].uid
+                                value: value.dataList.data?.coachlist[index].uid
                                         .toString() ??
                                     '',
                                 child: Text(value
-                                        .dataList.data?.data![index].name
+                                        .dataList.data?.coachlist[index].name
                                         .toString() ??
                                     ''));
                           });
