@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 class TextCheckBox extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
@@ -69,7 +69,7 @@ class _TextCheckBoxState extends State<TextCheckBox> {
       decoration: BoxDecoration(
         color: fillColor,
         border: Border.all(width: 2, color: fillColor),
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Text(
         widget.title,
@@ -81,9 +81,9 @@ class _TextCheckBoxState extends State<TextCheckBox> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        style: TextButton.styleFrom(backgroundColor: Colors.transparent),
-        onPressed: () => widget.onChanged(!_checked),
-        child: _buildIcon(),
+      style: TextButton.styleFrom(backgroundColor: Colors.transparent),
+      onPressed: () => widget.onChanged(!_checked),
+      child: _buildIcon(),
     );
   }
 }

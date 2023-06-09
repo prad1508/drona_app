@@ -1,9 +1,4 @@
-import 'dart:async';
-
-import 'package:drona/utils/routes/routes_name.dart';
 import 'package:drona/view/layout.dart';
-import 'package:drona/view/profile/view_profile.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +12,11 @@ import '../../view_model/myprogram_view_model.dart';
 import 'create_batch_listing.dart';
 import 'view_batch_details.dart';
 
+// ignore: must_be_immutable
 class SearchBatchList extends StatefulWidget {
-  const SearchBatchList({super.key});
+  String pathPage;
+
+  SearchBatchList({super.key, required this.pathPage});
 
   @override
   State<SearchBatchList> createState() => _SearchBatchListState();
@@ -213,20 +211,22 @@ class _SearchBatchListState extends State<SearchBatchList> {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            IconButton(
-              onPressed: (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const CreateBatchListing(),
+            widget.pathPage == "onBoarding"
+                ? SizedBox()
+                : IconButton(
+                    onPressed: (() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const CreateBatchListing(),
+                        ),
+                      );
+                    }),
+                    icon: const Icon(Icons.add),
+                    iconSize: 25,
+                    color: Colors.black,
                   ),
-                );
-              }),
-              icon: const Icon(Icons.add),
-              iconSize: 25,
-              color: Colors.black,
-            ),
           ],
         ),
         body: Container(
@@ -433,19 +433,21 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 const SizedBox(
                   height: 15,
                 ),
-
-                RoundButton(
-                    loading: false,
-                    title: AppLocale.conts.getString(context),
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                    onPress: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Layout(selectedIndex: 0)));
-                    }),
+                widget.pathPage == "onBoarding"
+                    ? RoundButton(
+                        loading: false,
+                        title: AppLocale.conts.getString(context),
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: Theme.of(context).primaryColor,
+                        onPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Layout(selectedIndex: 0)));
+                        })
+                    : SizedBox()
               ],
             )),
       ),

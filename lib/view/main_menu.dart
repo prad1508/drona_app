@@ -214,7 +214,9 @@ class _MainMenuState extends State<MainMenu> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SearchBatchList(),
+                                      SearchBatchList(
+                                    pathPage: '',
+                                  ),
                                 ),
                               );
                             },
@@ -417,12 +419,12 @@ class _MainMenuState extends State<MainMenu> {
                             trailing: IconButton(
                               onPressed: (() {
                                 Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                 CoachListSelected(),
-                                          ),
-                                        );
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CoachListSelected(),
+                                  ),
+                                );
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -473,9 +475,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Attendance reports',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {
-                               
-                              }),
+                              onPressed: (() {}),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),

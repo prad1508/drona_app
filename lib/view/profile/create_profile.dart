@@ -40,10 +40,12 @@ class _CreateProfileState extends State<CreateProfile> {
     return (value) => setState(() => _genderValue = value!);
   }
 
+  List<DropdownMenuItem<String>> dropdownItems = [];
+
 //profille image picke
   File? imgFile;
   final imgPicker = ImagePicker();
-  String selectedService = "fymg3n6d8g69cysc4hhr";
+  String? selectedService;
   void openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
     userViewModel.fetchouserProfileimg(imgCamera!.path, context);
@@ -447,20 +449,20 @@ class _CreateProfileState extends State<CreateProfile> {
                         create: (context) => myservicesViewViewModel,
                         child: Consumer<MyservicesViewViewModel>(
                             builder: (context, value, child) {
-                          List<DropdownMenuItem<String>> dropdownItems =
-                              List.generate(
-                                  value.dataList.data?.services!.length ?? 0,
-                                  (index) {
-                            return DropdownMenuItem(
-                                value: value.dataList.data?.services?[index].uid
+                          dropdownItems.clear();
+                          for (var i = 0;
+                              i < value.dataList.data!.services!.length;
+                              i++) {
+                            dropdownItems.add(DropdownMenuItem(
+                                value: value.dataList.data!.services![i].uid
                                     .toString(),
-                                child: Text(value.dataList.data
-                                        ?.services?[index].serviceName
-                                        .toString() ??
-                                    ''));
-                          });
+                                child: Text(value
+                                    .dataList.data!.services![i].serviceName
+                                    .toString())));
+                          }
                           return DropdownButton(
                               isExpanded: true,
+                              hint: const Text("Choose Your Service"),
                               underline: DropdownButtonHideUnderline(
                                   child: Container()),
                               value: selectedService,

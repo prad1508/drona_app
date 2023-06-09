@@ -24,8 +24,8 @@ class _TellusAcadmicState extends State<DetailFilled> {
   final FlutterLocalization _localization = FlutterLocalization.instance;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   final TextEditingController dob = TextEditingController();
- List<Myservices> _selectedAnimals2 = [];
-List items = [];
+  List<Myservices> _selectedAnimals2 = [];
+  List items = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -36,7 +36,7 @@ List items = [];
 
   @override
   Widget build(BuildContext context) {
-   final registration = Provider.of<RegistrationViewModel>(context);
+    final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -93,12 +93,11 @@ List items = [];
                       create: (context) => myservicesViewViewModel,
                       child: Consumer<MyservicesViewViewModel>(
                         builder: (context, value, child) {
-                          
                           final List<Myservices> myservices = List.generate(
                               value.dataList.data?.services?.length ?? 0,
                               (index) => Myservices(
-                                  serviceuid: value.dataList.data
-                                          ?.services?[index].uid
+                                  serviceuid: value
+                                          .dataList.data?.services?[index].uid
                                           ?.toString() ??
                                       '',
                                   servicename: value.dataList.data
@@ -139,28 +138,28 @@ List items = [];
                               ),
                             ),
                             onConfirm: (results) {
-                               _selectedAnimals2 = results;
+                              _selectedAnimals2 = results;
                             },
-                           
                           );
                         },
                       )),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width *1,
-                        height: 60,
-                        child: ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _selectedAnimals2.length,
-                                itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right:10),
-                                  child: Chip(label: Text(_selectedAnimals2[index].servicename.toString())),
-                                );
-                            }
-                             ),
-                      ),
-                           
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 1,
+                    height: 60,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _selectedAnimals2.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Chip(
+                                label: Text(_selectedAnimals2[index]
+                                    .servicename
+                                    .toString())),
+                          );
+                        }),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -174,9 +173,9 @@ List items = [];
                   const SizedBox(
                     height: 10,
                   ),
-                
-                  DateOfBirth(controller: dob, hintText: AppLocale.dob.getString(context)),
-
+                  DateOfBirth(
+                      controller: dob,
+                      hintText: AppLocale.dob.getString(context)),
                   const SizedBox(
                     height: 15,
                   ),
@@ -187,21 +186,16 @@ List items = [];
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                       
-                          List servicesUid = List.generate(
-                                    _selectedAnimals2.length,
-                                    (index) {
-                                  return {
-                                      'service_uid':
-                                          _selectedAnimals2[index].serviceuid.toString(),
-                                    };
-                                });
-                       Map data =  {
-                                 "dob": dob.text,
-                                 "services":servicesUid
-                                 };   
+                        List servicesUid =
+                            List.generate(_selectedAnimals2.length, (index) {
+                          return {
+                            'service_uid':
+                                _selectedAnimals2[index].serviceuid.toString(),
+                          };
+                        });
+                        Map data = {"dob": dob.text, "services": servicesUid};
 
-                                 registration.detailsOwner(data, context);           
+                        registration.detailsOwner(data, context);
                       }),
                 ],
               ),

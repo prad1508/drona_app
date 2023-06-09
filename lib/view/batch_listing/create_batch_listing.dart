@@ -100,6 +100,16 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     coachlistViewViewModel.fetchCoachlistListApi();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    batchName.dispose();
+    batchFrom.dispose();
+    batchTo.dispose();
+    fee.dispose();
+    onlineUrl.dispose();
+  }
+
   String batchFromdata = '';
   String batchTodata = '';
   List activeServiceValue = [];
@@ -229,6 +239,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               underline: DropdownButtonHideUnderline(
                                   child: Container()),
                               value: selectedService,
+                              hint: const Text("Choose Your Service"),
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedService = newValue!;
@@ -554,7 +565,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       children: <Widget>[
                         TextCheckBox(
                           value: sun,
-                          title: 'Sun',
+                          title: 'SU',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -568,11 +579,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: mon,
-                          title: 'Mon',
+                          title: 'MO',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -586,11 +597,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: tue,
-                          title: 'Tue',
+                          title: 'TU',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -604,11 +615,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: wed,
-                          title: 'Wed',
+                          title: 'WE',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -622,11 +633,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: thu,
-                          title: 'Thu',
+                          title: 'TH',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -640,11 +651,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: fri,
-                          title: 'Fri',
+                          title: 'FR',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -658,11 +669,11 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           },
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         TextCheckBox(
                           value: sat,
-                          title: 'Sat',
+                          title: 'SA',
                           checkedFillColor: Colors.black,
                           onChanged: (val) {
                             setState(() {
@@ -734,105 +745,105 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
-                  RoundButton(
-                    loading: false,
-                    title: 'Add Trainee',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                    onPress: () {
-                      // showModalBottomSheet<void>(
-                      //   context: context,
-                      //   shape: const RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.vertical(
-                      //       top: Radius.circular(25.0),
-                      //     ),
-                      //   ),
-                      //   builder: (BuildContext context) {
-                      //     return SizedBox(
-                      //       height: 250,
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         children: <Widget>[
-                      //           SizedBox(
-                      //             height: 15,
-                      //           ),
-                      //           Align(
-                      //               alignment: Alignment.topLeft,
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.only(left: 20),
-                      //                 child: Text(
-                      //                     'Add Trainee In ${batchName.text.toUpperCase()}'),
-                      //               )),
-                      //           SizedBox(
-                      //             height: 10,
-                      //           ),
-                      //           Divider(
-                      //             thickness: 2,
-                      //           ),
-                      //           SizedBox(
-                      //             height: 15,
-                      //           ),
-                      //           Align(
-                      //               alignment: Alignment.topLeft,
-                      //               child: Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.only(left: 10),
-                      //                   child: TextButton(
-                      //                       onPressed: () {
-                      //                         Navigator.push(
-                      //                           context,
-                      //                           MaterialPageRoute(
-                      //                             builder:
-                      //                                 (BuildContext context) =>
-                      //                                     TrainAddManualy(
-                      //                               //  batchId: batchUid,
+                  // RoundButton(
+                  //   loading: false,
+                  //   title: 'Add Trainee',
+                  //   textColor: Colors.white,
+                  //   rounded: true,
+                  //   color: Theme.of(context).primaryColorDark.withOpacity(0.2),
+                  //   onPress: () {
+                  //     // showModalBottomSheet<void>(
+                  //     //   context: context,
+                  //     //   shape: const RoundedRectangleBorder(
+                  //     //     borderRadius: BorderRadius.vertical(
+                  //     //       top: Radius.circular(25.0),
+                  //     //     ),
+                  //     //   ),
+                  //     //   builder: (BuildContext context) {
+                  //     //     return SizedBox(
+                  //     //       height: 250,
+                  //     //       child: Column(
+                  //     //         mainAxisAlignment: MainAxisAlignment.center,
+                  //     //         mainAxisSize: MainAxisSize.min,
+                  //     //         children: <Widget>[
+                  //     //           SizedBox(
+                  //     //             height: 15,
+                  //     //           ),
+                  //     //           Align(
+                  //     //               alignment: Alignment.topLeft,
+                  //     //               child: Padding(
+                  //     //                 padding: const EdgeInsets.only(left: 20),
+                  //     //                 child: Text(
+                  //     //                     'Add Trainee In ${batchName.text.toUpperCase()}'),
+                  //     //               )),
+                  //     //           SizedBox(
+                  //     //             height: 10,
+                  //     //           ),
+                  //     //           Divider(
+                  //     //             thickness: 2,
+                  //     //           ),
+                  //     //           SizedBox(
+                  //     //             height: 15,
+                  //     //           ),
+                  //     //           Align(
+                  //     //               alignment: Alignment.topLeft,
+                  //     //               child: Padding(
+                  //     //                   padding:
+                  //     //                       const EdgeInsets.only(left: 10),
+                  //     //                   child: TextButton(
+                  //     //                       onPressed: () {
+                  //     //                         Navigator.push(
+                  //     //                           context,
+                  //     //                           MaterialPageRoute(
+                  //     //                             builder:
+                  //     //                                 (BuildContext context) =>
+                  //     //                                     TrainAddManualy(
+                  //     //                               //  batchId: batchUid,
 
-                      //                               batchId: "batchUid",
+                  //     //                               batchId: "batchUid",
 
-                      //                               batchName: batchName.text
-                      //                                   .toString()
-                      //                                   .toUpperCase(),
-                      //                             ),
-                      //                           ),
-                      //                         );
-                      //                       },
-                      //                       child: Text(
-                      //                         'Enter Manually',
-                      //                         style: Theme.of(context)
-                      //                             .textTheme
-                      //                             .bodyMedium,
-                      //                       )))),
-                      //           SizedBox(
-                      //             height: 15,
-                      //           ),
-                      //           Align(
-                      //               alignment: Alignment.topLeft,
-                      //               child: Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.only(left: 10),
-                      //                   child: TextButton(
-                      //                     onPressed: () {},
-                      //                     child: Text(
-                      //                       'Select From Existing Trainees',
-                      //                       style: Theme.of(context)
-                      //                           .textTheme
-                      //                           .bodyMedium,
-                      //                     ),
-                      //                   ))),
-                      //         ],
-                      //       ),
-                      //     );
-                      //   },
-                      // );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  //     //                               batchName: batchName.text
+                  //     //                                   .toString()
+                  //     //                                   .toUpperCase(),
+                  //     //                             ),
+                  //     //                           ),
+                  //     //                         );
+                  //     //                       },
+                  //     //                       child: Text(
+                  //     //                         'Enter Manually',
+                  //     //                         style: Theme.of(context)
+                  //     //                             .textTheme
+                  //     //                             .bodyMedium,
+                  //     //                       )))),
+                  //     //           SizedBox(
+                  //     //             height: 15,
+                  //     //           ),
+                  //     //           Align(
+                  //     //               alignment: Alignment.topLeft,
+                  //     //               child: Padding(
+                  //     //                   padding:
+                  //     //                       const EdgeInsets.only(left: 10),
+                  //     //                   child: TextButton(
+                  //     //                     onPressed: () {},
+                  //     //                     child: Text(
+                  //     //                       'Select From Existing Trainees',
+                  //     //                       style: Theme.of(context)
+                  //     //                           .textTheme
+                  //     //                           .bodyMedium,
+                  //     //                     ),
+                  //     //                   ))),
+                  //     //         ],
+                  //     //       ),
+                  //     //     );
+                  //     //   },
+                  //     // );
+                  //   },
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   RoundButton(
                     loading: false,
                     title: 'Continue',

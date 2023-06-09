@@ -176,7 +176,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const CreateBatchListing(),
+                                  //const CreateProfile(),
+                                  CreateBatchListing(),
                             ),
                           );
                         })
@@ -193,6 +194,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
+                                  // const CreateBatchListing(),
                                   const CreateProfile(),
                             ),
                           );

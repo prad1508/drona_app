@@ -30,7 +30,9 @@ class _LayoutState extends State<Layout> {
   final pages = [
     const HomeScreen(),
     const SessionList(),
-    const SearchBatchList(),
+    SearchBatchList(
+      pathPage: 'dashBoard',
+    ),
     AddTraineeList()
   ];
 
