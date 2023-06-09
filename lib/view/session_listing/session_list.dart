@@ -4,6 +4,7 @@ import 'package:drona/view_model/session_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
+import '../../res/app_url.dart';
 import '../../res/widget/round_button.dart';
 import 'create_session_details.dart';
 import 'session_detailcancel.dart';
@@ -14,7 +15,7 @@ class SessionList extends StatefulWidget {
   @override
   State<SessionList> createState() => _SessionListState();
 }
-
+int data1=0;
 enum Status { sheduled, close, cancel }
 
 class _SessionListState extends State<SessionList>
@@ -59,11 +60,16 @@ class _SessionListState extends State<SessionList>
   @override
   initState() {
     _foundUsers = _allUsers;
-    sessionViewModel.fetchSessionListSearchApi(data);
+
     super.initState();
 
     _controller = TabController(length: 4, vsync: this);
     _controller.addListener(() {
+      if(_controller.index == 0)
+        {
+          print(_controller.index);
+          sessionViewModel.fetchSessionListSearchApi(data);
+        }
       setState(() {
         _selectedIndex = _controller.index;
       });
@@ -87,6 +93,7 @@ class _SessionListState extends State<SessionList>
 
   @override
   Widget build(BuildContext context) {
+    // sessionViewModel.fetchSessionListSearchApi(data);
     final width = MediaQuery.of(context).size.width;
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
@@ -212,7 +219,7 @@ class _SessionListState extends State<SessionList>
                                         ? Colors.blue.shade100
                                         : const Color.fromARGB(
                                             255, 242, 242, 242),
-                                    child: Text(_foundUsers.length.toString()),
+                                    child:  Text('${data1}'),
                                   ),
                                 ),
                               ),
@@ -301,10 +308,12 @@ class _SessionListState extends State<SessionList>
                                       child: Consumer<SessionViewViewModel>(
                                       builder: (context, value, _) {
                                               print("abcd");
+                                              data1 =  value.dataList.data?.data?.length as int;
                                            print(value.dataList.status);
-                                           print(value.dataList.data!.data?[0].batch_name);
+                                           print(value.dataList.data!.data?[0].service_iconname);
                                         // value.dataList.data!.data?.length
-                                        return  Expanded(
+                                        return  value.dataList.data?.data!.length != null ?
+                                          Expanded(
                                           child: ListView.builder(
                                             itemCount: value.dataList.data?.data?.length,
                                             itemBuilder: (context, index) =>
@@ -363,11 +372,7 @@ class _SessionListState extends State<SessionList>
                                                                       color: Colors
                                                                           .black)),
                                                               TextSpan(
-                                                                  text: _foundUsers[
-                                                                  index]
-                                                                  [
-                                                                  "detail"]
-                                                                      .toString(),
+                                                                  text: '  ${value.dataList.data!.data?[index].batch_timing_from} - ${value.dataList.data!.data?[index].batch_timing_to}',
                                                                   style: const TextStyle(
                                                                       color: Colors
                                                                           .black)),
@@ -376,11 +381,9 @@ class _SessionListState extends State<SessionList>
                                                         ),
                                                         trailing: CircleAvatar(
                                                           radius: 12,
-                                                          child: Image(
-                                                              image: AssetImage(
-                                                                  _foundUsers[
-                                                                  index][
-                                                                  "categorgyImg"])),
+                                                          child:Image(
+                                                              image: NetworkImage(
+                                                                  "${AppUrl.imageListendPoint}${value.dataList.data!.data?[index].service_iconname}")),
                                                         ),
                                                         onTap: () {
                                                           if (_foundUsers[index]
@@ -445,21 +448,17 @@ class _SessionListState extends State<SessionList>
                                                   ),
                                                 ),
                                           ),
+                                        ) :
+                                        Expanded(
+                                          child:  Text(
+                                                  'No results found',
+                                                  style: TextStyle(fontSize: 24),
+                                                ),
                                         );
-
                                       })),
 
 
-                                    // Expanded(
-                                    //   child: _foundUsers.isNotEmpty
-                                    //       ?
-                                    //
-                                    //
-                                    //       : const Text(
-                                    //           'No results found',
-                                    //           style: TextStyle(fontSize: 24),
-                                    //         ),
-                                    // ),
+
                                   ],
                                 ),
                                 const Text('tab 2'),
