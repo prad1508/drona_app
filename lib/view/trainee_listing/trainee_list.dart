@@ -1,3 +1,4 @@
+import 'package:drona/view/layout.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_url.dart';
+import '../../res/language/language.dart';
+import '../../res/widget/round_button.dart';
 import '../../view_model/coachlist_view_model.dart';
 
 class TraineeNewList extends StatefulWidget {
@@ -383,6 +386,20 @@ class _TraineeNewListState extends State<TraineeNewList> {
                   const SizedBox(
                     height: 15,
                   ),
+                  RoundButton(
+                      loading: false,
+                      title: AppLocale.conts.getString(context),
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor,
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Layout(
+                                      selectedIndex: 0,
+                                    )));
+                      }),
                 ],
               )),
         ),
