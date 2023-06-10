@@ -10,7 +10,8 @@ import '../profile/view_profile.dart';
 import 'session_detail_edit.dart';
 
 class ViewDetailClosed extends StatefulWidget {
-  const ViewDetailClosed({super.key});
+  String id;
+   ViewDetailClosed({super.key, required this.id});
 
   @override
   State<ViewDetailClosed> createState() => _ViewDetailClosedState();

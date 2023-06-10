@@ -64,6 +64,9 @@ String? program_uid;
 String? academy_uid;
 String? program_name;
 String? status;
+String? trainee_name;
+String? trainee_userid;
+String? trainee_profile_uid;
 String? batch_timing_from;
 String? batch_timing_to;
 String? timestamp;
@@ -90,6 +93,9 @@ this.cDate,
 this.program_uid,
 this.academy_uid,
 this.program_name,
+  this.trainee_name ='',
+  this.trainee_profile_uid='',
+  this.trainee_userid='',
 this.status,
 this.batch_timing_from,
 this.batch_timing_to,
@@ -116,6 +122,9 @@ Data.fromJson(Map<String, dynamic> json) {
   batch_timing_to = json['batch_timing_to'];
   batch_timing_from = json['batch_timing_from'];
   status = json['status'];
+  trainee_name = json['trainee_name'];
+  trainee_profile_uid = json['trainee_profile_uid'];
+  trainee_userid = json['trainee_userid'];
   program_name = json['program_name'];
   program_uid = json['program_uid'];
   batch_name = json['batch_name'];
@@ -146,6 +155,9 @@ data['smm'] = this.smm;
 data['sdd'] = this.sdd;
 data['batch_timing_to'] = this.batch_timing_to;
 data['batch_timing_from'] = this.batch_timing_from;
+data['trainee_userid'] = this.trainee_userid;
+data['trainee_name'] = this.trainee_name;
+data['trainee_profile_uid'] = this.trainee_profile_uid;
 data['status'] = this.status;
 data['program_uid'] = this.program_uid;
 data['batch_name'] = this.batch_name;

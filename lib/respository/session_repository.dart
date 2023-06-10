@@ -28,4 +28,19 @@ class SessionRepository {
     }
   }
 
+  Future<SessionListListModel> fetchSessionDetailsListApi(String? id ) async {
+    try {
+      dynamic response = await _apiServices.getGetApiResponse(
+          '${AppUrl.sessionDetailsListEndPoint}/$id');
+
+      return response = SessionListListModel.fromJson(response);
+
+
+    } catch (e) {
+      print("error is$e");
+      print(e);
+      rethrow;
+    }
+  }
+
 }

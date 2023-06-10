@@ -61,5 +61,20 @@ class SessionViewViewModel with ChangeNotifier {
     });
   }
 
+  Future<void> fetchSessionDetailsListhApi(String? id) async {
+    setDataList(ApiResponse.loading());
+
+    _myRepo.fetchSessionDetailsListApi(id).then((value) {
+      setDataList(ApiResponse.completed(value));
+
+      print("api session Details list success");
+    }).onError((error, stackTrace) {
+      setDataList(ApiResponse.error(error.toString()));
+      print("api  session Details list not success");
+      print(error);
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+
 
 }
