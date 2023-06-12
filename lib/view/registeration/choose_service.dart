@@ -22,9 +22,9 @@ class ChooseService extends StatefulWidget {
 }
 
 class _ChooseServiceState extends State<ChooseService> {
-ServiceViewViewModel  serviceViewViewModel = ServiceViewViewModel();
-RegistrationViewModel registrationViewModel =RegistrationViewModel();
- bool shouldCheck = false;
+  ServiceViewViewModel serviceViewViewModel = ServiceViewViewModel();
+  RegistrationViewModel registrationViewModel = RegistrationViewModel();
+  bool shouldCheck = false;
   //Service List
   List serviceList = [];
   List<String> serviceSelected = [];
@@ -34,14 +34,15 @@ RegistrationViewModel registrationViewModel =RegistrationViewModel();
 
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>  serviceViewViewModel.fetchServiceListApi(userUid));
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => serviceViewViewModel.fetchServiceListApi(userUid));
   }
 
   @override
   Widget build(BuildContext context) {
     final facility = Provider.of<FacilityViewViewModel>(context);
     final registration = Provider.of<RegistrationViewModel>(context);
-          userUid = registration.uid;
+    userUid = registration.uid;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -82,81 +83,101 @@ RegistrationViewModel registrationViewModel =RegistrationViewModel();
                   const SizedBox(
                     height: 30,
                   ),
-
                   ChangeNotifierProvider<ServiceViewViewModel>(
-                      create: (BuildContext context) => serviceViewViewModel,
-                      child: Consumer<ServiceViewViewModel>(
-                          builder: (context, value, _){
-                            if(value.dataList.status! == Status.completed){
-                            catUid = value.dataList.data!.data![0].catUid!.toString();
-                            return SizedBox(
-                    height: MediaQuery.of(context).size.height * .6,
-                    child: GridView.count(
-                        crossAxisCount: 4,
-                        crossAxisSpacing: 4.0,
-                        mainAxisSpacing: 8.0,
-                        children: List.generate(value.dataList.data!.data!.length, (index) {
-                          return Center(
-                            child: CustomCheckBox(
+                    create: (BuildContext context) => serviceViewViewModel,
+                    child: Consumer<ServiceViewViewModel>(
+                        builder: (context, value, _) {
+                      if (value.dataList.status! == Status.completed) {
+                        catUid =
+                            value.dataList.data!.data![0].catUid!.toString();
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height * .6,
+                          child: GridView.count(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 4.0,
+                              mainAxisSpacing: 8.0,
+                              children: List.generate(
+                                  value.dataList.data!.data!.length, (index) {
+                                return Center(
+                                  child: CustomCheckBox(
                                     value: _selectedItems.contains(index),
-                                    checkedFillColor: const Color.fromRGBO(42, 98, 184, 1),
-                                    imageUrl: AppUrl.imageListendPoint + value.dataList.data!.data![index].iconname!.toString(),
-                                    name: value.dataList.data!.data![index].serviceName!.toString(),
+                                    checkedFillColor:
+                                        const Color.fromRGBO(42, 98, 184, 1),
+                                    imageUrl: AppUrl.imageListendPoint +
+                                        value.dataList.data!.data![index]
+                                            .iconname!
+                                            .toString(),
+                                    name: value.dataList.data!.data![index]
+                                        .serviceName!
+                                        .toString(),
                                     onChanged: (val) {
                                       //do your stuff here
-                                       final Map<String, String> services = {
-                                                    "service_uid": value.dataList.data!.data![index].uid!.toString(),
-                                                    "service_name": value.dataList.data!.data![index].serviceName!.toString(),
-                                                  };
+                                      final Map<String, String> services = {
+                                        "service_uid": value
+                                            .dataList.data!.data![index].uid!
+                                            .toString(),
+                                        "service_name": value.dataList.data!
+                                            .data![index].serviceName!
+                                            .toString(),
+                                      };
                                       if (!_selectedItems.contains(index)) {
-                                      setState(() {
-                                        _selectedItems.add(index);
-                                        serviceList.add(services);
-                                        serviceSelected.add(value.dataList.data!.data![index].uid!.toString(),);
-                                      });
-                                    } else {
-                                      setState(() {
-                                        serviceList.remove(services);
-                                        serviceSelected.remove(value.dataList.data!.data![index].uid!.toString(),);
-                                        _selectedItems
-                                            .removeWhere((val) => val == index);
-                                      });
-                                    }
-                                     
+                                        setState(() {
+                                          _selectedItems.add(index);
+                                          serviceList.add(services);
+                                          serviceSelected.add(
+                                            value.dataList.data!.data![index]
+                                                .uid!
+                                                .toString(),
+                                          );
+                                        });
+                                      } else {
+                                        setState(() {
+                                          serviceList.clear();
+                                          serviceList.remove(services);
+                                          serviceSelected.remove(
+                                            value.dataList.data!.data![index]
+                                                .uid!
+                                                .toString(),
+                                          );
+                                          _selectedItems.removeWhere(
+                                              (val) => val == index);
+                                        });
+                                      }
                                     },
-                                  
-                            ),
-                          );
-                        })),
-                  );
-                            }
-                           return Container(
-                            height: MediaQuery.of(context).size.height * .6,
-                           );
-                          }),
-                    ),
+                                  ),
+                                );
+                              })),
+                        );
+                      }
+                      return Container(
+                        height: MediaQuery.of(context).size.height * .6,
+                      );
+                    }),
+                  ),
                   RoundButton(
-                      
                       loading: false,
                       title: AppLocale.conts.getString(context),
                       textColor: Colors.white,
                       rounded: true,
-                      color: serviceList.isEmpty ? Theme.of(context).primaryColor.withOpacity(0.2) : Theme.of(context).primaryColor,
+                      color: serviceList.isEmpty
+                          ? Theme.of(context).primaryColor.withOpacity(0.2)
+                          : Theme.of(context).primaryColor,
                       onPress: () async {
-                      if(serviceList.isEmpty){}else{
-                        Map<String, dynamic> data = {
-                              "cat_uid": catUid,
-                              "services": serviceList,
-                            };
-                            final prefsData = await SharedPreferences.getInstance();
-                            prefsData.setStringList('SelectedServices', serviceSelected);
-                           facility.resetcounter();
-                            registration.servicePost(data, context);
-                      
-                      }
-                      
+                        if (serviceList.isEmpty) {
+                        } else {
+                          print("serviceList--${serviceList.length}");
+                          Map<String, dynamic> data = {
+                            "cat_uid": catUid,
+                            "services": serviceList,
+                          };
+                          final prefsData =
+                              await SharedPreferences.getInstance();
+                          prefsData.setStringList(
+                              'SelectedServices', serviceSelected);
+                          facility.resetcounter();
+                          registration.servicePost(data, context);
+                        }
                       }),
-                      
                 ],
               ),
             ),
@@ -165,10 +186,7 @@ RegistrationViewModel registrationViewModel =RegistrationViewModel();
       ),
     );
   }
-
-  
 }
-
 
 class Choice {
   const Choice({required this.imageUrl});

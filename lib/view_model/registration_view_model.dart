@@ -32,26 +32,26 @@ class RegistrationViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  //setUid 
-   String _uid = '';
-   String get uid => _uid;
-   setUid(String value) {
+  //setUid
+  String _uid = '';
+  String get uid => _uid;
+  setUid(String value) {
     _uid = value;
     notifyListeners();
   }
 
-  //setMobile 
-   String _mobno = '';
-   String get mobno => _mobno;
-   setMobno(String value) {
+  //setMobile
+  String _mobno = '';
+  String get mobno => _mobno;
+  setMobno(String value) {
     _mobno = value;
     notifyListeners();
   }
 
   //setforgettoken
-   String _prToken = '';
-   String get prToken => _prToken;
-   setPrToken(String value) {
+  String _prToken = '';
+  String get prToken => _prToken;
+  setPrToken(String value) {
     _prToken = value;
     notifyListeners();
   }
@@ -74,25 +74,27 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage('Register Successfully', context);
       // ignore: use_build_context_synchronously
       Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      OtpPage(registration: data),
-                ),
-              );
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => OtpPage(registration: data),
+        ),
+      );
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
- 
+
   //////////////otp verify ////////////////////////////////////
   Future<void> otpVerify(dynamic otp, BuildContext context) async {
     final prefsData = await SharedPreferences.getInstance();
     List<String>? items = prefsData.getStringList('registerResponse');
-     Map data = {'ccode': items![2].toString(), 'mobno': items[3].toString(), 'otp': otp.toString()};
+    Map data = {
+      'ccode': items![2].toString(),
+      'mobno': items[3].toString(),
+      'otp': otp.toString()
+    };
     _myRepo.fetchOtpListApi(data).then((value) async {
-      
       prefsData.setString('token', value['token']);
       if (kDebugMode) {
         print("token ${value['token']}");
@@ -106,16 +108,15 @@ class RegistrationViewModel with ChangeNotifier {
     });
   }
 
-  
-   //////////////Basic Details ////////////////////////////////////
-  Future<void> basicDetails(dynamic data, BuildContext context, uid, acadmicName) async {
+  //////////////Basic Details ////////////////////////////////////
+  Future<void> basicDetails(
+      dynamic data, BuildContext context, uid, acadmicName) async {
     setLoading(true);
-     setUid(uid);
+    setUid(uid);
     _myRepo.basicDetailsListApi(data).then((value) async {
-
       setLoading(false);
       final prefsData = await SharedPreferences.getInstance();
-    prefsData.setString('acadmicName', acadmicName);
+      prefsData.setString('acadmicName', acadmicName);
       Utils.flushBarErrorMessage('Basic Details update Successfully', context);
       Navigator.pushNamed(context, RoutesName.chooseService);
     }).onError((error, stackTrace) {
@@ -127,9 +128,8 @@ class RegistrationViewModel with ChangeNotifier {
   //////////////Service Post ////////////////////////////////////
   Future<void> servicePost(dynamic data, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
+    setUid(uid);
     _myRepo.servicePostListApi(data).then((value) async {
-
       setLoading(false);
       Utils.flushBarErrorMessage('Services update Successfully', context);
       Navigator.pushNamed(context, RoutesName.chooseFacility);
@@ -143,132 +143,128 @@ class RegistrationViewModel with ChangeNotifier {
   Future<void> facilityePost(dynamic data, BuildContext context) async {
     setLoading(true);
     _myRepo.facilityePostListApi(data).then((value) async {
-
       setLoading(false);
-      Utils.flushBarErrorMessage('Facilty Sved Successfully', context);        
-      Navigator.pushNamed(context, RoutesName.chooseprogram);     
-    
+      Utils.flushBarErrorMessage('Facilty Sved Successfully', context);
+      Navigator.pushNamed(context, RoutesName.chooseprogram);
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
 //////////////program Save ////////////////////////////////////
   Future<void> programPost(dynamic data, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
+    setUid(uid);
     _myRepo.programPostListApi(data).then((value) async {
-
       setLoading(false);
       Utils.flushBarErrorMessage('Program update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.detailFilled);
       Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const DetailFilled(),
-                ),
-              );
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const DetailFilled(),
+        ),
+      );
     }).onError((error, stackTrace) {
       setLoading(false);
-    
-   //    var newerror = jsonDecode(error.toString()) ;
-       
+
+      //    var newerror = jsonDecode(error.toString()) ;
+
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
   //////////////////////Details for owner /////////////////////////////////////
   Future<void> detailsOwner(dynamic data, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
+    setUid(uid);
     _myRepo.detailsOwnerPostListApi(data).then((value) async {
-
-       setLoading(false);
-       Utils.flushBarErrorMessage(value['msg'], context);
-       Navigator.pushNamed(context, RoutesName.welcomeScreen);
-    
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      Navigator.pushNamed(context, RoutesName.welcomeScreen);
     }).onError((error, stackTrace) {
       setLoading(false);
-     Utils.flushBarErrorMessage(error.toString(), context);
+      Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
 
   //////////////////////forget password /////////////////////////////////////
   Future<void> forgetPassword(dynamic data, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
+    setUid(uid);
     _myRepo.forgetPasswordListApi(data).then((value) async {
-
-       setLoading(false);
-       Utils.flushBarErrorMessage(value['msg'], context);
-       setMobno(value['data'] ['mobno']);
-       Navigator.push(
-                 context,
-                 MaterialPageRoute(
-                   builder: (BuildContext context) =>
-                       const ForgetOtp(),
-                 ),
-               );
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      setMobno(value['data']['mobno']);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const ForgetOtp(),
+        ),
+      );
     }).onError((error, stackTrace) {
       setLoading(false);
-     Utils.flushBarErrorMessage(error.toString(), context);
+      Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
   //////////////////////forget password /////////////////////////////////////
   Future<void> resetotpVerify(dynamic Otpdata, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
-     Map data = {'mobno': '8109355407', 'otp': Otpdata.toString()};
+    setUid(uid);
+    Map data = {'mobno': '8109355407', 'otp': Otpdata.toString()};
     _myRepo.resetotpVerifyListApi(data).then((value) async {
-       setLoading(false);
-       setPrToken( value['prtoken']);
-        final userPreference = Provider.of<UserViewModel>(context , listen: false);
-       userPreference.saveToken(UserModel(data: value['prtoken'].toString()));
-       Utils.flushBarErrorMessage(value['msg'], context);
-       Navigator.push(
-                                             context,
-                                             MaterialPageRoute(
-                                               builder: (BuildContext context) =>
-                                                   const NewPassword(),
-                                             ),
-                                           );
+      setLoading(false);
+      setPrToken(value['prtoken']);
+      final userPreference = Provider.of<UserViewModel>(context, listen: false);
+      userPreference.saveToken(UserModel(data: value['prtoken'].toString()));
+      Utils.flushBarErrorMessage(value['msg'], context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const NewPassword(),
+        ),
+      );
     }).onError((error, stackTrace) {
       setLoading(false);
-     Utils.flushBarErrorMessage(error.toString(), context);
+      Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
-  
+
 //////////////////////Set New password /////////////////////////////////////
   Future<void> verifynewPassword(dynamic newPass, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
-     Map data = {'newpassword': newPass.toString(), 'prtoken': _prToken.toString()};
+    setUid(uid);
+    Map data = {
+      'newpassword': newPass.toString(),
+      'prtoken': _prToken.toString()
+    };
     _myRepo.verifynewPasswordListApi(data).then((value) async {
-       setLoading(false);
-       Utils.flushBarErrorMessage(value['msg'], context);
-        Navigator.pushNamed(context, RoutesName.login);
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      Navigator.pushNamed(context, RoutesName.login);
     }).onError((error, stackTrace) {
       setLoading(false);
-     Utils.flushBarErrorMessage(error.toString(), context);
+      Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
-  
 
   //////////////////////add trainee onboarding /////////////////////////////////////
   Future<void> addTrainee(dynamic newPass, BuildContext context) async {
     setLoading(true);
-     setUid(uid);
-     Map data = {'newpassword': newPass.toString(), 'prtoken': _prToken.toString()};
+    setUid(uid);
+    Map data = {
+      'newpassword': newPass.toString(),
+      'prtoken': _prToken.toString()
+    };
     _myRepo.verifynewPasswordListApi(data).then((value) async {
-       setLoading(false);
-       Utils.flushBarErrorMessage(value['msg'], context);
-        Navigator.pushNamed(context, RoutesName.login);
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      Navigator.pushNamed(context, RoutesName.login);
     }).onError((error, stackTrace) {
       setLoading(false);
-     Utils.flushBarErrorMessage(error.toString(), context);
+      Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
-
 }
-
-

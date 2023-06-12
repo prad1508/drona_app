@@ -235,36 +235,36 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Age",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            controller: age,
-                            decoration: InputDecoration(
-                              hintText: '21',
-                              contentPadding: const EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width * 0.4,
+                    //   child: Column(
+                    //     children: [
+                    //       Align(
+                    //         alignment: Alignment.topLeft,
+                    //         child: Text(
+                    //           "Age",
+                    //           style: Theme.of(context).textTheme.bodyMedium,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       TextFormField(
+                    //         controller: age,
+                    //         decoration: InputDecoration(
+                    //           hintText: '21',
+                    //           contentPadding: const EdgeInsets.all(10),
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(5.0),
+                    //             borderSide: BorderSide(
+                    //               color: Theme.of(context).primaryColor,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
 
@@ -399,7 +399,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                       "gender": _genderValue,
                       "fees": fee.text,
                       "dateofjoining": doj.text,
-                      "age": age.text,
+                      // "age": age.text,
                       "dob": dob.text,
                       "monthofbilling": dobilling.text,
                       "img": "izf5azt0sy2iurz.jpeg",

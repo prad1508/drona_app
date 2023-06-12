@@ -109,6 +109,7 @@ class _TellusAcadmicState extends State<DetailFilled> {
                                   myservices, myservices.servicename))
                               .toList();
                           // providerCreate.updateServicesList(items);
+                          print("item.length==${items.length}");
                           return MultiSelectDialogField(
                             dialogWidth: MediaQuery.of(context).size.width * 2,
                             dialogHeight:
@@ -151,6 +152,8 @@ class _TellusAcadmicState extends State<DetailFilled> {
                         scrollDirection: Axis.horizontal,
                         itemCount: _selectedAnimals2.length,
                         itemBuilder: (context, index) {
+                          print(
+                              "_selectedAnimals2====${_selectedAnimals2.length}");
                           return Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Chip(

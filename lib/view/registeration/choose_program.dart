@@ -184,10 +184,10 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                             alignment: Alignment.center,
                                             child: Text(
                                               AppLocale.title31
-                                                      .getString(context) +
-                                                  value.dataList.data!.data![0]
-                                                      .serviceName!
-                                                      .toString(),
+                                                  .getString(context),
+                                              // + value.dataList.data!.data![0]
+                                              //     .serviceName!
+                                              //     .toString(),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleLarge,

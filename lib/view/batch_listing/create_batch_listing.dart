@@ -53,7 +53,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   Future<bool> isValidPasscode(String value) async {
     return await Future.delayed(const Duration(seconds: 1),
-        () => value.isNotEmpty && value.toLowerCase() == 'batman');
+            () => value.isNotEmpty && value.toLowerCase() == 'batman');
   }
 
   List<DropdownMenuItem<String>> get dropdownCategory {
@@ -214,39 +214,39 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => academyViewViewModel,
                         child: Consumer<AcademyViewViewModel>(
                             builder: (context, value, child) {
-                          activeServiceValue.clear();
-                          activeServices.clear();
-                          for (var i = 0;
+                              activeServiceValue.clear();
+                              activeServices.clear();
+                              for (var i = 0;
                               i < value.dataList.data!.services!.length;
                               i++) {
-                            if (value.dataList.data!.services![i].status
+                                if (value.dataList.data!.services![i].status
                                     .toString() ==
-                                'active') {
-                              activeServiceValue.add(value
-                                  .dataList.data!.services![i].uid
-                                  .toString());
-                              activeServices.add(DropdownMenuItem(
-                                  value: value.dataList.data!.services![i].uid
-                                      .toString(),
-                                  child: Text(value
-                                      .dataList.data!.services![i].serviceName
-                                      .toString())));
-                            }
-                          }
-                          assignSeviceId(activeServiceValue[0]);
-                          return DropdownButton(
-                              isExpanded: true,
-                              underline: DropdownButtonHideUnderline(
-                                  child: Container()),
-                              value: selectedService,
-                              hint: const Text("Choose Your Service"),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedService = newValue!;
-                                });
-                              },
-                              items: activeServices);
-                        })),
+                                    'active') {
+                                  activeServiceValue.add(value
+                                      .dataList.data!.services![i].uid
+                                      .toString());
+                                  activeServices.add(DropdownMenuItem(
+                                      value: value.dataList.data!.services![i].uid
+                                          .toString(),
+                                      child: Text(value
+                                          .dataList.data!.services![i].serviceName
+                                          .toString())));
+                                }
+                              }
+                              assignSeviceId(activeServiceValue[0]);
+                              return DropdownButton(
+                                  isExpanded: true,
+                                  underline: DropdownButtonHideUnderline(
+                                      child: Container()),
+                                  value: selectedService,
+                                  hint: const Text("Choose Your Service"),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedService = newValue!;
+                                    });
+                                  },
+                                  items: activeServices);
+                            })),
                   ),
                   const SizedBox(
                     height: 15,
@@ -268,7 +268,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const CreateProfile(),
+                              const CreateProfile(),
                             ),
                           );
                         },
@@ -290,37 +290,37 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
-                          print(
-                              "object==${value.dataList.data!.coachlist.length}");
+                              print(
+                                  "object==${value.dataList.data!.coachlist.length}");
 
-                          profileUid = value.dataList.data!.coachlist[0].uid
+                              profileUid = value.dataList.data!.coachlist[0].uid
                                   .toString() ??
-                              '';
-                          List<DropdownMenuItem<String>> dropdownItems =
+                                  '';
+                              List<DropdownMenuItem<String>> dropdownItems =
                               List.generate(
                                   value.dataList.data!.coachlist.length ?? 0,
-                                  (index) {
-                            return DropdownMenuItem(
-                                value: value.dataList.data!.coachlist[index].uid
-                                        .toString() ??
-                                    '',
-                                child: Text(value
-                                        .dataList.data!.coachlist[index].name
-                                        .toString() ??
-                                    'add coach'));
-                          });
-                          return DropdownButton(
-                              isExpanded: true,
-                              underline: DropdownButtonHideUnderline(
-                                  child: Container()),
-                              value: profileUid,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  profileUid = newValue!;
-                                });
-                              },
-                              items: dropdownItems);
-                        })),
+                                      (index) {
+                                    return DropdownMenuItem(
+                                        value: value.dataList.data!.coachlist[index].uid
+                                            .toString() ??
+                                            '',
+                                        child: Text(value
+                                            .dataList.data!.coachlist[index].name
+                                            .toString() ??
+                                            'add coach'));
+                                  });
+                              return DropdownButton(
+                                  isExpanded: true,
+                                  underline: DropdownButtonHideUnderline(
+                                      child: Container()),
+                                  value: profileUid,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      profileUid = newValue!;
+                                    });
+                                  },
+                                  items: dropdownItems);
+                            })),
                   ),
                   const SizedBox(
                     height: 15,
@@ -329,92 +329,92 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     create: (BuildContext context) => myProgramViewViewModel,
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
-                      _programid = value.dataList.data?.data![0].uid.toString();
-                      _programName = value
-                          .dataList.data?.data![0].programs![0].programName
-                          .toString();
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: (value.dataList.data?.data![0].name ?? '')
+                          _programid = value.dataList.data?.data![0].uid.toString();
+                          _programName = value
+                              .dataList.data?.data![0].programs![0].programName
+                              .toString();
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: (value.dataList.data?.data![0].name ?? '')
                                     .isNotEmpty
-                                ? Text(
-                                    'Program',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  )
+                                    ? Text(
+                                  'Program',
+                                  style:
+                                  Theme.of(context).textTheme.bodyMedium,
+                                )
                                 // 'What ${value.dataList.data?.data![0].name.toString()}',
 
-                                : Container(),
-                          ),
-                          (value.dataList.data?.data![0].programs)
-                                      ?.isNotEmpty ??
+                                    : Container(),
+                              ),
+                              (value.dataList.data?.data![0].programs)
+                                  ?.isNotEmpty ??
                                   false
-                              ? SizedBox(
-                                  height: 15,
-                                )
-                              : Container(),
-                          (value.dataList.data?.data![0].programs)
-                                      ?.isNotEmpty ??
+                                  ? SizedBox(
+                                height: 15,
+                              )
+                                  : Container(),
+                              (value.dataList.data?.data![0].programs)
+                                  ?.isNotEmpty ??
                                   false
-                              ? Container(
-                                  height: 50,
-                                  //color: Colors.amber,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: value.dataList.data?.data![0]
-                                              .programs?.length ??
-                                          0,
-                                      itemBuilder: (context, index) {
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            value.dataList.data?.data![0]
-                                                        .programs![index].amount
-                                                        .toString() ==
-                                                    '0'
-                                                ? Container()
-                                                : CustomRadio<String>(
-                                                    btnColor: Colors.black,
-                                                    value: value
-                                                            .dataList
-                                                            .data
-                                                            ?.data![0]
-                                                            .programs![index]
-                                                            .uid
-                                                            .toString() ??
-                                                        '',
-                                                    groupValue: _programUid,
-                                                    onChanged:
-                                                        _valueChangedHandler(
-                                                            _programName),
-                                                    label: value
-                                                            .dataList
-                                                            .data
-                                                            ?.data![0]
-                                                            .programs![index]
-                                                            .programName
-                                                            .toString() ??
-                                                        '',
-                                                  ),
-                                            SizedBox(
-                                              width: 10,
-                                            )
-                                          ],
-                                        );
-                                      }),
-                                )
-                              : Container(),
-                        ],
-                      );
-                    }),
+                                  ? Container(
+                                height: 50,
+                                //color: Colors.amber,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: value.dataList.data?.data![0]
+                                        .programs?.length ??
+                                        0,
+                                    itemBuilder: (context, index) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          value.dataList.data?.data![0]
+                                              .programs![index].amount
+                                              .toString() ==
+                                              '0'
+                                              ? Container()
+                                              : CustomRadio<String>(
+                                            btnColor: Colors.black,
+                                            value: value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![index]
+                                                .uid
+                                                .toString() ??
+                                                '',
+                                            groupValue: _programUid,
+                                            onChanged:
+                                            _valueChangedHandler(
+                                                _programName),
+                                            label: value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![index]
+                                                .programName
+                                                .toString() ??
+                                                '',
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              )
+                                  : Container(),
+                            ],
+                          );
+                        }),
                   ),
                   const SizedBox(
                     height: 15,
@@ -433,27 +433,27 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       create: (BuildContext context) => myProgramViewViewModel,
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
-                        for (var fee
+                            for (var fee
                             in value.dataList.data?.data![0].programs! ?? []) {
-                          fee.amount;
-                        }
-                        return TextFormField(
-                          readOnly: true,
-                          controller: fee
-                            ..text = value.dataList.data?.data![0].programs![0]
+                              fee.amount;
+                            }
+                            return TextFormField(
+                              readOnly: true,
+                              controller: fee
+                                ..text = value.dataList.data?.data![0].programs![0]
                                     .amount ??
-                                '0',
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                                    '0',
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      })),
+                            );
+                          })),
                   const SizedBox(
                     height: 15,
                   ),
@@ -861,7 +861,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "type_batch": _groupBatch.toString(),
                         "provide_online_sessions": onlineSession,
                         "online_session_url":
-                            onlineSession ? onlineUrl.text.toString() : "n/a",
+                        onlineSession ? onlineUrl.text.toString() : "n/a",
                         "batch_days": batchDays,
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
