@@ -18,7 +18,8 @@ import '../layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateProfile extends StatefulWidget {
-  const CreateProfile({super.key});
+  int listindex;
+   CreateProfile({super.key , this.listindex=-1});
 
   @override
   State<CreateProfile> createState() => _CreateProfileState();
@@ -514,7 +515,16 @@ class _CreateProfileState extends State<CreateProfile> {
                           "img": imgFile.toString(),
                           "relation": "self"
                         };
-                        user.userProfileAdd(data, context);
+                        print(data);
+                        if(widget.listindex!=-1)
+                          {
+                            user.userProfileAdd(data, context , widget.listindex);
+                          }
+                        else
+                          {
+                            user.userProfileAdd(data, context);
+                          }
+
                       }),
                 ],
               ),

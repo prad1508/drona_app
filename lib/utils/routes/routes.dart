@@ -68,10 +68,10 @@ class Routes {
             builder: (BuildContext context) => const WelcomeScreen());
       case RoutesName.CreateProfile:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const CreateProfile());
+            builder: (BuildContext context) =>  CreateProfile());
       case RoutesName.CoachListSelected:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const CoachListSelected());
+            builder: (BuildContext context) =>  CoachListSelected());
       case RoutesName.ViewProfilenew:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ViewProfilenew());
@@ -131,9 +131,9 @@ class Routes {
       case RoutesName.welcomeScreen:
         return MaterialPageRoute(builder: (BuildContext context) => const WelcomeScreen());
       case RoutesName.createProfile:
-        return MaterialPageRoute(builder: (BuildContext context) => const CreateProfile());
-      case RoutesName.coachListSelected:
-        return MaterialPageRoute(builder: (BuildContext context) => const CoachListSelected());
+        return MaterialPageRoute(builder: (BuildContext context) =>  CreateProfile());
+      // case RoutesName.coachListSelected:
+      //   return MaterialPageRoute(builder: (BuildContext context) => const CoachListSelected());
       case RoutesName.viewProfilenew:
         return MaterialPageRoute(builder: (BuildContext context) => const ViewProfilenew());
       case RoutesName.batchList:

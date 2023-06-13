@@ -16,5 +16,14 @@ class BatchRepository {
       rethrow;
     }
    }
+  Future<dynamic>  fetchEditbatchListApi(data) async {
+    try {
+      dynamic response =
+      await _apiServices.getPutApiResponseWithData(AppUrl.EditbatchListEndPoint, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
 }

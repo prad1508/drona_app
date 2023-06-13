@@ -44,6 +44,7 @@ class Data {
   String? timestamp;
   String? cDate;
   String? cTime;
+  String? batch_type;
   String? programUid;
   String? academyUid;
   String? programName;
@@ -69,6 +70,7 @@ class Data {
       this.serviceIconname,
       this.catUid,
       this.batchName,
+        this.batch_type,
       this.timestamp,
       this.cDate,
       this.cTime,
@@ -108,6 +110,7 @@ class Data {
     cmm = json['cmm'];
     cyy = json['cyy'];
     status = json['status'];
+    batch_type = json['batch_type'];
     batchTimingFrom = json['batch_timing_from'];
     batchTimingTo = json['batch_timing_to'];
     onlineSessionUrl = json['online_session_url'];
@@ -128,6 +131,7 @@ class Data {
     data['cat_uid'] = this.catUid;
     data['batch_name'] = this.batchName;
     data['timestamp'] = this.timestamp;
+    data['batch_type'] = this.batch_type;
     data['cDate'] = this.cDate;
     data['cTime'] = this.cTime;
     data['program_uid'] = this.programUid;

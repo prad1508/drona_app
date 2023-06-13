@@ -53,7 +53,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                            context,
                            MaterialPageRoute(
                              builder: (BuildContext context) =>
-                                 const CreateProfile(),
+                                  CreateProfile(),
                            ),
                          );
               },

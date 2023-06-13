@@ -1,4 +1,5 @@
 import 'package:drona/view/academy/academy_setting.dart';
+import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -9,10 +10,12 @@ import '../utils/routes/routes_name.dart';
 import '../view_model/user_view_model.dart';
 //import 'acedamy/academy_setting.dart';
 import 'batch_listing/batchlist_search.dart';
+import 'coach_listing/coach_view_profile.dart';
 import 'coach_listselected.dart';
 import 'profile/create_profile.dart';
 import 'session_listing/session_list.dart';
 import 'trainee_listing/trainee_listing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'trainne_addmanual.dart';
 
 class MainMenu extends StatefulWidget {
@@ -29,15 +32,33 @@ class _MainMenuState extends State<MainMenu> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
-
+  String fullname ='' ;
+  String academicname ='' ;
+  late List details ;
   @override
   initState() {
     super.initState();
   }
+  getData() async {
+    final prefs = await SharedPreferences.getInstance();
+   details = prefs.getStringList('registerResponse')!;
+   fullname = details[0];
+   academicname = prefs.getString('acadmicName')!;
+   print("full name is ${details[0]}");
+   print("number is ${details[3]}");
+
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    getData();
     final userPrefernece = Provider.of<UserViewModel>(context);
+
+
+
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -86,19 +107,19 @@ class _MainMenuState extends State<MainMenu> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
+                                   Column(
                                     children: [
-                                      const Text(
-                                        'abc Academy',
-                                        style: TextStyle(
+                                      Text(
+                                        academicname,
+                                        style: const TextStyle(
                                           color: Colors.blue,
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Row(
-                                        children: const [
+                                      const Row(
+                                        children: [
                                           Padding(
                                             padding: EdgeInsets.only(left: 12),
                                             child: Text(
@@ -166,8 +187,8 @@ class _MainMenuState extends State<MainMenu> {
                     tileColor: Colors.grey.shade100,
                     leading: const Image(
                         image: AssetImage('assets/images/user_profile.png')),
-                    title: const Text(
-                      'John Smith',
+                    title:  Text(
+                      fullname,
                     ),
                     trailing: IconButton(
                       onPressed: (() {
@@ -175,7 +196,7 @@ class _MainMenuState extends State<MainMenu> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                const CreateProfile(),
+                            ViewProfilenew(),
                           ),
                         );
                       }),

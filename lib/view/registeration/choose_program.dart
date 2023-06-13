@@ -376,11 +376,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                           Row(
                                                             children: [
                                                               Checkbox(
-                                                                checkColor:
-                                                                    Colors
-                                                                        .white,
-                                                                activeColor: Theme.of(
-                                                                        context)
+                                                                checkColor: Colors.white,
+                                                                activeColor: Theme.of(context)
                                                                     .primaryColor,
                                                                 value:
                                                                     bylevelIntermediate,
@@ -396,57 +393,30 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                               ),
                                                               Text(
                                                                 'Intermediate',
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium,
+                                                                style: Theme.of(context).textTheme.bodyMedium,
                                                               ),
                                                             ],
                                                           ),
-                                                          bylevelIntermediate
-                                                              ? SizedBox(
+                                                          bylevelIntermediate ? SizedBox(
                                                                   width: 150,
                                                                   child:
-                                                                      TextFormField(
-                                                                    focusNode:
-                                                                        _focusNodes[
-                                                                            1],
-                                                                    controller:
-                                                                        txtBylevelIntermediate,
-                                                                    onTap:
-                                                                        () {},
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .number,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      hintText:
-                                                                          '  Fees',
-                                                                      contentPadding:
-                                                                          const EdgeInsets.all(
-                                                                              15),
-                                                                      border:
-                                                                          OutlineInputBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
+                                                                      TextFormField(focusNode: _focusNodes[1],
+                                                                    controller: txtBylevelIntermediate,
+                                                                    onTap: () {},
+                                                                    keyboardType: TextInputType.number,
+                                                                    decoration: InputDecoration(hintText: '  Fees',
+                                                                      contentPadding: const EdgeInsets.all(15),
+                                                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
                                                                       ),
-                                                                      focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color:
-                                                                                Colors.blue,
-                                                                            width: 1.0),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
+                                                                      focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
+                                                                            color: Colors.blue, width: 1.0),
+                                                                        borderRadius: BorderRadius.circular(10),
                                                                       ),
                                                                       prefixIcon: Container(
                                                                           decoration: BoxDecoration(color: _focusNodes[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                                                                           child: Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(15),
-                                                                            child:
-                                                                                Text(
-                                                                              '₹/M',
+                                                                            padding: const EdgeInsets.all(15),
+                                                                            child: Text('₹/M',
                                                                               style: TextStyle(color: _focusNodes[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
                                                                             ),
                                                                           )),
@@ -1024,13 +994,7 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                                     ? '0'
                                                                     : txtBylevelIntermediate
                                                                         .text,
-                                                                "registrationfee":
-                                                                    txtBylevelIntermediate2
-                                                                            .text
-                                                                            .isEmpty
-                                                                        ? '0'
-                                                                        : txtBylevelIntermediate2
-                                                                            .text
+                                                                "registrationfee": txtBylevelIntermediate2.text.isEmpty ? '0' : txtBylevelIntermediate2.text
                                                               },
                                                               {
                                                                 "program_name":
@@ -1050,14 +1014,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                                             .text
                                                               },
                                                               {
-                                                                "program_name":
-                                                                    "professional",
-                                                                "amount": txtBylevelprof
-                                                                        .text
-                                                                        .isEmpty
-                                                                    ? '0'
-                                                                    : txtBylevelprof
-                                                                        .text,
+                                                                "program_name": "professional",
+                                                                "amount": txtBylevelprof.text.isEmpty ? '0' : txtBylevelprof.text,
                                                                 "registrationfee":
                                                                     txtBylevelProf2
                                                                             .text
@@ -1788,48 +1746,19 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                                             (context, index) {
                                                           //by label
                                                           data = {
-                                                            "service_uid": value
-                                                                .dataList
-                                                                .data!
-                                                                .data![0]
-                                                                .serviceUid
-                                                                .toString(),
+                                                            "service_uid": value.dataList.data!.data![0].serviceUid.toString(),
                                                             "name": "By Age",
                                                             "custom": false,
                                                             "programs": [
                                                               {
-                                                                "program_name":
-                                                                    "Under 12",
-                                                                "amount": txtBylevelBeginner
-                                                                        .text
-                                                                        .isEmpty
-                                                                    ? '0'
-                                                                    : txtBylevelBeginner
-                                                                        .text,
-                                                                "registrationfee":
-                                                                    txtBylevelBeginner2
-                                                                            .text
-                                                                            .isEmpty
-                                                                        ? '0'
-                                                                        : txtBylevelBeginner2
-                                                                            .text
+                                                                "program_name": "Under 12",
+                                                                "amount": txtBylevelBeginner.text.isEmpty ? '0' : txtBylevelBeginner.text,
+                                                                "registrationfee": txtBylevelBeginner2.text.isEmpty ? '0' : txtBylevelBeginner2.text
                                                               },
                                                               {
-                                                                "program_name":
-                                                                    "Under 14",
-                                                                "amount": txtBylevelIntermediate
-                                                                        .text
-                                                                        .isEmpty
-                                                                    ? '0'
-                                                                    : txtBylevelIntermediate
-                                                                        .text,
-                                                                "registrationfee":
-                                                                    txtBylevelIntermediate2
-                                                                            .text
-                                                                            .isEmpty
-                                                                        ? '0'
-                                                                        : txtBylevelIntermediate2
-                                                                            .text
+                                                                "program_name": "Under 14",
+                                                                "amount": txtBylevelIntermediate.text.isEmpty ? '0' : txtBylevelIntermediate.text,
+                                                                "registrationfee": txtBylevelIntermediate2.text.isEmpty ? '0' : txtBylevelIntermediate2.text
                                                               },
                                                               {
                                                                 "program_name":
@@ -2218,6 +2147,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                           rounded: true,
                           color: Theme.of(context).primaryColor,
                           onPress: () async {
+                            print("data is");
+                            print(data);
                             registration.programPost(data, context);
                           },
                         ),

@@ -14,10 +14,12 @@ class BatchListViewViewModel with ChangeNotifier {
   }
   Future<void> fetchBatchListListApi ()async{
     setDataList(ApiResponse.loading());
-
+     print("fetching list api success");
     _myRepo.fetchBatchListListApi().then((value){
       setDataList(ApiResponse.completed(value));
     }).onError((error, stackTrace){
+      print("fetching list api not success");
+      print(error);
       setDataList(ApiResponse.error(error.toString()));
     });
   }

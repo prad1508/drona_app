@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../model/savecredential_modal.dart';
 import '../respository/user.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/coach_listselected.dart';
 import '/model/user_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,20 +83,53 @@ class UserViewModel with ChangeNotifier {
   }
 
   //user profile add
-  Future<void> userProfileAdd(dynamic data, BuildContext context) async {
+  Future<void> userProfileAdd(dynamic data, BuildContext context , [int listindex = -1]) async {
     setLoading(true);
     _myRepo.fetchUserprofileAddListApi(data).then((value) async {
       setLoading(false);
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage(value['msg'], context);
-      print("api success");
-      Navigator.pushNamed(context, RoutesName.coachListSelected);
+      print("api success of adding coach");
+
+
+   if(listindex!=-1)
+     {
+       Navigator.push(
+         context,
+         MaterialPageRoute(
+           builder: (BuildContext context) =>
+               CoachListSelected(Listindex : listindex),
+         ),
+       );
+     }
+   else
+     {
+       Navigator.push(
+         context,
+         MaterialPageRoute(
+           builder: (BuildContext context) =>
+               CoachListSelected(),
+         ),
+       );
+     }
+
     }).onError((error, stackTrace) {
       setLoading(false);
       print("api  not success");
 
       Utils.flushBarErrorMessage(error.toString(), context);
-      Navigator.pushNamed(context, RoutesName.coachListSelected);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (BuildContext context) =>
+      //         CoachListSelected(),
+      //   ),
+      // );
     });
   }
+
+
+
 }
+
+

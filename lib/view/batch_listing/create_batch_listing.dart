@@ -268,7 +268,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                              const CreateProfile(),
+                               CreateProfile(),
                             ),
                           );
                         },
@@ -333,7 +333,9 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           _programName = value
                               .dataList.data?.data![0].programs![0].programName
                               .toString();
-                          return Column(
+                          return
+
+                            Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -363,7 +365,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                   ? Container(
                                 height: 50,
                                 //color: Colors.amber,
-                                child: ListView.builder(
+                                child:
+                                ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
                                     itemCount: value.dataList.data?.data![0]
@@ -433,15 +436,16 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       create: (BuildContext context) => myProgramViewViewModel,
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
-                            for (var fee
-                            in value.dataList.data?.data![0].programs! ?? []) {
+                            print("amount is");
+                            // print(value.dataList.data?.data![0].programs![0].amount);
+                            for (var fee in value.dataList.data?.data![0].programs! ?? []) {
                               fee.amount;
                             }
                             return TextFormField(
                               readOnly: true,
                               controller: fee
                                 ..text = value.dataList.data?.data![0].programs![0]
-                                    .amount ??
+                                    .amount.toString() ??
                                     '0',
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(10),
@@ -857,7 +861,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "coach_profile_uid": profileUid,
                         "program_uid": _programid.toString(),
                         "program_name": _programName.toString(),
-                        "fees": fee.text.toString(),
+                        "fees": fee.text,
                         "type_batch": _groupBatch.toString(),
                         "provide_online_sessions": onlineSession,
                         "online_session_url":
@@ -866,6 +870,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
                       };
+                      print("ddddddd");
+                      print(data);
                       batch.fetchCreatebatchListApi(data, context);
                     },
                   ),

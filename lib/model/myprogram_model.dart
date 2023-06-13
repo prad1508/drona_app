@@ -100,7 +100,7 @@ class Programs {
   String? uid;
   String? programName;
   dynamic? amount;
-  dynamic? registrationfee;
+  int? registrationfee;
 
   Programs({this.uid, this.programName, this.amount, this.registrationfee});
 

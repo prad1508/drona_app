@@ -102,6 +102,7 @@ class NetworkApiService extends BaseApiServices {
     dynamic responseJson;
     try {
       if (kDebugMode) {
+        print("toekn is $token");
         print(url);
       }
       Map<String, String> headerData = {

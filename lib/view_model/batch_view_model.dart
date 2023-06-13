@@ -22,6 +22,7 @@ class BatchViewViewModel with ChangeNotifier {
     _myRepo.fetchCreatebatchListApi(data).then((value) {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
+      print("api of batch create successfull");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -31,6 +32,32 @@ class BatchViewViewModel with ChangeNotifier {
         ),
       );
     }).onError((error, stackTrace) {
+      print("api of batch create not successfull");
+      print(error);
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+  // edit batch
+  Future<void> fetchEditebatchListApi(
+      dynamic data, BuildContext context) async {
+    setLoading(true);
+    _myRepo.fetchEditbatchListApi(data).then((value) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      print("edit batch api success");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => SearchBatchList(
+            pathPage: 'onBoarding',
+          ),
+        ),
+      );
+    }).onError((error, stackTrace) {
+      print("edit batch api not sucsees ");
+      print(error);
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
     });

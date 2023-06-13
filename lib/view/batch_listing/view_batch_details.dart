@@ -196,7 +196,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'What Level?',
+                                  'Program',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),

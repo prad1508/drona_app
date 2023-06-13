@@ -1,3 +1,4 @@
+import 'package:drona/view/batch_listing/edit_batch_listing.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ import '../view_model/coachlist_view_model.dart';
 import 'batch_listing/create_batch_listing.dart';
 
 class CoachListSelected extends StatefulWidget {
-  const CoachListSelected({super.key});
+  int Listindex ;
+   CoachListSelected({super.key , this.Listindex=-1});
 
   @override
   State<CoachListSelected> createState() => _CoachListSelectedState();
@@ -105,7 +107,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
         ),
         body: Material(
           color: Colors.white,
-          child: Container(
+          child: 
+          Container(
               // height: MediaQuery.of(context).size.height,
               // width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20),
@@ -178,142 +181,144 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                 child: Text("data not found"),
                               )
                             : Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.65,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView.builder(
-                                    itemCount:
-                                        value.dataList.data!.coachlist.length,
-                                    itemBuilder: (context, index) {
-                                      print(
-                                          "img==${value.dataList.data!.coachlist.length}");
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.58,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ListView.builder(
+                                      itemCount:
+                                          value.dataList.data!.coachlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(
+                                            "img==${value.dataList.data!.coachlist.length}");
 
-                                      return Card(
-                                        //key: ValueKey(value.dataList.data!.coachlist[index].),
-                                        elevation: 0,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 0),
-                                        child: Column(
-                                          children: [
-                                            ListTile(
-                                              tileColor: (_selectedItems
-                                                      .contains(index))
-                                                  ? const Color.fromARGB(
-                                                          255, 218, 218, 219)
-                                                      .withOpacity(0.5)
-                                                  : Colors.transparent,
-                                              leading: CircleAvatar(
-                                                radius: 20.5,
-                                                backgroundColor:
-                                                    const Color.fromRGBO(
-                                                        194, 235, 216, 1),
-                                                child: _selectedItems
-                                                        .contains(index)
-                                                    ? const Icon(
-                                                        Icons.check,
-                                                        color: Color.fromRGBO(
-                                                            71, 192, 136, 1),
-                                                        size: 30.0,
-                                                      )
-                                                    : value
-                                                                .dataList
-                                                                .data!
-                                                                .coachlist[
-                                                                    index]
-                                                                .img !=
-                                                            ""
-                                                        ? Image(
-                                                            image: NetworkImage(
-                                                              AppUrl.profileimageListendPoint +
-                                                                  value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .coachlist[
-                                                                          index]
-                                                                      .img,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.person),
-                                              ),
-                                              title: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      value
-                                                          .dataList
-                                                          .data!
-                                                          .coachlist[index]
-                                                          .name,
-                                                      style: const TextStyle(
+                                        return Card(
+                                          //key: ValueKey(value.dataList.data!.coachlist[index].),
+                                          elevation: 0,
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 0),
+                                          child: Column(
+                                            children: [
+                                              ListTile(
+                                                tileColor: (_selectedItems
+                                                        .contains(index))
+                                                    ? const Color.fromARGB(
+                                                            255, 218, 218, 219)
+                                                        .withOpacity(0.5)
+                                                    : Colors.transparent,
+                                                leading: CircleAvatar(
+                                                  radius: 20.5,
+                                                  backgroundColor:
+                                                      const Color.fromRGBO(
+                                                          194, 235, 216, 1),
+                                                  child: _selectedItems
+                                                          .contains(index)
+                                                      ? const Icon(
+                                                          Icons.check,
                                                           color: Color.fromRGBO(
-                                                              57, 64, 74, 1),
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontFamily:
-                                                              'Loto-Regular'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              subtitle: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 25),
-                                                child: Text(
-                                                  value
-                                                          .dataList
-                                                          .data!
-                                                          .coachlist[index]
-                                                          .gender +
-                                                      ", +" +
-                                                      value
-                                                          .dataList
-                                                          .data!
-                                                          .coachlist[index]
-                                                          .userid,
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
+                                                              71, 192, 136, 1),
+                                                          size: 30.0,
+                                                        )
+                                                      : value
+                                                                  .dataList
+                                                                  .data!
+                                                                  .coachlist[
+                                                                      index]
+                                                                  .img !=
+                                                              ""
+                                                          ? Image(
+                                                              image: NetworkImage(
+                                                                AppUrl.profileimageListendPoint +
+                                                                    value
+                                                                        .dataList
+                                                                        .data!
+                                                                        .coachlist[
+                                                                            index]
+                                                                        .img,
+                                                              ),
+                                                            )
+                                                          : Icon(Icons.person),
                                                 ),
+                                                title: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        value
+                                                            .dataList
+                                                            .data!
+                                                            .coachlist[index]
+                                                            .name,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontFamily:
+                                                                'Loto-Regular'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                subtitle: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      right: 25),
+                                                  child: Text(
+                                                    value
+                                                            .dataList
+                                                            .data!
+                                                            .coachlist[index]
+                                                            .gender +
+                                                        ", +" +
+                                                        value
+                                                            .dataList
+                                                            .data!
+                                                            .coachlist[index]
+                                                            .userid,
+                                                    style: const TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            57, 64, 74, 1),
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontFamily:
+                                                            'Loto-Regular'),
+                                                  ),
+                                                ),
+                                                trailing: CircleAvatar(
+                                                  radius: 12,
+                                                  child: Image(
+                                                      image: NetworkImage(
+                                                          "${AppUrl.imageListendPoint}${value.dataList.data!.coachlist[index].services[0].serviceIconname}")),
+                                                ),
+                                                onTap: () {},
+                                                onLongPress: () {
+                                                  if (!_selectedItems
+                                                      .contains(index)) {
+                                                    setState(() {
+                                                      _selectedItems.add(index);
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      _selectedItems.removeWhere(
+                                                          (val) => val == index);
+                                                    });
+                                                  }
+                                                },
                                               ),
-                                              trailing: CircleAvatar(
-                                                radius: 12,
-                                                child: Image(
-                                                    image: NetworkImage(
-                                                        "${AppUrl.imageListendPoint}${value.dataList.data!.coachlist[index].services[0].serviceIconname}")),
+                                              const Divider(
+                                                height: 5,
                                               ),
-                                              onTap: () {},
-                                              onLongPress: () {
-                                                if (!_selectedItems
-                                                    .contains(index)) {
-                                                  setState(() {
-                                                    _selectedItems.add(index);
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    _selectedItems.removeWhere(
-                                                        (val) => val == index);
-                                                  });
-                                                }
-                                              },
-                                            ),
-                                            const Divider(
-                                              height: 5,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              );
+                                            ],
+                                          ),
+                                        );
+                                      }),
+                                );
+
                       })),
                   const SizedBox(
                     height: 15,
                   ),
+                  widget.Listindex!=-1?
                   RoundButton(
                       loading: false,
                       title: AppLocale.conts.getString(context),
@@ -321,6 +326,21 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
+                        print("pressssss edit");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                 EditBatchListing(Listindex : widget.Listindex )));
+                      }):
+                  RoundButton(
+                      loading: false,
+                      title: AppLocale.conts.getString(context),
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor,
+                      onPress: () {
+                        print("normal case");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
