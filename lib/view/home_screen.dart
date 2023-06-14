@@ -5,7 +5,7 @@ import '../res/widget/dashboard_card.dart';
 import '../res/widget/drawer_widget.dart';
 import 'main_menu.dart';
 import 'trainee_listing/trainee_listing.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String academicname ='' ;
   late ScrollController _scrollController;
   
   static const kExpandedHeight = 100.0;
@@ -27,6 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ..addListener(() {
         setState(() {});
       });
+  }
+  getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    academicname = prefs.getString('acadmicName')!;
+
   }
 
   bool get _isSliverAppBarExpanded {
@@ -48,11 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 centerTitle: false,
                 toolbarHeight: 90,
                 backgroundColor: Colors.white,
-                title: Column(
+                title:  Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Abc Academey',
+                    Text(
+                      academicname,
                       style: TextStyle(
                         color: Colors.black,
                         fontStyle: FontStyle.normal,
@@ -61,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Row(
-                      children: const [
+                      children: [
                         Text(
                           "Power by ",
                           style: TextStyle(

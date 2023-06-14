@@ -233,6 +233,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                           .toString())));
                                 }
                               }
+                              print("service id");
+                              print(activeServiceValue[0]);
                               assignSeviceId(activeServiceValue[0]);
                               return DropdownButton(
                                   isExpanded: true,

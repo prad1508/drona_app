@@ -1,5 +1,6 @@
 import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/profile/view_profile.dart';
+import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -18,6 +19,9 @@ import 'trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'trainne_addmanual.dart';
 
+String fullname ='' ;
+String academicname ='' ;
+late List details ;
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
 
@@ -32,11 +36,9 @@ class _MainMenuState extends State<MainMenu> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
-  String fullname ='' ;
-  String academicname ='' ;
-  late List details ;
   @override
   initState() {
+    getData();
     super.initState();
   }
   getData() async {
@@ -44,17 +46,15 @@ class _MainMenuState extends State<MainMenu> {
    details = prefs.getStringList('registerResponse')!;
    fullname = details[0];
    academicname = prefs.getString('acadmicName')!;
+
    print("full name is ${details[0]}");
    print("number is ${details[3]}");
-
-
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
+
+
     final userPrefernece = Provider.of<UserViewModel>(context);
 
 
@@ -188,7 +188,7 @@ class _MainMenuState extends State<MainMenu> {
                     leading: const Image(
                         image: AssetImage('assets/images/user_profile.png')),
                     title:  Text(
-                      fullname,
+                      fullname.toString(),
                     ),
                     trailing: IconButton(
                       onPressed: (() {
@@ -196,7 +196,7 @@ class _MainMenuState extends State<MainMenu> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                            ViewProfilenew(),
+                            ViewProfileDetails(),
                           ),
                         );
                       }),

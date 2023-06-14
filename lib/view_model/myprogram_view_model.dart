@@ -22,6 +22,7 @@ class MyProgramViewViewModel with ChangeNotifier {
 
     }).onError((error, stackTrace){
       print("program list api not success");
+      print(error);
       setDataList(ApiResponse.error(error.toString()));
     });
   }
