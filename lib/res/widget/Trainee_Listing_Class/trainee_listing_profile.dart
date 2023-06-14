@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../model/trainee_list_model.dart';
 import '../../../respository/trainee_repositry.dart';
+import '../../../utils/no_data.dart';
 import '../../../view_model/trainee_view_model.dart';
 
 class Trainee_Listing_Profile extends StatefulWidget {
@@ -47,9 +48,12 @@ class _Trainee_Listing_ProfileState extends State<Trainee_Listing_Profile> {
                     child: Consumer<TraineeViewModel>(
                         builder: (context, value, _) {
                           print("value is");
-                          print(value.dataList.data!.data.length);
-                         print(value.dataList);
-                          return ListView.builder(
+                          // print(value.dataList.data!.data.length);
+                          // print(value.dataList.data!.data.);
+
+                          return value.dataList.data!=null ?
+
+                            ListView.builder(
                             itemCount: value.dataList.data!.data.length,
                               itemBuilder: (context, index) {
                               return Column(
@@ -271,7 +275,9 @@ class _Trainee_Listing_ProfileState extends State<Trainee_Listing_Profile> {
                               );
                                     }
 
-                          );
+                          ) :
+
+                          NoData();
                         })),
 
 
