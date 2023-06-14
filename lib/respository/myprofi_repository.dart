@@ -10,9 +10,12 @@ class MyprofiRepository {
   Future<MyprofiListModel> fetchMyprofiListApi()async{
     try{
       dynamic response = await _apiServices.getGetApiResponse(AppUrl.myprofiListEndPoint);
+      print("profile details api success");
       return response = MyprofiListModel.fromJson(response);
       
     }catch(e){
+      print("profile api not success");
+      print(e.toString());
       rethrow ;
     }
   }

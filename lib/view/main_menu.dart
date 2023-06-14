@@ -58,7 +58,6 @@ class _MainMenuState extends State<MainMenu> {
     final userPrefernece = Provider.of<UserViewModel>(context);
 
 
-
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,

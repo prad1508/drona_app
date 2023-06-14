@@ -35,6 +35,7 @@ class Data {
   String? name;
   String? timestamp;
   String? cDate;
+  String? dob;
   String? cTime;
   String? gender;
   String? email;
@@ -54,6 +55,7 @@ class Data {
       this.cDate,
       this.cTime,
       this.gender,
+        this.dob ='',
       this.email,
       this.type,
       this.role,
@@ -70,6 +72,7 @@ class Data {
     timestamp = json['timestamp'];
     cDate = json['cDate'];
     cTime = json['cTime'];
+    dob = json['dob'];
     gender = json['gender'];
     email = json['email'];
     type = json['type'];
@@ -84,6 +87,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['uid'] = this.uid;
+    data['dob'] = this.dob;
     data['userid'] = this.userid;
     data['name'] = this.name;
     data['timestamp'] = this.timestamp;
