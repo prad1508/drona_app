@@ -51,7 +51,8 @@ class _Trainee_Listing_ProfileState extends State<Trainee_Listing_Profile> {
                           // print(value.dataList.data!.data.length);
                           // print(value.dataList.data!.data.);
 
-                          return value.dataList.data!=null ?
+                          return
+                            value.dataList.data !=null ?
 
                             ListView.builder(
                             itemCount: value.dataList.data!.data.length,

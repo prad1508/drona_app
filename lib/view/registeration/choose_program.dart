@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field, prefer_final_fields, depend_on_referenced_packages, unnecessary_import
 
+import 'package:drona/utils/no_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -2123,18 +2124,8 @@ class _ChooseProgramState extends State<ChooseProgram> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.error_outline,
-                                      color: Theme.of(context).primaryColorDark,
-                                      size: 100.0,
-                                    ),
-                                    Text(
-                                      value.dataList.message.toString(),
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 20,
-                                          height: 2),
-                                    )
+
+                                    NoData()
                                   ],
                                 ));
                             }

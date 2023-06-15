@@ -1,4 +1,5 @@
 import 'package:drona/data/response/status.dart';
+import 'package:drona/utils/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -532,13 +533,14 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                     color: Theme.of(context).primaryColorDark,
                                     size: 100.0,
                                   ),
-                                  Text(
-                                    value.dataList.message.toString(),
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 20,
-                                        height: 2),
-                                  )
+                                  NoData()
+                                  // Text(
+                                  //   value.dataList.message.toString(),
+                                  //   style: TextStyle(
+                                  //       color: Theme.of(context).primaryColor,
+                                  //       fontSize: 20,
+                                  //       height: 2),
+                                  // )
                                 ],
                               ));
                       }

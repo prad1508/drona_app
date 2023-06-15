@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
+import '../../utils/no_data.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
@@ -278,6 +280,8 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 // const SizedBox(
                 //   height: 15,
                 // ),
+
+
                 ChangeNotifierProvider<BatchListViewViewModel>(
                     create: (BuildContext context) => batchListViewViewModel,
                     child: Consumer<BatchListViewViewModel>(
@@ -303,132 +307,171 @@ class _SearchBatchListState extends State<SearchBatchList> {
                         });
                       }
 
-                      return Expanded(
-                        child: notFound
-                            ? const Text(
-                                'No results found',
-                                style: TextStyle(fontSize: 24),
-                              )
-                            : ListView.builder(
-                                itemCount: _foundUsers.length,
-                                itemBuilder: (context, index) => Card(
-                                  key: ValueKey(_foundUsers[index]["id"]),
-                                  elevation: 0,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 0),
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        tileColor:
-                                            (_selectedItems.contains(index))
-                                                ? const Color.fromARGB(
-                                                        255, 218, 218, 219)
-                                                    .withOpacity(0.5)
-                                                : Colors.transparent,
-                                        leading: CircleAvatar(
-                                          radius: 20,
-                                          backgroundColor:
-                                              Colors.lightBlue.shade100,
-                                          child: _selectedItems.contains(index)
-                                              ? const Icon(
-                                                  Icons.check,
-                                                  color: Color.fromRGBO(
-                                                      71, 192, 136, 1),
-                                                  size: 30.0,
-                                                )
-                                              : Text(
-                                                  _foundUsers[index]['name'],
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
-                                                ),
-                                        ),
-                                        title: Row(
-                                          children: [
-                                            Text(
-                                              _foundUsers[index]['batchName'],
-                                              style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      57, 64, 74, 1),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontFamily: 'Loto-Regular'),
-                                            ),
-                                          ],
-                                        ),
-                                        subtitle: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              _foundUsers[index]["detail"]
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      57, 64, 74, 1),
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'Loto-Regular'),
-                                            ),
-                                            // Row(
-                                            //   children: [
-                                            //     const Text("Coach Name:",
-                                            //         style: TextStyle(
-                                            //             color: Colors.black)),
-                                            //     Text(
-                                            //       _foundUsers[index]
-                                            //           ["coach_name"],
-                                            //     ),
-                                            //   ],
-                                            // ),
-                                          ],
-                                        ),
-                                        trailing: CircleAvatar(
-                                            radius: 20.5,
-                                            backgroundColor:
-                                                const Color.fromRGBO(
-                                                    194, 235, 216, 1),
-                                            child: Image(
-                                                image: NetworkImage(
-                                                    AppUrl.imageListendPoint +
-                                                        _foundUsers[index]
-                                                            ["batchImg"]))),
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ViewBatchDetails(
-                                                          ListIndex: index)));
-                                        },
-                                        onLongPress: () {
-                                          if (!_selectedItems.contains(index)) {
-                                            setState(() {
-                                              _selectedItems.add(index);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _selectedItems.removeWhere(
-                                                  (val) => val == index);
-                                            });
-                                          }
-                                        },
+                      switch (value.dataList.status!) {
+                        case Status.loading:
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.teal,
+                            ),
+                          );
+
+                        case Status.completed:
+                           return Expanded(
+                            child: notFound
+                                ? const Text(
+                              'No results found',
+                              style: TextStyle(fontSize: 24),
+                            )
+                                : ListView.builder(
+                              itemCount: _foundUsers.length,
+                              itemBuilder: (context, index) => Card(
+                                key: ValueKey(_foundUsers[index]["id"]),
+                                elevation: 0,
+                                margin:
+                                const EdgeInsets.symmetric(vertical: 0),
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      tileColor:
+                                      (_selectedItems.contains(index))
+                                          ? const Color.fromARGB(
+                                          255, 218, 218, 219)
+                                          .withOpacity(0.5)
+                                          : Colors.transparent,
+                                      leading: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor:
+                                        Color.fromRGBO(
+                                            194, 235, 216, 1),
+                                        child: _selectedItems.contains(index)
+                                            ? const Icon(
+                                          Icons.check,
+                                          color: Color.fromRGBO(
+                                              71, 192, 136, 1),
+                                          size: 30.0,
+                                        )
+                                            : Image(
+
+                                            image: NetworkImage(
+                                                AppUrl.imageListendPoint +
+                                                    _foundUsers[index]
+                                                    ["batchImg"])),
                                       ),
-                                      const Divider(
-                                        height: 5,
-                                        thickness: 1,
+                                      title: Row(
+                                        children: [
+                                          Text(
+                                            _foundUsers[index]['batchName'],
+                                            style: const TextStyle(
+                                                color: Color.fromRGBO(
+                                                    57, 64, 74, 1),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: 'Loto-Regular'),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                      subtitle: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _foundUsers[index]["detail"]
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Color.fromRGBO(
+                                                    57, 64, 74, 1),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Loto-Regular'),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text("Coach Name:",
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
+                                              Text(
+                                                _foundUsers[index]
+                                                ["coach_name"],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      trailing: Container(
+                                        height: 20,
+                                        width:60,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius: BorderRadius.circular(10)
+                                        ),
+                                        child: Center(
+                                          child: Text(_foundUsers[index]["status"]
+                                              .toString(),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 10
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ViewBatchDetails(
+                                                        ListIndex: index)));
+                                      },
+                                      onLongPress: () {
+                                        if (!_selectedItems.contains(index)) {
+                                          setState(() {
+                                            _selectedItems.add(index);
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _selectedItems.removeWhere(
+                                                    (val) => val == index);
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    const Divider(
+                                      height: 5,
+                                      thickness: 1,
+                                    ),
+                                  ],
                                 ),
                               ),
-                      );
+                            ),
+                          );
+
+                        case Status.error:
+                          return Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    color: Theme.of(context).primaryColorDark,
+                                    size: 100.0,
+                                  ),
+                                  NoData()
+                                  // Text(
+                                  //   value.dataList.message.toString(),
+                                  //   style: TextStyle(
+                                  //       color: Theme.of(context).primaryColor,
+                                  //       fontSize: 20,
+                                  //       height: 2),
+                                  // )
+                                ],
+                              ));
+                      }
+
+
+
                     })),
                 const SizedBox(
                   height: 15,

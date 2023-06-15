@@ -455,7 +455,7 @@ class _OtpPageState extends State<OtpPage> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                           ),
-                        duration: 120,
+                        duration: 45,
                       ),
                       ],
                     ),

@@ -4,6 +4,7 @@ import '../utils/utils.dart';
 import '../view/batch_listing/batchlist_search.dart';
 import '/data/response/api_response.dart';
 import '/respository/batch_repository.dart';
+import 'batchList_view_model.dart';
 
 class BatchViewViewModel with ChangeNotifier {
   final _myRepo = BatchRepository();
@@ -15,6 +16,8 @@ class BatchViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+
   // create batch
   Future<void> fetchCreatebatchListApi(
       dynamic data, BuildContext context) async {
@@ -23,6 +26,7 @@ class BatchViewViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
       print("api of batch create successfull");
+      batchListViewViewModel.fetchBatchListListApi();
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -47,6 +51,8 @@ class BatchViewViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
       print("edit batch api success");
+      batchListViewViewModel.fetchBatchListListApi();
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -63,3 +69,5 @@ class BatchViewViewModel with ChangeNotifier {
     });
   }
 }
+
+

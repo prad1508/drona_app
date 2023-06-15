@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
+import '../../utils/no_data.dart';
 import '../../view_model/coachlist_view_model.dart';
 
 class TraineeNewList extends StatefulWidget {
@@ -275,114 +277,152 @@ class _TraineeNewListState extends State<TraineeNewList> {
                         // //
                         //
 
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount:
-                                  traineeViewModel.dataList.data!.data.length,
-                              itemBuilder: (context, index) {
-                                print("_foundUsers==${_foundUsers.length}");
+                        switch (value.dataList.status!) {
+                          case Status.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.teal,
+                              ),
+                            );
 
-                                return Card(
-                                  // key: ValueKey(_foundUsers[index]["id"]),
-                                  elevation: 0,
-                                  margin:
+                          case Status.completed:
+                            return Expanded(
+                              child: ListView.builder(
+                                  itemCount:
+                                  traineeViewModel.dataList.data!.data.length,
+                                  itemBuilder: (context, index) {
+                                    print("_foundUsers==${_foundUsers.length}");
+
+                                    return Card(
+                                      // key: ValueKey(_foundUsers[index]["id"]),
+                                      elevation: 0,
+                                      margin:
                                       const EdgeInsets.symmetric(vertical: 0),
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        tileColor:
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            tileColor:
                                             (_selectedItems.contains(index))
                                                 ? const Color.fromARGB(
-                                                        255, 218, 218, 219)
-                                                    .withOpacity(0.5)
+                                                255, 218, 218, 219)
+                                                .withOpacity(0.5)
                                                 : Colors.transparent,
-                                        leading: CircleAvatar(
-                                          radius: 20.5,
-                                          backgroundColor: const Color.fromRGBO(
-                                              194, 235, 216, 1),
-                                          child: Text(
-                                            "${traineeViewModel.dataList.data!.data[index].traineeName[0].characters.first.toUpperCase()}${traineeViewModel.dataList.data!.data[index].traineeName[0].characters.last.toUpperCase()}",
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                                color: Color.fromRGBO(
-                                                    57, 64, 74, 1),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: 'Loto-Regular'),
-                                          ),
-                                        ),
-                                        title: Text(
-                                          //_foundUsers[index]['name'],
-                                          traineeViewModel.dataList.data!
-                                              .data[index].traineeName,
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(
-                                              color:
+                                            leading: CircleAvatar(
+                                              radius: 20.5,
+                                              backgroundColor: const Color.fromRGBO(
+                                                  194, 235, 216, 1),
+                                              child: Text(
+                                                "${traineeViewModel.dataList.data!.data[index].traineeName[0].characters.first.toUpperCase()}${traineeViewModel.dataList.data!.data[index].traineeName[0].characters.last.toUpperCase()}",
+                                                textAlign: TextAlign.start,
+                                                style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        57, 64, 74, 1),
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'Loto-Regular'),
+                                              ),
+                                            ),
+                                            title: Text(
+                                              //_foundUsers[index]['name'],
+                                              traineeViewModel.dataList.data!
+                                                  .data[index].traineeName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                  color:
                                                   Color.fromRGBO(57, 64, 74, 1),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: 'Loto-Regular'),
-                                        ),
-                                        subtitle: Column(
-                                          children: [
-                                            Row(children: [
-                                              Text(
-                                                "+${traineeViewModel.dataList.data!.data[index].traineeUserid}",
-                                                textAlign: TextAlign.start,
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 3),
-                                                height: 12,
-                                                width: 1,
-                                                color: Colors.black54,
-                                              ),
-                                              Text(
-                                                "₹${traineeViewModel.dataList.data!.data[index].fees.toString()}",
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ]),
-                                            Row(children: [
-                                              Text(
-                                                "Joining Date: ${traineeViewModel.dataList.data!.data[index].dateOfJoining}",
-                                                textAlign: TextAlign.start,
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 3),
-                                                height: 12,
-                                                width: 1,
-                                                color: Colors.black54,
-                                              ),
-                                              Text(
-                                                "Billing Date${traineeViewModel.dataList.data!.data[index].monthOfBilling}",
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ]),
-                                          ],
-                                        ),
-                                        onTap: () {},
-                                        onLongPress: () {
-                                          if (!_selectedItems.contains(index)) {
-                                            setState(() {
-                                              _selectedItems.add(index);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _selectedItems.removeWhere(
-                                                  (val) => val == index);
-                                            });
-                                          }
-                                        },
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Loto-Regular'),
+                                            ),
+                                            subtitle: Column(
+                                              children: [
+                                                Row(children: [
+                                                  Text(
+                                                    "+${traineeViewModel.dataList.data!.data[index].traineeUserid}",
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(
+                                                        horizontal: 3),
+                                                    height: 12,
+                                                    width: 1,
+                                                    color: Colors.black54,
+                                                  ),
+                                                  Text(
+                                                    "₹${traineeViewModel.dataList.data!.data[index].fees.toString()}",
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                ]),
+                                                Row(children: [
+                                                  Text(
+                                                    "Joining Date: ${traineeViewModel.dataList.data!.data[index].dateOfJoining}",
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(
+                                                        horizontal: 3),
+                                                    height: 12,
+                                                    width: 1,
+                                                    color: Colors.black54,
+                                                  ),
+                                                  Text(
+                                                    "Billing Date${traineeViewModel.dataList.data!.data[index].monthOfBilling}",
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                ]),
+                                              ],
+                                            ),
+                                            onTap: () {},
+                                            onLongPress: () {
+                                              if (!_selectedItems.contains(index)) {
+                                                setState(() {
+                                                  _selectedItems.add(index);
+                                                });
+                                              } else {
+                                                setState(() {
+                                                  _selectedItems.removeWhere(
+                                                          (val) => val == index);
+                                                });
+                                              }
+                                            },
+                                          ),
+                                          const Divider(
+                                            height: 5,
+                                          ),
+                                        ],
                                       ),
-                                      const Divider(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                        );
+                                    );
+                                  }),
+                            );
+
+                          case Status.error:
+                            return Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Theme.of(context).primaryColorDark,
+                                      size: 100.0,
+                                    ),
+                                    NoData()
+                                    // Text(
+                                    //   value.dataList.message.toString(),
+                                    //   style: TextStyle(
+                                    //       color: Theme.of(context).primaryColor,
+                                    //       fontSize: 20,
+                                    //       height: 2),
+                                    // )
+                                  ],
+                                ));
+                        }
+
+
+
+
+
+
                       })),
                   const SizedBox(
                     height: 15,

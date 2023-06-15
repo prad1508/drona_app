@@ -5,12 +5,15 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
-      width: 1000,
-      child: Image.asset(
-        "assets/images/nodata.png",
-        fit: BoxFit.fitWidth,
-        height: 300,
+    double w = MediaQuery.of(context).size.width;
+    return  Center(
+      child: SizedBox(
+        width: w,
+        child: Image.asset(
+          "assets/images/nodata.png",
+          fit: BoxFit.fitWidth,
+          height: 300,
+        ),
       ),
     );
   }
