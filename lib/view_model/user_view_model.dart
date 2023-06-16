@@ -6,7 +6,7 @@ import '../model/savecredential_modal.dart';
 import '../respository/user.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
-import '../view/coach_listselected.dart';
+import '../view/coach_listing/coach_listselected.dart';
 import '/model/user_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';

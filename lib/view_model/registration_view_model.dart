@@ -112,6 +112,14 @@ class RegistrationViewModel with ChangeNotifier {
   Future<void> basicDetails(
       dynamic data, BuildContext context, uid, acadmicName) async {
     setLoading(true);
+    /// use hsared prefrences
+
+    print("uid is coming is $uid");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('uid',uid)!;
+
+
+
     setUid(uid);
     _myRepo.basicDetailsListApi(data).then((value) async {
       setLoading(false);

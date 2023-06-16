@@ -8,7 +8,7 @@ import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
-import '../coach_listselected.dart';
+import '../coach_listing/coach_listselected.dart';
 
 class CoachProfileAdd extends StatefulWidget {
   const CoachProfileAdd({super.key});

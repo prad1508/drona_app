@@ -34,8 +34,15 @@ class _ChooseServiceState extends State<ChooseService> {
 
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => serviceViewViewModel.fetchServiceListApi(userUid));
+    getData();
+    //WidgetsBinding.instance.addPostFrameCallback(
+    // (_) => serviceViewViewModel.fetchServiceListApi(userUid));
+  }
+  getData()
+  async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userUid = prefs.getString('uid')!;
+    serviceViewViewModel.fetchServiceListApi(userUid);
   }
 
   @override
@@ -43,6 +50,7 @@ class _ChooseServiceState extends State<ChooseService> {
     final facility = Provider.of<FacilityViewViewModel>(context);
     final registration = Provider.of<RegistrationViewModel>(context);
     userUid = registration.uid;
+    print("uid is $userUid");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -87,72 +95,72 @@ class _ChooseServiceState extends State<ChooseService> {
                     create: (BuildContext context) => serviceViewViewModel,
                     child: Consumer<ServiceViewViewModel>(
                         builder: (context, value, _) {
-                      if (value.dataList.status! == Status.completed) {
-                        catUid =
-                            value.dataList.data!.data![0].catUid!.toString();
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height * .6,
-                          child: GridView.count(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 4.0,
-                              mainAxisSpacing: 8.0,
-                              children: List.generate(
-                                  value.dataList.data!.data!.length, (index) {
-                                return Center(
-                                  child: CustomCheckBox(
-                                    value: _selectedItems.contains(index),
-                                    checkedFillColor:
+                          if (value.dataList.status! == Status.completed) {
+                            catUid =
+                                value.dataList.data!.data![0].catUid!.toString();
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * .6,
+                              child: GridView.count(
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: 4.0,
+                                  mainAxisSpacing: 8.0,
+                                  children: List.generate(
+                                      value.dataList.data!.data!.length, (index) {
+                                    return Center(
+                                      child: CustomCheckBox(
+                                        value: _selectedItems.contains(index),
+                                        checkedFillColor:
                                         const Color.fromRGBO(42, 98, 184, 1),
-                                    imageUrl: AppUrl.imageListendPoint +
-                                        value.dataList.data!.data![index]
-                                            .iconname!
-                                            .toString(),
-                                    name: value.dataList.data!.data![index]
-                                        .serviceName!
-                                        .toString(),
-                                    onChanged: (val) {
-                                      //do your stuff here
-                                      final Map<String, String> services = {
-                                        "service_uid": value
-                                            .dataList.data!.data![index].uid!
-                                            .toString(),
-                                        "service_name": value.dataList.data!
-                                            .data![index].serviceName!
-                                            .toString(),
-                                      };
-                                      if (!_selectedItems.contains(index)) {
-                                        setState(() {
-                                          _selectedItems.add(index);
-                                          serviceList.add(services);
-                                          serviceSelected.add(
+                                        imageUrl: AppUrl.imageListendPoint +
                                             value.dataList.data!.data![index]
-                                                .uid!
+                                                .iconname!
                                                 .toString(),
-                                          );
-                                        });
-                                      } else {
-                                        setState(() {
-                                          serviceList.clear();
-                                          serviceList.remove(services);
-                                          serviceSelected.remove(
-                                            value.dataList.data!.data![index]
-                                                .uid!
+                                        name: value.dataList.data!.data![index]
+                                            .serviceName!
+                                            .toString(),
+                                        onChanged: (val) {
+                                          //do your stuff here
+                                          final Map<String, String> services = {
+                                            "service_uid": value
+                                                .dataList.data!.data![index].uid!
                                                 .toString(),
-                                          );
-                                          _selectedItems.removeWhere(
-                                              (val) => val == index);
-                                        });
-                                      }
-                                    },
-                                  ),
-                                );
-                              })),
-                        );
-                      }
-                      return Container(
-                        height: MediaQuery.of(context).size.height * .6,
-                      );
-                    }),
+                                            "service_name": value.dataList.data!
+                                                .data![index].serviceName!
+                                                .toString(),
+                                          };
+                                          if (!_selectedItems.contains(index)) {
+                                            setState(() {
+                                              _selectedItems.add(index);
+                                              serviceList.add(services);
+                                              serviceSelected.add(
+                                                value.dataList.data!.data![index]
+                                                    .uid!
+                                                    .toString(),
+                                              );
+                                            });
+                                          } else {
+                                            setState(() {
+                                              serviceList.clear();
+                                              serviceList.remove(services);
+                                              serviceSelected.remove(
+                                                value.dataList.data!.data![index]
+                                                    .uid!
+                                                    .toString(),
+                                              );
+                                              _selectedItems.removeWhere(
+                                                      (val) => val == index);
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    );
+                                  })),
+                            );
+                          }
+                          return Container(
+                            height: MediaQuery.of(context).size.height * .6,
+                          );
+                        }),
                   ),
                   RoundButton(
                       loading: false,
@@ -171,7 +179,7 @@ class _ChooseServiceState extends State<ChooseService> {
                             "services": serviceList,
                           };
                           final prefsData =
-                              await SharedPreferences.getInstance();
+                          await SharedPreferences.getInstance();
                           prefsData.setStringList(
                               'SelectedServices', serviceSelected);
                           facility.resetcounter();

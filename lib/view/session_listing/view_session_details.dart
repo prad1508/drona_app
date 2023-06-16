@@ -11,7 +11,7 @@ import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../../view_model/session_view_model.dart';
-import '../layout.dart';
+import '../dashboard/layout.dart';
 import '../profile/view_profile.dart';
 import 'session_detail_edit.dart';
 

@@ -1,11 +1,16 @@
+import 'package:drona/view_model/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import '../res/language/language.dart';
-import '../res/widget/dashboard_card.dart';
-import '../res/widget/drawer_widget.dart';
+import 'package:provider/provider.dart';
+import '../../data/response/status.dart';
+import '../../res/language/language.dart';
+import '../../res/widget/dashboard_card.dart';
+import '../../res/widget/drawer_widget.dart';
+import '../../utils/no_data.dart';
 import 'main_menu.dart';
-import 'trainee_listing/trainee_listing.dart';
+import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -14,30 +19,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String academicname ='' ;
+  DashBoardViewViewModel dashBoardViewViewModel = DashBoardViewViewModel();
+  String academicname = '';
   late ScrollController _scrollController;
-  
+
   static const kExpandedHeight = 100.0;
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
+
   @override
   void initState() {
     super.initState();
-
+    getData();
+    dashBoardViewViewModel.fetchDashBoardListApi();
     _scrollController = ScrollController()
       ..addListener(() {
         setState(() {});
       });
   }
+
   getData() async {
     final prefs = await SharedPreferences.getInstance();
-    academicname = prefs.getString('acadmicName')!;
+    List<String>? items = prefs.getStringList('loginData')!;
 
-  }
+    setState(() {
+      academicname = items[3].toString();
+    });
 
-  bool get _isSliverAppBarExpanded {
-    return _scrollController.hasClients &&
-        _scrollController.offset > kExpandedHeight - kToolbarHeight;
+    print("academicname is $academicname");
   }
 
   @override
@@ -54,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 centerTitle: false,
                 toolbarHeight: 90,
                 backgroundColor: Colors.white,
-                title:  Column(
+                title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      academicname,
+                      academicname.toString(),
                       style: TextStyle(
                         color: Colors.black,
                         fontStyle: FontStyle.normal,
@@ -136,12 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: RawMaterialButton(
                                     onPressed: () {
                                       Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext context) =>
-                                                      const MainMenu(),
-                                                ),
-                                              );
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const MainMenu(),
+                                        ),
+                                      );
                                     },
                                     elevation: 2.0,
                                     fillColor: Colors.white,
@@ -163,122 +172,166 @@ class _HomeScreenState extends State<HomeScreen> {
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                               Navigator.push(
-                                         context,
-                                         MaterialPageRoute(
-                                           builder: (BuildContext context) =>
-                                               const Trainee_Listing(),
-                                         ),
-                                       );
-                            },
-                          child:const DashboardCard(
-                              color: Colors.blueAccent,
-                              icon: Icons.group_outlined,
-                              title: 'Total Trainee',
-                              subtitle: '23 Onboarded',
-                              count: '54',
-                              line: .54),
-                          ),
-                          const DashboardCard(
-                              color: Color.fromARGB(255, 7, 3, 244),
-                              icon: Icons.currency_rupee_outlined,
-                              title: 'Free Paid',
-                              subtitle: '14 Members Due',
-                              count: '36',
-                              line: .36),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          DashboardCard(
-                              color: Colors.green,
-                              icon: Icons.calendar_month_outlined,
-                              title: 'Attendance',
-                              subtitle: '76% Monthly Avg',
-                              count: '80',
-                              line: .8),
-                          DashboardCard(
-                              color: Color.fromARGB(255, 8, 174, 229),
-                              icon: Icons.account_balance_wallet_outlined,
-                              title: 'Collection (M)',
-                              subtitle: '10,000 - Due Amount',
-                              count: '50,000',
-                              line: .36),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Academy Batches & Sessions",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'poppin'),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'poppin',
-                                  height: 1),
-                            ),
-                            onPressed: null,
-                            child: const Text(
-                              'Add +',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(42, 98, 184, 1),
-                                  height: 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "4 Batches - 6 Sessions",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Loto-Regular',
-                              height: 1),
-                        ),
-                      ),
-                      _batchSession(context, width),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Academy Sports",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Loto-Regular',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      _academySport(context, width),
-                    ],
+                  child: ChangeNotifierProvider<DashBoardViewViewModel>(
+                    create: (context) => dashBoardViewViewModel,
+                    child: Consumer<DashBoardViewViewModel>(
+                      builder: (context, value, _) {
+                        switch (value.dataList.status!) {
+                          case Status.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.teal,
+                              ),
+                            );
+
+                          case Status.completed:
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const Trainee_Listing(),
+                                          ),
+                                        );
+                                      },
+                                      child:  DashboardCard(
+                                          color: Colors.blueAccent,
+                                          icon: Icons.group_outlined,
+                                          title: 'Total Trainee',
+                                          subtitle: '${value.dataList.data!.totalOnboardedTrainee.toString()} Onboarded',
+                                          count: value.dataList.data!.totalTrainee.toString(),
+                                          line: value.dataList.data!.totalTrainee.toDouble()),
+                                    ),
+                                     DashboardCard(
+                                        color: Color.fromARGB(255, 7, 3, 244),
+                                        icon: Icons.currency_rupee_outlined,
+                                        title: 'Fee Paid',
+                                        subtitle: '${value.dataList.data!.feeDue.toString()} Members Due',
+                                        count: value.dataList.data!.feePiad.toString(),
+                                        line: value.dataList.data!.feePiad.toDouble()),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children:  [
+                                    DashboardCard(
+                                        color: Colors.green,
+                                        icon: Icons.calendar_month_outlined,
+                                        title: 'Attendance',
+                                        subtitle: '${value.dataList.data!.monthAttendancePercentage}% Monthly Avg',
+                                        count: value.dataList.data!.todayAttendancePercentage.toString(),
+                                        line: value.dataList.data!.todayAttendancePercentage.toDouble()),
+                                    DashboardCard(
+                                        color: Color.fromARGB(255, 8, 174, 229),
+                                        icon: Icons
+                                            .account_balance_wallet_outlined,
+                                        title: 'Collection (M)',
+                                        subtitle: '${value.dataList.data!.collection} - Due Amount',
+                                        count: value.dataList.data!.totalCollection.toString(),
+                                        line: value.dataList.data!.totalCollection.toDouble()),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "Academy Batches & Sessions",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'poppin'),
+                                    ),
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        textStyle: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'poppin',
+                                            height: 1),
+                                      ),
+                                      onPressed: null,
+                                      child: const Text(
+                                        'Add +',
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(42, 98, 184, 1),
+                                            height: 1),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "4 Batches - 6 Sessions",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1),
+                                  ),
+                                ),
+                                _batchSession(context, width),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Academy Sports",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Loto-Regular',
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                _academySport(context, width),
+                              ],
+                            );
+
+                          case Status.error:
+                            return Center(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: Theme.of(context).primaryColorDark,
+                                  size: 100.0,
+                                ),
+                                NoData()
+                                // Text(
+                                //   value.dataList.message.toString(),
+                                //   style: TextStyle(
+                                //       color: Theme.of(context).primaryColor,
+                                //       fontSize: 20,
+                                //       height: 2),
+                                // )
+                              ],
+                            ));
+                        }
+                      },
+                    ),
                   ),
                 ),
               ))),
@@ -576,14 +629,13 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 100,
       width: width * 1,
       child: ListView(
-        
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           Container(
             width: width / 4,
             child: Column(
-              children:  [
+              children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.blue.withOpacity(.1),
@@ -593,14 +645,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 25.0,
                   ),
                 ),
-                const Text('Game One', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),)
+                const Text(
+                  'Game One',
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),
+                )
               ],
             ),
           ),
-         Container(
+          Container(
             width: width / 4,
             child: Column(
-              children:  [
+              children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.blue.withOpacity(.1),
@@ -610,14 +666,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 25.0,
                   ),
                 ),
-                const Text('Game Two', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),)
+                const Text(
+                  'Game Two',
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),
+                )
               ],
             ),
           ),
-         Container(
+          Container(
             width: width / 4,
             child: Column(
-              children:  [
+              children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.blue.withOpacity(.1),
@@ -627,14 +687,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 25.0,
                   ),
                 ),
-                const Text('Game Three', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),)
+                const Text(
+                  'Game Three',
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),
+                )
               ],
             ),
           ),
-         Container(
+          Container(
             width: width / 4,
             child: Column(
-              children:  [
+              children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.blue.withOpacity(.1),
@@ -644,12 +708,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 25.0,
                   ),
                 ),
-                const Text('Game One', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),)
+                const Text(
+                  'Game One',
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500, height: 1.7),
+                )
               ],
             ),
           ),
-         
-           ],
+        ],
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../batch_details.dart';
-import '../layout.dart';
+import '../dashboard/layout.dart';
 
 
 class BatchList extends StatefulWidget {

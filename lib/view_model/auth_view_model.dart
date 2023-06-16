@@ -1,6 +1,3 @@
-
-
-import 'package:drona/view/registeration/choose%20_service.dart';
 import 'package:drona/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -14,23 +11,21 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel with ChangeNotifier {
-
   final _myRepo = UserRepository();
 
-  
-  bool _signUpLoading = false ;
-  bool get signUpLoading => _signUpLoading ;
+  bool _signUpLoading = false;
+  bool get signUpLoading => _signUpLoading;
   late int setupProgress = 0;
-  late bool setupFinish =false;
-  bool _loading = false ;
-  bool get loading => _loading ;
+  late bool setupFinish = true;
+  bool _loading = false;
+  bool get loading => _loading;
 
-  setLoading(bool value){
+  setLoading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  setSignUpLoading(bool value){
+  setSignUpLoading(bool value) {
     _signUpLoading = value;
     notifyListeners();
   }
@@ -38,115 +33,96 @@ class AuthViewModel with ChangeNotifier {
   Future<void> loginApi(dynamic data, save, BuildContext context) async {
     setLoading(true);
     _myRepo.academyRegistrationTrack().then((value) async {
-    print(value);
+      print(value);
       setLoading(false);
-      setupProgress  = value['onboarding_completed'];
+      setupProgress = value['onboarding_completed'];
       print("setupprogess is $setupProgress");
 
       setupFinish = value['onboarding_setup_finish'];
       print("setupfrinish is $setupFinish");
-    }
-    );
+    });
     _myRepo.loginApi(data).then((value) async {
       setLoading(false);
-      final userPreference = Provider.of<UserViewModel>(context , listen: false);
-      if(save == true){
-        userPreference.savecredential(SavecredentialModel(userid: data['userid'], password: data['password']));
+      final userPreference = Provider.of<UserViewModel>(context, listen: false);
+      if (save == true) {
+        userPreference.savecredential(SavecredentialModel(
+            userid: data['userid'], password: data['password']));
         final prefsData = await SharedPreferences.getInstance();
+        prefsData.setStringList("loginData", <String>[
+          value['Profiles'][0]['role'].toString(),
+          value['Profiles'][0]['name'].toString(),
+          value['Profiles'][0]['email'].toString(),
+          value['Profiles'][0]['academy_name'].toString(),
+        ]);
       }
-       userPreference.saveToken(UserModel(data: value['token'].toString()) );
-       userPreference.saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
-       Utils.flushBarErrorMessage('Login Successfully', context);
+      userPreference.saveToken(UserModel(data: value['token'].toString()));
+      userPreference
+          .saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
+      Utils.flushBarErrorMessage('Login Successfully', context);
 
-       print("value for academy is");
-       print(value['Profiles'][0]['role']);
-     if( setupFinish == false){
-     // if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
+      print("value for academy is");
+      print(value['Profiles'][0]['role']);
+      if (setupFinish == false) {
+        // if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
         //track registration and redirect
-        switch(setupProgress) {
+        switch (setupProgress) {
+          //
+          // case 0: {
+          //      Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+          //      break;
+          // }
 
-             case 0: { 
-                  Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-                  break;
-             }
-             /// otp screen
-                case 3 : {
+          case 3:
+            {
+              Navigator.pushNamed(context, RoutesName.chooseService);
+              break;
+            }
 
-                  Navigator.pushNamed(context, RoutesName.chooseService);
-                  break;
-                }
+          case 4:
+            {
+              Navigator.pushNamed(context, RoutesName.chooseFacility);
+              break;
+            }
 
+          case 5:
+            {
+              Navigator.pushNamed(context, RoutesName.ChooseProgram);
+              break;
+            }
 
-              case 4: { 
-                 Navigator.pushNamed(context, RoutesName.chooseFacility);
-                 break;
-              } 
+          case 6:
+            {
+              Navigator.pushNamed(context, RoutesName.detailFilled);
+              break;
+            }
 
-              case 5: { 
-                   Navigator.pushNamed(context, RoutesName.ChooseProgram);
-                   break;
-              } 
+          case 7:
+            {
+              Navigator.pushNamed(context, RoutesName.chooseService);
+              break;
+            }
 
-              case 6: { 
-                   Navigator.pushNamed(context, RoutesName.detailFilled);
-                   break;
-              }
-
-          case 7: {
-            Navigator.pushNamed(context, RoutesName.chooseService);
-            break;
-          }
-
-          default : {
-            print("default coming");
-            Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-            break;
-          }
-
-
-            } 
-  
-     }
-     else{
-       print("coming hereee");
-      userPreference.saveToken(
-                    UserModel(
-                      data: value['token'].toString()
-                    )
-                  );
+          // default : {
+          //   print("default coming");
+          //   Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+          //   break;
+          // }
+        }
+      } else {
+        print("coming hereee");
+        if (setupProgress == 0) {
+          userPreference.saveToken(UserModel(data: value['token'].toString()));
+          Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+        }
+        userPreference.saveToken(UserModel(data: value['token'].toString()));
         Navigator.pushNamed(context, RoutesName.layout);
-     }
-    }).onError((error, stackTrace){
+      }
+    }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
-      if(kDebugMode){
+      if (kDebugMode) {
         print(error.toString());
       }
-
     });
   }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

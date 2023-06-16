@@ -1,4 +1,4 @@
-import 'package:drona/view/layout.dart';
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';

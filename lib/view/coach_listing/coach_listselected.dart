@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
-import '../res/app_url.dart';
-import '../res/language/language.dart';
-import '../res/widget/round_button.dart';
-import '../view_model/batchList_view_model.dart';
-import '../view_model/coachlist_view_model.dart';
-import 'batch_listing/create_batch_listing.dart';
+import '../../res/app_url.dart';
+import '../../res/language/language.dart';
+import '../../res/widget/round_button.dart';
+import '../../view_model/batchList_view_model.dart';
+import '../../view_model/coachlist_view_model.dart';
+import '../batch_listing/create_batch_listing.dart';
 
 class CoachListSelected extends StatefulWidget {
   int Listindex ;

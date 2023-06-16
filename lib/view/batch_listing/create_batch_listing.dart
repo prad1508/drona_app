@@ -33,6 +33,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   String? _programUid;
   String? _programid;
   String? _programName;
+  String? _feesamount;
   ValueChanged<String?> _valueChangedHandler(value) {
     return (value) => setState(() => _programUid = value!);
   }
@@ -190,24 +191,26 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             builder: (context, value, child) {
                               activeServiceValue.clear();
                               activeServices.clear();
-                              for (var i = 0;
-                              i < value.dataList.data!.services!.length;
-                              i++) {
-                                if (value.dataList.data!.services![i].status
-                                    .toString() ==
-                                    'active') {
-                                  activeServiceValue.add(value
-                                      .dataList.data!.services![i].uid
-                                      .toString());
-                                  activeServices.add(DropdownMenuItem(
-                                      value: value.dataList.data!.services![i].uid
-                                          .toString(),
-                                      child: Text(value
-                                          .dataList.data!.services![i].serviceName
-                                          .toString())));
+                              if(value.dataList.data != null) {
+                                for (var i = 0; i <
+                                    value.dataList.data!.services!.length; i++) {
+                                  if (value.dataList.data!.services![i].status
+                                      .toString() ==
+                                      'active') {
+                                    activeServiceValue.add(value
+                                        .dataList.data!.services![i].uid
+                                        .toString());
+                                    activeServices.add(DropdownMenuItem(
+                                        value: value.dataList.data!.services![i]
+                                            .uid
+                                            .toString(),
+                                        child: Text(value
+                                            .dataList.data!.services![i]
+                                            .serviceName
+                                            .toString())));
+                                  }
                                 }
                               }
-
                               assignSeviceId(activeServiceValue[0]);
                               return DropdownButton(
                                   isExpanded: true,
@@ -253,8 +256,6 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     height: 15,
                   ),
 
-
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -272,7 +273,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                               CreateProfile(),
+                                  CreateProfile(),
                             ),
                           );
                         },
@@ -332,24 +333,30 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     create: (BuildContext context) => myProgramViewViewModel,
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
-                          _programid = value.dataList.data?.data![0].uid.toString();
-                          _programName = value
-                              .dataList.data?.data![0].programs![0].programName
-                              .toString();
-                          return
+                          if(value.dataList.data?.data != null) {
+                            _programid = value.dataList.data?.data![0].uid
+                                .toString();
+                            _programName = value.dataList.data?.data![0]
+                                .programs![0].programName.toString();
+                          }
+                          return    (value.dataList.data?.data != null)  ?
 
-                            Column(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: (value.dataList.data?.data![0].name ?? '')
+                                child: (value.dataList.data?.data![0]
+                                    .name ?? '')
                                     .isNotEmpty
                                     ? Text(
                                   'Program',
                                   style:
-                                  Theme.of(context).textTheme.bodyMedium,
+                                  Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodyMedium,
                                 )
                                 // 'What ${value.dataList.data?.data![0].name.toString()}',
 
@@ -373,41 +380,29 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
                                     itemCount: value.dataList.data?.data![0]
-                                        .programs?.length ??
-                                        0,
+                                        .programs?.length ?? 0,
                                     itemBuilder: (context, index) {
                                       return Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .start,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
                                         children: [
                                           value.dataList.data?.data![0]
                                               .programs![index].amount
-                                              .toString() ==
-                                              '0'
+                                              .toString() == '0'
                                               ? Container()
                                               : CustomRadio<String>(
                                             btnColor: Colors.black,
-                                            value: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs![index]
-                                                .uid
-                                                .toString() ??
-                                                '',
+                                            value: value.dataList.data
+                                                ?.data![0].programs![index]
+                                                .uid.toString() ?? '',
                                             groupValue: _programUid,
-                                            onChanged:
-                                            _valueChangedHandler(
+                                            onChanged: _valueChangedHandler(
                                                 _programName),
-                                            label: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs![index]
-                                                .programName
-                                                .toString() ??
+                                            label: value.dataList.data
+                                                ?.data![0].programs![index]
+                                                .programName.toString() ??
                                                 '',
                                           ),
                                           SizedBox(
@@ -419,7 +414,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               )
                                   : Container(),
                             ],
-                          );
+                          ) : Text('');
                         }),
                   ),
                   const SizedBox(
@@ -440,14 +435,24 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
 
-                            for (var fee in value.dataList.data?.data![0].programs! ?? []) {
-                              fee.amount;
+                            if(value.dataList.data != null) {
+                              for (int i = 0; i <
+                                  value.dataList.data!.data![0].programs!
+                                      .length; i++) {
+                                _feesamount = '';
+                                if (value.dataList.data!.data![0].programs?[i]
+                                    .uid == _programUid) {
+                                  _feesamount =
+                                      value.dataList.data!.data![0].programs?[i]
+                                          .amount;
+                                  break;
+                                }
+                              }
                             }
                             return TextFormField(
                               readOnly: true,
                               controller: fee
-                                ..text = value.dataList.data?.data![0].programs![0]
-                                    .amount.toString() ??
+                                ..text = _feesamount ??
                                     '0',
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(10),
@@ -863,7 +868,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "coach_profile_uid": profileUid,
                         "program_uid": _programid.toString(),
                         "program_name": _programName.toString(),
-                        "fees": fee.text,
+                        "fees": _feesamount,
                         "type_batch": _groupBatch.toString(),
                         "provide_online_sessions": onlineSession,
                         "online_session_url":

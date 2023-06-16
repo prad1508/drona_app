@@ -7,21 +7,21 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
-import '../utils/routes/routes_name.dart';
-import '../view_model/user_view_model.dart';
+import '../../utils/routes/routes_name.dart';
+import '../../view_model/user_view_model.dart';
 //import 'acedamy/academy_setting.dart';
-import 'batch_listing/batchlist_search.dart';
-import 'coach_listing/coach_view_profile.dart';
-import 'coach_listselected.dart';
-import 'profile/create_profile.dart';
-import 'session_listing/session_list.dart';
-import 'trainee_listing/trainee_listing.dart';
+import '../batch_listing/batchlist_search.dart';
+import '../coach_listing/coach_view_profile.dart';
+import '../coach_listing/coach_listselected.dart';
+import '../profile/create_profile.dart';
+import '../session_listing/session_list.dart';
+import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'trainne_addmanual.dart';
+import '../trainne_addmanual.dart';
 
 String fullname ='' ;
 String academicname ='' ;
-late List details ;
+ List details = [] ;
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
 

@@ -272,7 +272,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                       padding: const EdgeInsets.fromLTRB(
                                           25, 15, 25, 15)),
                                   child: Text(value.dataList.data
-                                      ?.data![widget.ListIndex].programName
+                                      ?.data![widget.ListIndex].batch_type
                                       .toString() ??
                                       ''),
                                 ),

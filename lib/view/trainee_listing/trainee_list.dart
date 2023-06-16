@@ -1,4 +1,4 @@
-import 'package:drona/view/layout.dart';
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +145,7 @@ class _TraineeNewListState extends State<TraineeNewList> {
                   const SizedBox(
                     height: 15,
                   ),
+
                   ChangeNotifierProvider<TraineeViewModel>(
                       create: (BuildContext context) => traineeViewModel,
                       child: Consumer<TraineeViewModel>(
