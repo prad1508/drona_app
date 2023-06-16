@@ -113,7 +113,7 @@ class _OtpPageState extends State<OtpPage> {
     var token = prefsData.getString('token');
     setState(() {
       token = token;
-      mobNumber = "${items![2]} ${items[3]}";
+      mobNumber = "${items?[3]}";
     });
   }
  //otp field merge

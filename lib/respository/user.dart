@@ -20,8 +20,13 @@ class UserRepository {
     try {
       dynamic response =
           await _apiServices.getGetApiResponse(AppUrl.academyRegistrationTrackEndPint);
+      print("academy api success");
+      /// call api my program check the status and then navigate according to the screen
+      // print(response);
       return response;
     } catch (e) {
+      print("academy api not success");
+      print(e);
       rethrow;
     }
   }

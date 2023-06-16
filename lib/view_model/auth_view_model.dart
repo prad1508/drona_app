@@ -38,9 +38,13 @@ class AuthViewModel with ChangeNotifier {
   Future<void> loginApi(dynamic data, save, BuildContext context) async {
     setLoading(true);
     _myRepo.academyRegistrationTrack().then((value) async {
+    print(value);
       setLoading(false);
       setupProgress  = value['onboarding_completed'];
+      print("setupprogess is $setupProgress");
+
       setupFinish = value['onboarding_setup_finish'];
+      print("setupfrinish is $setupFinish");
     }
     );
     _myRepo.loginApi(data).then((value) async {
@@ -51,39 +55,60 @@ class AuthViewModel with ChangeNotifier {
         final prefsData = await SharedPreferences.getInstance();
       }
        userPreference.saveToken(UserModel(data: value['token'].toString()) );
-      userPreference.saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
-      Utils.flushBarErrorMessage('Login Successfully', context);
+       userPreference.saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
+       Utils.flushBarErrorMessage('Login Successfully', context);
 
-     if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
+       print("value for academy is");
+       print(value['Profiles'][0]['role']);
+     if( setupFinish == false){
+     // if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
         //track registration and redirect
-        switch(setupProgress) { 
+        switch(setupProgress) {
+
              case 0: { 
                   Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-              } 
-              break;  
+                  break;
+             }
+             /// otp screen
+                case 3 : {
 
-               case 7: {
                   Navigator.pushNamed(context, RoutesName.chooseService);
-              } 
-              break;  
+                  break;
+                }
+
 
               case 4: { 
                  Navigator.pushNamed(context, RoutesName.chooseFacility);
+                 break;
               } 
-              break;   
+
               case 5: { 
                    Navigator.pushNamed(context, RoutesName.ChooseProgram);
+                   break;
               } 
-              break;    
+
               case 6: { 
                    Navigator.pushNamed(context, RoutesName.detailFilled);
-              } 
-              break; 
+                   break;
+              }
+
+          case 7: {
+            Navigator.pushNamed(context, RoutesName.chooseService);
+            break;
+          }
+
+          default : {
+            print("default coming");
+            Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+            break;
+          }
+
 
             } 
   
      }
      else{
+       print("coming hereee");
       userPreference.saveToken(
                     UserModel(
                       data: value['token'].toString()
@@ -104,3 +129,24 @@ class AuthViewModel with ChangeNotifier {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

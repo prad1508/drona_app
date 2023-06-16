@@ -82,10 +82,35 @@ class _RegistrationState extends State<Registration> {
                   const SizedBox(
                     height: 30,
                   ),
+
+
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      AppLocale.title7.getString(context),
+                      AppLocale.phoneNumber.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  AsyncTextFormField(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 500),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'eg. 9658992342',
+                      isValidatingMessage:
+                      'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                      'Enter a valid 10 digit mobile number'),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.title34.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -106,29 +131,10 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      AppLocale.phoneNumber.getString(context),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  AsyncTextFormField(
-                      controller: phone,
-                      validationDebounce: const Duration(milliseconds: 500),
-                      validator: Validation().isPhoneField,
-                      keyboardType: TextInputType.phone,
-                      hintText: 'eg. 9658992342',
-                      isValidatingMessage:
-                          'Enter a valid 10 digit mobile number',
-                      valueIsInvalidMessage:
-                          'Enter a valid 10 digit mobile number'),
+
+
+
+
                   const SizedBox(
                     height: 15,
                   ),

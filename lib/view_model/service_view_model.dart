@@ -18,10 +18,13 @@ class ServiceViewViewModel with ChangeNotifier {
   Future<void> fetchServiceListApi (data)async{
 
     setDataList(ApiResponse.loading());
+    print("service list api success");
     _myRepo.fetchServiceListApi(data).then((value){
       setDataList(ApiResponse.completed(value));
   
     }).onError((error, stackTrace){
+      print("service list api not success");
+      print(error.toString());
       setDataList(ApiResponse.error(error.toString()));
     });
   }

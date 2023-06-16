@@ -1,18 +1,12 @@
-import 'package:drona/model/savecredential_modal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
-import '../../res/language/language.dart';
-import '../../res/widget/custom_textfield.dart';
-import '../../res/widget/password_field.dart';
+
 import '../../res/widget/round_button.dart';
 import '/utils/routes/routes_name.dart';
 import '/utils/utils.dart';
 import '/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/text_styles.dart';
-// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
@@ -39,10 +33,8 @@ class _LoginViewState extends State<LoginView> {
 
     _emailController.dispose();
     _passwordController.dispose();
-
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
-
     _obsecurePassword.dispose();
   }
 
@@ -61,6 +53,7 @@ class _LoginViewState extends State<LoginView> {
       pass = items[1].toString();
     });
  }
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     final authViewMode = Provider.of<AuthViewModel>(context);
@@ -141,12 +134,22 @@ class _LoginViewState extends State<LoginView> {
                 height: 15,
               ),
               TextFormField(
-                obscureText: true,
+                obscureText: _obscureText,
                 controller: _passwordController..text = pass.toString()..selection = TextSelection(
                             baseOffset: pass.length,
                             extentOffset: pass.length),
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
                   hintText: '************',
                   hintStyle: TextStyle(fontSize: 12),
                   contentPadding: const EdgeInsets.all(10),
@@ -194,14 +197,14 @@ class _LoginViewState extends State<LoginView> {
                       Navigator.pushNamed(context, RoutesName.resetPassword);
                     },
                     child: Text(
-                      "Forget password?",
+                      "Forgot password?",
                       style: TextStyle(
                           fontSize: 14, color: Theme.of(context).primaryColor),
                     ),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 21.5,
               ),
               RoundButton(
@@ -224,7 +227,6 @@ class _LoginViewState extends State<LoginView> {
                       'userid': _emailController.text,
                       'password': _passwordController.text.toString(),
                     };
-
                     authViewMode.loginApi(data, value, context);
                   }
                 },

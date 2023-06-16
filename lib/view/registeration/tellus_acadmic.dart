@@ -59,7 +59,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.center,
                     child: Icon(
                       Icons.close_rounded,
@@ -117,11 +117,50 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
 //billig date dropdown
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "1", child: Text("1 of every month")),
-      const DropdownMenuItem(value: "5", child: Text("5 of every month")),
-      const DropdownMenuItem(value: "7", child: Text("7 of every month")),
-      const DropdownMenuItem(value: "10", child: Text("10 of every month")),
-      const DropdownMenuItem(value: "15", child: Text("15 of every month")),
+       DropdownMenuItem(
+        value: "1",
+        child: selectedValue =="1"?
+            const Text("1 of every month" ,style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500
+            ),) : Text("1 of every month")
+           // Add a check icon if selected
+
+      ),
+       DropdownMenuItem(
+           value: "5",
+           child: selectedValue == "5" ?
+            Text("5 of every month",style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500
+            ),) :Text("5 of every month")
+
+
+      ),
+       DropdownMenuItem(
+        value: "7",
+        child: selectedValue == "7" ?
+            Text("7 of every month" ,style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500
+            ),) :Text("7 of every month")
+      ),
+       DropdownMenuItem(
+        value: "10",
+        child: selectedValue =="10" ?
+        Text("10 of every month" ,style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500
+        ),):Text("10 of every month")
+      ),
+       DropdownMenuItem(
+        value: "15",
+        child: selectedValue == "15" ?
+        Text("15 of every month" ,style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500
+        ),) :Text("15 of every month")
+      ),
     ];
     return menuItems;
   }
@@ -190,6 +229,8 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                     const SizedBox(
                       height: 15,
                     ),
+
+
                     TextFormField(
                       controller: acadmicName,
                       keyboardType: TextInputType.name,
@@ -393,7 +434,8 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                             return DropdownMenuItem(
                                 value: value.dataList.data?.data?[index].uid
                                     .toString(),
-                                child: Text(value
+                                child:
+                                Text(value
                                         .dataList.data?.data?[index].name
                                         .toString() ??
                                     ''));
@@ -462,7 +504,10 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5)),
                       ),
-                      child: DropdownButton(
+                      child:
+
+
+                      DropdownButton(
                           isExpanded: true,
                           underline:
                               DropdownButtonHideUnderline(child: Container()),

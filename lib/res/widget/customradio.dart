@@ -24,7 +24,7 @@ class CustomRadio<T> extends StatelessWidget {
             color: isSelected ? btnColor.withOpacity(0.1) : Colors.black),
         borderRadius: const BorderRadius.all(
           Radius.circular(5)),
-        color: isSelected ? btnColor : Colors.white,
+        color: isSelected ? Colors.white : Colors.black,
       ),
       padding: const EdgeInsets.fromLTRB(32, 15, 32, 15),
       child: Column(
@@ -33,7 +33,8 @@ class CustomRadio<T> extends StatelessWidget {
           Text(
             label.toString(),
             style: TextStyle(
-                color: isSelected ? Colors.white : Colors.black, fontSize: 13),
+
+                 color: isSelected ? Colors.black : Colors.white, fontSize: 13),
           ),
         ],
       ),

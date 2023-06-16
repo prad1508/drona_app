@@ -50,11 +50,11 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
       },
       onChanged: (text) async {
         isDirty = true;
-        if (text.isEmpty) {
+        if (text.isEmpty || text.length < 10) {
           setState(() {
             isValid = false;
             if (kDebugMode) {
-              print('is empty');
+              print('is empty or length < 10');
             }
           });
           cancelTimer();
@@ -69,6 +69,27 @@ class _AsyncTextFormFieldState extends State<AsyncTextFormField> {
           isValidating = false;
         });
       },
+      // onChanged: (text) async {
+      //   isDirty = true;
+      //   if (text.isEmpty) {
+      //     setState(() {
+      //       isValid = false;
+      //       if (kDebugMode) {
+      //         print('is empty');
+      //       }
+      //     });
+      //     cancelTimer();
+      //     return;
+      //   }
+      //   isWaiting = true;
+      //   cancelTimer();
+      //   _debounce = Timer(widget.validationDebounce, () async {
+      //     isWaiting = false;
+      //     isValid = await validate(text);
+      //     setState(() {});
+      //     isValidating = false;
+      //   });
+      // },
       enabled: widget.enable,
       textAlign: TextAlign.start,
       controller: widget.controller,

@@ -54,4 +54,5 @@ class RoutesName {
   static const String chooseFacility = 'ChooseFacility_screen';
   static const String chooseprogram = 'chooseprogram_screen';
   static const String resetPassword = 'ResetPassword_screen';
+  static const String serviceOffering = 'serviceOffering_screen';
 }

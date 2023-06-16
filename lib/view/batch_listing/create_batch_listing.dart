@@ -171,32 +171,6 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Name',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: batchName,
-                    decoration: InputDecoration(
-                      hintText: 'eg. Cricket',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
                   const Align(
                       alignment: Alignment.topLeft, child: Text('Services')),
                   const SizedBox(
@@ -233,8 +207,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                           .toString())));
                                 }
                               }
-                              print("service id");
-                              print(activeServiceValue[0]);
+
                               assignSeviceId(activeServiceValue[0]);
                               return DropdownButton(
                                   isExpanded: true,
@@ -253,6 +226,35 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   const SizedBox(
                     height: 15,
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Batch Name',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: batchName,
+                    decoration: InputDecoration(
+                      hintText: 'eg. Cricket',
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+
+
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -292,8 +294,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
-                              print(
-                                  "object==${value.dataList.data!.coachlist.length}");
+
 
                               profileUid = value.dataList.data!.coachlist[0].uid
                                   .toString() ??
@@ -438,8 +439,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       create: (BuildContext context) => myProgramViewViewModel,
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
-                            print("amount is");
-                            // print(value.dataList.data?.data![0].programs![0].amount);
+
                             for (var fee in value.dataList.data?.data![0].programs! ?? []) {
                               fee.amount;
                             }
@@ -872,7 +872,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         "batch_timing_from": batchFrom.text,
                         "batch_timing_to": batchTo.text.toString()
                       };
-                      print("ddddddd");
+
                       print(data);
                       batch.fetchCreatebatchListApi(data, context);
                     },

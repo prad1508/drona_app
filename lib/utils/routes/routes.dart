@@ -13,6 +13,7 @@ import 'package:drona/view/batch_listing/trainee_add_options.dart';
 import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:flutter/material.dart';
+import '../../res/widget/Academy_Listing/service_offring_page.dart';
 import '../../view/language.dart';
 import '../../view/profile/batch_list.dart';
 import '../../view/profile/view_profile.dart';
@@ -44,6 +45,7 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const Layout(selectedIndex: 0,));
       case RoutesName.tellusAcadmic:
         return MaterialPageRoute(builder: (BuildContext context) => const TellusAcadmic());
+
         
       case RoutesName.language:
         return MaterialPageRoute(builder: (BuildContext context) => const Language());
