@@ -112,8 +112,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     children: <TextSpan>[
                       TextSpan(
                         text: value.dataList.data?.data![0].role!.toInt() == 0
-                            ? '2 steps'
-                            : '3 steps',
+                            ? '3 steps'
+                            : '2 steps',
                         style: const TextStyle(
                             decoration: TextDecoration.none,
                             color: Colors.white,
@@ -134,7 +134,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-                value.dataList.data?.data![0].role!.toInt() == 0
+                value.dataList.data?.data![0].role!.toInt() == 1
                     ? Column(children: [
                         CircleWidthtext(
                             numb: 1,
@@ -155,14 +155,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                 CircleWidthtext(
                     numb: value.dataList.data?.data![0].role!.toInt() == 0
-                        ? 2
-                        : 3,
+                        ? 3
+                        : 2,
                     label: AppLocale.title16.getString(context),
                     color: Colors.white),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                 ),
-                value.dataList.data?.data![0].role!.toInt() == 0
+                value.dataList.data?.data![0].role!.toInt() == 1
                     ? RoundButton(
                         loading: false,
                         title: AppLocale.addBatch.getString(context),

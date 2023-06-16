@@ -138,11 +138,11 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                 AppLocale.title31.getString(context),
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
-                              // Text(
-                              //   value.dataList.data?.serviceName.toString() ??
-                              //       '',
-                              //   style: Theme.of(context).textTheme.titleLarge,
-                              // )
+                              Text(
+                                value.dataList.data?.serviceName.toString() ??
+                                    '',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              )
                             ],
                           )
                           :

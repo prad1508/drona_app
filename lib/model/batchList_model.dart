@@ -110,7 +110,7 @@ class Data {
     cmm = json['cmm'];
     cyy = json['cyy'];
     status = json['status'];
-    batch_type = json['batch_type'];
+    batch_type = json['type_batch'];
     batchTimingFrom = json['batch_timing_from'];
     batchTimingTo = json['batch_timing_to'];
     onlineSessionUrl = json['online_session_url'];
@@ -131,7 +131,7 @@ class Data {
     data['cat_uid'] = this.catUid;
     data['batch_name'] = this.batchName;
     data['timestamp'] = this.timestamp;
-    data['batch_type'] = this.batch_type;
+    data['type_batch'] = this.batch_type;
     data['cDate'] = this.cDate;
     data['cTime'] = this.cTime;
     data['program_uid'] = this.programUid;

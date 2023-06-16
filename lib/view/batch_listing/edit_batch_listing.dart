@@ -1,12 +1,8 @@
-import 'dart:developer';
-
-import 'package:drona/view/batch_listing/coach_profile_add.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import 'dart:math';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
@@ -15,9 +11,8 @@ import '../../view_model/batchList_view_model.dart';
 import '../../view_model/batch_view_model.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
-import '../../view_model/myservices_view_model.dart';
 import '../profile/create_profile.dart';
-import '../trainne_addmanual.dart';
+
 
 class EditBatchListing extends StatefulWidget {
   int Listindex;
@@ -538,10 +533,20 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'Fee',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Fee',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                 TextButton(
+                                 onPressed: () {             _openModal(context);
+                                 }, child: Text("Edit Fees",style: TextStyle(
+                                  color: Colors.blue,)))
+                              ],
+                            )
+
                           ),
                           const SizedBox(
                             height: 10,
@@ -556,7 +561,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                         []) {
                                       fee.amount;
                                     }
-                                    return TextFormField(
+                                    return
+
+                                      TextFormField(
                                       readOnly: true,
                                       controller: fee..text = fee.text ?? '0',
                                       decoration: InputDecoration(
@@ -964,6 +971,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
               );
             })));
   }
+
+  void _openModal(BuildContext context) {}
 }
 
 

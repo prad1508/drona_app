@@ -309,7 +309,7 @@ class _MainMenuState extends State<MainMenu> {
                           const Padding(
                             padding: EdgeInsets.only(left: 20),
                             child: Text(
-                              'Attendance',
+                              'Members',
                               style: TextStyle(
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w500,
@@ -318,6 +318,16 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                   CoachListSelected(),
+                                ),
+                              );
+                            },
+
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -325,18 +335,15 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image: AssetImage(
-                                        'assets/images/matchbatch.png'),
+                                        'assets/images/coach.png'),
                                     width: 15,
                                   ),
                                 )),
                             title: const Text(
-                              'Mark by batch',
+                              'Coach',
                             ),
-                            trailing: IconButton(
-                              onPressed: (() {}),
-                              icon: const Icon(Icons.arrow_forward_ios),
-                              iconSize: 20,
-                            ),
+                            trailing: Icon(Icons.arrow_forward_ios, size: 20),
+
                           ),
                           ListTile(
                             onTap: () {
@@ -355,12 +362,12 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image: AssetImage(
-                                        'assets/images/matchtrinee.png'),
-                                    width: 18,
+                                        'assets/images/user.png'),
+                                    width: 15,
                                   ),
                                 )),
                             title: const Text(
-                              'Mark by traniee',
+                              'Trainee',
                             ),
                             trailing: Icon(Icons.arrow_forward_ios, size: 20),
                           ),
