@@ -63,6 +63,7 @@ class AuthViewModel with ChangeNotifier {
       print("value for academy is");
       print(value['Profiles'][0]['role']);
       if (value['Profiles'][0]['role'] == 1 && setupFinish == false) {
+        print("coming");
         // if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
         //track registration and redirect
         switch (setupProgress) {

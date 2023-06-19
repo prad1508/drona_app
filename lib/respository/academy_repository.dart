@@ -17,4 +17,16 @@ class AcademyRepository {
     }
   }
 
+  Future<AcademyListModel> fetchEditAcademyListApi(dynamic data)async{
+    try{
+      dynamic response = await _apiServices.getPutApiResponseWithData(AppUrl.academyRegistrationTrackEndPint , data);
+      return response = AcademyListModel.fromJson(response);
+
+    }catch(e){
+      rethrow ;
+    }
+  }
+
+
+
 }

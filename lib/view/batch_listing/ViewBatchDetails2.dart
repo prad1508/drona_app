@@ -355,7 +355,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Online session Url',
+                      'Online Session Url',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

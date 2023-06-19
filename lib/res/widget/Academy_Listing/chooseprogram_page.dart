@@ -692,7 +692,9 @@ class _ChooseProgramPageState extends State<ChooseProgramPage> {
                                           Icons.arrow_drop_down,
                                           color: Colors.black,
                                         ),
-                                        children: <Widget>[
+                                        children:
+                                        <Widget>[
+
                                           //Beginner
                                           const SizedBox(
                                             height: 10,

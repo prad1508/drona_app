@@ -43,5 +43,10 @@ class AppUrl {
   // dashboard
   static var dashBoardHome = "$baseUrl/academy/dashboard";
 
+  // academy
+  static var academydetails = "$baseUrl/academy/academy";
+
+
+
 
 }

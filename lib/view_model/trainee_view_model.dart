@@ -39,11 +39,11 @@ class TraineeViewModel with ChangeNotifier {
     }).onError((error, stackTrace) {
       setLoading(false);
       print("api  not success");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => const TraineeNewList()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (BuildContext context) => const TraineeNewList()),
+      // );
 
       Utils.flushBarErrorMessage(error.toString(), context);
     });

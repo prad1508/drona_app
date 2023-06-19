@@ -19,7 +19,7 @@ int data1=0;
 enum Status { sheduled, close, cancel }
 
 class _SessionListState extends State<SessionList>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin  {
   SessionViewViewModel sessionViewModel = SessionViewViewModel();
   //multi language support
   Map<String, dynamic> data = {"filter_batch_uid": "", "search": ""};
@@ -59,9 +59,10 @@ class _SessionListState extends State<SessionList>
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
-     _foundUsers = _allUsers;
+    print("build in it ");
+     // _foundUsers = _allUsers;
      sessionViewModel.fetchSessionListSearchApi(data);
-    super.initState();
+      super.initState();
 
 
     _controller = TabController(length: 4, vsync: this);
@@ -91,7 +92,8 @@ class _SessionListState extends State<SessionList>
 
   @override
   Widget build(BuildContext context) {
-
+    // sessionViewModel.fetchSessionListSearchApi(data);
+    print("build in ");
      // sessionViewModel.fetchSessionListSearchApi(data);
     final width = MediaQuery.of(context).size.width;
     return
@@ -302,11 +304,6 @@ class _SessionListState extends State<SessionList>
                                       create: (BuildContext context) => sessionViewModel,
                                       child: Consumer<SessionViewViewModel>(
                                       builder: (context, value, _) {
-                                              print("abcd");
-                                              print(value.dataList.data?.data?.length);
-                                              print(value.dataList.data!.data?[0].batch_name);
-                                              print(value.dataList.data!.data?[0].status);
-                                              print(value.dataList.data!.data?[0].program_name);
                                         return
                                             Expanded(
                                               child: ListView.builder(
@@ -590,14 +587,10 @@ class _SessionListState extends State<SessionList>
                                         children: [],
                                       ),
 
-
-
                                       ChangeNotifierProvider<SessionViewViewModel>(
                                           create: (BuildContext context) => sessionViewModel,
                                           child: Consumer<SessionViewViewModel>(
                                               builder: (context, value, _) {
-
-
                                                 return  Expanded(
                                                     child: ListView.builder(
                                                       itemCount: value.dataList.data?.data?.length,

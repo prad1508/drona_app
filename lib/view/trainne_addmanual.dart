@@ -49,8 +49,10 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
       debugShowCheckedModeBanner: false,
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
+
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        resizeToAvoidBottomInset : false ,
         appBar: AppBar(
           leading: Row(
             children: [
@@ -417,3 +419,6 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
     );
   }
 }
+
+
+

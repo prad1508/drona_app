@@ -5,6 +5,8 @@ class AcademyListModel {
   String? academyname;
   String? address;
   String? city;
+  String? email;
+  String? website;
   String? state;
   String? pincode;
   String? billingDate;
@@ -35,6 +37,8 @@ class AcademyListModel {
       this.totalOnboardingStep,
       this.onboardingSetupFinish,
       this.cDate,
+      this.email = 'demo',
+      this.website = 'demo',
       this.cTime,
       this.uDate,
       this.uTime,
@@ -47,6 +51,8 @@ class AcademyListModel {
     academyname = json['academyname'];
     address = json['address'];
     city = json['city'];
+    email = json['email'];
+    website = json['website'];
     state = json['state'];
     pincode = json['pincode'];
     billingDate = json['billing_date'];
@@ -74,6 +80,8 @@ class AcademyListModel {
     data['academy_uid'] = this.academyUid;
     data['academyname'] = this.academyname;
     data['address'] = this.address;
+    data['email'] = this.email;
+    data['website'] = this.website;
     data['city'] = this.city;
     data['state'] = this.state;
     data['pincode'] = this.pincode;

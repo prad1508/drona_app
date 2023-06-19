@@ -98,7 +98,8 @@ class _LayoutState extends State<Layout> {
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: Scaffold(
-          body: Center(
+        resizeToAvoidBottomInset : false ,
+        body: Center(
             child: pages[pageIndex],
           ),
           floatingActionButton: CircleAvatar(
@@ -255,11 +256,11 @@ class _LayoutState extends State<Layout> {
               ),
               pageIndex == 3
                   ? const Text(
-                      'Members',
+                      'Trainees',
                       style: TextStyle(height: .5, fontSize: 12),
                     )
                   : const Text(
-                      'Members',
+                      'Trainees',
                       style: TextStyle(
                           height: .5,
                           color: Color.fromARGB(255, 153, 160, 171),

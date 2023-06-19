@@ -6,6 +6,8 @@ import 'dart:async';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
+import '../../utils/utils.dart';
+import '../../utils/validation.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/batch_view_model.dart';
@@ -28,6 +30,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
+
   //custom radio
   // custum radio call in seprate page
   String? _programUid;
@@ -39,6 +42,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
   }
 
   String? _groupBatch = 'Group';
+
   ValueChanged<String?> _valueChangedBatch() {
     return (value) => setState(() => _groupBatch = value!);
   }
@@ -54,7 +58,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
   final TextEditingController batchTo = TextEditingController();
   final TextEditingController batchFrom = TextEditingController();
   final TextEditingController fee = TextEditingController();
+  final TextEditingController editfee = TextEditingController();
   final TextEditingController onlineUrl = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
 
   Future<bool> isValidPasscode(String value) async {
     return await Future.delayed(const Duration(seconds: 1),
@@ -98,6 +104,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -121,6 +128,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
   String batchTodata = '';
   List activeServiceValue = [];
   List<DropdownMenuItem<String>> activeServices = [];
+
   selectTimeFrom() async {
     var timepick = await showTimePicker(
       context: context,
@@ -152,8 +160,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
         localizationsDelegates: _localization.localizationsDelegates,
         home: ChangeNotifierProvider<BatchListViewViewModel>(
             create: (BuildContext context) => batchListViewViewModel,
-            child:
-            Consumer<BatchListViewViewModel>(builder: (context, value, _) {
+            child: Consumer<BatchListViewViewModel>(builder: (context, value, _) {
               if (!isInitialized) {
                 assignSeviceId(
                     value.dataList.data!.data![widget.Listindex].serviceUid);
@@ -177,6 +184,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                     .dataList.data!.data![widget.Listindex].batchTimingFrom
                     .toString();
                 fee.text = value.dataList.data!.data![widget.Listindex].fees
+                    .toString();
+                editfee.text = value.dataList.data!.data![widget.Listindex].fees
                     .toString();
                 onlineUrl.text = value
                     .dataList.data!.data![widget.Listindex].onlineSessionUrl
@@ -232,7 +241,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                   value.dataList.data?.data![widget.Listindex].serviceName;
 
               return Scaffold(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor,
                 appBar: AppBar(
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -240,7 +251,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                   ),
                   title: Text(
                     'Edit Batch',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyLarge,
                   ),
                   centerTitle: true,
                   backgroundColor: Colors.white,
@@ -259,7 +273,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Batch Name',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -273,7 +290,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
                                 ),
                               ),
                             ),
@@ -295,7 +314,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
                                 ),
                               ),
                             ),
@@ -308,7 +329,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             children: [
                               Text(
                                 'Assign Coach',
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodyMedium,
                               ),
                               TextButton(
                                 child: const Text(
@@ -345,7 +369,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                 child: Consumer<CoachlistViewViewModel>(
                                     builder: (context, value, child) {
                                       print(
-                                          "object==${value.dataList.data!.coachlist.length}");
+                                          "object==${value.dataList.data!
+                                              .coachlist.length}");
 
                                       // profileUid =selected;
                                       List<DropdownMenuItem<String>>
@@ -396,13 +421,15 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             child: Consumer<MyProgramViewViewModel>(
                                 builder: (context, value, _) {
                                   _programid =
-                                      value.dataList.data?.data![0].uid.toString();
+                                      value.dataList.data?.data![0].uid
+                                          .toString();
                                   _programName = value.dataList.data?.data![0]
                                       .programs![0].programName
                                       .toString();
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
                                     children: [
                                       Align(
                                         alignment: Alignment.topLeft,
@@ -412,7 +439,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                             .isNotEmpty
                                             ? Text(
                                           'Program',
-                                          style: Theme.of(context)
+                                          style: Theme
+                                              .of(context)
                                               .textTheme
                                               .bodyMedium,
                                         )
@@ -532,25 +560,31 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           // ),
 
                           Align(
-                            alignment: Alignment.topLeft,
-                            child:Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Fee',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                 TextButton(
-                                 onPressed: () {             _openModal(context);
-                                 }, child: Text("Edit Fees",style: TextStyle(
-                                  color: Colors.blue,)))
-                              ],
-                            )
+                              alignment: Alignment.topLeft,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Text(
+                                    'Fee',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodyMedium,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        _openModal(context);
+                                      },
+                                      child: Text("Edit Fees", style: TextStyle(
+                                        color: Colors.blue,)))
+                                ],
+                              )
 
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
                           ChangeNotifierProvider<MyProgramViewViewModel>(
                               create: (BuildContext context) =>
                               myProgramViewViewModel,
@@ -564,18 +598,22 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                     return
 
                                       TextFormField(
-                                      readOnly: true,
-                                      controller: fee..text = fee.text ?? '0',
-                                      decoration: InputDecoration(
-                                        contentPadding: const EdgeInsets.all(10),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                          borderSide: BorderSide(
-                                            color: Theme.of(context).primaryColor,
+                                        readOnly: true,
+                                        controller: fee..text = fee.text ?? '0',
+                                        decoration: InputDecoration(
+                                          contentPadding: const EdgeInsets.all(
+                                              10),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                5.0),
+                                            borderSide: BorderSide(
+                                              color: Theme
+                                                  .of(context)
+                                                  .primaryColor,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
+                                      );
                                   })),
                           const SizedBox(
                             height: 15,
@@ -584,7 +622,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Type of Batch',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -615,7 +656,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           Row(children: <Widget>[
                             Checkbox(
                               checkColor: Colors.white,
-                              activeColor: Theme.of(context).primaryColor,
+                              activeColor: Theme
+                                  .of(context)
+                                  .primaryColor,
                               value: value1,
                               onChanged: (value) {
                                 setState(() {
@@ -635,7 +678,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               children: [
                                 Text(
                                   'Provide Online Sessions',
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodyMedium,
                                 ),
                               ],
                             )
@@ -646,8 +692,11 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Online session Url',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              'Online Session Url',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -666,7 +715,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
                                 ),
                               ),
                             ),
@@ -678,7 +729,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Batch Days',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -838,7 +892,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Batch Timing',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -848,7 +905,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.4,
                                 child: TextFormField(
                                   controller: batchFrom
                                     ..text = batchFromdata.toString(),
@@ -864,7 +924,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme
+                                            .of(context)
+                                            .primaryColor,
                                       ),
                                     ),
                                   ),
@@ -872,7 +934,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.4,
                                 child: TextFormField(
                                   readOnly: true,
                                   controller: batchTo
@@ -885,7 +950,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme
+                                            .of(context)
+                                            .primaryColor,
                                       ),
                                     ),
                                   ),
@@ -903,7 +970,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             title: 'Save',
                             textColor: Colors.white,
                             rounded: true,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
                             onPress: () {
                               /* Map<String, dynamic> data = {
                                 'batch_uid': value
@@ -937,25 +1006,37 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               };*/
                               Map<String, dynamic> data = {
                                 "batch_uid": "${value
-                                    .dataList.data!.data?[widget.Listindex].uid}",
+                                    .dataList.data!.data?[widget.Listindex]
+                                    .uid}",
                                 "batch_name": batchName.text.isEmpty ? value
-                                    .dataList.data!.data![widget.Listindex].batchName : batchName.text,
-                                "coach_profile_uid":profileUid,
-                                "program_uid":"${value.dataList.data!
+                                    .dataList.data!.data![widget.Listindex]
+                                    .batchName : batchName.text,
+                                "coach_profile_uid": profileUid,
+                                "program_uid": "${value.dataList.data!
                                     .data?[widget.Listindex].programUid}",
-                                "program_name":"${value.dataList.data!
+                                "program_name": "${value.dataList.data!
                                     .data?[widget.Listindex].programName}",
-                                "fees":fee.text.isEmpty ?    value
-                                    .dataList.data!.data![widget.Listindex].fees : fee.text,
-                                "type_batch": _groupBatch.toString() == "" ?  value
-                                    .dataList.data!.data![widget.Listindex].batch_type : _groupBatch.toString(),
-                                "provide_online_sessions":false,
-                                "online_session_url": onlineSession ? onlineUrl.text : "n/a",
-                                "batch_days":batchDays,
-                                "batch_timing_from":batchFrom.text.isEmpty ? value
-                                    .dataList.data!.data![widget.Listindex].batchTimingFrom : batchFrom.text,
-                                "batch_timing_to":batchTo.text.isEmpty ? value
-                                    .dataList.data!.data![widget.Listindex].batchTimingTo : batchTo.text
+                                "fees": fee.text.isEmpty
+                                    ? value
+                                    .dataList.data!.data![widget.Listindex].fees
+                                    : fee.text,
+                                "type_batch": _groupBatch.toString() == ""
+                                    ? value
+                                    .dataList.data!.data![widget.Listindex]
+                                    .batch_type
+                                    : _groupBatch.toString(),
+                                "provide_online_sessions": false,
+                                "online_session_url": onlineSession ? onlineUrl
+                                    .text : "n/a",
+                                "batch_days": batchDays,
+                                "batch_timing_from": batchFrom.text.isEmpty
+                                    ? value
+                                    .dataList.data!.data![widget.Listindex]
+                                    .batchTimingFrom
+                                    : batchFrom.text,
+                                "batch_timing_to": batchTo.text.isEmpty ? value
+                                    .dataList.data!.data![widget.Listindex]
+                                    .batchTimingTo : batchTo.text
                               };
 
                               print("data is");
@@ -972,7 +1053,72 @@ class _EditBatchListingState extends State<EditBatchListing> {
             })));
   }
 
-  void _openModal(BuildContext context) {}
+  void _openModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: editfee,
+                  decoration: InputDecoration(
+                    hintText: "Enter Fees",
+                    contentPadding: const EdgeInsets.all(10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: BorderSide(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Dismiss the modal
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                          String enteredText = _textEditingController.text;
+                          if(editfee.text.isEmpty || int.parse(editfee.text) <=0)
+                            {
+                              Utils.flushBarErrorMessage("Please enter valid fees", context);
+                            }
+                          else
+                            {
+                              fee.text = editfee.text;
+                              Navigator.of(context).pop();
+                            }
+
+                        },
+                        child: Text('OK'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
-
-

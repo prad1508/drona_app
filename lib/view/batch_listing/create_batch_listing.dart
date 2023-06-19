@@ -149,6 +149,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       home: Scaffold(
+
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(
@@ -531,7 +532,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Online session Url',
+                      'Online Session Url',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -706,7 +707,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Batch Timing',
+                      'Batch Timings',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

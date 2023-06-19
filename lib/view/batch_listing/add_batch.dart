@@ -373,7 +373,7 @@ class _AddBatchState extends State<AddBatch> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Online session Url',
+                      'Online Session Url',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

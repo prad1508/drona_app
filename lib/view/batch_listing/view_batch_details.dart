@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:drona/data/response/status.dart';
 import 'package:drona/utils/no_data.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../res/widget/round_button.dart';
 import '../../view_model/batchList_view_model.dart';
+import '../../view_model/trainee_view_model.dart';
 import '../trainne_addmanual.dart';
 import 'edit_batch_listing.dart';
 
@@ -21,9 +24,12 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+  TraineeViewModel traineeViewModel = TraineeViewModel();
+  Map<String, dynamic> data = {"filter_batch_uid": "", "search": ""};
   @override
   initState() {
     super.initState();
+    traineeViewModel.fetchTraineeListSearchApi(data);
     batchListViewViewModel.fetchBatchListListApi();
   }
 
@@ -73,7 +79,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          EditBatchListing(Listindex : widget.ListIndex),
+                          EditBatchListing(Listindex: widget.ListIndex),
                     ),
                   );
                 },
@@ -272,7 +278,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                       padding: const EdgeInsets.fromLTRB(
                                           25, 15, 25, 15)),
                                   child: Text(value.dataList.data
-                                      ?.data![widget.ListIndex].programName
+                                      ?.data![widget.ListIndex].batch_type
                                       .toString() ??
                                       ''),
                                 ),
@@ -286,7 +292,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Online session Url',
+                                  'Online Session Url',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
@@ -351,7 +357,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                 .batchDaysShort![index] ??
                                                 ''),
                                           ),
-                                          const SizedBox(
+                                          SizedBox(
                                             width: 10,
                                           )
                                         ],
@@ -395,188 +401,261 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               const SizedBox(
                                 height: 15,
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              //Trainee List View
                               Row(
-                                children: [
+                                children: const [
                                   Text(
-                                    'Trainee List',
-                                    style: Theme.of(context).textTheme.bodyMedium,
+                                    "Trainee List",
+                                    style: TextStyle(
+                                        fontSize: 15, fontWeight: FontWeight.w700),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: Container(
-                                      height: 25,
-                                      width: 25,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade400,
-                                          borderRadius: BorderRadius.circular(80)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '06',
-                                          style: Theme.of(context).textTheme.bodyMedium,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Padding(padding: EdgeInsets.only(left: 10)),
+                                  Text(
+                                    "06",
+                                    style: TextStyle(
+                                        fontSize: 10, fontWeight: FontWeight.w400),
+                                  )
                                 ],
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              ListView.separated(
-                                itemCount: 2,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 115,
-                                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey.shade100,
-                                        borderRadius:
-                                        const BorderRadius.all(Radius.circular(10.0))),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Padding(
-                                                padding:
-                                                const EdgeInsets.only(top: 0, left: 20),
-                                                child: Container(
-                                                    padding: const EdgeInsets.all(5),
-                                                    decoration: const BoxDecoration(
-                                                        color: Colors.white,
-                                                        shape: BoxShape.circle
-                                                    ),
-                                                    child: const Icon(Icons.person, size: 35,))
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      bottom: 1, left: 20),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.green.shade700,
-                                                        borderRadius: BorderRadius.circular(5)),
-                                                    child: const Text(
-                                                      "Active",
-                                                      style: TextStyle(color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
+                              SizedBox(height: 20),
+                              //List
 
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 10),
-                                              child: Text(
-                                                "Riyaz mohammad",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                            ),
-                                            const Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 5),
-                                              child: Text("Male | 34 Year"),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 15),
-                                              child: Text(
-                                                "Tennis Batch",
-                                                style:
-                                                Theme.of(context).textTheme.bodyMedium,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "Fee :",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                  ),
-                                                  const Text("₹10,000"),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.only(),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.green.shade100,
-                                                      borderRadius: BorderRadius.circular(5)),
-                                                  child: const Text(
-                                                    "Onboarded",
-                                                    style: TextStyle(color: Colors.green),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 55,
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(right: 10),
-                                                  child: CircleAvatar(
-                                                      backgroundImage:
-                                                      AssetImage("assets/images/Golf.png")),
-                                                ),
-                                              ],
-                                            ),
-                                            const Padding(
-                                              padding: EdgeInsets.only(top: 15, right: 10),
-                                              child: Text("03:00 PM to 05:30 PM"),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 10, right: 10),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    " Due :",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                  ),
-                                                  const Text("₹30,000"),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        )
+
+          ChangeNotifierProvider<TraineeViewModel>(
+          create: (BuildContext context) => traineeViewModel,
+          child: Consumer<TraineeViewModel>(
+          builder: (context, value, _) {
+
+                   return
+
+
+                                      SizedBox(
+                                      height: 113,
+                                      child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                      Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                      SizedBox(
+                                      width: 41,
+                                      height: 46,
+                                      child: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                      'assets/images/user_profile.png')),
+                                      ),
+                                      Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Container(
+                                      width: 44,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                      color: Color(0xff47C088),
+                                      borderRadius:
+                                      BorderRadius.circular(4)),
+                                      child: Center(
+                                      child: Text(
+                                      "Active",
+                                      style: TextStyle(
+                                      color: Color(0xffFBFBFC),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w600),
+                                      ),
+                                      ),
+                                      ),
+                                      ),
                                       ],
-                                    ),
-                                  );
-                                },
-                                separatorBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    color: Colors.grey,
-                                    height: 1,
-                                  );
-                                },
-                              ),
-                              const SizedBox(
-                                height: 45,
-                              ),
+                                      ),
+                                      Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                      Row(
+                                      children: [
+                                      Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 15.0),
+                                      child: Text(
+                                      "Riyaz Mohammed",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700),
+                                      ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Container(
+                                      width: 67,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                      color: Color(0xffEDF9F3),
+                                      borderRadius:
+                                      BorderRadius.circular(4)),
+                                      child: Center(
+                                      child: Text(
+                                      "Onboarded",
+                                      style: TextStyle(
+                                      color: Color(0xff47C088),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      ),
+                                      ),
+                                      Align(
+                                      alignment: Alignment.centerRight,
+                                      widthFactor: 4.5,
+                                      child: SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                      'assets/images/tennis.png'),
+                                      backgroundColor: Colors.white,
+                                      ),
+                                      ),
+                                      ),
+                                      ],
+                                      ),
+                                      SizedBox(height: 1),
+                                      Row(
+                                      children: const [
+                                      Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 15.0),
+                                      child: Text(
+                                      "Male ",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      ),
+                                      Text(
+                                      "|",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(
+                                      " 34 Year",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      )
+                                      ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                      children: const [
+                                      Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 15.0),
+                                      child: Text(
+                                      "Tennis Batch Evening",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700),
+                                      ),
+
+                                      ),
+                                      Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Text(
+                                      "03:00 PM to 05:30 PM",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      ),
+
+
+
+                                      ],
+                                      ),
+                                      SizedBox(height: 5),
+
+                                      SizedBox(height: 5),
+                                      Container(
+                                      width: 300,
+                                      child: Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                      children: [
+                                      Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                      Text(
+                                      "Fee : ",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      fontWeight:
+                                      FontWeight.w700),
+                                      ),
+                                      Text(
+                                      "₹15,000",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight:
+                                      FontWeight.w400),
+                                      ),
+                                      ],
+                                      ),
+
+                                      Row(
+
+                                      children: const [
+                                      Text(
+                                      "Due : ",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                      "₹30,000",
+                                      style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      ],
+                                      )
+                                      ],
+                                      ),
+                                      ),
+                                      )
+                                      ],
+                                      ),
+                                      ],
+                                      ),
+                                      );
+
+                       
+
+
+          })),
+
+
+                              //
                               RoundButton(
                                   loading: false,
                                   title: 'Add Trainee',
@@ -622,7 +701,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                             MainAxisAlignment.center,
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
-                                              const SizedBox(
+                                              SizedBox(
                                                 height: 15,
                                               ),
                                               Align(
@@ -633,13 +712,13 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                     child: Text(
                                                         'Add Trainee In ${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}'),
                                                   )),
-                                              const SizedBox(
+                                              SizedBox(
                                                 height: 10,
                                               ),
-                                              const Divider(
+                                              Divider(
                                                 thickness: 2,
                                               ),
-                                              const SizedBox(
+                                              SizedBox(
                                                 height: 15,
                                               ),
                                               Align(
@@ -674,7 +753,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                 .textTheme
                                                                 .bodyMedium,
                                                           )))),
-                                              const SizedBox(
+                                              SizedBox(
                                                 height: 15,
                                               ),
                                               Align(
@@ -715,7 +794,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                     color: Theme.of(context).primaryColorDark,
                                     size: 100.0,
                                   ),
-                                  const NoData()
+                                  NoData()
                                   // Text(
                                   //   value.dataList.message.toString(),
                                   //   style: TextStyle(

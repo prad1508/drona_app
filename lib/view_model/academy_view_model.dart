@@ -22,4 +22,16 @@ class AcademyViewViewModel with ChangeNotifier {
       setDataList(ApiResponse.error(error.toString()));
     });
   }
+
+  Future<void> fetchEditAcademy(dynamic data)async{
+    setDataList(ApiResponse.loading());
+
+    _myRepo.fetchEditAcademyListApi(data).then((value){
+
+      setDataList(ApiResponse.completed(value));
+
+    }).onError((error, stackTrace){
+      setDataList(ApiResponse.error(error.toString()));
+    });
+  }
 }
