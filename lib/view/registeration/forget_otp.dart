@@ -150,7 +150,7 @@ class _ForgetOtpState extends State<ForgetOtp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppLocale.title8.getString(context),
+                      Text(AppLocale.title35.getString(context),
                           style: const TextStyle(
                               color: Color.fromARGB(255, 81, 81, 81),
                               fontSize: 16,

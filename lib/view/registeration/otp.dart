@@ -198,11 +198,11 @@ class _OtpPageState extends State<OtpPage> {
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              showExitPopup(context);
-            },
+          leading:  IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black), onPressed: () {
+            Navigator.of(context).pop();
+          },
+
           ),
           title: Row(
             children: [

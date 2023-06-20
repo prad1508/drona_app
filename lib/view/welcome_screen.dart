@@ -12,7 +12,8 @@ import 'batch_listing/create_batch_listing.dart';
 import 'profile/create_profile.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  String Owner;
+    WelcomeScreen({this.Owner="",super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -21,16 +22,25 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   MyprofiViewViewModel myprofiViewViewModel = MyprofiViewViewModel();
   AcademyViewViewModel pacademyViewViewModel = AcademyViewViewModel();
+  String role ='';
   @override
   initState() {
     // TODO: implement initState
+    getrole();
     super.initState();
     myprofiViewViewModel.fetchMyprofiListApi();
     pacademyViewViewModel.fetchAcademyListApi();
   }
 
+  Future<void> getrole()
+  async {
+    final prefsData = await SharedPreferences.getInstance();
+     role = prefsData.getString('role')!;
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Material(
         child: Container(
       decoration: const BoxDecoration(
@@ -111,7 +121,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         fontWeight: FontWeight.w400),
                     children: <TextSpan>[
                       TextSpan(
-                        text: value.dataList.data?.data![0].role!.toInt() == 0
+                        text: role == '0'
                             ? '3 steps'
                             : '2 steps',
                         style: const TextStyle(
@@ -134,7 +144,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-                value.dataList.data?.data![0].role!.toInt() == 1
+                role == '1'
                     ? Column(children: [
                         CircleWidthtext(
                             numb: 1,
@@ -154,7 +164,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ],
                       ),
                 CircleWidthtext(
-                    numb: value.dataList.data?.data![0].role!.toInt() == 0
+                    numb: role =='0'
                         ? 3
                         : 2,
                     label: AppLocale.title16.getString(context),
@@ -162,7 +172,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                 ),
-                value.dataList.data?.data![0].role!.toInt() == 1
+                role == '1'
                     ? RoundButton(
                         loading: false,
                         title: AppLocale.addBatch.getString(context),

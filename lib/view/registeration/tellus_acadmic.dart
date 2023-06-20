@@ -119,47 +119,87 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
     List<DropdownMenuItem<String>> menuItems = [
        DropdownMenuItem(
         value: "1",
-        child: selectedValue =="1"?
-            const Text("1 of every month" ,style: TextStyle(
-                color: Colors.black,
+        child: selectedValue =="1" && payDate !=true ?
+             const Text("1 of every month" ,style: TextStyle(
+                color: Colors.grey,
                 fontWeight: FontWeight.w500
-            ),) : Text("1 of every month")
+            ),) : payDate == true && selectedValue =="1" ? Container(
+          color:Theme.of(context).hoverColor,
+          width: double.maxFinite,
+          height: 25,
+              child: const Text("1 of every month" ,style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500
+        )),
+            )  :  const Text("1 of every month")
            // Add a check icon if selected
 
       ),
        DropdownMenuItem(
            value: "5",
-           child: selectedValue == "5" ?
-            Text("5 of every month",style: TextStyle(
-              color: Colors.black,
+           child: selectedValue == "5" && payDate != true ?
+            const Text("5 of every month",style: TextStyle(
+              color: Colors.grey,
               fontWeight: FontWeight.w500
-            ),) :Text("5 of every month")
+            ),) :  payDate == true &&  selectedValue == "5" ? Container(
+             color:Theme.of(context).hoverColor,
+             width: double.maxFinite,
+             height: 25,
+              child: const Text("5 of every month" ,style: TextStyle(
+                 color: Colors.black,
+                 fontWeight: FontWeight.w500
+           )),
+            ) :  const Text("5 of every month")
 
 
       ),
        DropdownMenuItem(
         value: "7",
-        child: selectedValue == "7" ?
-            Text("7 of every month" ,style: TextStyle(
-                color: Colors.black,
+        child: selectedValue == "7" && payDate != true ?
+            const Text("7 of every month" ,style: TextStyle(
+                color: Colors.grey,
                 fontWeight: FontWeight.w500
-            ),) :Text("7 of every month")
+            ),) :  payDate == true && selectedValue == "7" ? Container(
+          color:Theme.of(context).hoverColor,
+          width: double.maxFinite,
+          height: 25,
+              child: const Text("7 of every month" ,style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500
+        )),
+            ) :Text("7 of every month")
       ),
        DropdownMenuItem(
         value: "10",
-        child: selectedValue =="10" ?
+        child: selectedValue =="10" && payDate != true  ?
         Text("10 of every month" ,style: TextStyle(
-            color: Colors.black,
+            color: Colors.grey,
             fontWeight: FontWeight.w500
-        ),):Text("10 of every month")
+        ),):  payDate == true && selectedValue =="10"? Container(
+          color:Theme.of(context).hoverColor,
+          width: double.maxFinite,
+          height: 25,
+          child: const Text("10 of every month" ,style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500
+          )),
+        ) :Text("10 of every month")
       ),
        DropdownMenuItem(
         value: "15",
-        child: selectedValue == "15" ?
+        child: selectedValue == "15"  && payDate != true ?
         Text("15 of every month" ,style: TextStyle(
-            color: Colors.black,
+            color: Colors.grey,
             fontWeight: FontWeight.w500
-        ),) :Text("15 of every month")
+        ),) :  payDate == true && selectedValue == "15"?  Container(
+          color:Theme.of(context).hoverColor,
+          width: double.maxFinite,
+          height: 25,
+          child: Text("15 of every month" ,style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500
+          )),
+        ) : Text("15 of every month")
       ),
     ];
     return menuItems;
@@ -373,6 +413,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                       height: 15,
                     ),
                     TextFormField(
+
                       controller: state
                         ..text = stateAssign.toString()
                         ..selection = TextSelection(
@@ -516,6 +557,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                               ? (String? newValue) {
                                   setState(() {
                                     selectedValue = newValue!;
+                                    payDate = false;
                                   });
                                 }
                               : null,

@@ -16,7 +16,7 @@ class AuthViewModel with ChangeNotifier {
   bool _signUpLoading = false;
   bool get signUpLoading => _signUpLoading;
   late int setupProgress = 0;
-  late bool setupFinish = true;
+  late bool setupFinish = false;
   bool _loading = false;
   bool get loading => _loading;
 
@@ -35,10 +35,10 @@ class AuthViewModel with ChangeNotifier {
     _myRepo.academyRegistrationTrack().then((value) async {
       print(value);
       setLoading(false);
-      setupProgress = value['onboarding_completed'];
+      setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0 ;
       print("setupprogess is $setupProgress");
 
-      setupFinish = value['onboarding_setup_finish'];
+      setupFinish = value['onboarding_setup_finish'] != null ?  value['onboarding_setup_finish'] : false ;
       print("setupfrinish is $setupFinish");
     });
     _myRepo.loginApi(data).then((value) async {
@@ -67,11 +67,11 @@ class AuthViewModel with ChangeNotifier {
         // if( value['Profiles'][0]['role'] == 0 && setupFinish == false){
         //track registration and redirect
         switch (setupProgress) {
-          //
-          // case 0: {
-          //      Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-          //      break;
-          // }
+
+          case 0: {
+            Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+               break;
+           }
 
           case 3:
             {
@@ -82,6 +82,7 @@ class AuthViewModel with ChangeNotifier {
           case 4:
             {
               Navigator.pushNamed(context, RoutesName.chooseFacility);
+
               break;
             }
 
@@ -96,27 +97,57 @@ class AuthViewModel with ChangeNotifier {
               Navigator.pushNamed(context, RoutesName.detailFilled);
               break;
             }
-
-          case 7:
-            {
-              Navigator.pushNamed(context, RoutesName.chooseService);
-              break;
-            }
-
-          // default : {
-          //   print("default coming");
-          //   Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-          //   break;
-          // }
         }
-      } else {
+      } else if(value['Profiles'][0]['role'] == 0 && setupFinish == false)
+        {
+          print("2nd part");
+           switch(setupProgress)
+           {
+             case 0: {
+               Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+               break;
+             }
+             case 3:
+               {
+                 Navigator.pushNamed(context, RoutesName.chooseService);
+                 break;
+               }
+
+             case 4:
+               {
+                 Navigator.pushNamed(context, RoutesName.chooseFacility);
+                 break;
+               }
+
+             case 5:
+               {
+                 Navigator.pushNamed(context, RoutesName.ChooseProgram);
+                 break;
+               }
+
+             // case 6:
+             //   {
+             //     Navigator.pushNamed(context, RoutesName.detailFilled);
+             //     break;
+             //   }
+
+           }
+        }
+
+
+
+      else {
         print("coming hereee");
-        if (setupProgress == 0) {
+        if (setupProgress == 0 && setupFinish==false) {
           userPreference.saveToken(UserModel(data: value['token'].toString()));
           Navigator.pushNamed(context, RoutesName.tellusAcadmic);
         }
-        userPreference.saveToken(UserModel(data: value['token'].toString()));
-        Navigator.pushNamed(context, RoutesName.layout);
+        else
+          {
+            userPreference.saveToken(UserModel(data: value['token'].toString()));
+            Navigator.pushNamed(context, RoutesName.layout);
+          }
+
       }
     }).onError((error, stackTrace) {
       setLoading(false);

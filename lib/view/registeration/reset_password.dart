@@ -87,7 +87,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
-                        if(phone.text.toString().length == 10)
+                        if(phone.text.trim().toString().length == 10)
                          {
                            Map<String, String> data = {
                           "mobno": phone.text.toString(),
@@ -95,7 +95,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         registration.forgetPassword(data, context);
                          }
                          else{
-                           Utils.flushBarErrorMessage('Password shoud be 10 latter', context);
+                           Utils.flushBarErrorMessage('Invalid mobile number. Must be 10 digits.', context);
                          }
                       }),
 

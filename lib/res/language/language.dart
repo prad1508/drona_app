@@ -102,6 +102,7 @@ mixin AppLocale {
   static const String title32 = 'title32';
   static const String title33 = 'title33';
   static const String title34 = 'title34';
+  static const String title35 = 'title35';
 
   static const Map<String, dynamic> en = {
     title: 'Localization',
@@ -131,6 +132,7 @@ mixin AppLocale {
     condions: 'Conditions',
     enterOtp: 'Enter OTP',
     title8: 'A 4 digit code has been sent to',
+    title35: 'A 6 digit code has been sent to',
     title9: 'Didn’t Receive OTP?',
     resendOtp: 'Resend OTP',
     title10: 'Tell Us About Academy',
@@ -235,6 +237,7 @@ mixin AppLocale {
     condions: 'शर्तें लागू',
     enterOtp: 'ओटीपी दर्ज करें',
     title8: 'एक 4 अंकों का कोड भेजा गया है',
+    title35: 'एक 6 अंकों का कोड भेजा गया है',
     title9: 'ओटीपी नहीं मिला?',
     resendOtp: 'ओटीपी पुनः भेजें',
     title10: 'अकादमी के बारे में हमें बताएं',

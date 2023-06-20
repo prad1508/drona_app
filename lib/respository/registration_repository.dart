@@ -100,8 +100,10 @@ class RegistrationRepository {
     try {
       dynamic response =
           await _apiServices.getPostWithoutApiResponse(AppUrl.resetotpVerify, data);
+      print("reset password otp successfull");
       return response;
     } catch (e) {
+      print("reset password otp not successfull $e");
       rethrow;
     }
   } 

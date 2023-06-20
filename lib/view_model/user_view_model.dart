@@ -61,6 +61,7 @@ class UserViewModel with ChangeNotifier {
   Future<bool> remove(context) async {
     //remove token to server and local
     final SharedPreferences sp = await SharedPreferences.getInstance();
+      // Clears all the data in SharedPreferences
     _myRepo.fetchUserListApi().then((value) {
       Utils.flushBarErrorMessage('Login Successfully', context);
       sp.remove('token');

@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/dashboard/layout.dart';
 import '../view/registeration/choose_program.dart';
 import '../view/registeration/detail_filled.dart';
 import '../view/registeration/forget_otp.dart';
@@ -168,12 +169,24 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage('Program update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.detailFilled);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const DetailFilled(),
-        ),
-      );
+      /// check role 1st
+      final prefsData = await SharedPreferences.getInstance();
+      String? role = prefsData.getString('role');
+      print("checking role , $role");
+      if(role == '0')
+        {
+          Navigator.pushNamed(context, RoutesName.welcomeScreen);
+        }
+      else
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const DetailFilled(),
+            ),
+          );
+        }
+
     }).onError((error, stackTrace) {
       setLoading(false);
 

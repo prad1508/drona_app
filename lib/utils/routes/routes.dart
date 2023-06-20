@@ -68,7 +68,7 @@ class Routes {
             builder: (BuildContext context) => const DetailFilled());
       case RoutesName.WelcomeScreen:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const WelcomeScreen());
+            builder: (BuildContext context) =>  WelcomeScreen());
       case RoutesName.CreateProfile:
         return MaterialPageRoute(
             builder: (BuildContext context) =>  CreateProfile());
@@ -132,7 +132,7 @@ class Routes {
         // case RoutesName.detailFilled:
         return MaterialPageRoute(builder: (BuildContext context) => const DetailFilled());
       case RoutesName.welcomeScreen:
-        return MaterialPageRoute(builder: (BuildContext context) => const WelcomeScreen());
+        return MaterialPageRoute(builder: (BuildContext context) =>  WelcomeScreen());
       case RoutesName.createProfile:
         return MaterialPageRoute(builder: (BuildContext context) =>  CreateProfile());
     // case RoutesName.coachListSelected:
