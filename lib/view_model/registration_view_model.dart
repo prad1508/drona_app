@@ -181,7 +181,12 @@ class RegistrationViewModel with ChangeNotifier {
       print("checking role , $role");
       if(role == '0')
         {
-          Navigator.pushNamed(context, RoutesName.welcomeScreen);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) =>  WelcomeScreen(),
+            ),
+          );
         }
       else
         {
