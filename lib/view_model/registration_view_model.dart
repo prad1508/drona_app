@@ -63,6 +63,7 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.fetchRegistrationListApi(data).then((value) async {
       setLoading(false);
       final prefs = await SharedPreferences.getInstance();
+      prefs.setString(value['data']['role'],'role');
       prefs.setStringList('registerResponse', <String>[
         value['data']['name'],
         value['data']['email'],
@@ -154,6 +155,7 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.facilityePostListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage('Facilty Sved Successfully', context);
+
       Navigator.pushNamed(context, RoutesName.chooseprogram);
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -163,15 +165,19 @@ class RegistrationViewModel with ChangeNotifier {
 
 //////////////program Save ////////////////////////////////////
   Future<void> programPost(dynamic data, BuildContext context) async {
+
     setLoading(true);
     setUid(uid);
     _myRepo.programPostListApi(data).then((value) async {
+      String role ='';
       setLoading(false);
       Utils.flushBarErrorMessage('Program update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.detailFilled);
       /// check role 1st
       final prefsData = await SharedPreferences.getInstance();
-      String? role = prefsData.getString('role');
+      List<String>? items = prefsData.getStringList('registerResponse');
+      role = items![4];
+
       print("checking role , $role");
       if(role == '0')
         {
@@ -202,8 +208,14 @@ class RegistrationViewModel with ChangeNotifier {
     setUid(uid);
     _myRepo.detailsOwnerPostListApi(data).then((value) async {
       setLoading(false);
+      // Navigator.pushNamed(context, RoutesName.welcomeScreen);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) =>  WelcomeScreen(),
+        ),
+      );
       Utils.flushBarErrorMessage(value['msg'], context);
-      Navigator.pushNamed(context, RoutesName.welcomeScreen);
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -216,6 +228,7 @@ class RegistrationViewModel with ChangeNotifier {
     setUid(uid);
     _myRepo.forgetPasswordListApi(data).then((value) async {
       setLoading(false);
+      print("forget password api success");
       Utils.flushBarErrorMessage(value['msg'], context);
       setMobno(value['data']['mobno']);
       Navigator.push(
@@ -225,6 +238,7 @@ class RegistrationViewModel with ChangeNotifier {
         ),
       );
     }).onError((error, stackTrace) {
+      print("forget password api not success");
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
     });
@@ -241,6 +255,7 @@ class RegistrationViewModel with ChangeNotifier {
       final userPreference = Provider.of<UserViewModel>(context, listen: false);
       userPreference.saveToken(UserModel(data: value['prtoken'].toString()));
       Utils.flushBarErrorMessage(value['msg'], context);
+
       Navigator.push(
         context,
         MaterialPageRoute(

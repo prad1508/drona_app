@@ -19,11 +19,13 @@ import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../trainne_addmanual.dart';
 
-String fullname ='' ;
-String academicname ='' ;
- List details = [] ;
+String academicname = '';
+String fullname = '';
+List details = [] ;
 class MainMenu extends StatefulWidget {
-  const MainMenu({super.key});
+  final String? name;
+  final String? academyName;
+  const MainMenu({super.key, this.name, this.academyName});
 
   @override
   State<MainMenu> createState() => _MainMenuState();
@@ -36,19 +38,21 @@ class _MainMenuState extends State<MainMenu> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
+
   @override
   initState() {
     getData();
     super.initState();
   }
+
   getData() async {
     final prefs = await SharedPreferences.getInstance();
-   details = prefs.getStringList('registerResponse')!;
-   fullname = details[0];
-   academicname = prefs.getString('acadmicName')!;
+    details = prefs.getStringList('registerResponse')!;
+    fullname = details[0];
+    academicname = prefs.getString('acadmicName')!;
 
-   print("full name is ${details[0]}");
-   print("number is ${details[3]}");
+    print("full name is ${details[0]}");
+    print("number is ${details[3]}");
   }
 
   @override
@@ -104,12 +108,12 @@ class _MainMenuState extends State<MainMenu> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
-                                   Column(
+                                  Column(
                                     children: [
                                       Text(
-                                        academicname,
+                                        widget.academyName.toString(),
                                         style: const TextStyle(
                                           color: Colors.blue,
                                           fontStyle: FontStyle.normal,
@@ -187,7 +191,7 @@ class _MainMenuState extends State<MainMenu> {
                     leading: const Image(
                         image: AssetImage('assets/images/user_profile.png')),
                     title:  Text(
-                      fullname.toString(),
+                      widget.name.toString(),
                     ),
                     trailing: IconButton(
                       onPressed: (() {
@@ -195,7 +199,7 @@ class _MainMenuState extends State<MainMenu> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                            ViewProfileDetails(),
+                                ViewProfileDetails(),
                           ),
                         );
                       }),
@@ -235,8 +239,8 @@ class _MainMenuState extends State<MainMenu> {
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       SearchBatchList(
-                                    pathPage: '',
-                                  ),
+                                        pathPage: '',
+                                      ),
                                 ),
                               );
                             },
@@ -265,7 +269,7 @@ class _MainMenuState extends State<MainMenu> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SessionList(),
+                                  const SessionList(),
                                 ),
                               );
                             },
@@ -323,7 +327,7 @@ class _MainMenuState extends State<MainMenu> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                   CoachListSelected(),
+                                      CoachListSelected(),
                                 ),
                               );
                             },
@@ -351,7 +355,7 @@ class _MainMenuState extends State<MainMenu> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const Trainee_Listing(),
+                                  const Trainee_Listing(),
                                 ),
                               );
                             },
@@ -421,7 +425,7 @@ class _MainMenuState extends State<MainMenu> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const Coach_Listing()),
+                                      const Coach_Listing()),
                                 );
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
@@ -436,7 +440,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                        AssetImage('assets/images/rupee.png'),
+                                    AssetImage('assets/images/rupee.png'),
                                     width: 10,
                                   ),
                                 )),
@@ -515,7 +519,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                        AssetImage('assets/images/finance.png'),
+                                    AssetImage('assets/images/finance.png'),
                                     width: 20,
                                   ),
                                 )),
@@ -548,7 +552,7 @@ class _MainMenuState extends State<MainMenu> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const academy_setting(),
+                                    const academy_setting(),
                                   ),
                                 );
                               }),
@@ -614,7 +618,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                       image:
-                                          AssetImage('assets/images/info.png')),
+                                      AssetImage('assets/images/info.png')),
                                 )),
                             title: const Text(
                               'About',

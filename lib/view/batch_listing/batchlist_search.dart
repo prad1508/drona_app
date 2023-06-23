@@ -281,7 +281,6 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 //   height: 15,
                 // ),
 
-
                 ChangeNotifierProvider<BatchListViewViewModel>(
                     create: (BuildContext context) => batchListViewViewModel,
                     child: Consumer<BatchListViewViewModel>(

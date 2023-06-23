@@ -77,10 +77,12 @@ class RegistrationRepository {
   //details for owner
   Future<dynamic> detailsOwnerPostListApi(dynamic data) async {
     try {
+      print("details owner post api success");
       dynamic response =
           await _apiServices.getPostApiResponse(AppUrl.detailsOwnerListEndPoint, data);
       return response;
     } catch (e) {
+      print("details owner post api not success");
       rethrow;
     }
   }  

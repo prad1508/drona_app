@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   DashBoardViewViewModel dashBoardViewViewModel = DashBoardViewViewModel();
   String academicname = '';
   late ScrollController _scrollController;
+  late Future<List> futureList;
 
   static const kExpandedHeight = 100.0;
   //multi language support
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getData();
+    futureList = getData();
     dashBoardViewViewModel.fetchDashBoardListApi();
     _scrollController = ScrollController()
       ..addListener(() {
@@ -38,15 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
       });
   }
 
-  getData() async {
+  Future<List> getData() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String>? items = prefs.getStringList('loginData')!;
-
+    String? items = prefs.getString('acadmicName')!;
+    details = prefs.getStringList('registerResponse')!;
+    fullname = details[0];
+    academicname = prefs.getString('acadmicName')!;
     setState(() {
-      academicname = items[3].toString();
+      academicname = items;
     });
-
     print("academicname is $academicname");
+    return [fullname, academicname];
   }
 
   @override
@@ -63,34 +67,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 centerTitle: false,
                 toolbarHeight: 90,
                 backgroundColor: Colors.white,
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      academicname.toString(),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Power by ",
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color.fromARGB(255, 121, 121, 121)),
-                        ),
-                        Image(
-                          image: AssetImage('assets/images/drona2.png'),
-                          width: 50,
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                title: FutureBuilder<List>(
+                    future: futureList,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        fullname = snapshot.data![0];
+                        academicname = snapshot.data![1];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.data![1],
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  "Powered by ",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color.fromARGB(255, 121, 121, 121)),
+                                ),
+                                Image(
+                                  image: AssetImage('assets/images/drona2.png'),
+                                  width: 50,
+                                )
+                              ],
+                            )
+                          ],
+                        );
+                      } else {
+                        return const Text('');
+                      }
+                    }),
                 elevation: 0,
                 actions: [
                   Container(
@@ -148,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const MainMenu(),
+                                              MainMenu(name: fullname, academyName: academicname,),
                                         ),
                                       );
                                     },
@@ -189,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       onTap: () {
@@ -197,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                const Trainee_Listing(),
+                                            const Trainee_Listing(),
                                           ),
                                         );
                                       },
@@ -209,8 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           count: value.dataList.data!.totalTrainee.toString(),
                                           line: value.dataList.data!.totalTrainee.toDouble()),
                                     ),
-                                     DashboardCard(
-                                        color: Color.fromARGB(255, 7, 3, 244),
+                                    DashboardCard(
+                                        color: const Color.fromARGB(255, 7, 3, 244),
                                         icon: Icons.currency_rupee_outlined,
                                         title: 'Fee Paid',
                                         subtitle: '${value.dataList.data!.feeDue.toString()} Members Due',
@@ -223,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children:  [
                                     DashboardCard(
                                         color: Colors.green,
@@ -233,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         count: value.dataList.data!.todayAttendancePercentage.toString(),
                                         line: value.dataList.data!.todayAttendancePercentage.toDouble()),
                                     DashboardCard(
-                                        color: Color.fromARGB(255, 8, 174, 229),
+                                        color: const Color.fromARGB(255, 8, 174, 229),
                                         icon: Icons
                                             .account_balance_wallet_outlined,
                                         title: 'Collection (M)',
@@ -247,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text(
                                       "Academy Batches & Sessions",
@@ -269,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         'Add +',
                                         style: TextStyle(
                                             color:
-                                                Color.fromRGBO(42, 98, 184, 1),
+                                            Color.fromRGBO(42, 98, 184, 1),
                                             height: 1),
                                       ),
                                     ),
@@ -311,24 +325,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           case Status.error:
                             return Center(
                                 child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.error_outline,
-                                  color: Theme.of(context).primaryColorDark,
-                                  size: 100.0,
-                                ),
-                                NoData()
-                                // Text(
-                                //   value.dataList.message.toString(),
-                                //   style: TextStyle(
-                                //       color: Theme.of(context).primaryColor,
-                                //       fontSize: 20,
-                                //       height: 2),
-                                // )
-                              ],
-                            ));
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Theme.of(context).primaryColorDark,
+                                      size: 100.0,
+                                    ),
+                                    const NoData()
+                                    // Text(
+                                    //   value.dataList.message.toString(),
+                                    //   style: TextStyle(
+                                    //       color: Theme.of(context).primaryColor,
+                                    //       fontSize: 20,
+                                    //       height: 2),
+                                    // )
+                                  ],
+                                ));
                         }
                       },
                     ),
@@ -349,275 +363,275 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {},
               child: Center(
                   child: Container(
-                width: width * .9,
-                height: 200,
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  color: const Color.fromARGB(255, 253, 253, 253),
-                  elevation: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Tennis Batch',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 18, 1, 58),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
+                    width: width * .9,
+                    height: 200,
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: const Color.fromARGB(255, 253, 253, 253),
+                      elevation: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Tennis Batch',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromARGB(255, 18, 1, 58),
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor:
                                   Color.fromARGB(255, 217, 217, 217),
-                              child: Image(
-                                  image:
+                                  child: Image(
+                                      image:
                                       AssetImage('assets/images/tennis.png')),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Chip(
+                                label: const Text(
+                                  'Beginner',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                backgroundColor: Colors.green.withOpacity(0.2),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text('5 Students',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Loto-Regular',
+                                      height: 1)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('23 Jan, 2023',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                Text('06:00 PM to 07:00 PM',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1))
+                              ],
                             ),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Chip(
-                            label: const Text(
-                              'Beginner',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            backgroundColor: Colors.green.withOpacity(0.2),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('5 Students',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Loto-Regular',
-                                  height: 1)),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('23 Jan, 2023',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            Text('06:00 PM to 07:00 PM',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1))
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ))),
+                  ))),
           InkWell(
               onTap: () {},
               child: Center(
                   child: Container(
-                width: width * .9,
-                height: 200,
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  color: const Color.fromARGB(255, 253, 253, 253),
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Tennis Batch',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 18, 1, 58),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
+                    width: width * .9,
+                    height: 200,
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: const Color.fromARGB(255, 253, 253, 253),
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Tennis Batch',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromARGB(255, 18, 1, 58),
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor:
                                   Color.fromARGB(255, 217, 217, 217),
-                              child: Image(
-                                  image:
+                                  child: Image(
+                                      image:
                                       AssetImage('assets/images/tennis.png')),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Chip(
+                                label: const Text(
+                                  'Beginner',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                backgroundColor: Colors.green.withOpacity(0.2),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text('5 Students',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Loto-Regular',
+                                      height: 1)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('23 Jan, 2023',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                Text('06:00 PM to 07:00 PM',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1))
+                              ],
                             ),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Chip(
-                            label: const Text(
-                              'Beginner',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            backgroundColor: Colors.green.withOpacity(0.2),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('5 Students',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Loto-Regular',
-                                  height: 1)),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('23 Jan, 2023',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            Text('06:00 PM to 07:00 PM',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1))
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ))),
+                  ))),
           InkWell(
               onTap: () {},
               child: Center(
                   child: Container(
-                width: width * .9,
-                height: 200,
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  color: const Color.fromARGB(255, 253, 253, 253),
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Tennis Batch',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 18, 1, 58),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor:
+                    width: width * .9,
+                    height: 200,
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: const Color.fromARGB(255, 253, 253, 253),
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Tennis Batch',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromARGB(255, 18, 1, 58),
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor:
                                   Color.fromARGB(255, 217, 217, 217),
-                              child: Image(
-                                  image:
+                                  child: Image(
+                                      image:
                                       AssetImage('assets/images/tennis.png')),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Chip(
+                                label: const Text(
+                                  'Beginner',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                backgroundColor: Colors.green.withOpacity(0.2),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text('5 Students',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Loto-Regular',
+                                      height: 1)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('23 Jan, 2023',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1)),
+                                Text('06:00 PM to 07:00 PM',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color.fromRGBO(98, 109, 126, 1),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Loto-Regular',
+                                        height: 1))
+                              ],
                             ),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Chip(
-                            label: const Text(
-                              'Beginner',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            backgroundColor: Colors.green.withOpacity(0.2),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('5 Students',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Loto-Regular',
-                                  height: 1)),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('23 Jan, 2023',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1)),
-                            Text('06:00 PM to 07:00 PM',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(98, 109, 126, 1),
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Loto-Regular',
-                                    height: 1))
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ))),
+                  ))),
         ],
       ),
     );

@@ -103,6 +103,7 @@ mixin AppLocale {
   static const String title33 = 'title33';
   static const String title34 = 'title34';
   static const String title35 = 'title35';
+  static const String title36= 'title36';
 
   static const Map<String, dynamic> en = {
     title: 'Localization',
@@ -203,11 +204,12 @@ mixin AppLocale {
     pincode: 'Pin Code',
     dob: 'Date Of Birth',
     addBatch: 'Add Batch',
-    title31: 'Choose Your Program ',
+    title31: 'Choose Your Program',
     surface: 'Surface',
     title32: 'Choose Your Business Category',
     title33: 'Service Which S/He Trains',
     title34: 'Full Name',
+    title36: 'Choose Your Facility For',
   };
   static const Map<String, dynamic> hi = {
     title: 'स्थानीयकरण',

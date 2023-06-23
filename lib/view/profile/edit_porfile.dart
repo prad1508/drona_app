@@ -322,7 +322,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   AsyncTextFormField(
                       controller: phone,
-                      validationDebounce: const Duration(milliseconds: 500),
+                      validationDebounce: const Duration(milliseconds: 100),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9876521233',
@@ -346,7 +346,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   AsyncTextFormField(
                       controller: alternatephone,
-                      validationDebounce: const Duration(milliseconds: 500),
+                      validationDebounce: const Duration(milliseconds: 100),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9876521233',

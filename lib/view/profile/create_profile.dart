@@ -291,7 +291,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   ),
                   AsyncTextFormField(
                       controller: phone,
-                      validationDebounce: const Duration(milliseconds: 500),
+                      validationDebounce: const Duration(milliseconds: 100),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9876521233',

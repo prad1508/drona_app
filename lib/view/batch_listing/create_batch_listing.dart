@@ -1,12 +1,9 @@
-import 'dart:developer';
 
-import 'package:drona/view/batch_listing/coach_profile_add.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import 'dart:math';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
@@ -14,9 +11,7 @@ import '../../view_model/academy_view_model.dart';
 import '../../view_model/batch_view_model.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
-import '../../view_model/myservices_view_model.dart';
 import '../profile/create_profile.dart';
-import '../trainne_addmanual.dart';
 
 class CreateBatchListing extends StatefulWidget {
   const CreateBatchListing({super.key});
@@ -28,17 +23,21 @@ class CreateBatchListing extends StatefulWidget {
 class _CreateBatchListingState extends State<CreateBatchListing> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
+  List<DropdownMenuItem<String>>? _dropdownItem;
+
   //custom radio
   // custum radio call in seprate page
   String? _programUid;
   String? _programid;
   String? _programName;
   String? _feesamount;
+
   ValueChanged<String?> _valueChangedHandler(value) {
     return (value) => setState(() => _programUid = value!);
   }
 
   String? _groupBatch = 'group';
+
   ValueChanged<String?> _valueChangedBatch() {
     return (value) => setState(() => _groupBatch = value!);
   }
@@ -59,18 +58,18 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
 
   List<DropdownMenuItem<String>> get dropdownCategory {
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(child: Text("Tennis"), value: "Tennis"),
-      const DropdownMenuItem(child: Text("Golf"), value: "golf"),
-      const DropdownMenuItem(child: Text("Cricket"), value: "cricket"),
+      const DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
+      const DropdownMenuItem(value: "golf", child: Text("Golf")),
+      const DropdownMenuItem(value: "cricket", child: Text("Cricket")),
     ];
     return menuItems;
   }
 
   List<DropdownMenuItem<String>> get dropdownAssignCoach {
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(child: Text("John"), value: "john"),
-      const DropdownMenuItem(child: Text("Anil"), value: "anil"),
-      const DropdownMenuItem(child: Text("Ravi"), value: "ravi"),
+      const DropdownMenuItem(value: "john", child: Text("John")),
+      const DropdownMenuItem(value: "anil", child: Text("Anil")),
+      const DropdownMenuItem(value: "ravi", child: Text("Ravi")),
     ];
     return menuItems;
   }
@@ -93,6 +92,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   BatchViewViewModel batchViewViewModel = BatchViewViewModel();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -115,6 +115,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   String batchTodata = '';
   List activeServiceValue = [];
   List<DropdownMenuItem<String>> activeServices = [];
+
   selectTimeFrom() async {
     var timepick = await showTimePicker(
       context: context,
@@ -136,20 +137,25 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   }
 
   String? selectedService;
+  var _refresh = false;
+
   assignSeviceId(selectedvalue) {
-    myProgramViewViewModel.fetchMyProgramListApi(selectedService);
+    if (_refresh == true) {
+      myProgramViewViewModel.fetchMyProgramListApi(selectedService);
+    }
     selectedService = selectedService;
+    _refresh = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
     final batch = Provider.of<BatchViewViewModel>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
       home: Scaffold(
-
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(
@@ -192,9 +198,10 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             builder: (context, value, child) {
                               activeServiceValue.clear();
                               activeServices.clear();
-                              if(value.dataList.data != null) {
-                                for (var i = 0; i <
-                                    value.dataList.data!.services!.length; i++) {
+                              if (value.dataList.data != null) {
+                                for (var i = 0;
+                                i < value.dataList.data!.services!.length;
+                                i++) {
                                   if (value.dataList.data!.services![i].status
                                       .toString() ==
                                       'active') {
@@ -202,17 +209,17 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                         .dataList.data!.services![i].uid
                                         .toString());
                                     activeServices.add(DropdownMenuItem(
-                                        value: value.dataList.data!.services![i]
-                                            .uid
+                                        value: value.dataList.data!.services![i].uid
                                             .toString(),
                                         child: Text(value
-                                            .dataList.data!.services![i]
-                                            .serviceName
+                                            .dataList.data!.services![i].serviceName
                                             .toString())));
                                   }
                                 }
                               }
-                              assignSeviceId(activeServiceValue[0]);
+                              value.dataList.data == null
+                                  ? null
+                                  : assignSeviceId(activeServiceValue[0]);
                               return DropdownButton(
                                   isExpanded: true,
                                   underline: DropdownButtonHideUnderline(
@@ -222,6 +229,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       selectedService = newValue!;
+                                      _refresh = true;
                                     });
                                   },
                                   items: activeServices);
@@ -296,35 +304,45 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         create: (context) => coachlistViewViewModel,
                         child: Consumer<CoachlistViewViewModel>(
                             builder: (context, value, child) {
-
-
-                              profileUid = value.dataList.data!.coachlist[0].uid
-                                  .toString() ??
-                                  '';
-                              List<DropdownMenuItem<String>> dropdownItems =
-                              List.generate(
-                                  value.dataList.data!.coachlist.length ?? 0,
-                                      (index) {
-                                    return DropdownMenuItem(
-                                        value: value.dataList.data!.coachlist[index].uid
-                                            .toString() ??
-                                            '',
-                                        child: Text(value
-                                            .dataList.data!.coachlist[index].name
-                                            .toString() ??
-                                            'add coach'));
-                                  });
-                              return DropdownButton(
-                                  isExpanded: true,
-                                  underline: DropdownButtonHideUnderline(
-                                      child: Container()),
-                                  value: profileUid,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      profileUid = newValue!;
+                              value.dataList.data != null
+                                  ? profileUid = value
+                                  .dataList.data!.coachlist[0].uid
+                                  .toString()
+                                  : null;
+                              if (value.dataList.data != null) {
+                                List<DropdownMenuItem<String>> dropdownItems =
+                                List.generate(
+                                    value.dataList.data!.coachlist.length,
+                                        (index) {
+                                      return DropdownMenuItem(
+                                          value: value
+                                              .dataList.data!.coachlist[index].uid
+                                              .toString(),
+                                          child: Text(value
+                                              .dataList.data!.coachlist[index].name
+                                              .toString()));
                                     });
-                                  },
-                                  items: dropdownItems);
+
+                                return DropdownButton(
+                                    isExpanded: true,
+                                    underline: DropdownButtonHideUnderline(
+                                        child: Container()),
+                                    value: profileUid,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        profileUid = newValue!;
+                                      });
+                                    },
+                                    items: dropdownItems);
+                              } else {
+                                return DropdownButton(
+                                    isExpanded: true,
+                                    underline: DropdownButtonHideUnderline(
+                                        child: Container()),
+                                    onChanged: (String? newValue) {
+                                    },
+                                    items: _dropdownItem);
+                              }
                             })),
                   ),
                   const SizedBox(
@@ -334,28 +352,26 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                     create: (BuildContext context) => myProgramViewViewModel,
                     child: Consumer<MyProgramViewViewModel>(
                         builder: (context, value, _) {
-                          if(value.dataList.data?.data != null) {
-                            _programid = value.dataList.data?.data![0].uid
+                          if (value.dataList.data != null) {
+                            _programid =
+                                value.dataList.data?.data![0].uid.toString();
+                            _programName = value
+                                .dataList.data?.data![0].programs![0].programName
                                 .toString();
-                            _programName = value.dataList.data?.data![0]
-                                .programs![0].programName.toString();
                           }
-                          return    (value.dataList.data?.data != null)  ?
-
-                          Column(
+                          return (value.dataList.data?.data != null)
+                              ? Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: (value.dataList.data?.data![0]
-                                    .name ?? '')
+                                child: (value.dataList.data?.data![0].name ??
+                                    '')
                                     .isNotEmpty
                                     ? Text(
                                   'Program',
-                                  style:
-                                  Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium,
                                 )
@@ -366,47 +382,70 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               (value.dataList.data?.data![0].programs)
                                   ?.isNotEmpty ??
                                   false
-                                  ? SizedBox(
+                                  ? const SizedBox(
                                 height: 15,
                               )
                                   : Container(),
                               (value.dataList.data?.data![0].programs)
                                   ?.isNotEmpty ??
                                   false
-                                  ? Container(
+                                  ? SizedBox(
                                 height: 50,
                                 //color: Colors.amber,
-                                child:
-                                ListView.builder(
+                                child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
-                                    itemCount: value.dataList.data?.data![0]
-                                        .programs?.length ?? 0,
+                                    itemCount: value
+                                        .dataList
+                                        .data
+                                        ?.data![0]
+                                        .programs
+                                        ?.length ??
+                                        0,
                                     itemBuilder: (context, index) {
                                       return Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .start,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                         children: [
-                                          value.dataList.data?.data![0]
-                                              .programs![index].amount
-                                              .toString() == '0'
+                                          value
+                                              .dataList
+                                              .data
+                                              ?.data![0]
+                                              .programs![index]
+                                              .amount
+                                              .toString() ==
+                                              '0'
                                               ? Container()
                                               : CustomRadio<String>(
-                                            btnColor: Colors.black,
-                                            value: value.dataList.data
-                                                ?.data![0].programs![index]
-                                                .uid.toString() ?? '',
-                                            groupValue: _programUid,
-                                            onChanged: _valueChangedHandler(
+                                            btnColor:
+                                            Colors.black,
+                                            value: value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![
+                                            index]
+                                                .uid
+                                                .toString() ??
+                                                '',
+                                            groupValue:
+                                            _programUid,
+                                            onChanged:
+                                            _valueChangedHandler(
                                                 _programName),
-                                            label: value.dataList.data
-                                                ?.data![0].programs![index]
-                                                .programName.toString() ??
+                                            label: value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![
+                                            index]
+                                                .programName
+                                                .toString() ??
                                                 '',
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           )
                                         ],
@@ -415,7 +454,8 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                               )
                                   : Container(),
                             ],
-                          ) : Text('');
+                          )
+                              : const Text('');
                         }),
                   ),
                   const SizedBox(
@@ -435,26 +475,25 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       create: (BuildContext context) => myProgramViewViewModel,
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
-
-                            if(value.dataList.data != null) {
-                              for (int i = 0; i <
-                                  value.dataList.data!.data![0].programs!
-                                      .length; i++) {
+                            if (value.dataList.data != null) {
+                              for (int i = 0;
+                              i <
+                                  value
+                                      .dataList.data!.data![0].programs!.length;
+                              i++) {
                                 _feesamount = '';
-                                if (value.dataList.data!.data![0].programs?[i]
-                                    .uid == _programUid) {
-                                  _feesamount =
-                                      value.dataList.data!.data![0].programs?[i]
-                                          .amount;
+                                if (value
+                                    .dataList.data!.data![0].programs?[i].uid ==
+                                    _programUid) {
+                                  _feesamount = value
+                                      .dataList.data!.data![0].programs?[i].amount;
                                   break;
                                 }
                               }
                             }
                             return TextFormField(
                               readOnly: true,
-                              controller: fee
-                                ..text = _feesamount ??
-                                    '0',
+                              controller: fee..text = _feesamount ?? '0',
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(10),
                                 border: OutlineInputBorder(
@@ -482,19 +521,29 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomRadio<String>(
-                        btnColor: Colors.black,
-                        value: 'group',
-                        groupValue: _groupBatch,
-                        onChanged: _valueChangedBatch(),
-                        label: 'Group Coaching',
+                      SizedBox(
+                        width: width * .425,
+                        child: FittedBox(
+                          child: CustomRadio<String>(
+                            btnColor: Colors.black,
+                            value: 'group',
+                            groupValue: _groupBatch,
+                            onChanged: _valueChangedBatch(),
+                            label: 'Group Coaching',
+                          ),
+                        ),
                       ),
-                      CustomRadio<String>(
-                        btnColor: Colors.black,
-                        value: 'private',
-                        groupValue: _groupBatch,
-                        onChanged: _valueChangedBatch(),
-                        label: 'Private Coaching',
+                      SizedBox(
+                        width: width * .425,
+                        child: FittedBox(
+                          child: CustomRadio<String>(
+                            btnColor: Colors.black,
+                            value: 'private',
+                            groupValue: _groupBatch,
+                            onChanged: _valueChangedBatch(),
+                            label: 'Private Coaching',
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -717,7 +766,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
                           controller: batchFrom
@@ -736,7 +785,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           onTap: selectTimeFrom,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
                           controller: batchTo..text = batchTodata.toString(),

@@ -72,8 +72,6 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                   const SizedBox(height: 20),
                   Row(
                     children: [
-
-
                       Expanded(
                           child: ElevatedButton(
                             onPressed: () {
@@ -413,7 +411,6 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                       height: 15,
                     ),
                     TextFormField(
-
                       controller: state
                         ..text = stateAssign.toString()
                         ..selection = TextSelection(

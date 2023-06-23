@@ -69,7 +69,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   AsyncTextFormField(
                       controller: phone,
-                      validationDebounce: const Duration(milliseconds: 500),
+                      validationDebounce: const Duration(milliseconds: 100),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'XXX-XXX-XXXX',

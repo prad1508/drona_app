@@ -96,7 +96,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   AsyncTextFormField(
                       controller: phone,
-                      validationDebounce: const Duration(milliseconds: 500),
+                      validationDebounce: const Duration(milliseconds: 50),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
                       hintText: 'eg. 9658992342',
@@ -182,7 +182,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   AsyncTextFormField(
                     controller: email,
-                    validationDebounce: const Duration(milliseconds: 500),
+                    validationDebounce: const Duration(milliseconds: 50),
                     validator: Validation().isEmailField,
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'eg. abc@example.com',

@@ -32,6 +32,7 @@ class _ChooseServiceState extends State<ChooseService> {
   late String userUid;
   final List<int> _selectedItems = <int>[];
 
+
   void initState() {
     super.initState();
     getData();
@@ -47,6 +48,9 @@ class _ChooseServiceState extends State<ChooseService> {
 
   @override
   Widget build(BuildContext context) {
+    print("selected items are $_selectedItems");
+    print("services selected  are $serviceSelected");
+    print(" services list  are $serviceList");
     final facility = Provider.of<FacilityViewViewModel>(context);
     final registration = Provider.of<RegistrationViewModel>(context);
     userUid = registration.uid;
@@ -96,8 +100,7 @@ class _ChooseServiceState extends State<ChooseService> {
                     child: Consumer<ServiceViewViewModel>(
                         builder: (context, value, _) {
                           if (value.dataList.status! == Status.completed) {
-                            catUid =
-                                value.dataList.data!.data![0].catUid!.toString();
+                            catUid = value.dataList.data!.data![0].catUid!.toString();
                             return SizedBox(
                               height: MediaQuery.of(context).size.height * .6,
                               child: GridView.count(
@@ -111,44 +114,31 @@ class _ChooseServiceState extends State<ChooseService> {
                                         value: _selectedItems.contains(index),
                                         checkedFillColor:
                                         const Color.fromRGBO(42, 98, 184, 1),
-                                        imageUrl: AppUrl.imageListendPoint +
-                                            value.dataList.data!.data![index]
-                                                .iconname!
-                                                .toString(),
-                                        name: value.dataList.data!.data![index]
-                                            .serviceName!
-                                            .toString(),
+                                        imageUrl: AppUrl.imageListendPoint + value.dataList.data!.data![index].iconname!.toString(),
+                                        name: value.dataList.data!.data![index].serviceName!.toString(),
                                         onChanged: (val) {
                                           //do your stuff here
                                           final Map<String, String> services = {
-                                            "service_uid": value
-                                                .dataList.data!.data![index].uid!
-                                                .toString(),
-                                            "service_name": value.dataList.data!
-                                                .data![index].serviceName!
-                                                .toString(),
+                                            "service_uid": value.dataList.data!.data![index].uid!.toString(),
+                                            "service_name": value.dataList.data!.data![index].serviceName!.toString(),
                                           };
                                           if (!_selectedItems.contains(index)) {
                                             setState(() {
                                               _selectedItems.add(index);
-                                              serviceList.add(services);
-                                              serviceSelected.add(
-                                                value.dataList.data!.data![index]
-                                                    .uid!
-                                                    .toString(),
+                                               serviceList.add(services);
+                                              serviceSelected.add(value.dataList.data!.data![index].uid!.toString(),
                                               );
                                             });
                                           } else {
                                             setState(() {
-                                              serviceList.clear();
-                                              serviceList.remove(services);
-                                              serviceSelected.remove(
-                                                value.dataList.data!.data![index]
-                                                    .uid!
-                                                    .toString(),
-                                              );
-                                              _selectedItems.removeWhere(
-                                                      (val) => val == index);
+                                               // serviceList.clear();
+                                              print("service which i want to remove is $services");
+                                              // serviceList.remove(services);
+                                              serviceList.removeWhere((item) =>
+                                              item['service_uid'] == services['service_uid'] && item['service_name'] == services['service_name']);
+                                               serviceSelected.remove(value.dataList.data!.data![index].uid!.toString(),
+                                               );
+                                              _selectedItems.removeWhere((val) => val == index);
                                             });
                                           }
                                         },

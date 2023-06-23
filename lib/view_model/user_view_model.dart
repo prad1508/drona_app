@@ -62,6 +62,14 @@ class UserViewModel with ChangeNotifier {
     //remove token to server and local
     final SharedPreferences sp = await SharedPreferences.getInstance();
       // Clears all the data in SharedPreferences
+    // value['Profiles'][0]['role'].toString(),
+    // value['Profiles'][0]['name'].toString(),
+    // value['Profiles'][0]['email'].toString(),
+    // value['Profiles'][0]['academy_name'].toString(),
+    sp.remove('role');
+    sp.remove('name');
+    sp.remove('email');
+    sp.remove('academy_name');
     _myRepo.fetchUserListApi().then((value) {
       Utils.flushBarErrorMessage('Login Successfully', context);
       sp.remove('token');

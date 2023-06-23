@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 
 class CustomRadio<T> extends StatelessWidget {
   final T value;
+  final T? valueName;
   final T? groupValue;
   final String label;
   final Color btnColor;
-  final ValueChanged<T?> onChanged;
+  final ValueChanged<T?>
+  onChanged;
+  final ValueChanged<T?>?
+  onChangedName;
 
-  const CustomRadio({super.key, 
+  const CustomRadio({super.key,
     required this.value,
     required this.groupValue,
     required this.label,
     required this.onChanged,
+    this.valueName,
+    this.onChangedName,
     required this.btnColor
   });
 
@@ -23,7 +29,7 @@ class CustomRadio<T> extends StatelessWidget {
             width: 1,
             color: isSelected ? btnColor.withOpacity(0.1) : Colors.black),
         borderRadius: const BorderRadius.all(
-          Radius.circular(5)),
+            Radius.circular(5)),
         color: isSelected ? Colors.white : Colors.black,
       ),
       padding: const EdgeInsets.fromLTRB(32, 15, 32, 15),
@@ -34,7 +40,7 @@ class CustomRadio<T> extends StatelessWidget {
             label.toString(),
             style: TextStyle(
 
-                 color: isSelected ? Colors.black : Colors.white, fontSize: 13),
+                color: isSelected ? Colors.black : Colors.white, fontSize: 13),
           ),
         ],
       ),
@@ -44,7 +50,12 @@ class CustomRadio<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => onChanged(value),
+        onTap: (){
+          onChanged(value);
+          if (onChangedName != null){
+            onChangedName!(valueName);
+          }
+        } ,
         splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
         child: _labelBtn(context));
   }

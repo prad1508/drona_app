@@ -48,10 +48,21 @@ class AuthViewModel with ChangeNotifier {
         userPreference.savecredential(SavecredentialModel(
             userid: data['userid'], password: data['password']));
         final prefsData = await SharedPreferences.getInstance();
-        prefsData.setStringList("loginData", <String>[
-          value['Profiles'][0]['role'].toString(),
+        prefsData.setStringList("registerResponse", <String>[
+
+          // value['data']['name'],
+          // value['data']['email'],
+          // value['data']['ccode'],
+          // value['data']['mobno'],
+          // value['data']['role'],
+          // value['data']['gender']
+
           value['Profiles'][0]['name'].toString(),
           value['Profiles'][0]['email'].toString(),
+          value['Profiles'][0]['ccdoe'].toString(),
+          value['Profiles'][0]['mobno'].toString(),
+          value['Profiles'][0]['role'].toString(),
+          value['Profiles'][0]['gender'].toString(),
           value['Profiles'][0]['academy_name'].toString(),
         ]);
       }

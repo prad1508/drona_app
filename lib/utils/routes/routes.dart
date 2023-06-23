@@ -131,8 +131,8 @@ class Routes {
         //   return MaterialPageRoute(builder: (BuildContext context) => const ChooseService());
         // case RoutesName.detailFilled:
         return MaterialPageRoute(builder: (BuildContext context) => const DetailFilled());
-      case RoutesName.welcomeScreen:
-        return MaterialPageRoute(builder: (BuildContext context) =>  WelcomeScreen());
+      // case RoutesName.welcomeScreen:
+      //   return MaterialPageRoute(builder: (BuildContext context) =>  WelcomeScreen());
       case RoutesName.createProfile:
         return MaterialPageRoute(builder: (BuildContext context) =>  CreateProfile());
     // case RoutesName.coachListSelected:
