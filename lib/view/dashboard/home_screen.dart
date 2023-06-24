@@ -21,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   DashBoardViewViewModel dashBoardViewViewModel = DashBoardViewViewModel();
   String academicname = '';
+  String fullname = '';
   late ScrollController _scrollController;
   late Future<List> futureList;
 

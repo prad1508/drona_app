@@ -38,6 +38,15 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
          setState(() {});
       });
     }
+    for (var node in programViewViewModel.focusNodesByage) {
+      node.addListener(() {
+        setState(() {});
+      });
+    } for (var node in programViewViewModel.customfocusNodes) {
+      node.addListener(() {
+        setState(() {});
+      });
+    }
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabChange);
     super.initState();
@@ -1694,7 +1703,7 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                 TextEditingController controller, String hint) {
                               return hint == 'Fee'
                                   ? TextField(
-                                      //  focusNode: _customfocusNodes[7],
+                                      //focusNode: _customfocusNodes[7],
                                       controller: controller,
                                       onTap: () {},
                                       keyboardType: TextInputType.number,

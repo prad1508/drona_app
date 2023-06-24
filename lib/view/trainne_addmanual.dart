@@ -33,6 +33,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
   final TextEditingController fee = TextEditingController();
   final TextEditingController age = TextEditingController();
   String? _genderValue = 'male';
+
   ValueChanged<String?> _genderChangedHandler() {
     return (value) => setState(() => _genderValue = value!);
   }

@@ -1,31 +1,32 @@
+import 'dart:core';
+
 import 'package:drona/view/academy/academy_setting.dart';
-import 'package:drona/view/profile/view_profile.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../view_model/user_view_model.dart';
-//import 'acedamy/academy_setting.dart';
+
 import '../batch_listing/batchlist_search.dart';
-import '../coach_listing/coach_view_profile.dart';
+
 import '../coach_listing/coach_listselected.dart';
-import '../profile/create_profile.dart';
+
 import '../session_listing/session_list.dart';
 import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../trainne_addmanual.dart';
 
-String academicname = '';
-String fullname = '';
+
+
 List details = [] ;
 class MainMenu extends StatefulWidget {
   final String? name;
   final String? academyName;
   const MainMenu({super.key, this.name, this.academyName});
+
 
   @override
   State<MainMenu> createState() => _MainMenuState();
@@ -33,18 +34,18 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   //multi language support
+  String academicname = '';
+  String fullname = '';
   final FlutterLocalization _localization = FlutterLocalization.instance;
   final TextEditingController fullName = TextEditingController();
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
-
   @override
   initState() {
     getData();
     super.initState();
   }
-
   getData() async {
     final prefs = await SharedPreferences.getInstance();
     details = prefs.getStringList('registerResponse')!;

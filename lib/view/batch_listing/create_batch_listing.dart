@@ -36,6 +36,13 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     return (value) => setState(() => _programUid = value!);
   }
 
+  ValueChanged<String?> _nameChangedHandler(value) {
+    return (value) => setState(() {
+      print(value);
+      _programName = value;
+    });
+  }
+
   String? _groupBatch = 'group';
 
   ValueChanged<String?> _valueChangedBatch() {
@@ -198,6 +205,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             builder: (context, value, child) {
                               activeServiceValue.clear();
                               activeServices.clear();
+                              // print(value.dataList.data!.services![0].status);
                               if (value.dataList.data != null) {
                                 for (var i = 0;
                                 i < value.dataList.data!.services!.length;
@@ -355,9 +363,6 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           if (value.dataList.data != null) {
                             _programid =
                                 value.dataList.data?.data![0].uid.toString();
-                            _programName = value
-                                .dataList.data?.data![0].programs![0].programName
-                                .toString();
                           }
                           return (value.dataList.data?.data != null)
                               ? Column(
@@ -430,10 +435,22 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                                 .uid
                                                 .toString() ??
                                                 '',
+                                            valueName: value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![
+                                            index]
+                                                .programName
+                                                .toString() ??
+                                                '',
                                             groupValue:
                                             _programUid,
                                             onChanged:
                                             _valueChangedHandler(
+                                                _programUid),
+                                            onChangedName:
+                                            _nameChangedHandler(
                                                 _programName),
                                             label: value
                                                 .dataList
