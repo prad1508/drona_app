@@ -3,6 +3,7 @@
 import 'package:drona/view/acedamy/academy_details.dart';
 import 'package:drona/view/acedamy/bank_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class academy_setting extends StatefulWidget {
@@ -151,12 +152,14 @@ class _academy_settingState extends State<academy_setting> {
                           size: 15,
                         ),
                         onTap: () {
-                          Navigator.push(
+                         /* Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     const Academy_Detail_Page()),
-                          );
+                          );*/
+                          Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+
                         },
                       ),
                       ListTile(
@@ -217,6 +220,8 @@ class _academy_settingState extends State<academy_setting> {
                             MaterialPageRoute(
                                 builder: (context) => const Bank_Details()),
                           );
+                          Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+
                         },
                       ),
                       ListTile(

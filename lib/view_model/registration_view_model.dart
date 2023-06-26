@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:drona/view/registeration/choose_facility.dart';
+import 'package:drona/view/registeration/choose_service.dart';
+import 'package:drona/view/registeration/login_view.dart';
 import 'package:drona/view_model/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +20,7 @@ import '../view/registeration/detail_filled.dart';
 import '../view/registeration/forget_otp.dart';
 import '../view/registeration/new_password.dart';
 import '../view/registeration/otp.dart';
+import '../view/registeration/tellus_acadmic.dart';
 import '../view/welcome_screen.dart';
 import '/respository/registration_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,12 +81,13 @@ class RegistrationViewModel with ChangeNotifier {
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage('Register Successfully', context);
       // ignore: use_build_context_synchronously
-      Navigator.push(
+     /* Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => OtpPage(registration: data),
         ),
-      );
+      );*/
+      Get.to(() => OtpPage(registration: data),transition: Transition.leftToRight);
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -103,7 +110,9 @@ class RegistrationViewModel with ChangeNotifier {
       }
       setLoading(false);
       Utils.flushBarErrorMessage('Otp Verify Successfully', context);
-      Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+      //Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+      Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -128,7 +137,9 @@ class RegistrationViewModel with ChangeNotifier {
       final prefsData = await SharedPreferences.getInstance();
       prefsData.setString('acadmicName', acadmicName);
       Utils.flushBarErrorMessage('Basic Details update Successfully', context);
-      Navigator.pushNamed(context, RoutesName.chooseService);
+      //Navigator.pushNamed(context, RoutesName.chooseService);
+      Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -142,7 +153,9 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.servicePostListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage('Services update Successfully', context);
-      Navigator.pushNamed(context, RoutesName.chooseFacility);
+      //Navigator.pushNamed(context, RoutesName.chooseFacility);
+      Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -156,7 +169,9 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage('Facilty Sved Successfully', context);
 
-      Navigator.pushNamed(context, RoutesName.chooseprogram);
+      //Navigator.pushNamed(context, RoutesName.chooseprogram);
+      Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -181,21 +196,28 @@ class RegistrationViewModel with ChangeNotifier {
       print("checking role , $role");
       if(role == '0')
         {
-          Navigator.push(
+        /*  Navigator.push(
             context,
             MaterialPageRoute(
               builder: (BuildContext context) =>  WelcomeScreen(),
             ),
-          );
+          );*/
+         // Navigator.pushNamed(context, RoutesName.WelcomeScreen);
+          Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+
         }
       else
         {
-          Navigator.push(
+         /* Navigator.push(
             context,
             MaterialPageRoute(
               builder: (BuildContext context) => const DetailFilled(),
             ),
-          );
+          );*/
+          //Navigator.pushNamed(context, RoutesName.DetailFilled);
+          Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+
+
         }
 
     }).onError((error, stackTrace) {
@@ -214,12 +236,14 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.detailsOwnerPostListApi(data).then((value) async {
       setLoading(false);
       // Navigator.pushNamed(context, RoutesName.welcomeScreen);
-      Navigator.push(
+     /* Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) =>  WelcomeScreen(),
         ),
-      );
+      );*/
+      Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+
       Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -236,12 +260,14 @@ class RegistrationViewModel with ChangeNotifier {
       print("forget password api success");
       Utils.flushBarErrorMessage(value['msg'], context);
       setMobno(value['data']['mobno']);
-      Navigator.push(
+      /*Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => const ForgetOtp(),
         ),
-      );
+      );*/
+      Get.to(()=> const ForgetOtp(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       print("forget password api not success");
       setLoading(false);
@@ -261,12 +287,14 @@ class RegistrationViewModel with ChangeNotifier {
       userPreference.saveToken(UserModel(data: value['prtoken'].toString()));
       Utils.flushBarErrorMessage(value['msg'], context);
 
-      Navigator.push(
+      /*Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => const NewPassword(),
         ),
-      );
+      );*/
+      Get.to(()=> const NewPassword(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -284,7 +312,9 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.verifynewPasswordListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
-      Navigator.pushNamed(context, RoutesName.login);
+      //Navigator.pushNamed(context, RoutesName.login);
+      Get.to(() => const LoginView(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -302,7 +332,9 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.verifynewPasswordListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
-      Navigator.pushNamed(context, RoutesName.login);
+      //Navigator.pushNamed(context, RoutesName.login);
+      Get.to(() => const LoginView(),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);

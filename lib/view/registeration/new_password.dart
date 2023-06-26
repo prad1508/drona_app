@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/widget/round_button.dart';
@@ -65,13 +67,15 @@ class _NewPasswordState extends State<NewPassword> {
                     child: ElevatedButton(
                       
                       onPressed: () {
-                      Navigator.push(
+                     /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       const Layout(selectedIndex: 0,),
                                 ),
-                              );
+                              );*/
+                      Get.to(()=>  const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor),

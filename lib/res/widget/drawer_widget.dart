@@ -1,6 +1,9 @@
+import 'package:drona/view/registeration/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,7 +79,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       IconButton(
                         onPressed: (() {
-                          Navigator.pushNamed(context, RoutesName.login);
+                          //Navigator.pushNamed(context, RoutesName.login);
+                          Get.to(() => const LoginView(),transition: Transition.leftToRight);
+
                         }),
                         icon: const Icon(
                           FontAwesomeIcons.solidUser,

@@ -1,3 +1,4 @@
+import 'package:drona/view/splash_view.dart';
 import 'package:drona/view_model/facility_view_model.dart';
 import 'package:drona/view_model/registration_view_model.dart';
 import 'package:drona/view_model/service_view_model.dart';
@@ -6,6 +7,7 @@ import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:drona/utils/color.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import '../res/language/language.dart';
 import '/utils/routes/routes.dart';
 import '/utils/routes/routes_name.dart';
@@ -89,14 +91,15 @@ class _AppTranslateState extends State<AppTranslate> {
         ChangeNotifierProvider(create: (_) => TraineeViewModel())
       ],
       child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) => MaterialApp(
+        builder: (context, themeProvider, child) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Drona',
           supportedLocales: _localization.supportedLocales,
           localizationsDelegates: _localization.localizationsDelegates,
           theme: themeProvider.isDarkTheme ? themeDataDark : themeDataLight,
-          initialRoute: RoutesName.splash,
-          onGenerateRoute: Routes.generateRoute,
+         // initialRoute: SplashView,
+         // onGenerateRoute: Routes.generateRoute,
+          home: const SplashView(),
         ),
       ),
     );

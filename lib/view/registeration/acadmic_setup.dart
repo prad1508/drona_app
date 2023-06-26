@@ -1,5 +1,9 @@
+import 'package:drona/view/registeration/login_view.dart';
+import 'package:drona/view/registeration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
@@ -57,8 +61,10 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   rounded: true,
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
-                  onPress: () => Navigator.pushNamed(
-                      context, RoutesName.registration),
+                  onPress: () => Get.to(() => const Registration(),transition: Transition.leftToRight),
+
+                   /*   Navigator.pushNamed(
+                      context, RoutesName.registration),*/
                 ),
                 const SizedBox(
                   height: 24,
@@ -112,7 +118,8 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, RoutesName.login);
+                              //Navigator.pushNamed(context, RoutesName.login);
+                              Get.to(() => const LoginView(),transition: Transition.leftToRight);
                               //Navigator.pushNamed(context, RoutesName.layout);
                             },
                             child: Text(

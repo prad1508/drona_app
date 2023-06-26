@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
@@ -49,13 +51,15 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
           actions: [
             IconButton(
               onPressed: () {
-                 Navigator.push(
+                 /*Navigator.push(
                            context,
                            MaterialPageRoute(
                              builder: (BuildContext context) =>
                                   CreateProfile(),
                            ),
-                         );
+                         );*/
+                 Get.to(()=>  CreateProfile(),transition: Transition.leftToRight);
+
               },
               icon: const Icon(Icons.edit),
               iconSize: 20,

@@ -4,6 +4,7 @@ import 'package:drona/res/widget/Academy_Listing/facility_program.dart';
 import 'package:drona/res/widget/Academy_Listing/service_offring_page.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Servicelist_Page extends StatefulWidget {
   const Servicelist_Page({super.key});
@@ -35,11 +36,13 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
               ),
             ),
             onTap: () {
-              Navigator.push(
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => Service_Offering_Page()),
-              );
+              );*/
+              Get.to(()=> const Service_Offering_Page(),transition: Transition.leftToRight);
+
             },
           )
         ],
@@ -56,11 +59,13 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
               height: 80,
               child: ListTile(
                 onTap: () {
-                  Navigator.push(
+                 /* Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const Facility_Program()),
-                  );
+                  );*/
+                  Get.to(()=> const Facility_Program(),transition: Transition.leftToRight);
+
                 },
                 contentPadding: EdgeInsets.all(5),
                 leading: SizedBox(

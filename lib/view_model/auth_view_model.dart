@@ -1,9 +1,17 @@
+import 'package:drona/view/dashboard/layout.dart';
+import 'package:drona/view/registeration/detail_filled.dart';
 import 'package:drona/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../model/savecredential_modal.dart';
 import '../respository/user.dart';
+import '../view/registeration/choose_facility.dart';
+import '../view/registeration/choose_program.dart';
+import '../view/registeration/choose_service.dart';
+import '../view/registeration/tellus_acadmic.dart';
 import '/model/user_model.dart';
 import '/utils/routes/routes_name.dart';
 import '/utils/utils.dart';
@@ -80,32 +88,41 @@ class AuthViewModel with ChangeNotifier {
         switch (setupProgress) {
 
           case 0: {
-            Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+            /*Navigator.pushNamed(context, RoutesName.tellusAcadmic);*/
+            Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
                break;
            }
 
           case 3:
             {
-              Navigator.pushNamed(context, RoutesName.chooseService);
+              //Navigator.pushNamed(context, RoutesName.chooseService);
+              Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+
               break;
             }
 
           case 4:
             {
-              Navigator.pushNamed(context, RoutesName.chooseFacility);
+              /*Navigator.pushNamed(context, RoutesName.chooseFacility);*/
+              Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+
 
               break;
             }
 
           case 5:
             {
-              Navigator.pushNamed(context, RoutesName.ChooseProgram);
+              /*Navigator.pushNamed(context, RoutesName.ChooseProgram);*/
+              Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+
               break;
             }
 
           case 6:
             {
-              Navigator.pushNamed(context, RoutesName.detailFilled);
+             /* Navigator.pushNamed(context, RoutesName.detailFilled);*/
+              Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+
               break;
             }
         }
@@ -115,24 +132,32 @@ class AuthViewModel with ChangeNotifier {
            switch(setupProgress)
            {
              case 0: {
-               Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+              /* Navigator.pushNamed(context, RoutesName.tellusAcadmic);*/
+               Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+
                break;
              }
              case 3:
                {
-                 Navigator.pushNamed(context, RoutesName.chooseService);
+                 //Navigator.pushNamed(context, RoutesName.chooseService);
+                 Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+
                  break;
                }
 
              case 4:
                {
-                 Navigator.pushNamed(context, RoutesName.chooseFacility);
+                 //Navigator.pushNamed(context, RoutesName.chooseFacility);
+                 Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+
                  break;
                }
 
              case 5:
                {
-                 Navigator.pushNamed(context, RoutesName.ChooseProgram);
+                 //Navigator.pushNamed(context, RoutesName.ChooseProgram);
+                 Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+
                  break;
                }
 
@@ -151,12 +176,16 @@ class AuthViewModel with ChangeNotifier {
         print("coming hereee");
         if (setupProgress == 0 && setupFinish==false) {
           userPreference.saveToken(UserModel(data: value['token'].toString()));
-          Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+         // Navigator.pushNamed(context, RoutesName.tellusAcadmic);
+          Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+
         }
         else
           {
             userPreference.saveToken(UserModel(data: value['token'].toString()));
-            Navigator.pushNamed(context, RoutesName.layout);
+           // Navigator.pushNamed(context, RoutesName.layout);
+            Get.to(() => const Layout(selectedIndex: 0),transition: Transition.leftToRight);
+
           }
 
       }

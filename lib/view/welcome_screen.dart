@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../res/language/language.dart';
@@ -12,8 +14,8 @@ import 'batch_listing/create_batch_listing.dart';
 import 'profile/create_profile.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  String Owner;
-  WelcomeScreen({this.Owner="",super.key});
+
+  const WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -191,14 +193,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 color: const Color.fromRGBO(241, 94, 83, 1),
                                 onPress: () {
                                   // Navigator.pushNamed(context, RoutesName.createProfile);
-                                  Navigator.push(
+                                  /*Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                       //const CreateProfile(),
                                       const CreateBatchListing(),
                                     ),
-                                  );
+                                  );*/
+                                  Get.to(()=> const CreateBatchListing(),transition: Transition.leftToRight);
+
                                 })
                                 : RoundButton(
                                 loading: false,

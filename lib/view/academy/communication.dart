@@ -2,6 +2,7 @@
 
 import 'package:drona/res/widget/Academy_Listing/communication_edit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Communication extends StatefulWidget {
   const Communication({super.key});
@@ -98,11 +99,13 @@ class _CommunicationState extends State<Communication> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
+                      /*Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const Edit_Communication()),
-                      );
+                      );*/
+                      Get.to(()=> const Edit_Communication(),transition: Transition.leftToRight);
+
                     },
                   ),
                 ],

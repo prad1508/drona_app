@@ -1,5 +1,8 @@
+import 'package:drona/view/registeration/acadmic_setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/routes/routes_name.dart';
 class Language extends StatefulWidget {
@@ -42,7 +45,8 @@ class _LanguageState extends State<Language> {
                   onPressed: () {
                     //English language
                     _localization.translate('en');
-                    Navigator.pushNamed(context, RoutesName.acadmicSetup);
+                   // Navigator.pushNamed(context, RoutesName.acadmicSetup);
+                    Get.to(() => const AcadmicSetup(),transition: Transition.leftToRight);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
@@ -67,7 +71,8 @@ class _LanguageState extends State<Language> {
                   onPressed: () {
                     //hindi language
                     _localization.translate('hi');
-                    Navigator.pushNamed(context, RoutesName.acadmicSetup);
+                    //Navigator.pushNamed(context, RoutesName.acadmicSetup);
+                    Get.to(() => const AcadmicSetup(),transition: Transition.leftToRight);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(

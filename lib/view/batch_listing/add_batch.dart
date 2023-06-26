@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/customTextField.dart';
@@ -186,13 +188,15 @@ class _AddBatchState extends State<AddBatch> {
                           style: TextStyle(color: Colors.redAccent),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                         /* Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   const BatchList(),
                             ),
-                          );
+                          );*/
+                          Get.to(()=> const BatchList(),transition: Transition.leftToRight);
+
                         },
                       ),
                     ],
@@ -542,14 +546,16 @@ class _AddBatchState extends State<AddBatch> {
                     color: Theme.of(context).primaryColorDark.withOpacity(0.2),
                     onPress: agree == true
                         ? () {
-                            Navigator.push(
+                           /* Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     const TraineeAddOptions(),
                               ),
-                            );
-                          }
+                            );*/
+                            Get.to(()=> const TraineeAddOptions(),transition: Transition.leftToRight);
+
+                    }
                         : () {
                             print('btn dissabled');
                           },
@@ -567,14 +573,16 @@ class _AddBatchState extends State<AddBatch> {
                         : Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: agree == true
                         ? () {
-                            Navigator.push(
+                            /*Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     const TraineeAddOptions(),
                               ),
-                            );
-                          }
+                            );*/
+                            Get.to(()=> const TraineeAddOptions(),transition: Transition.leftToRight);
+
+                    }
                         : () {
                             print(FullName);
                             print('services');

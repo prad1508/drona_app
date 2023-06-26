@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -8,6 +10,8 @@ import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import 'package:intl/intl.dart';
+
+import 'batch_list.dart';
 
 class CoachAddProfile extends StatefulWidget {
   const CoachAddProfile({super.key});
@@ -575,8 +579,10 @@ class _CoachAddProfileState extends State<CoachAddProfile> {
                         print(salary);
                         print(doj);
                         print(_genderValue);
-                        Navigator.pushNamed(
-                            context, RoutesName.BatchLists);
+                        /*Navigator.pushNamed(
+                            context, RoutesName.BatchLists);*/
+                        Get.to(() => const BatchLists(),transition: Transition.leftToRight);
+
                       }),
                 ],
               ),

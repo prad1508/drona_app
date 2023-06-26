@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/customTextField.dart';
@@ -11,6 +14,7 @@ import '../../res/widget/progressPills.dart';
 import '../../res/widget/round_button.dart';
 import '../../utils/routes/routes_name.dart';
 import '../../utils/color.dart' as AppColor;
+import 'create_batch_listing.dart';
 
 class TraineeList extends StatefulWidget {
   const TraineeList({super.key});
@@ -214,8 +218,11 @@ class _TraineeListState extends State<TraineeList> {
                                             .primaryColorDark
                                             .withOpacity(0.2),
                                         onPress: () {
-                                          Navigator.pushNamed(context,
-                                              RoutesName.CreateBatchListing);
+                                          /*Navigator.pushNamed(context,
+                                              RoutesName.CreateBatchListing);*/
+                                          Get.to(() => const CreateBatchListing(),
+                                              transition:
+                                              Transition.leftToRight);
                                         }),
                                   ),
                                 ),
@@ -228,11 +235,12 @@ class _TraineeListState extends State<TraineeList> {
                                       rounded: true,
                                       color: Theme.of(context).primaryColor,
                                       onPress: () {
-                                        Navigator.pushNamed(context,
-                                            RoutesName.CreateBatchListing);
+                                        /*Navigator.pushNamed(context,
+                                            RoutesName.CreateBatchListing);*/
+                                        Get.to(() => const CreateBatchListing(), transition: Transition.leftToRight);
                                       }),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                               ],

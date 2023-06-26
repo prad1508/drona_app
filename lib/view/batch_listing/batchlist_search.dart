@@ -1,6 +1,8 @@
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/response/status.dart';
@@ -11,6 +13,7 @@ import '../../utils/no_data.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/myprogram_view_model.dart';
+import '../academy/academy_details.dart';
 import 'create_batch_listing.dart';
 import 'view_batch_details.dart';
 
@@ -217,13 +220,15 @@ class _SearchBatchListState extends State<SearchBatchList> {
                 ? SizedBox()
                 : IconButton(
                     onPressed: (() {
-                      Navigator.push(
+                     /* Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
                               const CreateBatchListing(),
                         ),
-                      );
+                      );*/
+                      Get.to(()=> const CreateBatchListing(),transition: Transition.leftToRight);
+
                     }),
                     icon: const Icon(Icons.add),
                     iconSize: 25,
@@ -488,6 +493,8 @@ class _SearchBatchListState extends State<SearchBatchList> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       Layout(selectedIndex: 0)));
+                          Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+
                         })
                     : SizedBox()
               ],

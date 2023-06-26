@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../model/savecredential_modal.dart';
 import '../respository/user.dart';
 import '../utils/routes/routes_name.dart';
@@ -103,23 +105,27 @@ class UserViewModel with ChangeNotifier {
 
    if(listindex!=-1)
      {
-       Navigator.push(
+       /*Navigator.push(
          context,
          MaterialPageRoute(
            builder: (BuildContext context) =>
                CoachListSelected(Listindex : listindex),
          ),
-       );
+       );*/
+       Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.leftToRight);
+
      }
    else
      {
-       Navigator.push(
+       /*Navigator.push(
          context,
          MaterialPageRoute(
            builder: (BuildContext context) =>
                CoachListSelected(),
          ),
-       );
+       );*/
+       Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
+
      }
 
     }).onError((error, stackTrace) {

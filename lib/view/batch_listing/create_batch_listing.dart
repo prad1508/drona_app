@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 import '../../res/widget/customradio.dart';
@@ -286,13 +288,15 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           style: TextStyle(color: Colors.redAccent),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                         /* Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   CreateProfile(),
                             ),
-                          );
+                          );*/
+                          Get.to(()=>  CreateProfile(),transition: Transition.leftToRight);
+
                         },
                       ),
                     ],

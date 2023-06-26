@@ -2,6 +2,8 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
 import '../batch_details.dart';
@@ -219,13 +221,15 @@ class _BatchListState extends State<BatchList> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () {
-                      Navigator.push(
+                      /*Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const Layout(selectedIndex: 0,),
+                              const Layout(selectedIndex: 0),
                         ),
-                      );
+                      );*/
+                      Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.leftToRight);
+
                     }),
               ],
             ),

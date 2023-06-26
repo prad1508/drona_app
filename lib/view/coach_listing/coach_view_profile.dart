@@ -2,6 +2,8 @@
 
 import 'package:drona/view/coach_listing/coach_personal_datails.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class View_Profile extends StatefulWidget {
   const View_Profile({super.key});
@@ -48,11 +50,13 @@ class _View_ProfileState extends State<View_Profile> {
                         child: Image(
                             image: AssetImage('assets/images/edit_icon.png')),
                         onTap: () {
-                          Navigator.push(
+                         /* Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const Personal_Details()),
-                          );
+                          );*/
+                          Get.to(()=> const Personal_Details(),transition: Transition.leftToRight);
+
                         },
                       ),
                     ),

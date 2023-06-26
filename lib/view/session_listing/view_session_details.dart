@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_url.dart';
@@ -947,13 +949,15 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
             _selectedItems.isEmpty
                 ? IconButton(
                     onPressed: (() {
-                      Navigator.push(
+                      /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       const SessionDetailEdit(),
                                 ),
-                              );
+                              );*/
+                      Get.to(()=> const SessionDetailEdit(),transition: Transition.leftToRight);
+
                     }),
                     icon: const Icon(Icons.edit),
                     iconSize: 25,
@@ -1252,14 +1256,16 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                     rounded: true,
                     color: Theme.of(context).primaryColor.withOpacity(0.5),
                     onPress: () {
-                    Navigator.push(
+                    /*Navigator.push(
                     context,
                     MaterialPageRoute(
                     builder: (BuildContext context) => const Layout(
                     selectedIndex: 0,
                     ),
                     ),
-                    );
+                    );*/
+                    Get.to(()=> const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+
                     }),
                     const SizedBox(
                     height: 10,

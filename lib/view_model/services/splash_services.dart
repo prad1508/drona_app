@@ -1,7 +1,12 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../respository/user.dart';
+import '../../view/dashboard/layout.dart';
+import '../../view/language.dart';
+import '../../view/registeration/login_view.dart';
 import '/model/user_model.dart';
 import '/utils/routes/routes_name.dart';
 import '/view_model/user_view_model.dart';
@@ -28,7 +33,8 @@ class SplashServices with ChangeNotifier {
       if(value.data.toString() == 'null' || value.data.toString() == ''){
         await Future.delayed(const Duration(seconds: 1));
         // ignore: use_build_context_synchronously
-        Navigator.pushNamed(context, RoutesName.language);
+        //Navigator.pushNamed(context, RoutesName.language);
+        Get.to(()=> const Language(),transition: Transition.leftToRight);
         
       }else {
         await  Future.delayed(const Duration(seconds: 1));
@@ -36,10 +42,14 @@ class SplashServices with ChangeNotifier {
          final prefsData = await SharedPreferences.getInstance();
         String? role = prefsData.getString('role');
         if(role == '1' || setupFinish == true){
-            Navigator.pushNamed(context, RoutesName.layout);
+           // Navigator.pushNamed(context, RoutesName.layout);
+            Get.to(()=> const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+
         }
         else{
-           Navigator.pushNamed(context, RoutesName.login);
+          // Navigator.pushNamed(context, RoutesName.login);
+           Get.to(()=> const  LoginView(),transition: Transition.leftToRight);
+
         }
        
       }

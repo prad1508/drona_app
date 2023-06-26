@@ -5,6 +5,7 @@ import 'package:drona/view/academy/view_payment_invoice.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class Billing_And_Invoice extends StatefulWidget {
   const Billing_And_Invoice({super.key});
@@ -154,12 +155,14 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                             color: Color(0xff99A0AB),
                           )),
                       onTap: () {
-                        Navigator.push(
+                       /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
                                   const Edit_Billing_Invoice()),
-                        );
+                        );*/
+                        Get.to(()=> const Edit_Billing_Invoice(),transition: Transition.leftToRight);
+
                       },
                     ),
                   ],
@@ -361,12 +364,14 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                             size: 15,
                           ),
                           onTap: () {
-                            Navigator.push(
+                           /* Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const Payment_Invoice_Page()),
-                            );
+                            );*/
+                            Get.to(()=> const Payment_Invoice_Page(),transition: Transition.leftToRight);
+
                           },
                         )),
                     Divider(),

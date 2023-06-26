@@ -2,10 +2,13 @@ import 'dart:core';
 
 import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
+import 'package:drona/view/registeration/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
 import '../../utils/routes/routes_name.dart';
@@ -196,13 +199,15 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                     trailing: IconButton(
                       onPressed: (() {
-                        Navigator.push(
+                      /*  Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 ViewProfileDetails(),
                           ),
-                        );
+                        );*/
+                        Get.to(()=> const ViewProfileDetails(),transition: Transition.leftToRight);
+
                       }),
                       icon: const Icon(Icons.arrow_forward_ios),
                       iconSize: 20,
@@ -235,7 +240,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.push(
+                              /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -243,7 +248,11 @@ class _MainMenuState extends State<MainMenu> {
                                         pathPage: '',
                                       ),
                                 ),
-                              );
+                              );*/
+                              Get.to(()=>   SearchBatchList(
+                                pathPage: '',
+                              ),transition: Transition.leftToRight);
+
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -266,13 +275,15 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.push(
+                             /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                   const SessionList(),
                                 ),
-                              );
+                              );*/
+                              Get.to(()=> const SessionList(),transition: Transition.leftToRight);
+
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -324,13 +335,15 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.push(
+                             /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       CoachListSelected(),
                                 ),
-                              );
+                              );*/
+                              Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
+
                             },
 
                             leading: CircleAvatar(
@@ -352,13 +365,15 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.push(
+                             /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                   const Trainee_Listing(),
                                 ),
-                              );
+                              );*/
+                              Get.to(()=> const Trainee_Listing(),transition: Transition.leftToRight);
+
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -422,12 +437,14 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                Navigator.push(
+                               /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const Coach_Listing()),
-                                );
+                                );*/
+                                Get.to(()=> const Coach_Listing(),transition: Transition.leftToRight);
+
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -450,13 +467,15 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                Navigator.push(
+                               /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         CoachListSelected(),
                                   ),
-                                );
+                                );*/
+                                Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
+
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -652,7 +671,11 @@ class _MainMenuState extends State<MainMenu> {
                           InkWell(
                             onTap: () {
                               userPrefernece.remove(context).then((value) {
+/*
                                 Navigator.pushNamed(context, RoutesName.login);
+*/
+                                Get.to(() => const LoginView(), transition: Transition.leftToRight);
+
                               });
                             },
                             child: ListTile(

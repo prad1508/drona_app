@@ -3,6 +3,8 @@
 import 'package:drona/res/widget/Academy_Listing/academy_details_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class Academy_Detail_Page extends StatefulWidget {
   const Academy_Detail_Page({super.key});
@@ -26,11 +28,13 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
                 onPressed: () {
-                  Navigator.push(
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const Edit_Academy_Detail()),
-                  );
+                  );*/
+                  Get.to(()=> const Edit_Academy_Detail(),transition: Transition.leftToRight);
+
                 },
                 icon: Icon(Icons.edit)),
           )

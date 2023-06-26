@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/customradio.dart';
@@ -198,14 +200,14 @@ class _CreateProfileState extends State<CreateProfile> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => const Layout(
-                      selectedIndex: 0,
-                    ),
+                    builder: (BuildContext context) => const Layout(selectedIndex: 0),
                   ),
-                );
+                );*/
+                Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.leftToRight);
+
               },
               child: Text(
                 AppLocale.skip.getString(context),

@@ -3,6 +3,8 @@ import 'package:drona/view/session_listing/view_session_details.dart';
 import 'package:drona/view_model/session_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import '../../res/app_url.dart';
 import '../../res/widget/round_button.dart';
@@ -126,12 +128,14 @@ class _SessionListState extends State<SessionList>
           actions: [
             IconButton(
               onPressed: (() {
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => const SessionalDetails(),
                   ),
-                );
+                );*/
+                Get.to(()=> const SessionalDetails(),transition: Transition.leftToRight);
+
               }),
               icon: const Icon(Icons.add),
               iconSize: 25,
@@ -380,29 +384,35 @@ class _SessionListState extends State<SessionList>
                                                             onTap: () {
                                                               print( value.dataList.data!.data?[index].id);
                                                               if (value.dataList.data!.data?[index].status == 'scheduled') {
-                                                                Navigator.of(context).push(
+                                                                /*Navigator.of(context).push(
                                                                     MaterialPageRoute(
                                                                         builder:
                                                                             (context) =>
-                                                                         ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));
+                                                                         ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
+                                                                Get.to(()=>  ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}"),transition: Transition.leftToRight);
+
                                                               } else if (value.dataList.data!.data?[index].status == 'closed') {
-                                                                Navigator.push(
+                                                              /*  Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
                                                                     builder: (BuildContext
                                                                     context) =>
                                                                      ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),
                                                                   ),
-                                                                );
+                                                                );*/
+                                                                Get.to(()=> ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),transition: Transition.leftToRight);
+
                                                               } else if (value.dataList.data!.data?[index].status == 'cancelled') {
-                                                                Navigator.push(
+                                                                /*Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
                                                                     builder: (BuildContext
                                                                     context) =>
                                                                     const SessionDetailCancel(),
                                                                   ),
-                                                                );
+                                                                );*/
+                                                                Get.to(()=>  SessionDetailCancel(),transition: Transition.leftToRight);
+
                                                               }
                                                             },
                                                             onLongPress: () {
@@ -522,29 +532,35 @@ class _SessionListState extends State<SessionList>
                                                                   ),
                                                                   onTap: () {
                                                                     if (value.dataList.data!.data?[index].status == 'scheduled') {
-                                                                      Navigator.of(context).push(
+                                                                      /*Navigator.of(context).push(
                                                                           MaterialPageRoute(
                                                                               builder:
                                                                                   (context) =>
-                                                                               ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));
+                                                                               ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));*/
+                                                                      Get.to(()=>  ViewSessionalDetails(id: '${value.dataList.data!.data?[index].uid}',),transition: Transition.leftToRight);
+
                                                                     } else if (value.dataList.data!.data?[index].status == 'closed') {
-                                                                      Navigator.push(
+                                                                      /*Navigator.push(
                                                                         context,
                                                                         MaterialPageRoute(
                                                                           builder: (BuildContext
                                                                           context) =>
                                                                            ViewDetailClosed(id: '',),
                                                                         ),
-                                                                      );
+                                                                      );*/
+                                                                      Get.to(()=>  ViewDetailClosed(id: '',),transition: Transition.leftToRight);
+
                                                                     } else if (value.dataList.data!.data?[index].status == 'cancelled') {
-                                                                      Navigator.push(
+                                                                      /*Navigator.push(
                                                                         context,
                                                                         MaterialPageRoute(
                                                                           builder: (BuildContext
                                                                           context) =>
                                                                            SessionDetailCancel(),
                                                                         ),
-                                                                      );
+                                                                      );*/
+                                                                      Get.to(()=>   SessionDetailCancel(),transition: Transition.leftToRight);
+
                                                                     }
                                                                   },
                                                                   onLongPress: () {
@@ -666,29 +682,35 @@ class _SessionListState extends State<SessionList>
                                                                   ),
                                                                   onTap: () {
                                                                     if (value.dataList.data!.data?[index].status == 'scheduled') {
-                                                                      Navigator.of(context).push(
+                                                                      /*Navigator.of(context).push(
                                                                           MaterialPageRoute(
                                                                               builder:
                                                                                   (context) =>
-                                                                                      ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));
+                                                                                      ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));*/
+
+                                                                      Get.to(()=>  ViewSessionalDetails(id: '${value.dataList.data!.data?[index].uid}',),transition: Transition.leftToRight);
                                                                     } else if (value.dataList.data!.data?[index].status == 'closed') {
-                                                                      Navigator.push(
+                                                                      /*Navigator.push(
                                                                         context,
                                                                         MaterialPageRoute(
                                                                           builder: (BuildContext
                                                                           context) =>
                                                                            ViewDetailClosed(id: '',),
                                                                         ),
-                                                                      );
+                                                                      );*/
+                                                                      Get.to(()=>  ViewDetailClosed(id: '',),transition: Transition.leftToRight);
+
                                                                     } else if (value.dataList.data!.data?[index].status == 'cancelled') {
-                                                                      Navigator.push(
+                                                                     /* Navigator.push(
                                                                         context,
                                                                         MaterialPageRoute(
                                                                           builder: (BuildContext
                                                                           context) =>
                                                                           const SessionDetailCancel(),
                                                                         ),
-                                                                      );
+                                                                      );*/
+                                                                      Get.to(()=>  SessionDetailCancel(),transition: Transition.leftToRight);
+
                                                                     }
                                                                   },
                                                                   onLongPress: () {
@@ -814,29 +836,35 @@ class _SessionListState extends State<SessionList>
                                                                 ),
                                                                 onTap: () {
                                                                   if (value.dataList.data!.data?[index].status == 'scheduled') {
-                                                                    Navigator.of(context).push(
+                                                                    /*Navigator.of(context).push(
                                                                         MaterialPageRoute(
                                                                             builder:
                                                                                 (context) =>
-                                                                                    ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));
+                                                                                    ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}")));*/
+
+                                                                    Get.to(()=>  ViewSessionalDetails(id :"${value.dataList.data!.data?[index].uid}"),transition: Transition.leftToRight);
                                                                   } else if (value.dataList.data!.data?[index].status == 'closed') {
-                                                                    Navigator.push(
+                                                                    /*Navigator.push(
                                                                       context,
                                                                       MaterialPageRoute(
                                                                         builder: (BuildContext
                                                                         context) =>
                                                                          ViewDetailClosed(id: '',),
                                                                       ),
-                                                                    );
+                                                                    );*/
+                                                                    Get.to(()=>  ViewDetailClosed(id: '',),transition: Transition.leftToRight);
+
                                                                   } else if (value.dataList.data!.data?[index].status == 'cancelled') {
-                                                                    Navigator.push(
+                                                                   /* Navigator.push(
                                                                       context,
                                                                       MaterialPageRoute(
                                                                         builder: (BuildContext
                                                                         context) =>
                                                                         const SessionDetailCancel(),
                                                                       ),
-                                                                    );
+                                                                    );*/
+                                                                    Get.to(()=> const SessionDetailCancel(),transition: Transition.leftToRight);
+
                                                                   }
                                                                 },
                                                                 onLongPress: () {

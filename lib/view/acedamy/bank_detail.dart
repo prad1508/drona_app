@@ -2,6 +2,7 @@
 
 import 'package:drona/res/widget/Academy_Listing/edit_bank_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Bank_Details extends StatefulWidget {
   const Bank_Details({super.key});
@@ -25,11 +26,13 @@ class _Bank_DetailsState extends State<Bank_Details> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
                 onPressed: () {
-                  Navigator.push(
+                 /* Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const Edit_Bank_Details()),
-                  );
+                  );*/
+                  Get.to(()=> const Edit_Bank_Details(),transition: Transition.leftToRight);
+
                 },
                 icon: Icon(Icons.edit)),
           )

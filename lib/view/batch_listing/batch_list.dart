@@ -3,6 +3,8 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/widget/round_button.dart';
 
@@ -332,7 +334,9 @@ class _BatchListsState extends State<BatchLists> {
                     rounded: true,
                     color: Theme.of(context).primaryColor,
                     onPress: () { 
-                      Navigator.pushNamed(context, RoutesName.AddTraineeList1);
+                     /* Navigator.pushNamed(context, RoutesName.AddTraineeList1);
+                      Get.to(() => const LoginView(),transition: Transition.leftToRight);*/
+
                       //showExitPopup(context);
                     }),
               ],

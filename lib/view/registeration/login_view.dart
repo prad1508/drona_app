@@ -1,5 +1,9 @@
+import 'package:drona/view/registeration/registration.dart';
+import 'package:drona/view/registeration/reset_password.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/widget/round_button.dart';
 import '/utils/routes/routes_name.dart';
@@ -194,7 +198,9 @@ class _LoginViewState extends State<LoginView> {
                     style:
                         TextButton.styleFrom(padding: const EdgeInsets.all(0)),
                     onPressed: () {
-                      Navigator.pushNamed(context, RoutesName.resetPassword);
+                      /*Navigator.pushNamed(context, RoutesName.resetPassword);*/
+                      Get.to(() => const ResetPassword(), transition: Transition.leftToRight);
+
                     },
                     child: Text(
                       "Forgot password?",
@@ -236,7 +242,9 @@ class _LoginViewState extends State<LoginView> {
               ),
               InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RoutesName.signUp);
+                   // Navigator.pushNamed(context, RoutesName.signUp);
+                    Get.to(() => const Registration(),transition: Transition.leftToRight);
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -246,7 +254,8 @@ class _LoginViewState extends State<LoginView> {
                         style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(0)),
                         onPressed: () {
-                          Navigator.pushNamed(context, RoutesName.registration);
+                          //Navigator.pushNamed(context, RoutesName.registration);
+                          Get.to(() => const Registration(),transition: Transition.leftToRight);
                         },
                         child: Text(
                           "Signup",

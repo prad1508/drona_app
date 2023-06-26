@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../res/language/language.dart';
 import '../../res/widget/customTextField.dart';
@@ -274,13 +276,15 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         //  showAlertDialog(context);
-                        Navigator.push(
+                       /* Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 AddCoachProfile(),
                           ),
-                        );
+                        );*/
+                        Get.to(()=> const AddCoachProfile(),transition: Transition.leftToRight);
+
                       }),
                 ],
               ),

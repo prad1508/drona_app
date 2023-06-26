@@ -4,11 +4,14 @@ import 'package:drona/data/response/status.dart';
 import 'package:drona/utils/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/widget/round_button.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
+import '../academy/academy_details.dart';
 import '../trainne_addmanual.dart';
 import 'edit_batch_listing.dart';
 
@@ -82,6 +85,8 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           EditBatchListing(Listindex: widget.ListIndex),
                     ),
                   );
+                  Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+
                 },
                 icon: const Icon(
                   Icons.edit,
@@ -729,7 +734,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                           left: 10),
                                                       child: TextButton(
                                                           onPressed: () {
-                                                            Navigator.push(
+                                                            /*Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                 builder: (BuildContext
@@ -745,7 +750,18 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                       "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
                                                                     ),
                                                               ),
-                                                            );
+                                                            );*/
+                                                            Get.to(()=>  TrainAddManualy(
+                                                              batchId: value
+                                                                  .dataList
+                                                                  .data!
+                                                                  .data![0]
+                                                                  .uid
+                                                                  .toString(),
+                                                              batchName:
+                                                              "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
+                                                            ),transition: Transition.leftToRight);
+
                                                           },
                                                           child: Text(
                                                             'Enter Manually',

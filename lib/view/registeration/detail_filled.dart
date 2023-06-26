@@ -16,10 +16,10 @@ class DetailFilled extends StatefulWidget {
   const DetailFilled({super.key});
 
   @override
-  State<DetailFilled> createState() => _TellusAcadmicState();
+  State<DetailFilled> createState() => _DetailFilledState();
 }
 
-class _TellusAcadmicState extends State<DetailFilled> {
+class _DetailFilledState extends State<DetailFilled> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
