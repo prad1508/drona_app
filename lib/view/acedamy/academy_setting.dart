@@ -215,12 +215,12 @@ class _academy_settingState extends State<academy_setting> {
                           size: 15,
                         ),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Bank_Details()),
-                          );
-                          Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => const Bank_Details()),
+                          // );
+                          Get.to(()=> const Bank_Details(),transition: Transition.leftToRight);
 
                         },
                       ),

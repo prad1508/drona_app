@@ -78,14 +78,14 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          EditBatchListing(Listindex: widget.ListIndex),
-                    ),
-                  );
-                  Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) =>
+                  //         EditBatchListing(Listindex: widget.ListIndex),
+                  //   ),
+                  // );
+                  Get.to(()=>  EditBatchListing(Listindex: widget.ListIndex),transition: Transition.leftToRight);
 
                 },
                 icon: const Icon(

@@ -74,6 +74,7 @@ class UserViewModel with ChangeNotifier {
     sp.remove('academy_name');
     _myRepo.fetchUserListApi().then((value) {
       Utils.flushBarErrorMessage('Login Successfully', context);
+      Utils.flushBarErrorMessage('Logout Successfully', context);
       sp.remove('token');
     });
     return true;

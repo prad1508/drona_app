@@ -76,7 +76,8 @@ class RegistrationViewModel with ChangeNotifier {
         value['data']['ccode'],
         value['data']['mobno'],
         value['data']['role'],
-        value['data']['gender']
+        value['data']['gender'],
+        // value['data']['academy_name']
       ]);
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage('Register Successfully', context);
@@ -135,6 +136,7 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.basicDetailsListApi(data).then((value) async {
       setLoading(false);
       final prefsData = await SharedPreferences.getInstance();
+
       prefsData.setString('acadmicName', acadmicName);
       Utils.flushBarErrorMessage('Basic Details update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.chooseService);

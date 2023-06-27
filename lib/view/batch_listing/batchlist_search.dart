@@ -488,12 +488,12 @@ class _SearchBatchListState extends State<SearchBatchList> {
                         rounded: true,
                         color: Theme.of(context).primaryColor,
                         onPress: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Layout(selectedIndex: 0)));
-                          Get.to(()=> const Academy_Detail_Page(),transition: Transition.leftToRight);
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             Layout(selectedIndex: 0)));
+                          Get.to(()=> const  Layout(selectedIndex: 0),transition: Transition.leftToRight);
 
                         })
                     : SizedBox()

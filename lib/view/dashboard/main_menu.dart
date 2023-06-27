@@ -8,10 +8,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
-import '../../utils/routes/routes_name.dart';
 import '../../view_model/user_view_model.dart';
 
 import '../batch_listing/batchlist_search.dart';
@@ -52,6 +50,7 @@ class _MainMenuState extends State<MainMenu> {
   getData() async {
     final prefs = await SharedPreferences.getInstance();
     details = prefs.getStringList('registerResponse')!;
+    String? items = prefs.getString('acadmicName')!;
     fullname = details[0];
     academicname = prefs.getString('acadmicName')!;
 

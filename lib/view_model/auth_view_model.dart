@@ -55,6 +55,7 @@ class AuthViewModel with ChangeNotifier {
       if (save == true) {
         userPreference.savecredential(SavecredentialModel(
             userid: data['userid'], password: data['password']));
+      }
         final prefsData = await SharedPreferences.getInstance();
         prefsData.setStringList("registerResponse", <String>[
 
@@ -73,7 +74,9 @@ class AuthViewModel with ChangeNotifier {
           value['Profiles'][0]['gender'].toString(),
           value['Profiles'][0]['academy_name'].toString(),
         ]);
-      }
+
+      prefsData.setString('acadmicName', value['Profiles'][0]['academy_name']);
+
       userPreference.saveToken(UserModel(data: value['token'].toString()));
       userPreference
           .saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
@@ -134,7 +137,6 @@ class AuthViewModel with ChangeNotifier {
              case 0: {
               /* Navigator.pushNamed(context, RoutesName.tellusAcadmic);*/
                Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
-
                break;
              }
              case 3:
@@ -149,7 +151,6 @@ class AuthViewModel with ChangeNotifier {
                {
                  //Navigator.pushNamed(context, RoutesName.chooseFacility);
                  Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
-
                  break;
                }
 
