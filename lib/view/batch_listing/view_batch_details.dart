@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
+import '../../res/app_url.dart';
 import '../../res/widget/round_button.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
@@ -17,7 +18,9 @@ import 'edit_batch_listing.dart';
 
 class ViewBatchDetails extends StatefulWidget {
   final int ListIndex;
-  const ViewBatchDetails({super.key, required this.ListIndex});
+  final String batchUid;
+  final String totalTrainee;
+  const ViewBatchDetails({super.key, required this.ListIndex ,  this.batchUid='' , this.totalTrainee=''});
 
   @override
   State<ViewBatchDetails> createState() => _ViewBatchDetailsState();
@@ -25,13 +28,15 @@ class ViewBatchDetails extends StatefulWidget {
 
 class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   //multi language support
+  late Map<String, dynamic> data;
   final FlutterLocalization _localization = FlutterLocalization.instance;
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
   TraineeViewModel traineeViewModel = TraineeViewModel();
-  Map<String, dynamic> data = {"filter_batch_uid": "", "search": ""};
+
   @override
   initState() {
     super.initState();
+    data = {"filter_batch_uid": widget.batchUid, "search": ""};
     traineeViewModel.fetchTraineeListSearchApi(data);
     batchListViewViewModel.fetchBatchListListApi();
   }
@@ -335,7 +340,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                 height: 10,
                               ),
                               SizedBox(
-                                height: 50,
+                                 height: 50,
                                 child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: value
@@ -408,7 +413,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               ),
                               //Trainee List View
                               Row(
-                                children: const [
+                                children:  [
                                   Text(
                                     "Trainee List",
                                     style: TextStyle(
@@ -416,7 +421,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 10)),
                                   Text(
-                                    "06",
+                                    widget.totalTrainee,
                                     style: TextStyle(
                                         fontSize: 10, fontWeight: FontWeight.w400),
                                   )
@@ -425,242 +430,297 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               SizedBox(height: 20),
                               //List
 
+                              // SingleChildScrollView(
+                                // child: Expanded(
+                                  // height: 
+                                  // child:
+                                  ChangeNotifierProvider<TraineeViewModel>(
+                                    create: (BuildContext context) => traineeViewModel,
+                                    child: Consumer<TraineeViewModel>(
+                                      builder: (context, value, _) {
+                                      switch (value.dataList.status!) {
+                                        case Status.loading:
+                                          return const Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.teal,
+                                            ),
+                                          );
+                                        case Status.completed:
+                                          return SingleChildScrollView(
+                                            child: Container(
+                                              height: 500,
+                                              child: ListView.builder(
+                                                itemCount: value.dataList.data?.data.length,
+                                                itemBuilder: (context, index) {
+                                                  return Column(
+                                                    children: [
+                                                      Container(
+                                                        color: Color(0XFFDFE1E4).withOpacity(0.3),
+                                                        height: 115,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: 41,
+                                                                    height: 46,
+                                                                    child: CircleAvatar(
+                                                                      backgroundImage: NetworkImage(AppUrl.profileimageListendPoint +
+                                                                          value.dataList.data!.data[index].image,
+                                                                      ),
+                                                                      // AssetImage('assets/images/user_profile.png'),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment: Alignment.bottomLeft,
+                                                                    child: Container(
+                                                                      width: 44,
+                                                                      height: 20,
+                                                                      decoration: BoxDecoration(
+                                                                        color: Color(0xff47C088),
+                                                                        borderRadius: BorderRadius.circular(4),
+                                                                      ),
+                                                                      child: Center(
+                                                                        child: Text(
+                                                                          'Active',
+                                                                          style: TextStyle(
+                                                                            color: Color(0xffFBFBFC),
+                                                                            fontSize: 10,
+                                                                            fontFamily: 'Lato',
+                                                                            fontWeight: FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:  EdgeInsets.only(left: 15.0),
+                                                                        child: Text(value.dataList.data!.data[index].traineeName,
+                                                                          style: TextStyle(
+                                                                            color: Color(0xff39404A),
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Lato',
+                                                                            fontWeight: FontWeight.w700,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(width: 10),
+                                                                      Container(
+                                                                        width: 67,
+                                                                        height: 20,
+                                                                        decoration: BoxDecoration(
+                                                                          color: Color(0xffEDF9F3),
+                                                                          borderRadius: BorderRadius.circular(4),
+                                                                        ),
+                                                                        child: Center(
+                                                                          child: Text(
+                                                                            "Onboarded",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff47C088),
+                                                                              fontSize: 10,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight: FontWeight.w400,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Align(
+                                                                        alignment: Alignment.centerRight,
+                                                                        widthFactor: 4.5,
+                                                                        child: SizedBox(
+                                                                          width: 24,
+                                                                          height: 24,
+                                                                          child: CircleAvatar(
+                                                                            backgroundImage: NetworkImage(AppUrl.imageListendPoint +
+                                                                                    value.dataList.data!.data[index].serviceicon,
+                                                                              ),
+                                                                            // AssetImage('assets/images/tennis.png'),
+                                                                          //  backgroundColor: Colors.white,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(height: 1),
+                                                                  Row(
+                                                                    children:  [
+                                                                      Padding(
+                                                                          padding:  EdgeInsets.only(left: 15.0),
+                                                                          child: value.dataList.data?.data[index].gender =='male' ?
+                                                                          Text(
+                                                                            "Male",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight: FontWeight.w400,
+                                                                            ),
+                                                                          ) : value.dataList.data?.data[index].gender =='female'?
+                                                                          Text(
+                                                                            "Female",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight: FontWeight.w400,
+                                                                            ),
+                                                                          ) :  Text(
+                                                                            "Others",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight: FontWeight.w400,
+                                                                            ),
+                                                                          )
+                                                                      ),
+                                                                      Text(
+                                                                        " | ",
+                                                                        style: TextStyle(
+                                                                          color: Color(0xff39404A),
+                                                                          fontSize: 12,
+                                                                          fontFamily: 'Lato',
+                                                                          fontWeight: FontWeight.w400,
+                                                                        ),
+                                                                      ),
+                                                                      Text(value.dataList.data!.data[index].dob,
+                                                                        style: TextStyle(
+                                                                          color: Color(0xff39404A),
+                                                                          fontSize: 12,
+                                                                          fontFamily: 'Lato',
+                                                                          fontWeight: FontWeight.w400,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(height: 12),
+                                                                  Row(
+                                                                    children:  [
+                                                                      Padding(
+                                                                        padding:  EdgeInsets.only(left: 15.0),
+                                                                        child: Text(
+                                                                          value.dataList.data!.data[index].batchname,
+                                                                          style: TextStyle(
+                                                                            color: Color(0xff39404A),
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Lato',
+                                                                            fontWeight: FontWeight.w700,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(left: 15),
+                                                                        child: Text(
+                                                                          "03:00 PM to 05:30 PM",
+                                                                          style: TextStyle(
+                                                                            color: Color(0xff39404A),
+                                                                            fontSize: 12,
+                                                                            fontFamily: 'Lato',
+                                                                            fontWeight: FontWeight.w400,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(height: 5),
+                                                                  SizedBox(height: 5),
+                                                                  Container(
+                                                                    width: 300,
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.only(left: 15),
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children:  [
+                                                                              Text(
+                                                                                "Fee : ",
+                                                                                style: TextStyle(
+                                                                                  color: Color(0xff39404A),
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: 'Lato',
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                              ),
+                                                                              Text(
+                                                                                '₹ ${value.dataList.data?.data[index].fees}',
+                                                                                style: TextStyle(
+                                                                                  color: Color(0xff39404A),
+                                                                                  fontSize: 12,
+                                                                                  fontFamily: 'Lato',
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
 
-          ChangeNotifierProvider<TraineeViewModel>(
-          create: (BuildContext context) => traineeViewModel,
-          child: Consumer<TraineeViewModel>(
-          builder: (context, value, _) {
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
 
-                   return
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Divider(
+                                                        height: 1,
+                                                        thickness: 1,
+                                                      ) ,
+                                                    ],
+                                                  );
 
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        case Status.error:
+                                          return Center(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.error_outline,
+                                                    color: Theme.of(context).primaryColorDark,
+                                                    size: 100.0,
+                                                  ),
+                                                  NoData()
+                                                  // Text(
+                                                  //   value.dataList.message.toString(),
+                                                  //   style: TextStyle(
+                                                  //       color: Theme.of(context).primaryColor,
+                                                  //       fontSize: 20,
+                                                  //       height: 2),
+                                                  // )
+                                                ],
+                                              ));
+                                      }
 
-                                      SizedBox(
-                                      height: 113,
-                                      child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                      Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                      SizedBox(
-                                      width: 41,
-                                      height: 46,
-                                      child: CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                      'assets/images/user_profile.png')),
-                                      ),
-                                      Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Container(
-                                      width: 44,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                      color: Color(0xff47C088),
-                                      borderRadius:
-                                      BorderRadius.circular(4)),
-                                      child: Center(
-                                      child: Text(
-                                      "Active",
-                                      style: TextStyle(
-                                      color: Color(0xffFBFBFC),
-                                      fontSize: 10,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w600),
-                                      ),
-                                      ),
-                                      ),
-                                      ),
-                                      ],
-                                      ),
-                                      Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                      Row(
-                                      children: [
-                                      Padding(
-                                      padding:
-                                      const EdgeInsets.only(left: 15.0),
-                                      child: Text(
-                                      "Riyaz Mohammed",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 14,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w700),
-                                      ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Container(
-                                      width: 67,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                      color: Color(0xffEDF9F3),
-                                      borderRadius:
-                                      BorderRadius.circular(4)),
-                                      child: Center(
-                                      child: Text(
-                                      "Onboarded",
-                                      style: TextStyle(
-                                      color: Color(0xff47C088),
-                                      fontSize: 10,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      ),
-                                      ),
-                                      ),
-                                      Align(
-                                      alignment: Alignment.centerRight,
-                                      widthFactor: 4.5,
-                                      child: SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                      'assets/images/tennis.png'),
-                                      backgroundColor: Colors.white,
-                                      ),
-                                      ),
-                                      ),
-                                      ],
-                                      ),
-                                      SizedBox(height: 1),
-                                      Row(
-                                      children: const [
-                                      Padding(
-                                      padding:
-                                      const EdgeInsets.only(left: 15.0),
-                                      child: Text(
-                                      "Male ",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      ),
-                                      ),
-                                      Text(
-                                      "|",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                      " 34 Year",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      )
-                                      ],
-                                      ),
-                                      SizedBox(height: 12),
-                                      Row(
-                                      children: const [
-                                      Padding(
-                                      padding:
-                                      const EdgeInsets.only(left: 15.0),
-                                      child: Text(
-                                      "Tennis Batch Evening",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 14,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w700),
-                                      ),
-
-                                      ),
-                                      Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: Text(
-                                      "03:00 PM to 05:30 PM",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      ),
-                                      ),
+                                      },
+                                    ),
+                                  ),
+                                // ),
+                              // ),
 
 
 
-                                      ],
-                                      ),
-                                      SizedBox(height: 5),
 
-                                      SizedBox(height: 5),
-                                      Container(
-                                      width: 300,
-                                      child: Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                                      children: [
-                                      Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                      Text(
-                                      "Fee : ",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 14,
-                                      fontFamily: 'Lato',
-                                      fontWeight:
-                                      FontWeight.w700),
-                                      ),
-                                      Text(
-                                      "₹15,000",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight:
-                                      FontWeight.w400),
-                                      ),
-                                      ],
-                                      ),
-
-                                      Row(
-
-                                      children: const [
-                                      Text(
-                                      "Due : ",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 14,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                      "₹30,000",
-                                      style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400),
-                                      ),
-                                      ],
-                                      )
-                                      ],
-                                      ),
-                                      ),
-                                      )
-                                      ],
-                                      ),
-                                      ],
-                                      ),
-                                      );
-
-                       
-
-
-          })),
-
-
-                              //
+                      //
                               RoundButton(
                                   loading: false,
                                   title: 'Add Trainee',

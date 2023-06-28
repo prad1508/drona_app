@@ -57,6 +57,9 @@ class Data {
   String? trainee_name;
   String? trainee_userid;
   String? timestamp;
+  String? gender='';
+  String? batchname='';
+  String? dob;
   String? cDate;
   String? cTime;
   String? cdd;
@@ -71,6 +74,9 @@ class Data {
         this.trainee_profile_uid,
         this.trainee_name,
         this.trainee_userid,
+        this.batchname,
+        this.gender='',
+        this.dob='',
         this.timestamp,
         this.cDate,
         this.cTime,
@@ -86,8 +92,11 @@ class Data {
     batch_uid = json['batch_uid'];
     trainee_profile_uid = json['trainee_profile_uid'];
     trainee_name = json['trainee_name'];
+    batchname = json['batch_name'];
+    gender = json['gender'];
     trainee_userid = json['trainee_userid'];
     timestamp = json['timestamp'];
+    dob = json['dob'];
     cDate = json['cDate'];
     cTime = json['cTime'];
     cdd = json['cdd'];
@@ -103,8 +112,11 @@ class Data {
     data['batch_uid'] = this.batch_uid;
     data['trainee_profile_uid'] = this.trainee_profile_uid;
     data['trainee_name'] = this.trainee_name;
+    data['batch_name'] = this.batchname;
+    data['gender'] = this.gender;
     data['trainee_userid'] = this.trainee_userid;
     data['timestamp'] = this.timestamp;
+    data['dob'] = this.dob;
     data['cDate'] = this.cDate;
     data['cTime'] = this.cTime;
     data['cdd'] = this.cdd;

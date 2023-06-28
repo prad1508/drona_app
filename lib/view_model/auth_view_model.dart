@@ -40,15 +40,34 @@ class AuthViewModel with ChangeNotifier {
 
   Future<void> loginApi(dynamic data, save, BuildContext context) async {
     setLoading(true);
-    _myRepo.academyRegistrationTrack().then((value) async {
+
+
+    try {
+      final value = await _myRepo.academyRegistrationTrack();
       print(value);
       setLoading(false);
-      setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0 ;
-      print("setupprogess is $setupProgress");
+      setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0;
+      print("setupprogress is $setupProgress");
 
-      setupFinish = value['onboarding_setup_finish'] != null ?  value['onboarding_setup_finish'] : false ;
-      print("setupfrinish is $setupFinish");
-    });
+      setupFinish = value['onboarding_setup_finish'] != null ? value['onboarding_setup_finish'] : false;
+      print("setupfinish is $setupFinish");
+
+      // Further code that depends on the API response
+      // ...
+    } catch (error) {
+      // Handle any errors that occurred during the API request
+      print("Error: $error");
+    }
+
+    // _myRepo.academyRegistrationTrack().then((value) async {
+    //   print(value);
+    //   setLoading(false);
+    //   setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0 ;
+    //   print("setupprogess is $setupProgress");
+    //
+    //   setupFinish = value['onboarding_setup_finish'] != null ?  value['onboarding_setup_finish'] : false ;
+    //   print("setupfrinish is $setupFinish");
+    // });
     _myRepo.loginApi(data).then((value) async {
       setLoading(false);
       final userPreference = Provider.of<UserViewModel>(context, listen: false);

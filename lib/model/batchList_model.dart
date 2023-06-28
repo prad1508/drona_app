@@ -58,6 +58,7 @@ class Data {
   String? onlineSessionUrl;
   bool? provideOnlineSessions;
   List? batchDaysShort;
+  int? totalTrainee;
   List<String>? batchDays;
 
   Data(
@@ -85,6 +86,7 @@ class Data {
       this.batchTimingFrom,
       this.batchTimingTo,
       this.onlineSessionUrl,
+        this.totalTrainee = 0,
       this.provideOnlineSessions,
       this.batchDaysShort,
       this.batchDays});
@@ -110,6 +112,7 @@ class Data {
     cmm = json['cmm'];
     cyy = json['cyy'];
     status = json['status'];
+    totalTrainee = json['total_trainee'];
     batch_type = json['type_batch'];
     batchTimingFrom = json['batch_timing_from'];
     batchTimingTo = json['batch_timing_to'];
@@ -142,6 +145,7 @@ class Data {
     data['cmm'] = this.cmm;
     data['cyy'] = this.cyy;
     data['status'] = this.status;
+    data['total_trainee'] = this.totalTrainee;
     data['batch_timing_from'] = this.batchTimingFrom;
     data['batch_timing_to'] = this.batchTimingTo;
     data['online_session_url'] = this.onlineSessionUrl;

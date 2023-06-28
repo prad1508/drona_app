@@ -70,6 +70,11 @@ class Datum {
   String traineeUserid;
   String timestamp;
   String cDate;
+  String gender;
+  String dob;
+  String batchname;
+  String serviceicon;
+  String image;
   String cTime;
   String cdd;
   String cmm;
@@ -89,6 +94,11 @@ class Datum {
     required this.timestamp,
     required this.cDate,
     required this.cTime,
+    this.gender ='',
+    this.serviceicon ='',
+    this.image ='',
+    this.dob ='',
+    this.batchname ='',
     required this.cdd,
     required this.cmm,
     required this.cyy,
@@ -106,6 +116,11 @@ class Datum {
         traineeName: json["trainee_name"],
         traineeUserid: json["trainee_userid"],
         timestamp: json["timestamp"],
+        gender: json["gender"],
+        serviceicon: json["service_iconname"],
+        image: json["img"],
+        dob: json["dob"],
+        batchname: json["batch_name"],
         cDate: json["cDate"],
         cTime: json["cTime"],
         cdd: json["cdd"],
@@ -125,6 +140,11 @@ class Datum {
         "trainee_name": traineeName,
         "trainee_userid": traineeUserid,
         "timestamp": timestamp,
+        "gender": gender,
+        "dob": dob,
+        "service_iconname": batchname,
+        "batch_name": serviceicon,
+        "img": image,
         "cDate": cDate,
         "cTime": cTime,
         "cdd": cdd,
