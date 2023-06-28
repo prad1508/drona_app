@@ -83,7 +83,6 @@ class _ChooseFacilityState extends State<ChooseFacility> {
   serviceId() async {
     final prefsData = await SharedPreferences.getInstance();
     List<String>? serviceId = prefsData.getStringList('SelectedServices');
-
     facilityViewViewModel.fetchFacilityListApi(serviceId?[0].toString());
   }
 

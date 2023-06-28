@@ -152,6 +152,10 @@ class RegistrationViewModel with ChangeNotifier {
   Future<void> servicePost(dynamic data, BuildContext context) async {
     setLoading(true);
     setUid(uid);
+
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString('service_name', data['services'][0]['service_name']);
+
     _myRepo.servicePostListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage('Services update Successfully', context);
@@ -169,7 +173,7 @@ class RegistrationViewModel with ChangeNotifier {
     setLoading(true);
     _myRepo.facilityePostListApi(data).then((value) async {
       setLoading(false);
-      Utils.flushBarErrorMessage('Facilty Sved Successfully', context);
+      Utils.flushBarErrorMessage('Facility Saved Successfully', context);
 
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
       Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
@@ -188,7 +192,7 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.programPostListApi(data).then((value) async {
       String role ='';
       setLoading(false);
-      Utils.flushBarErrorMessage('Program update Successfully', context);
+    //  Utils.flushBarErrorMessage('Program update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.detailFilled);
       /// check role 1st
       final prefsData = await SharedPreferences.getInstance();
@@ -196,31 +200,31 @@ class RegistrationViewModel with ChangeNotifier {
       role = items![4];
 
       print("checking role , $role");
-      if(role == '0')
-        {
-        /*  Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) =>  WelcomeScreen(),
-            ),
-          );*/
-         // Navigator.pushNamed(context, RoutesName.WelcomeScreen);
-          Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
-
-        }
-      else
-        {
-         /* Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const DetailFilled(),
-            ),
-          );*/
-          //Navigator.pushNamed(context, RoutesName.DetailFilled);
-          Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
-
-
-        }
+      // if(role == '0')
+      //   {
+      //   /*  Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (BuildContext context) =>  WelcomeScreen(),
+      //       ),
+      //     );*/
+      //    // Navigator.pushNamed(context, RoutesName.WelcomeScreen);
+      //     Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+      //
+      //   }
+      // else
+      //   {
+      //    /* Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (BuildContext context) => const DetailFilled(),
+      //       ),
+      //     );*/
+      //     //Navigator.pushNamed(context, RoutesName.DetailFilled);
+      //     Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+      //
+      //
+      //   }
 
     }).onError((error, stackTrace) {
       setLoading(false);

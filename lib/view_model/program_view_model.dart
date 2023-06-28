@@ -335,7 +335,6 @@ class ProgramViewViewModel with ChangeNotifier {
     _myRepo.fetchProgramListApi(data).then((value){
       print(value.data![0].catName.toString());
       setDataList(ApiResponse.completed(value));
-
     }).onError((error, stackTrace){
       setDataList(ApiResponse.error(error.toString()));
     });

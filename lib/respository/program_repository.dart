@@ -9,10 +9,12 @@ class ProgramRepository {
 
   Future<ProgramListModel> fetchProgramListApi(data)async{
     try{
+      print("data is $data");
       dynamic response = await _apiServices.getGetApiResponse(AppUrl.programListEndPoint + data);
       return response = ProgramListModel.fromJson(response);
       
     }catch(e){
+      print(e);
       rethrow ;
     }
   }

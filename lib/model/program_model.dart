@@ -52,8 +52,8 @@ class Data {
       this.cDate,
       this.cTime,
       this.serviceUid,
-      this.name,
-      this.programoption});
+      this.name ='',
+      this.programoption = const [''], });
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -68,7 +68,7 @@ class Data {
     cTime = json['cTime'];
     serviceUid = json['service_uid'];
     name = json['name'];
-    programoption = json['programoption '].cast<String>();
+    programoption = json['programoption']!=null ? json['programoption ']: [''];
   }
 
   Map<String, dynamic> toJson() {

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/widget/progress_pills.dart';
@@ -14,7 +17,10 @@ import '../../view_model/program_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../view_model/registration_view_model.dart';
+import '../welcome_screen.dart';
+import 'detail_filled.dart';
 
+bool sendData = false;
 class ChooseProgram extends StatefulWidget {
   const ChooseProgram({super.key});
 
@@ -28,11 +34,17 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
   ProgramViewViewModel programViewViewModel = ProgramViewViewModel();
   late Map<String, dynamic> data;
   late TabController _tabController;
+  String serviceName='';
 
+  getData()
+  async {
+    final prefs = await SharedPreferences.getInstance();
+    serviceName = prefs.getString('service_name')!;
+  }
 
   @override
   void initState() {
-
+    getData();
     for (var node in programViewViewModel.focusNodes) {
       node.addListener(() {
          setState(() {});
@@ -63,6 +75,8 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
   serviceId() async {
     final prefsData = await SharedPreferences.getInstance();
     List<String>? serviceId = prefsData.getStringList('SelectedServices');
+    print("11111");
+    print(serviceId);
     programViewViewModel.fetchProgramListApi(serviceId![0].toString());
   }
 
@@ -121,10 +135,17 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                         children: <Widget>[
                                           Align(
                                             alignment: Alignment.center,
-                                            child: Text(
-                                              AppLocale.title31.getString(context),
-                                              style: Theme.of(context).textTheme.titleLarge,
-                                            ),
+                                            child:Row(
+                                              children: [
+                                                Text(
+                                                  AppLocale.title31.getString(context),
+                                                  style: Theme.of(context).textTheme.titleLarge,
+                                                ),
+                                                Text(" "),
+                                                Text("For $serviceName" , style: Theme.of(context).textTheme.titleLarge,),
+                                              ],
+                                            )
+
                                           ),
                                           const SizedBox(height: 20,),
                                           TabBar(
@@ -1631,7 +1652,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                               onPress: () async {
                                 print(data);
                                 // programViewViewModel.isContinueButtonEnabled ?
-                                 registration.programPost(data, context);
+                                //
+                                 /// open modal
+                                registration.programPost(data, context);
+                                openModal(context , serviceName);
+
                                 //     :null;
                               },
                             );
@@ -1870,8 +1895,79 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
         children: children,
       ),
     );
-    ;
+
   }
+
+}
+
+void openModal(BuildContext context , String service_name) {
+  String role = '';
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: AlertDialog(
+          title: Center(child: Text('Confirmation')),
+          content:  Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Program Setup Completed For $service_name',style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey
+              ),),
+              SizedBox(height: 5),
+              Text('To complete setup for additional services, visit',style: TextStyle(
+                fontSize: 12
+              ),),
+              SizedBox(height: 5),
+              Text('"Academy Management"',style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500
+              ),)
+            ],
+          ),
+          contentPadding: EdgeInsets.all(20),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: double.infinity,
+                child: RoundButton(
+                  title: 'Continue',
+                  onPress: () async {
+                    Navigator.pop(context);
+                    try {
+                      final prefsData = await SharedPreferences.getInstance();
+                      List<String>? items = prefsData.getStringList('registerResponse');
+                      role = items![4];
+                      if(role == '0')
+                      {
+
+                        Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+                      }
+                      else
+                      {
+                        Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+                      }
+                    } catch (error){
+
+                    }
+
+                  },
+                  rounded: true,
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+
+                )
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
 
 
