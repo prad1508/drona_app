@@ -312,6 +312,8 @@ class _SearchBatchListState extends State<SearchBatchList> {
                         });
                       }
 
+
+
                       switch (value.dataList.status!) {
                         case Status.loading:
                           return const Center(
