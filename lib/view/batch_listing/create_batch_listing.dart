@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
@@ -16,7 +18,8 @@ import '../../view_model/myprogram_view_model.dart';
 import '../profile/create_profile.dart';
 
 class CreateBatchListing extends StatefulWidget {
-  const CreateBatchListing({super.key});
+  String pathPage;
+   CreateBatchListing({this.pathPage='' ,super.key});
 
   @override
   State<CreateBatchListing> createState() => _CreateBatchListingState();
@@ -160,800 +163,697 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final batch = Provider.of<BatchViewViewModel>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
-      home: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+    return WillPopScope(
+      onWillPop: () => showExitPopup(context),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        supportedLocales: _localization.supportedLocales,
+        localizationsDelegates: _localization.localizationsDelegates,
+        home: Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          appBar: AppBar(
+            leading:   widget.pathPage == "dashBoard" ? IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ) : null,
+            title: Text(
+              'Create Batch',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
-          title: Text(
-            'Create Batch',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Material(
-            color: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Align(
-                      alignment: Alignment.topLeft, child: Text('Services')),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1,
-                          color: const Color.fromARGB(255, 218, 216, 216)),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+          body: SingleChildScrollView(
+            child: Material(
+              color: Colors.white,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                     Align(
+                        alignment: Alignment.topLeft, child: Text('Services' , style: Theme.of(context).textTheme.bodyMedium,)),
+                    const SizedBox(
+                      height: 10,
                     ),
-                    child: ChangeNotifierProvider<AcademyViewViewModel>(
-                        create: (context) => academyViewViewModel,
-                        child: Consumer<AcademyViewViewModel>(
-                            builder: (context, value, child) {
-                              activeServiceValue.clear();
-                              activeServices.clear();
-                              // print(value.dataList.data!.services![0].status);
-                              if (value.dataList.data != null) {
-                                for (var i = 0;
-                                i < value.dataList.data!.services!.length;
-                                i++) {
-                                  if (value.dataList.data!.services![i].status
-                                      .toString() ==
-                                      'active') {
-                                    activeServiceValue.add(value
-                                        .dataList.data!.services![i].uid
-                                        .toString());
-                                    activeServices.add(DropdownMenuItem(
-                                        value: value.dataList.data!.services![i].uid
-                                            .toString(),
-                                        child: Text(value
-                                            .dataList.data!.services![i].serviceName
-                                            .toString())));
-                                  }
-                                }
-                              }
-                              value.dataList.data == null
-                                  ? null
-                                  : assignSeviceId(activeServiceValue[0]);
-                              return DropdownButton(
-                                  isExpanded: true,
-                                  underline: DropdownButtonHideUnderline(
-                                      child: Container()),
-                                  value: selectedService,
-                                  hint: const Text("Choose Your Service"),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      selectedService = newValue!;
-                                      _refresh = true;
-                                    });
-                                  },
-                                  items: activeServices);
-                            })),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Name',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: batchName,
-                    decoration: InputDecoration(
-                      hintText: 'eg. Cricket',
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: const Color.fromARGB(255, 218, 216, 216)),
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Assign Coach',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      TextButton(
-                        child: const Text(
-                          'Add Coach',
-                          style: TextStyle(color: Colors.redAccent),
-                        ),
-                        onPressed: () {
-                         /* Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CreateProfile(),
-                            ),
-                          );*/
-                          Get.to(()=>  CreateProfile(),transition: Transition.leftToRight);
-
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1,
-                          color: const Color.fromARGB(255, 218, 216, 216)),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: ChangeNotifierProvider<CoachlistViewViewModel>(
-                        create: (context) => coachlistViewViewModel,
-                        child: Consumer<CoachlistViewViewModel>(
-                            builder: (context, value, child) {
-                              value.dataList.data != null
-                                  ? profileUid = value
-                                  .dataList.data!.coachlist[0].uid
-                                  .toString()
-                                  : null;
-                              if (value.dataList.data != null) {
-                                List<DropdownMenuItem<String>> dropdownItems =
-                                List.generate(
-                                    value.dataList.data!.coachlist.length,
-                                        (index) {
-                                      return DropdownMenuItem(
-                                          value: value
-                                              .dataList.data!.coachlist[index].uid
+                      child: ChangeNotifierProvider<AcademyViewViewModel>(
+                          create: (context) => academyViewViewModel,
+                          child: Consumer<AcademyViewViewModel>(
+                              builder: (context, value, child) {
+                                activeServiceValue.clear();
+                                activeServices.clear();
+                                // print(value.dataList.data!.services![0].status);
+                                if (value.dataList.data != null) {
+                                  for (var i = 0;
+                                  i < value.dataList.data!.services!.length;
+                                  i++) {
+                                    if (value.dataList.data!.services![i].status
+                                        .toString() ==
+                                        'active') {
+                                      activeServiceValue.add(value
+                                          .dataList.data!.services![i].uid
+                                          .toString());
+                                      activeServices.add(DropdownMenuItem(
+                                          value: value.dataList.data!.services![i].uid
                                               .toString(),
                                           child: Text(value
-                                              .dataList.data!.coachlist[index].name
-                                              .toString()));
-                                    });
-
+                                              .dataList.data!.services![i].serviceName
+                                              .toString())));
+                                    }
+                                  }
+                                }
+                                value.dataList.data == null
+                                    ? null
+                                    : assignSeviceId(activeServiceValue[0]);
                                 return DropdownButton(
                                     isExpanded: true,
                                     underline: DropdownButtonHideUnderline(
                                         child: Container()),
-                                    value: profileUid,
+                                    value: selectedService,
+                                    hint: const Text("Choose Your Service"),
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        profileUid = newValue!;
+                                        selectedService = newValue!;
+                                        _refresh = true;
                                       });
                                     },
-                                    items: dropdownItems);
-                              } else {
-                                return DropdownButton(
-                                    isExpanded: true,
-                                    underline: DropdownButtonHideUnderline(
-                                        child: Container()),
-                                    onChanged: (String? newValue) {
-                                    },
-                                    items: _dropdownItem);
-                              }
-                            })),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ChangeNotifierProvider<MyProgramViewViewModel>(
-                    create: (BuildContext context) => myProgramViewViewModel,
-                    child: Consumer<MyProgramViewViewModel>(
-                        builder: (context, value, _) {
-                          if (value.dataList.data != null) {
-                            _programid =
-                                value.dataList.data?.data![0].uid.toString();
-                          }
-                          return (value.dataList.data?.data != null)
-                              ? Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: (value.dataList.data?.data![0].name ??
-                                    '')
-                                    .isNotEmpty
-                                    ? Text(
-                                  'Program',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium,
-                                )
-                                // 'What ${value.dataList.data?.data![0].name.toString()}',
-
-                                    : Container(),
-                              ),
-                              (value.dataList.data?.data![0].programs)
-                                  ?.isNotEmpty ??
-                                  false
-                                  ? const SizedBox(
-                                height: 15,
-                              )
-                                  : Container(),
-                              (value.dataList.data?.data![0].programs)
-                                  ?.isNotEmpty ??
-                                  false
-                                  ? SizedBox(
-                                height: 50,
-                                //color: Colors.amber,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemCount: value
-                                        .dataList
-                                        .data
-                                        ?.data![0]
-                                        .programs
-                                        ?.length ??
-                                        0,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          value
-                                              .dataList
-                                              .data
-                                              ?.data![0]
-                                              .programs![index]
-                                              .amount
-                                              .toString() ==
-                                              '0'
-                                              ? Container()
-                                              : CustomRadio<String>(
-                                            btnColor:
-                                            Colors.black,
-                                            value: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs![
-                                            index]
-                                                .uid
-                                                .toString() ??
-                                                '',
-                                            valueName: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs![
-                                            index]
-                                                .programName
-                                                .toString() ??
-                                                '',
-                                            groupValue:
-                                            _programUid,
-                                            onChanged:
-                                            _valueChangedHandler(
-                                                _programUid),
-                                            onChangedName:
-                                            _nameChangedHandler(
-                                                _programName),
-                                            label: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs![
-                                            index]
-                                                .programName
-                                                .toString() ??
-                                                '',
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          )
-                                        ],
-                                      );
-                                    }),
-                              )
-                                  : Container(),
-                            ],
-                          )
-                              : const Text('');
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Fee',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                                    items: activeServices);
+                              })),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ChangeNotifierProvider<MyProgramViewViewModel>(
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Batch Name',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: batchName,
+                      decoration: InputDecoration(
+                        hintText: 'eg. Cricket',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Assign Coach',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextButton(
+                          child: const Text(
+                            'Add Coach',
+                            style: TextStyle(color: Colors.redAccent),
+                          ),
+                          onPressed: () {
+                            Get.to(()=>  CreateProfile(pathPage : 'dashBoard'),transition: Transition.leftToRight);
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: const Color.fromARGB(255, 218, 216, 216)),
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: ChangeNotifierProvider<CoachlistViewViewModel>(
+                          create: (context) => coachlistViewViewModel,
+                          child: Consumer<CoachlistViewViewModel>(
+                              builder: (context, value, child) {
+                                value.dataList.data != null
+                                    ? profileUid = value
+                                    .dataList.data!.coachlist[0].uid
+                                    .toString()
+                                    : null;
+                                if (value.dataList.data != null) {
+                                  List<DropdownMenuItem<String>> dropdownItems =
+                                  List.generate(
+                                      value.dataList.data!.coachlist.length,
+                                          (index) {
+                                        return DropdownMenuItem(
+                                            value: value
+                                                .dataList.data!.coachlist[index].uid
+                                                .toString(),
+                                            child: Text(value
+                                                .dataList.data!.coachlist[index].name
+                                                .toString()));
+                                      });
+
+                                  return DropdownButton(
+                                      isExpanded: true,
+                                      underline: DropdownButtonHideUnderline(
+                                          child: Container()),
+                                      value: profileUid,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          profileUid = newValue!;
+                                        });
+                                      },
+                                      items: dropdownItems);
+                                } else {
+                                  return DropdownButton(
+                                      isExpanded: true,
+                                      underline: DropdownButtonHideUnderline(
+                                          child: Container()),
+                                      onChanged: (String? newValue) {
+                                      },
+                                      items: _dropdownItem);
+                                }
+                              })),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ChangeNotifierProvider<MyProgramViewViewModel>(
                       create: (BuildContext context) => myProgramViewViewModel,
                       child: Consumer<MyProgramViewViewModel>(
                           builder: (context, value, _) {
                             if (value.dataList.data != null) {
-                              for (int i = 0;
-                              i <
-                                  value
-                                      .dataList.data!.data![0].programs!.length;
-                              i++) {
-                                _feesamount = '';
-                                if (value
-                                    .dataList.data!.data![0].programs?[i].uid ==
-                                    _programUid) {
-                                  _feesamount = value
-                                      .dataList.data!.data![0].programs?[i].amount;
-                                  break;
-                                }
-                              }
+                              _programid =
+                                  value.dataList.data?.data![0].uid.toString();
                             }
-                            return TextFormField(
-                              readOnly: true,
-                              controller: fee..text = _feesamount ?? '0',
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(10),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
+                            return (value.dataList.data?.data != null)
+                                ? Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: (value.dataList.data?.data![0].name ??
+                                      '')
+                                      .isNotEmpty
+                                      ? Text(
+                                    'Program',
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  )
+                                  // 'What ${value.dataList.data?.data![0].name.toString()}',
+
+                                      : Container(),
                                 ),
-                              ),
-                            );
-                          })),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Type of Batch',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: width * .425,
-                        child: FittedBox(
-                          child: CustomRadio<String>(
-                            btnColor: Colors.black,
-                            value: 'group',
-                            groupValue: _groupBatch,
-                            onChanged: _valueChangedBatch(),
-                            label: 'Group Coaching',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: width * .425,
-                        child: FittedBox(
-                          child: CustomRadio<String>(
-                            btnColor: Colors.black,
-                            value: 'private',
-                            groupValue: _groupBatch,
-                            onChanged: _valueChangedBatch(),
-                            label: 'Private Coaching',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(children: <Widget>[
-                    Checkbox(
-                      checkColor: Colors.white,
-                      activeColor: Theme.of(context).primaryColor,
-                      value: value,
-                      onChanged: (value) {
-                        setState(() {
-                          this.value = value!;
-                          onlineSession = value;
-                        });
-                      },
+                                (value.dataList.data?.data![0].programs)
+                                    ?.isNotEmpty ??
+                                    false
+                                    ? const SizedBox(
+                                  height: 15,
+                                )
+                                    : Container(),
+                                (value.dataList.data?.data![0].programs)
+                                    ?.isNotEmpty ??
+                                    false
+                                    ? SizedBox(
+                                  height: 50,
+                                  //color: Colors.amber,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemCount: value
+                                          .dataList
+                                          .data
+                                          ?.data![0]
+                                          .programs
+                                          ?.length ??
+                                          0,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            value
+                                                .dataList
+                                                .data
+                                                ?.data![0]
+                                                .programs![index]
+                                                .amount
+                                                .toString() ==
+                                                '0'
+                                                ? Container()
+                                                : CustomRadio<String>(
+                                              btnColor:
+                                              Colors.black,
+                                              value: value
+                                                  .dataList
+                                                  .data
+                                                  ?.data![0]
+                                                  .programs![
+                                              index]
+                                                  .uid
+                                                  .toString() ??
+                                                  '',
+                                              valueName: value
+                                                  .dataList
+                                                  .data
+                                                  ?.data![0]
+                                                  .programs![
+                                              index]
+                                                  .programName
+                                                  .toString() ??
+                                                  '',
+                                              groupValue:
+                                              _programUid,
+                                              onChanged:
+                                              _valueChangedHandler(
+                                                  _programUid),
+                                              onChangedName:
+                                              _nameChangedHandler(
+                                                  _programName),
+                                              label: value
+                                                  .dataList
+                                                  .data
+                                                  ?.data![0]
+                                                  .programs![
+                                              index]
+                                                  .programName
+                                                  .toString() ??
+                                                  '',
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                )
+                                    : Container(),
+                              ],
+                            )
+                                : const Text('');
+                          }),
                     ),
                     const SizedBox(
-                      width: 10,
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Fee',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ChangeNotifierProvider<MyProgramViewViewModel>(
+                        create: (BuildContext context) => myProgramViewViewModel,
+                        child: Consumer<MyProgramViewViewModel>(
+                            builder: (context, value, _) {
+                              if (value.dataList.data != null) {
+                                for (int i = 0;
+                                i <
+                                    value
+                                        .dataList.data!.data![0].programs!.length;
+                                i++) {
+                                  _feesamount = '';
+                                  if (value
+                                      .dataList.data!.data![0].programs?[i].uid ==
+                                      _programUid) {
+                                    _feesamount = value
+                                        .dataList.data!.data![0].programs?[i].amount;
+                                    break;
+                                  }
+                                }
+                              }
+                              return TextFormField(
+                                readOnly: true,
+                                controller: fee..text = _feesamount ?? '0',
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(10),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            })),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Type of Batch',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Provide Online Sessions',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                        SizedBox(
+                          width: width * .425,
+                          child: FittedBox(
+                            child: CustomRadio<String>(
+                              btnColor: Colors.black,
+                              value: 'group',
+                              groupValue: _groupBatch,
+                              onChanged: _valueChangedBatch(),
+                              label: 'Group Coaching',
+                            ),
+                          ),
                         ),
-                      ],
-                    )
-                  ]),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Online Session Url',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    readOnly: onlineSession ? false : true,
-                    controller: onlineUrl,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. ww.xyz.com',
-                      filled: true,
-                      fillColor: onlineSession
-                          ? Colors.white
-                          : const Color.fromARGB(255, 228, 228, 228),
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Days',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 70,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        TextCheckBox(
-                          value: sun,
-                          title: 'SU',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              sun = val;
-                              if (val == true) {
-                                batchDays.add("0");
-                              } else {
-                                batchDays.remove("0");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: mon,
-                          title: 'MO',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              mon = val;
-                              if (val == true) {
-                                batchDays.add("1");
-                              } else {
-                                batchDays.remove("1");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: tue,
-                          title: 'TU',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              tue = val;
-                              if (val == true) {
-                                batchDays.add("2");
-                              } else {
-                                batchDays.remove("2");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: wed,
-                          title: 'WE',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              wed = val;
-                              if (val == true) {
-                                batchDays.add("3");
-                              } else {
-                                batchDays.remove("3");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: thu,
-                          title: 'TH',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              thu = val;
-                              if (val == true) {
-                                batchDays.add("4");
-                              } else {
-                                batchDays.remove("4");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: fri,
-                          title: 'FR',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              fri = val;
-                              if (val == true) {
-                                batchDays.add("5");
-                              } else {
-                                batchDays.remove("5");
-                              }
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        TextCheckBox(
-                          value: sat,
-                          title: 'SA',
-                          checkedFillColor: Colors.black,
-                          onChanged: (val) {
-                            setState(() {
-                              sat = val;
-                              if (val == true) {
-                                batchDays.add("6");
-                              } else {
-                                batchDays.remove("6");
-                              }
-                            });
-                          },
+                        SizedBox(
+                          width: width * .425,
+                          child: FittedBox(
+                            child: CustomRadio<String>(
+                              btnColor: Colors.black,
+                              value: 'private',
+                              groupValue: _groupBatch,
+                              onChanged: _valueChangedBatch(),
+                              label: 'Private Coaching',
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Batch Timings',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: batchFrom
-                            ..text = batchFromdata.toString(),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: 'From',
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
+                    Row(children: <Widget>[
+                      Checkbox(
+                        checkColor: Colors.white,
+                        activeColor: Theme.of(context).primaryColor,
+                        value: value,
+                        onChanged: (value) {
+                          setState(() {
+                            this.value = value!;
+                            onlineSession = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Provide Online Sessions',
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          onTap: selectTimeFrom,
+                        ],
+                      )
+                    ]),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Online Session Url',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      readOnly: onlineSession ? false : true,
+                      controller: onlineUrl,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. ww.xyz.com',
+                        filled: true,
+                        fillColor: onlineSession
+                            ? Colors.white
+                            : const Color.fromARGB(255, 228, 228, 228),
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: batchTo..text = batchTodata.toString(),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: 'To',
-                            contentPadding: const EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Batch Days',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 70,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          TextCheckBox(
+                            value: sun,
+                            title: 'SU',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                sun = val;
+                                if (val == true) {
+                                  batchDays.add("0");
+                                } else {
+                                  batchDays.remove("0");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: mon,
+                            title: 'MO',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                mon = val;
+                                if (val == true) {
+                                  batchDays.add("1");
+                                } else {
+                                  batchDays.remove("1");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: tue,
+                            title: 'TU',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                tue = val;
+                                if (val == true) {
+                                  batchDays.add("2");
+                                } else {
+                                  batchDays.remove("2");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: wed,
+                            title: 'WE',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                wed = val;
+                                if (val == true) {
+                                  batchDays.add("3");
+                                } else {
+                                  batchDays.remove("3");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: thu,
+                            title: 'TH',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                thu = val;
+                                if (val == true) {
+                                  batchDays.add("4");
+                                } else {
+                                  batchDays.remove("4");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: fri,
+                            title: 'FR',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                fri = val;
+                                if (val == true) {
+                                  batchDays.add("5");
+                                } else {
+                                  batchDays.remove("5");
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          TextCheckBox(
+                            value: sat,
+                            title: 'SA',
+                            checkedFillColor: Colors.black,
+                            onChanged: (val) {
+                              setState(() {
+                                sat = val;
+                                if (val == true) {
+                                  batchDays.add("6");
+                                } else {
+                                  batchDays.remove("6");
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Batch Timings',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextFormField(
+                            controller: batchFrom
+                              ..text = batchFromdata.toString(),
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: 'From',
+                              contentPadding: const EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ),
+                            onTap: selectTimeFrom,
                           ),
-                          onTap: selectTimeTo,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  // RoundButton(
-                  //   loading: false,
-                  //   title: 'Add Trainee',
-                  //   textColor: Colors.white,
-                  //   rounded: true,
-                  //   color: Theme.of(context).primaryColorDark.withOpacity(0.2),
-                  //   onPress: () {
-                  //     // showModalBottomSheet<void>(
-                  //     //   context: context,
-                  //     //   shape: const RoundedRectangleBorder(
-                  //     //     borderRadius: BorderRadius.vertical(
-                  //     //       top: Radius.circular(25.0),
-                  //     //     ),
-                  //     //   ),
-                  //     //   builder: (BuildContext context) {
-                  //     //     return SizedBox(
-                  //     //       height: 250,
-                  //     //       child: Column(
-                  //     //         mainAxisAlignment: MainAxisAlignment.center,
-                  //     //         mainAxisSize: MainAxisSize.min,
-                  //     //         children: <Widget>[
-                  //     //           SizedBox(
-                  //     //             height: 15,
-                  //     //           ),
-                  //     //           Align(
-                  //     //               alignment: Alignment.topLeft,
-                  //     //               child: Padding(
-                  //     //                 padding: const EdgeInsets.only(left: 20),
-                  //     //                 child: Text(
-                  //     //                     'Add Trainee In ${batchName.text.toUpperCase()}'),
-                  //     //               )),
-                  //     //           SizedBox(
-                  //     //             height: 10,
-                  //     //           ),
-                  //     //           Divider(
-                  //     //             thickness: 2,
-                  //     //           ),
-                  //     //           SizedBox(
-                  //     //             height: 15,
-                  //     //           ),
-                  //     //           Align(
-                  //     //               alignment: Alignment.topLeft,
-                  //     //               child: Padding(
-                  //     //                   padding:
-                  //     //                       const EdgeInsets.only(left: 10),
-                  //     //                   child: TextButton(
-                  //     //                       onPressed: () {
-                  //     //                         Navigator.push(
-                  //     //                           context,
-                  //     //                           MaterialPageRoute(
-                  //     //                             builder:
-                  //     //                                 (BuildContext context) =>
-                  //     //                                     TrainAddManualy(
-                  //     //                               //  batchId: batchUid,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextFormField(
+                            controller: batchTo..text = batchTodata.toString(),
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: 'To',
+                              contentPadding: const EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onTap: selectTimeTo,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
 
-                  //     //                               batchId: "batchUid",
+                    RoundButton(
+                      loading: false,
+                      title: 'Continue',
+                      textColor: Colors.white,
+                      rounded: true,
+                      color: Theme.of(context).primaryColor,
+                      onPress: () {
+                        Map data = {
+                          "service_uid": selectedService,
+                          "batch_name": batchName.text.toString(),
+                          "coach_profile_uid": profileUid,
+                          "program_uid": _programid.toString(),
+                          "program_name": _programName.toString(),
+                          "fees": _feesamount,
+                          "type_batch": _groupBatch.toString(),
+                          "provide_online_sessions": onlineSession,
+                          "online_session_url":
+                          onlineSession ? onlineUrl.text.toString() : "n/a",
+                          "batch_days": batchDays,
+                          "batch_timing_from": batchFrom.text,
+                          "batch_timing_to": batchTo.text.toString()
+                        };
 
-                  //     //                               batchName: batchName.text
-                  //     //                                   .toString()
-                  //     //                                   .toUpperCase(),
-                  //     //                             ),
-                  //     //                           ),
-                  //     //                         );
-                  //     //                       },
-                  //     //                       child: Text(
-                  //     //                         'Enter Manually',
-                  //     //                         style: Theme.of(context)
-                  //     //                             .textTheme
-                  //     //                             .bodyMedium,
-                  //     //                       )))),
-                  //     //           SizedBox(
-                  //     //             height: 15,
-                  //     //           ),
-                  //     //           Align(
-                  //     //               alignment: Alignment.topLeft,
-                  //     //               child: Padding(
-                  //     //                   padding:
-                  //     //                       const EdgeInsets.only(left: 10),
-                  //     //                   child: TextButton(
-                  //     //                     onPressed: () {},
-                  //     //                     child: Text(
-                  //     //                       'Select From Existing Trainees',
-                  //     //                       style: Theme.of(context)
-                  //     //                           .textTheme
-                  //     //                           .bodyMedium,
-                  //     //                     ),
-                  //     //                   ))),
-                  //     //         ],
-                  //     //       ),
-                  //     //     );
-                  //     //   },
-                  //     // );
-                  //   },
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  RoundButton(
-                    loading: false,
-                    title: 'Continue',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                    onPress: () {
-                      Map data = {
-                        "service_uid": selectedService,
-                        "batch_name": batchName.text.toString(),
-                        "coach_profile_uid": profileUid,
-                        "program_uid": _programid.toString(),
-                        "program_name": _programName.toString(),
-                        "fees": _feesamount,
-                        "type_batch": _groupBatch.toString(),
-                        "provide_online_sessions": onlineSession,
-                        "online_session_url":
-                        onlineSession ? onlineUrl.text.toString() : "n/a",
-                        "batch_days": batchDays,
-                        "batch_timing_from": batchFrom.text,
-                        "batch_timing_to": batchTo.text.toString()
-                      };
-
-                      print(data);
-                      batch.fetchCreatebatchListApi(data, context);
-                    },
-                  ),
-                ],
+                        print(data);
+                        batch.fetchCreatebatchListApi(data, context ,batchName.text.toString(),widget.pathPage );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -961,4 +861,61 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
       ),
     );
   }
+}
+
+Future<bool> showExitPopup(context) async {
+  return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 150,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.close_rounded,
+                    color: Colors.redAccent,
+                    size: 50.0,
+                  ),
+                ),
+                const Text("Do you want to exit?"),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          child: const Text("No",
+                              style: TextStyle(color: Colors.black)),
+                        )),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          exit(0);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent),
+                        child: const Text(
+                          "Yes",
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      });
 }

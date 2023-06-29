@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drona/view/trainee_phonbook_add.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import '../res/widget/customradio.dart';
 import '../res/widget/datefield.dart';
 import '../res/widget/round_button.dart';
 import '../res/widget/synctextform.dart';
+import '../utils/utils.dart';
 import '../utils/validation.dart';
 import '../view_model/registration_view_model.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +18,9 @@ import 'package:intl/intl.dart';
 class TrainAddManualy extends StatefulWidget {
   String batchId;
   String batchName;
+  String pathPage;
 
-  TrainAddManualy({super.key, required this.batchId, required this.batchName});
+  TrainAddManualy({super.key, required this.batchId, required this.batchName, this.pathPage=''});
 
   @override
   State<TrainAddManualy> createState() => _TrainAddManualyState();
@@ -46,378 +50,459 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
   @override
   Widget build(BuildContext context) {
     final traineeViewModel = Provider.of<TraineeViewModel>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
+    return WillPopScope(
+      onWillPop: () => showExitPopup(context),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        supportedLocales: _localization.supportedLocales,
+        localizationsDelegates: _localization.localizationsDelegates,
 
-      home: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        resizeToAvoidBottomInset : false ,
-        appBar: AppBar(
-          leading: Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-          title: Text(
-            //AppLocale.title27.getString(context),
-            "Add Trainee In ${widget.batchName}",
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const AddPhonebook(),
-                  ),
-                );
-              }),
-              icon: const Icon(Icons.contact_page),
-              iconSize: 25,
-              color: Colors.black,
-            )
-          ],
-        ),
-        body: Material(
-          color: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+        home: Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          resizeToAvoidBottomInset : false ,
+          appBar: AppBar(
+            leading: widget.pathPage=="dashBoard"?
+            Row(
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    AppLocale.phoneNumber.getString(context),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                AsyncTextFormField(
-                    controller: phone,
-                    validationDebounce: const Duration(milliseconds: 100),
-                    validator: Validation().isPhoneField,
-                    keyboardType: TextInputType.phone,
-                    hintText: 'eg. 9876521233',
-                    isValidatingMessage: 'Enter a valid 10 digit mobile number',
-                    valueIsInvalidMessage:
-                        'Enter a valid 10 digit mobile number'),
-                const SizedBox(
-                  height: 15,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    AppLocale.fullName.getString(context),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: fullName,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Full Name',
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                /// add gender
-
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Gender',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomRadio<String>(
-                      btnColor: Colors.black,
-                      value: 'male',
-                      groupValue: _genderValue,
-                      onChanged: _genderChangedHandler(),
-                      label: 'Male ',
-                    ),
-                    CustomRadio<String>(
-                      btnColor: Colors.black,
-                      value: 'female',
-                      groupValue: _genderValue,
-                      onChanged: _genderChangedHandler(),
-                      label: 'Female',
-                    ),
-                    CustomRadio<String>(
-                      btnColor: Colors.black,
-                      value: 'other',
-                      groupValue: _genderValue,
-                      onChanged: _genderChangedHandler(),
-                      label: 'Other',
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                /// dob age
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              AppLocale.dob.getString(context),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            readOnly: true,
-                            controller: dob,
-                            keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                              suffixIcon: const Icon(
-                                Icons.calendar_month,
-                                size: 30.0,
-                              ),
-                              hintText: "Dob",
-                              contentPadding: const EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
-                            onTap: () async {
-                              var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1930),
-                                lastDate: DateTime.now(),
-                              );
-                              if (date != null) {
-                                dob.text =
-                                    DateFormat('dd-MM-yyyy').format(date);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    // SizedBox(
-                    //   width: MediaQuery.of(context).size.width * 0.4,
-                    //   child: Column(
-                    //     children: [
-                    //       Align(
-                    //         alignment: Alignment.topLeft,
-                    //         child: Text(
-                    //           "Age",
-                    //           style: Theme.of(context).textTheme.bodyMedium,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       TextFormField(
-                    //         controller: age,
-                    //         decoration: InputDecoration(
-                    //           hintText: '21',
-                    //           contentPadding: const EdgeInsets.all(10),
-                    //           border: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(5.0),
-                    //             borderSide: BorderSide(
-                    //               color: Theme.of(context).primaryColor,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 15,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              AppLocale.doj.getString(context),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            readOnly: true,
-                            controller: doj,
-                            keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                              suffixIcon: const Icon(
-                                Icons.calendar_month,
-                                size: 30.0,
-                              ),
-                              hintText: "Doj",
-                              contentPadding: const EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
-                            onTap: () async {
-                              var date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1930),
-                                lastDate: DateTime.now(),
-                              );
-                              if (date != null) {
-                                doj.text =
-                                    DateFormat('dd-MM-yyyy').format(date);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Month of Billing",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          YearMonthPicker(
-                              controller: dobilling,
-                              hintText: 'Month of Billing'),
-                          // DateOfjoining(
-                          //     controller: dobilling,
-                          //     hintText: 'Month of Billing'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    AppLocale.fee.getString(context),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: fee,
-                  decoration: InputDecoration(
-                    hintText: '₹ 1000',
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                RoundButton(
-                  loading: false,
-                  title: AppLocale.submit.getString(context),
-                  textColor: Colors.white,
-                  rounded: true,
-                  color: Theme.of(context).primaryColor,
-                  onPress: () {
-                    print(widget.batchId);
-                    print(fullName.text);
-                    print(phone.text);
-                    print(doj.text);
-                    print(dobilling.text);
-                    print(fee.text);
-
-                    Map<String, dynamic> data = {
-                      "batch_uid": widget.batchId,
-                      "fullname": fullName.text,
-                      "ccode": "91",
-                      "mobno": phone.text,
-                      "gender": _genderValue,
-                      "fees": fee.text,
-                      "dateofjoining": doj.text,
-                      // "age": age.text,
-                      "dob": dob.text,
-                      "monthofbilling": dobilling.text,
-                      "img": "izf5azt0sy2iurz.jpeg",
-                      "relation": "self"
-                    };
-                    print(data);
-                    traineeViewModel.fetchTraineeAddListApi(data, context);
-                  },
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
+            ) :null,
+            title: Text(
+              //AppLocale.title27.getString(context),
+              "Add Trainee In ${widget.batchName}",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            // actions: [
+            //   IconButton(
+            //     onPressed: (() {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (BuildContext context) => const AddPhonebook(),
+            //         ),
+            //       );
+            //     }),
+            //     icon: const Icon(Icons.contact_page),
+            //     iconSize: 25,
+            //     color: Colors.black,
+            //   )
+            // ],
+          ),
+          body: Material(
+            color: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.phoneNumber.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AsyncTextFormField(
+                      controller: phone,
+                      validationDebounce: const Duration(milliseconds: 100),
+                      validator: Validation().isPhoneField,
+                      keyboardType: TextInputType.phone,
+                      hintText: 'eg. 9876521233',
+                      isValidatingMessage: 'Enter a valid 10 digit mobile number',
+                      valueIsInvalidMessage:
+                          'Enter a valid 10 digit mobile number'),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.fullName.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: fullName,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Full Name',
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+
+                  /// add gender
+
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Gender',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomRadio<String>(
+                        btnColor: Colors.black,
+                        value: 'male',
+                        groupValue: _genderValue,
+                        onChanged: _genderChangedHandler(),
+                        label: 'Male ',
+                      ),
+                      CustomRadio<String>(
+                        btnColor: Colors.black,
+                        value: 'female',
+                        groupValue: _genderValue,
+                        onChanged: _genderChangedHandler(),
+                        label: 'Female',
+                      ),
+                      CustomRadio<String>(
+                        btnColor: Colors.black,
+                        value: 'other',
+                        groupValue: _genderValue,
+                        onChanged: _genderChangedHandler(),
+                        label: 'Other',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+
+                  /// dob age
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                AppLocale.dob.getString(context),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            DateOfBirth(
+                                controller: dob,
+                                hintText: AppLocale.dob.getString(context)),
+                          ],
+                        ),
+                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width * 0.4,
+                      //   child: Column(
+                      //     children: [
+                      //       Align(
+                      //         alignment: Alignment.topLeft,
+                      //         child: Text(
+                      //           "Age",
+                      //           style: Theme.of(context).textTheme.bodyMedium,
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       TextFormField(
+                      //         controller: age,
+                      //         decoration: InputDecoration(
+                      //           hintText: '21',
+                      //           contentPadding: const EdgeInsets.all(10),
+                      //           border: OutlineInputBorder(
+                      //             borderRadius: BorderRadius.circular(5.0),
+                      //             borderSide: BorderSide(
+                      //               color: Theme.of(context).primaryColor,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 15,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                AppLocale.doj.getString(context),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            DateOfjoining(controller: doj, hintText: 'Doj'),
+
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Month of Billing",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            YearMonthPicker(
+                                controller: dobilling,
+                                hintText: 'Month of Billing'),
+                            // DateOfjoining(
+                            //     controller: dobilling,
+                            //     hintText: 'Month of Billing'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocale.fee.getString(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: fee,
+                    decoration: InputDecoration(
+                      hintText: '₹ 1000',
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  RoundButton(
+                    loading: false,
+                    title: AppLocale.submit.getString(context),
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Theme.of(context).primaryColor,
+                    onPress: () {
+                      print(widget.batchId);
+                      print(fullName.text);
+                      print(phone.text);
+                      print(doj.text);
+                      print(dobilling.text);
+                      print(fee.text);
+                      if (fullName.text.toString().isEmpty) {
+                        Utils.flushBarErrorMessage('Please fill Name', context);
+                      }
+                      else if (phone.text.toString().isEmpty) {
+                        Utils.flushBarErrorMessage('Please fill Number', context);
+                      }
+                      else if (doj.text.toString().isEmpty) {
+                        Utils.flushBarErrorMessage('Please Select Date of Joining', context);
+                      }
+                      else if (dobilling.text.toString().isEmpty) {
+                        Utils.flushBarErrorMessage('Please Select Month Of Blling', context);
+                      }
+                      else if (fee.text.toString().isEmpty) {
+                        Utils.flushBarErrorMessage('Please Fill Salary', context);
+                      }
+                      else {
+                        /// show dialog box
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: AlertDialog(
+                                //  title: const Center(child: Text('')),
+                                content:   Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.green,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    const Text("Send Invite",style: TextStyle(
+                                        fontSize: 14
+                                    ),),
+                                    const SizedBox(height: 5),
+
+                                    Text('Invite "${fullName.text}" To Your Academy',style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w200
+                                    ),),
+                                    SizedBox(height: 5),
+
+                                  ],
+                                ),
+                                contentPadding: EdgeInsets.all(15),
+                                actions: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                        width: double.infinity,
+                                        child: RoundButton(
+                                          title: 'Okay',
+                                          onPress: () async {
+                                            Navigator.pop(context);
+                                            Map<String, dynamic> data = {
+                                              "batch_uid": widget.batchId,
+                                              "fullname": fullName.text,
+                                              "ccode": "91",
+                                              "mobno": phone.text,
+                                              "gender": _genderValue,
+                                              "fees": fee.text,
+                                              "dateofjoining": doj.text,
+                                              // "age": age.text,
+                                              "dob": dob.text,
+                                              "monthofbilling": dobilling.text,
+                                              "img": "izf5azt0sy2iurz.jpeg",
+                                              "relation": "self"
+                                            };
+                                            print(data);
+                                            traineeViewModel.fetchTraineeAddListApi(data, context ,"onboarding");
+                                          },
+                                          rounded: true,
+                                          color: Theme.of(context).primaryColor,
+                                          textColor: Colors.white,
+
+                                        )
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+
+                      }
+                    }
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: Colors.redAccent,
+                      size: 50.0,
+                    ),
+                  ),
+                  const Text("Do you want to exit?"),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                            child: const Text("No",
+                                style: TextStyle(color: Colors.black)),
+                          )),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            exit(0);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent),
+                          child: const Text(
+                            "Yes",
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
 

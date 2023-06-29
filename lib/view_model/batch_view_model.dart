@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../utils/utils.dart';
 import '../view/batch_listing/batchlist_search.dart';
+import '../view/trainne_addmanual.dart';
 import '/data/response/api_response.dart';
 import '/respository/batch_repository.dart';
 import 'batchList_view_model.dart';
@@ -19,22 +22,20 @@ class BatchViewViewModel with ChangeNotifier {
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
 
   // create batch
-  Future<void> fetchCreatebatchListApi(
-      dynamic data, BuildContext context) async {
+  Future<void> fetchCreatebatchListApi(dynamic data, BuildContext context, String batchName, String pathPage) async {
     setLoading(true);
     _myRepo.fetchCreatebatchListApi(data).then((value) {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
+      print(value);
       print("api of batch create successfull");
       batchListViewViewModel.fetchBatchListListApi();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => SearchBatchList(
-            pathPage: 'onBoarding',
-          ),
-        ),
-      );
+      /// go to add trainee page
+      pathPage=="onboarding" ?
+       Get.to(()=>  TrainAddManualy(batchId: value['batch_uid'],
+         batchName: batchName,),transition: Transition.leftToRight) :
+      Get.to(()=>  SearchBatchList(pathPage: 'dashBoard',),transition: Transition.leftToRight);
+
     }).onError((error, stackTrace) {
       print("api of batch create not successfull");
       print(error);

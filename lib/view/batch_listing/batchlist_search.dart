@@ -22,7 +22,6 @@ class SearchBatchList extends StatefulWidget {
   String pathPage;
 
   SearchBatchList({super.key, required this.pathPage});
-
   @override
   State<SearchBatchList> createState() => _SearchBatchListState();
 }
@@ -229,7 +228,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                               const CreateBatchListing(),
                         ),
                       );*/
-                      Get.to(()=> const CreateBatchListing(),transition: Transition.leftToRight);
+                      Get.to(()=>  CreateBatchListing(pathPage: "dashBoard",),transition: Transition.leftToRight);
 
                     }),
                     icon: const Icon(Icons.add),
@@ -547,7 +546,12 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ViewBatchDetails(ListIndex: index , batchUid: value.dataList.data!.data![index].uid.toString(),totalTrainee : value.dataList.data!.data![index].totalTrainee.toString())));
+                                                    ViewBatchDetails(ListIndex: index ,
+                                                        batchUid: value.dataList.data!.data![index].uid.toString(),
+                                                        totalTrainee : value.dataList.data!.data![index].totalTrainee.toString(),
+                                                         pathPage: widget.pathPage,
+                                                    )
+                                            ) );
                                       },
                                       onLongPress: () {
                                         if (!_selectedItems.contains(index)) {

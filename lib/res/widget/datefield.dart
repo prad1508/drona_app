@@ -84,11 +84,13 @@ class _DateOfjoiningState extends State<DateOfjoining> {
         ),
       ),
       onTap: () async {
+        DateTime now = DateTime.now();
+        DateTime firstDate = DateTime(now.year, now.month);
         var date = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime(1930),
-          lastDate: DateTime.now(),
+          firstDate: firstDate,
+          lastDate: DateTime.now().add(Duration(days: 90)),
         );
         if (date != null) {
           widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
@@ -119,6 +121,7 @@ class _YearMonthPickerState extends State<YearMonthPicker> {
       builder: (BuildContext context) {
         return YearMonthPickerDialog(
           initialDate: _selectedDate,
+
         );
       },
     );
@@ -227,7 +230,8 @@ class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
   @override
   void initState() {
     super.initState();
-    _selectedDate = widget.initialDate;
+    _selectedDate = DateTime(
+        DateTime.now().year, widget.initialDate.month, widget.initialDate.day);
   }
 
   @override
@@ -251,7 +255,7 @@ class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
                 },
                 items: List<DropdownMenuItem<int>>.generate(
                   12,
-                  (int index) => DropdownMenuItem<int>(
+                      (int index) => DropdownMenuItem<int>(
                     value: index + 1,
                     child: Text(DateFormat('MMMM')
                         .format(DateTime(2000, index + 1, 1))),
@@ -262,7 +266,7 @@ class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
             SizedBox(width: 16),
             Expanded(
               child: DropdownButton<int>(
-                value: _selectedDate.year,
+                value: DateTime.now().year,
                 onChanged: (int? newValue) {
                   if (newValue != null) {
                     setState(() {
@@ -272,13 +276,12 @@ class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
                     widget.onChanged(_selectedDate);
                   }
                 },
-                items: List<DropdownMenuItem<int>>.generate(
-                  100,
-                  (int index) => DropdownMenuItem<int>(
-                    value: DateTime.now().year - index,
-                    child: Text((DateTime.now().year - index).toString()),
+                items: [
+                  DropdownMenuItem<int>(
+                    value: DateTime.now().year,
+                    child: Text(DateTime.now().year.toString()),
                   ),
-                ),
+                ],
               ),
             ),
           ],
@@ -287,3 +290,4 @@ class _YearMonthPickerWidgetState extends State<YearMonthPickerWidget> {
     );
   }
 }
+

@@ -249,7 +249,7 @@ class _MainMenuState extends State<MainMenu> {
                                 ),
                               );*/
                               Get.to(()=>   SearchBatchList(
-                                pathPage: '',
+                                pathPage: 'dashBoard',
                               ),transition: Transition.leftToRight);
 
                             },

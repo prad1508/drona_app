@@ -8,6 +8,8 @@ import '../model/savecredential_modal.dart';
 import '../respository/user.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/batch_listing/add_batch.dart';
+import '../view/batch_listing/create_batch_listing.dart';
 import '../view/coach_listing/coach_listselected.dart';
 import '/model/user_model.dart';
 // ignore: depend_on_referenced_packages
@@ -95,7 +97,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   //user profile add
-  Future<void> userProfileAdd(dynamic data, BuildContext context , [int listindex = -1]) async {
+  Future<void> userProfileAdd(dynamic data, BuildContext context, String pathPage , [int listindex = -1]) async {
     setLoading(true);
     _myRepo.fetchUserprofileAddListApi(data).then((value) async {
       setLoading(false);
@@ -104,30 +106,18 @@ class UserViewModel with ChangeNotifier {
       print("api success of adding coach");
 
 
-   if(listindex!=-1)
-     {
-       /*Navigator.push(
-         context,
-         MaterialPageRoute(
-           builder: (BuildContext context) =>
-               CoachListSelected(Listindex : listindex),
-         ),
-       );*/
-       Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.leftToRight);
-
-     }
-   else
-     {
-       /*Navigator.push(
-         context,
-         MaterialPageRoute(
-           builder: (BuildContext context) =>
-               CoachListSelected(),
-         ),
-       );*/
-       Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
-
-     }
+   //if(listindex!=-1)
+     //{
+       /// create batch
+      pathPage == "dashBoard"?
+      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.leftToRight) :
+      Get.to(()=>  CreateBatchListing(),transition: Transition.leftToRight);
+     //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.leftToRight);
+   //  }
+   // else
+   //   {
+   //     Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
+   //   }
 
     }).onError((error, stackTrace) {
       setLoading(false);

@@ -19,8 +19,9 @@ import 'edit_batch_listing.dart';
 class ViewBatchDetails extends StatefulWidget {
   final int ListIndex;
   final String batchUid;
+  final String pathPage;
   final String totalTrainee;
-  const ViewBatchDetails({super.key, required this.ListIndex ,  this.batchUid='' , this.totalTrainee=''});
+  const ViewBatchDetails({super.key, required this.ListIndex ,  this.batchUid='' , this.pathPage= '',this.totalTrainee=''});
 
   @override
   State<ViewBatchDetails> createState() => _ViewBatchDetailsState();
@@ -812,14 +813,9 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                               ),
                                                             );*/
                                                             Get.to(()=>  TrainAddManualy(
-                                                              batchId: value
-                                                                  .dataList
-                                                                  .data!
-                                                                  .data![0]
-                                                                  .uid
-                                                                  .toString(),
-                                                              batchName:
-                                                              "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
+                                                              batchId: value.dataList.data!.data![0].uid.toString(),
+                                                              batchName: "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
+                                                              pathPage : widget.pathPage,
                                                             ),transition: Transition.leftToRight);
 
                                                           },

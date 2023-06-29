@@ -3,6 +3,8 @@ import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_url.dart';
@@ -341,11 +343,12 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         print("normal case");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const CreateBatchListing()));
+                        Get.to(()=>  CreateBatchListing(),transition: Transition.leftToRight);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const CreateBatchListing()));
                       }),
                 ],
               )),

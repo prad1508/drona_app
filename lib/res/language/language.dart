@@ -48,7 +48,7 @@ mixin AppLocale {
   static const String addBatch = 'Add Batch';
   static const String congratulation = 'congratulation';
   static const String title17 = 'Proceed Here to Create Batch';
-  static const String title18 = 'Proceed here to add Coach';
+  static const String title18 = 'Proceed Here to Add Coach';
   static const String createProfile = 'Create Profile';
   static const String title19 = 'Coach’s Full Name';
   static const String inviteCode = 'Invite Code';
@@ -104,6 +104,7 @@ mixin AppLocale {
   static const String title34 = 'title34';
   static const String title35 = 'title35';
   static const String title36= 'title36';
+  static const String addACoach= 'addACoach';
 
   static const Map<String, dynamic> en = {
     title: 'Localization',
@@ -153,8 +154,9 @@ mixin AppLocale {
     createBatch: 'Create Batch',
     title16: 'Add Trainee in created batch',
     addCoach: 'Add Coach',
-    title17: 'Proceed here to Create Batch',
-    title18: 'Proceed here to add Coach',
+    addACoach: 'Add A Coach',
+    title17: 'Proceed Here to Create Batch',
+    title18: 'Proceed Here to Add Coach',
     createProfile: 'Create Profile',
     title19: 'Coach’s Full Name',
     inviteCode: 'Invite Code',

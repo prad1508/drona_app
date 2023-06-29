@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../data/response/api_response.dart';
 import '../model/coachlist_model.dart';
@@ -8,6 +10,7 @@ import '../respository/batch_repository.dart';
 import '../respository/trainee_repositry.dart';
 import '../utils/utils.dart';
 import '../view/batch_listing/add_trainee_list.dart';
+import '../view/dashboard/layout.dart';
 import '../view/trainee_listing/trainee_list.dart';
 
 class TraineeViewModel with ChangeNotifier {
@@ -22,20 +25,23 @@ class TraineeViewModel with ChangeNotifier {
 
   // create Trainee
   Future<void> fetchTraineeAddListApi(
-      dynamic data, BuildContext context) async {
+      dynamic data, BuildContext context ,String type) async {
     setLoading(true);
     _myRepo.fetchCreateTraineeListApi(data).then((value) {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
 
       print("api success");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => const TraineeNewList()
-            // AddTraineeList(),
-            ),
-      );
+      type =="onboarding" ?
+      Get.to(()=> const  Layout(selectedIndex: 0),transition: Transition.leftToRight) :
+      Get.to(()=> const  TraineeNewList(),transition: Transition.leftToRight);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (BuildContext context) => const TraineeNewList()
+      //       // AddTraineeList(),
+      //       ),
+      // );
     }).onError((error, stackTrace) {
       setLoading(false);
       print("api  not success");

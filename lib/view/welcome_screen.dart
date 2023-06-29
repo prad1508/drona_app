@@ -186,7 +186,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             role == '1'
                                 ? RoundButton(
                                 loading: false,
-                                title: AppLocale.addBatch.getString(context),
+                                title: AppLocale.title17.getString(context),
                                 // title: AppLocale.title18.getString(context),
                                 textColor: Colors.white,
                                 rounded: true,
@@ -201,7 +201,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       const CreateBatchListing(),
                                     ),
                                   );*/
-                                  Get.to(()=> const CreateBatchListing(),transition: Transition.leftToRight);
+                                  Get.to(()=>  CreateBatchListing(),transition: Transition.leftToRight);
 
                                 })
                                 : RoundButton(
