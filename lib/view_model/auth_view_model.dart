@@ -26,6 +26,7 @@ class AuthViewModel with ChangeNotifier {
   late int setupProgress = 0;
   late bool setupFinish = false;
   bool _loading = false;
+  bool check = false;
   bool get loading => _loading;
 
   setLoading(bool value) {
@@ -56,6 +57,7 @@ class AuthViewModel with ChangeNotifier {
       // ...
     } catch (error) {
       // Handle any errors that occurred during the API request
+      check = true;
       print("Error: $error");
     }
 
@@ -69,6 +71,7 @@ class AuthViewModel with ChangeNotifier {
     //   print("setupfrinish is $setupFinish");
     // });
     _myRepo.loginApi(data).then((value) async {
+      print("coming inside here");
       setLoading(false);
       final userPreference = Provider.of<UserViewModel>(context, listen: false);
       if (save == true) {
@@ -84,17 +87,17 @@ class AuthViewModel with ChangeNotifier {
           // value['data']['mobno'],
           // value['data']['role'],
           // value['data']['gender']
-
           value['Profiles'][0]['name'].toString(),
           value['Profiles'][0]['email'].toString(),
           value['Profiles'][0]['ccdoe'].toString(),
           value['Profiles'][0]['mobno'].toString(),
           value['Profiles'][0]['role'].toString(),
           value['Profiles'][0]['gender'].toString(),
-          value['Profiles'][0]['academy_name'].toString(),
+          //!check ? value['Profiles'][0]['academy_name'].toString() :''
         ]);
 
-      prefsData.setString('acadmicName', value['Profiles'][0]['academy_name']);
+      !check  ?
+      prefsData.setString('acadmicName', value['Profiles'][0]['academy_name']) : null ;
 
       userPreference.saveToken(UserModel(data: value['token'].toString()));
       userPreference
@@ -189,9 +192,6 @@ class AuthViewModel with ChangeNotifier {
 
            }
         }
-
-
-
       else {
         print("coming hereee");
         if (setupProgress == 0 && setupFinish==false) {
