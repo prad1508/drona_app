@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:drona/view/registeration/login_view.dart';
+import 'package:drona/view/trainee_listing/record_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -95,96 +96,101 @@ class _MainMenuState extends State<MainMenu> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      color: const Color.fromARGB(255, 244, 247, 245),
-                      elevation: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        widget.academyName.toString(),
-                                        style: const TextStyle(
-                                          color: Colors.blue,
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(() => const academy_setting(), transition: Transition.rightToLeft);
+                    },
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color: const Color.fromARGB(255, 244, 247, 245),
+                        elevation: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          widget.academyName.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.blue,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
                                         ),
-                                      ),
-                                      const Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 12),
-                                            child: Text(
-                                              'Services',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
-                                                  height: 2),
+                                        const Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(left: 12),
+                                              child: Text(
+                                                'Services',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                    height: 2),
+                                              ),
                                             ),
-                                          ),
-                                          Image(
-                                            image: AssetImage(
-                                                'assets/images/tennis.png'),
-                                            width: 30,
-                                          ),
-                                          Image(
-                                            image: AssetImage(
-                                                'assets/images/Golf.png'),
-                                            width: 30,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      const Image(
-                                        image: AssetImage(
-                                            'assets/images/coachlogo.png'),
-                                        width: 80,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                            shape: const StadiumBorder(
-                                                side: BorderSide(
-                                                    color: Colors.green,
-                                                    width: 2)),
-                                            backgroundColor: Colors.green),
-                                        child: Row(
-                                          children: const [
-                                            Text("60%"),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 10,
-                                            )
+                                            Image(
+                                              image: AssetImage(
+                                                  'assets/images/tennis.png'),
+                                              width: 30,
+                                            ),
+                                            Image(
+                                              image: AssetImage(
+                                                  'assets/images/Golf.png'),
+                                              width: 30,
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        const Image(
+                                          image: AssetImage(
+                                              'assets/images/coachlogo.png'),
+                                          width: 80,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                              shape: const StadiumBorder(
+                                                  side: BorderSide(
+                                                      color: Colors.green,
+                                                      width: 2)),
+                                              backgroundColor: Colors.green),
+                                          child: Row(
+                                            children: const [
+                                              Text("60%"),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 10,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )),
+                            ],
+                          ),
+                        )),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -198,7 +204,7 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                     trailing: IconButton(
                       onPressed: (() {
-                      /*  Navigator.push(
+                        /*  Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
@@ -239,19 +245,9 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      SearchBatchList(
-                                        pathPage: '',
-                                      ),
-                                ),
-                              );*/
                               Get.to(()=>   SearchBatchList(
                                 pathPage: 'dashBoard',
                               ),transition: Transition.leftToRight);
-
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -274,7 +270,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                             /* Navigator.push(
+                              /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -334,7 +330,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                             /* Navigator.push(
+                              /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -364,7 +360,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                             /* Navigator.push(
+                              /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -436,13 +432,13 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                               /* Navigator.push(
+                                /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const Coach_Listing()),
                                 );*/
-                                Get.to(()=> const Coach_Listing(),transition: Transition.leftToRight);
+                                Get.to(()=> const Record_Payment(),transition: Transition.leftToRight);
 
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
@@ -466,7 +462,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                               /* Navigator.push(
+                                /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
@@ -567,13 +563,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                    const academy_setting(),
-                                  ),
-                                );
+
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -714,3 +704,4 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 }
+

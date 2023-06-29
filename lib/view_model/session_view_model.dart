@@ -19,6 +19,12 @@ class SessionViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  ApiResponse<SessionListListModel> dataList = ApiResponse.loading();
+  setDataList(ApiResponse<SessionListListModel> response) {
+    dataList = response;
+    notifyListeners();
+  }
+
   Future<void> fetchCreateSessionListApi (dynamic data, BuildContext context)async{
     setLoading(true);
     _myRepo.fetchCreateSessionListApi(data).then((value){
@@ -41,11 +47,7 @@ class SessionViewViewModel with ChangeNotifier {
     });
   }
 
-  ApiResponse<SessionListListModel> dataList = ApiResponse.loading();
-  setDataList(ApiResponse<SessionListListModel> response) {
-    dataList = response;
-    notifyListeners();
-  }
+
 
   Future<void> fetchSessionListSearchApi(dynamic data) async {
     setDataList(ApiResponse.loading());
@@ -65,6 +67,7 @@ class SessionViewViewModel with ChangeNotifier {
     setDataList(ApiResponse.loading());
 
     _myRepo.fetchSessionDetailsListApi(id).then((value) {
+      print("value==${value.data![0].batch_name.toString()}");
       setDataList(ApiResponse.completed(value));
 
       print("api session Details list success");
@@ -78,3 +81,4 @@ class SessionViewViewModel with ChangeNotifier {
 
 
 }
+

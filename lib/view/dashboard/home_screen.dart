@@ -1,6 +1,7 @@
 import 'package:drona/view_model/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/language/language.dart';
@@ -166,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MainMenu(name: fullname, academyName: academicname,),
                                         ),
                                       );
+                                      Get.to(()=> MainMenu(name: fullname, academyName: academicname,), transition: Transition.rightToLeft);
                                     },
                                     elevation: 2.0,
                                     fillColor: Colors.white,
@@ -736,3 +738,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
