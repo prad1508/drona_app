@@ -63,6 +63,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
   String batchUid = '';
   @override
   Widget build(BuildContext context) {
+    double screenWidth=MediaQuery.of(context).size.width;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       supportedLocales: _localization.supportedLocales,
@@ -457,9 +458,10 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                     children: [
                                                       Container(
                                                         color: Color(0XFFDFE1E4).withOpacity(0.3),
-                                                        height: 115,
+                                                        width: screenWidth*.9,
+                                                        height : 105,
                                                         child: Padding(
-                                                          padding: const EdgeInsets.all(8.0),
+                                                          padding: const EdgeInsets.only(left:8,top: 5),
                                                           child: Row(
                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                             children: [
@@ -482,19 +484,28 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                       width: 44,
                                                                       height: 20,
                                                                       decoration: BoxDecoration(
-                                                                        color: Color(0xff47C088),
+                                                                        color: value.dataList.data!.data[index].status=="active" ? Color(0xff47C088) : Colors.redAccent,
                                                                         borderRadius: BorderRadius.circular(4),
                                                                       ),
                                                                       child: Center(
-                                                                        child: Text(
-                                                                          'Active',
+                                                                        child: value.dataList.data!.data[index].status=="active" ?
+                                                                        Text(
+                                                                        "Active",
                                                                           style: TextStyle(
                                                                             color: Color(0xffFBFBFC),
                                                                             fontSize: 10,
                                                                             fontFamily: 'Lato',
                                                                             fontWeight: FontWeight.w600,
                                                                           ),
-                                                                        ),
+                                                                        ) : Text(
+                                                                          "Inactive",
+                                                                          style: TextStyle(
+                                                                            color: Color(0xffFBFBFC),
+                                                                            fontSize: 10,
+                                                                            fontFamily: 'Lato',
+                                                                            fontWeight: FontWeight.w600,
+                                                                          ),
+                                                                        )
                                                                       ),
                                                                     ),
                                                                   ),
@@ -521,11 +532,21 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                         width: 67,
                                                                         height: 20,
                                                                         decoration: BoxDecoration(
-                                                                          color: Color(0xffEDF9F3),
+                                                                          color: value.dataList.data!.data[index].join_status == "not_onboarded" ? Colors.redAccent.shade100.withOpacity(0.3):Color(0xffEDF9F3),
                                                                           borderRadius: BorderRadius.circular(4),
                                                                         ),
                                                                         child: Center(
-                                                                          child: Text(
+                                                                          child:  value.dataList.data!.data[index].join_status=="not_onboarded"?
+                                                                          Text(
+                                                                            "Not Onboarded",
+                                                                            style: TextStyle(
+                                                                              color: Colors.redAccent,
+                                                                              fontSize: 10,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight: FontWeight.w400,
+                                                                            ),
+                                                                          ):
+                                                                          Text(
                                                                             "Onboarded",
                                                                             style: TextStyle(
                                                                               color: Color(0xff47C088),
@@ -533,7 +554,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                               fontFamily: 'Lato',
                                                                               fontWeight: FontWeight.w400,
                                                                             ),
-                                                                          ),
+                                                                          )
                                                                         ),
                                                                       ),
                                                                       Align(
@@ -622,8 +643,9 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                       ),
                                                                       Padding(
                                                                         padding: const EdgeInsets.only(left: 15),
-                                                                        child: Text(
-                                                                          "03:00 PM to 05:30 PM",
+                                                                        child:
+                                                                        Text(
+                                                                          '${value.dataList.data?.data[index].batch_timing_from} to ${value.dataList.data?.data[index].batch_timing_to}',
                                                                           style: TextStyle(
                                                                             color: Color(0xff39404A),
                                                                             fontSize: 12,

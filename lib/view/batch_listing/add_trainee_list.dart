@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
+import '../../res/widget/Trainee_Listing_Class/batch_name.dart';
+import '../../res/widget/Trainee_Listing_Class/filter_trainee_list.dart';
 import '../../res/widget/customTextField.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/progressPills.dart';
@@ -174,10 +176,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                 return Column(
                                   children: [
                                     Container(
-                                      color: Color(0XFFDFE1E4).withOpacity(0.3),
-                                      height: 115,
+                                      color: const Color(0XFFDFE1E4).withOpacity(0.3),
+                                      height: 110,
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.only(top:8.0,left: 20),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
@@ -200,19 +202,28 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     width: 44,
                                                     height: 20,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xff47C088),
+                                                      color:value.dataList.data!.data[index].status=="active" ? const Color(0xff47C088) : Colors.redAccent,
                                                       borderRadius: BorderRadius.circular(4),
                                                     ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Active',
-                                                        style: TextStyle(
+                                                    child:  Center(
+                                                      child: value.dataList.data!.data[index].status == "active" ?
+                                                      Text(
+                                                       "Active",
+                                                        style: const TextStyle(
                                                           color: Color(0xffFBFBFC),
                                                           fontSize: 10,
                                                           fontFamily: 'Lato',
                                                           fontWeight: FontWeight.w600,
                                                         ),
-                                                      ),
+                                                      ) :  Text(
+                                                        "Inactive",
+                                                        style: const TextStyle(
+                                                          color: Color(0xffFBFBFC),
+                                                          fontSize: 10,
+                                                          fontFamily: 'Lato',
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+                                                      )
                                                     ),
                                                   ),
                                                 ),
@@ -224,9 +235,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                 Row(
                                                   children: [
                                                     Padding(
-                                                      padding:  EdgeInsets.only(left: 15.0),
+                                                      padding:  const EdgeInsets.only(left: 15.0),
                                                       child: Text(value.dataList.data!.data[index].traineeName,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: Color(0xff39404A),
                                                           fontSize: 14,
                                                           fontFamily: 'Lato',
@@ -234,24 +245,34 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(width: 10),
+                                                    const SizedBox(width: 10),
                                                     Container(
                                                       width: 67,
                                                       height: 20,
                                                       decoration: BoxDecoration(
-                                                        color: Color(0xffEDF9F3),
+                                                        color:  value.dataList.data!.data[index].join_status=="not_onboarded" ?Colors.redAccent.shade100.withOpacity(0.3) :const Color(0xffEDF9F3),
                                                         borderRadius: BorderRadius.circular(4),
                                                       ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Onboarded",
-                                                          style: TextStyle(
-                                                            color: Color(0xff47C088),
+                                                      child:  Center(
+                                                        child:  value.dataList.data!.data[index].join_status=="not_onboarded"?
+                                                        const Text(
+                                                         "Not Onboarded",
+                                                          style:  TextStyle(
+                                                            color:  Colors.redAccent,
                                                             fontSize: 10,
                                                             fontFamily: 'Lato',
                                                             fontWeight: FontWeight.w400,
                                                           ),
-                                                        ),
+                                                        ):  const Text(
+                                                          "Onboarded",
+                                                          style:  TextStyle(
+                                                            color:  Color(0xff47C088),
+                                                            fontSize: 10,
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                        )
+
                                                       ),
                                                     ),
                                                     Align(
@@ -271,13 +292,13 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 1),
+                                                const SizedBox(height: 1),
                                                 Row(
                                                   children:  [
                                                     Padding(
-                                                        padding:  EdgeInsets.only(left: 15.0),
+                                                        padding:  const EdgeInsets.only(left: 15.0),
                                                         child: value.dataList.data?.data[index].gender =='male' ?
-                                                        Text(
+                                                        const Text(
                                                           "Male",
                                                           style: TextStyle(
                                                             color: Color(0xff39404A),
@@ -286,7 +307,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             fontWeight: FontWeight.w400,
                                                           ),
                                                         ) : value.dataList.data?.data[index].gender =='female'?
-                                                        Text(
+                                                        const Text(
                                                           "Female",
                                                           style: TextStyle(
                                                             color: Color(0xff39404A),
@@ -294,7 +315,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             fontFamily: 'Lato',
                                                             fontWeight: FontWeight.w400,
                                                           ),
-                                                        ) :  Text(
+                                                        ) :  const Text(
                                                           "Others",
                                                           style: TextStyle(
                                                             color: Color(0xff39404A),
@@ -304,7 +325,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                           ),
                                                         )
                                                     ),
-                                                    Text(
+                                                    const Text(
                                                       " | ",
                                                       style: TextStyle(
                                                         color: Color(0xff39404A),
@@ -314,7 +335,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                       ),
                                                     ),
                                                     Text(value.dataList.data!.data[index].dob,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: Color(0xff39404A),
                                                         fontSize: 12,
                                                         fontFamily: 'Lato',
@@ -323,14 +344,14 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 12),
+                                                const SizedBox(height: 12),
                                                 Row(
                                                   children:  [
                                                     Padding(
-                                                      padding:  EdgeInsets.only(left: 15.0),
+                                                      padding:  const EdgeInsets.only(left: 15.0),
                                                       child: Text(
                                                         value.dataList.data!.data[index].batchname,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: Color(0xff39404A),
                                                           fontSize: 14,
                                                           fontFamily: 'Lato',
@@ -338,11 +359,11 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(left: 15),
+                                                     Padding(
+                                                      padding: EdgeInsets.only(left: 15),
                                                       child: Text(
-                                                        "03:00 PM to 05:30 PM",
-                                                        style: TextStyle(
+                                                        '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_from}',
+                                                        style: const TextStyle(
                                                           color: Color(0xff39404A),
                                                           fontSize: 12,
                                                           fontFamily: 'Lato',
@@ -352,19 +373,19 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 5),
-                                                SizedBox(height: 5),
+                                                const SizedBox(height: 5),
+                                                //const SizedBox(height: 5),
                                                 Container(
                                                   width: 300,
                                                   child: Padding(
                                                     padding: const EdgeInsets.only(left: 15),
-                                                    child: Row(
+                                                    child:Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children:  [
-                                                            Text(
+                                                            const Text(
                                                               "Fee : ",
                                                               style: TextStyle(
                                                                 color: Color(0xff39404A),
@@ -375,7 +396,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             ),
                                                             Text(
                                                               '₹ ${value.dataList.data?.data[index].fees}',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                 color: Color(0xff39404A),
                                                                 fontSize: 12,
                                                                 fontFamily: 'Lato',
@@ -384,7 +405,28 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             ),
                                                           ],
                                                         ),
-
+                                                        // Row(
+                                                        //   children: [
+                                                        //     const Text(
+                                                        //       "Due : ",
+                                                        //       style: TextStyle(
+                                                        //         color: Color(0xff39404A),
+                                                        //         fontSize: 14,
+                                                        //         fontFamily: 'Lato',
+                                                        //         fontWeight: FontWeight.w700,
+                                                        //       ),
+                                                        //     ),
+                                                        //     Text(
+                                                        //       '₹ ${value.dataList.data?.data[index].fees}',
+                                                        //       style: const TextStyle(
+                                                        //         color: Color(0xff39404A),
+                                                        //         fontSize: 12,
+                                                        //         fontFamily: 'Lato',
+                                                        //         fontWeight: FontWeight.w400,
+                                                        //       ),
+                                                        //     ),
+                                                        //   ],
+                                                        // )
                                                       ],
                                                     ),
                                                   ),
@@ -396,7 +438,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       height: 1,
                                       thickness: 1,
                                     ) ,
@@ -682,6 +724,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
+        double screenWidth=MediaQuery.of(context).size.width;
+        double screenHeight=MediaQuery.of(context).size.height;
         AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
         academyViewViewModel.fetchAcademyListApi();
         List<DropdownMenuItem<String>> activeServices = [];
@@ -690,14 +734,16 @@ class _AddTraineeListState extends State<AddTraineeList> {
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: false,
           body: Container(
+            height: screenHeight*.7,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const SizedBox(
-                  height: 200,
+                  height: 40,
                 ),
                 Container(
+                  height: screenHeight*.45,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -734,26 +780,33 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('Services')),
+                      Container(
+                        width: 342,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffDFE1E4)),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Batch_DropDown(),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       Container(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1,
-                              color: const Color.fromARGB(255, 218, 216, 216)),
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(5)),
-                        ),
+                        height: screenHeight*.25,
+                        padding: const EdgeInsets.only(left: 8.0),
+                        // decoration: BoxDecoration(
+                        //   border: Border.all(
+                        //       width: 1,
+                        //       color: const Color.fromARGB(255, 218, 216, 216)),
+                        //   borderRadius:
+                        //   const BorderRadius.all(Radius.circular(5)),
+                        // ),
                         child: ChangeNotifierProvider<AcademyViewViewModel>(
                             create: (context) => academyViewViewModel,
                             child: Consumer<AcademyViewViewModel>(
                                 builder: (context, value, child) {
-                                  return Text("make ui");
+                                  return
+                                    //Custom Filter Bar
+                                    const Filter();
                                 }
                             )),
                       ),

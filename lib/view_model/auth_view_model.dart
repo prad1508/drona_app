@@ -26,7 +26,7 @@ class AuthViewModel with ChangeNotifier {
   late int setupProgress = 0;
   late bool setupFinish = false;
   bool _loading = false;
-  bool check = false;
+  bool check = true;
   bool get loading => _loading;
 
   setLoading(bool value) {
@@ -43,50 +43,24 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
 
 
-    try {
-      final value = await _myRepo.academyRegistrationTrack();
-      print(value);
-      setLoading(false);
-      setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0;
-      print("setupprogress is $setupProgress");
 
-      setupFinish = value['onboarding_setup_finish'] != null ? value['onboarding_setup_finish'] : false;
-      print("setupfinish is $setupFinish");
 
-      // Further code that depends on the API response
-      // ...
-    } catch (error) {
-      // Handle any errors that occurred during the API request
-      check = true;
-      print("Error: $error");
-    }
-
-    // _myRepo.academyRegistrationTrack().then((value) async {
-    //   print(value);
-    //   setLoading(false);
-    //   setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0 ;
-    //   print("setupprogess is $setupProgress");
-    //
-    //   setupFinish = value['onboarding_setup_finish'] != null ?  value['onboarding_setup_finish'] : false ;
-    //   print("setupfrinish is $setupFinish");
-    // });
     _myRepo.loginApi(data).then((value) async {
-      print("coming inside here");
+     print(value);
+      // print("coming inside here");
+      // print(value['data']['name']);
+      // print(value['data']['email']);
+      // print(value['data']['ccode']);
+      // print( value['data']['mobno']);
+      // print(value['data']['role']);
+      // print( value['data']['gender']);
       setLoading(false);
       final userPreference = Provider.of<UserViewModel>(context, listen: false);
       if (save == true) {
-        userPreference.savecredential(SavecredentialModel(
-            userid: data['userid'], password: data['password']));
+        userPreference.savecredential(SavecredentialModel(userid: data['userid'], password: data['password']));
       }
         final prefsData = await SharedPreferences.getInstance();
         prefsData.setStringList("registerResponse", <String>[
-
-          // value['data']['name'],
-          // value['data']['email'],
-          // value['data']['ccode'],
-          // value['data']['mobno'],
-          // value['data']['role'],
-          // value['data']['gender']
           value['Profiles'][0]['name'].toString(),
           value['Profiles'][0]['email'].toString(),
           value['Profiles'][0]['ccdoe'].toString(),
@@ -96,13 +70,43 @@ class AuthViewModel with ChangeNotifier {
           //!check ? value['Profiles'][0]['academy_name'].toString() :''
         ]);
 
-      !check  ?
-      prefsData.setString('acadmicName', value['Profiles'][0]['academy_name']) : null ;
+    if(value['Profiles'][0]['academy_name']!=null)
+      {
+        prefsData.setString('acadmicName', value['Profiles'][0]['academy_name']);
+      }
 
       userPreference.saveToken(UserModel(data: value['token'].toString()));
-      userPreference
-          .saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
+      userPreference.saveRole(UserModel(data: value['Profiles'][0]['role'].toString()));
       Utils.flushBarErrorMessage('Login Successfully', context);
+
+      // _myRepo.academyRegistrationTrack().then((value) async {
+      //   print(value);
+      //   setLoading(false);
+      //   setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0 ;
+      //   print("setupprogess is $setupProgress");
+      //
+      //   setupFinish = value['onboarding_setup_finish'] != null ?  value['onboarding_setup_finish'] : false ;
+      //   print("setupfrinish is $setupFinish");
+      // });
+
+      try {
+        final value = await _myRepo.academyRegistrationTrack();
+        print(value);
+        setLoading(false);
+        setupProgress = value['onboarding_completed'] != null ? value['onboarding_completed'] : 0;
+        print("setupprogress is $setupProgress");
+
+        setupFinish = value['onboarding_setup_finish'] != null ? value['onboarding_setup_finish'] : false;
+        print("setupfinish is $setupFinish");
+
+        // Further code that depends on the API response
+        // ...
+      } catch (error) {
+        // Handle any errors that occurred during the API request
+
+        print("Error: $error");
+      }
+
 
       print("value for academy is");
       print(value['Profiles'][0]['role']);

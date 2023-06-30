@@ -8,10 +8,13 @@ class UserRepository {
   //user login
   Future<dynamic> loginApi(dynamic data) async {
     try {
+      print("login api success ");
       dynamic response =
           await _apiServices.getPostWithoutApiResponse(AppUrl.userloginEndPint, data);
       return response;
     } catch (e) {
+      print("login api not successful error");
+      print(e);
       rethrow;
     }
   }

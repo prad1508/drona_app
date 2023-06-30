@@ -59,7 +59,10 @@ class TraineeListModel {
         "Data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
-
+// "status": "active",
+// "join_status": "not_onboarded",
+// "batch_timing_from": "5:27 AM",
+// "batch_timing_to": "5:27 PM"
 class Datum {
   String id;
   String uid;
@@ -79,6 +82,10 @@ class Datum {
   String cdd;
   String cmm;
   String cyy;
+  String status;
+  String join_status;
+  String batch_timing_from;
+  String batch_timing_to;
   int fees;
   String dateOfJoining;
   String monthOfBilling;
@@ -94,6 +101,10 @@ class Datum {
     required this.timestamp,
     required this.cDate,
     required this.cTime,
+    this.status ='',
+    this.join_status ='',
+    this.batch_timing_from ='',
+    this.batch_timing_to ='',
     this.gender ='',
     this.serviceicon ='',
     this.image ='',
@@ -117,6 +128,10 @@ class Datum {
         traineeUserid: json["trainee_userid"],
         timestamp: json["timestamp"],
         gender: json["gender"],
+        status: json["status"],
+        join_status: json["join_status"],
+        batch_timing_from: json["batch_timing_from"],
+        batch_timing_to: json["batch_timing_to"],
         serviceicon: json["service_iconname"],
         image: json["img"],
         dob: json["dob"],
@@ -141,6 +156,10 @@ class Datum {
         "trainee_userid": traineeUserid,
         "timestamp": timestamp,
         "gender": gender,
+        "status": status,
+        "join_status": join_status,
+        "batch_timing_from": batch_timing_from,
+        "batch_timing_to": batch_timing_to,
         "dob": dob,
         "service_iconname": batchname,
         "batch_name": serviceicon,
