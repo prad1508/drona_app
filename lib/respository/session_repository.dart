@@ -1,4 +1,6 @@
 
+import 'package:drona/model/session_details_model.dart';
+
 import '../data/network/base_apiservices.dart';
 import '../data/network/network_apiservice.dart';
 import '../model/sessionList_model.dart';
@@ -22,6 +24,7 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           AppUrl.sessionListEndPoint, data);
+
       return response = SessionListListModel.fromJson(response);
     } catch (e) {
       rethrow;
@@ -43,4 +46,20 @@ class SessionRepository {
     }
   }
 
+  Future<SessionDetailsModel> fetchSessionDetailsListApi2(String? id ) async {
+    try {
+      dynamic response = await _apiServices.getGetApiResponse(
+          '${AppUrl.sessionDetailsListEndPoint}/$id');
+      print("object==$response");
+      return response = SessionDetailsModel.fromJson(response);
+      print("object==$response");
+
+    } catch (e) {
+      print("error is$e");
+      print(e);
+      rethrow;
+    }
+  }
+
 }
+

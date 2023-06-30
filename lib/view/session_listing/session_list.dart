@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/session_listing/view_detailsclosed.dart';
@@ -338,7 +337,9 @@ class _SessionListState extends State<SessionList>
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Container(
                                   height: h * .43,
                                   decoration: BoxDecoration(
@@ -480,9 +481,16 @@ class _SessionListState extends State<SessionList>
                                                                  ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
 
                                                         Get.to(
-                                                                () => ViewSessionalDetails(
-                                                                id:
-                                                                "${value.dataList.data!.data?[index].uid}"),
+                                                                () =>
+                                                                ViewSessionalDetails(
+                                                                  id: "${value.dataList.data!.data?[index].uid}",
+                                                                  serviceIcon: value
+                                                                      .dataList
+                                                                      .data!
+                                                                      .data?[
+                                                                  index]
+                                                                      .service_iconname,
+                                                                ),
                                                             transition: Transition
                                                                 .leftToRight);
                                                       } else if (value
@@ -544,7 +552,9 @@ class _SessionListState extends State<SessionList>
                                                       }
                                                     },
                                                   ),
-                                                  const SizedBox(height: 5,),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
                                                   const Divider(
                                                     height: 5,
                                                     thickness: 1,

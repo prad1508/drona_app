@@ -21,7 +21,12 @@ import 'session_detail_edit.dart';
 
 class ViewSessionalDetails extends StatefulWidget {
   String? id;
-  ViewSessionalDetails({super.key, this.id});
+  String? serviceIcon;
+  ViewSessionalDetails({
+    super.key,
+    this.id,
+    this.serviceIcon,
+  });
 
   @override
   State<ViewSessionalDetails> createState() => _ViewSessionalDetailsState();
@@ -94,6 +99,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   List<Map<String, dynamic>> _foundUsers = [];
   @override
   initState() {
+    print("widget.id==${widget.id}");
     sessionViewModel.fetchSessionDetailsListhApi(widget.id);
     _foundUsers = _allUsers;
     super.initState();
@@ -134,14 +140,6 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                   SizedBox(
                     height: 5,
                   ),
-
-
-
-
-
-
-
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -470,13 +468,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                       ],
                                                     ),
                                                   ),
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                            const ViewProfilenew()));
-                                                  },
+                                                  onTap: () {},
                                                   onLongPress: () {
                                                     if (!_selectedItems
                                                         .contains(index)) {
@@ -656,13 +648,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                       ],
                                                     ),
                                                   ),
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                            const ViewProfilenew()));
-                                                  },
+                                                  onTap: () {},
                                                   onLongPress: () {
                                                     if (!_selectedItems
                                                         .contains(index)) {
@@ -958,8 +944,8 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       const SessionDetailEdit(),
                                 ),
                               );*/
-                Get.to(()=> const SessionDetailEdit(),transition: Transition.leftToRight);
-
+                Get.to(() => const SessionDetailEdit(),
+                    transition: Transition.leftToRight);
               }),
               icon: const Icon(Icons.edit),
               iconSize: 25,
@@ -982,24 +968,21 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
             color: Colors.white,
             child: Container(
               padding: const EdgeInsets.all(20),
-              child:
-              ChangeNotifierProvider<SessionViewViewModel>(
+              child: ChangeNotifierProvider<SessionViewViewModel>(
                   create: (BuildContext context) => sessionViewModel,
                   child: Consumer<SessionViewViewModel>(
                       builder: (context, value, _) {
-                        // print(value.dataList.data!.data?[0].batch_name);
+                        // print(value.dataList2.data!.data?[0].batch_name);
 
-                        switch(value.dataList.status!){
-
-
-                          case Status.loading :
+                        switch (value.dataList2.status!) {
+                          case Status.loading:
                             return const Center(
                               child: CircularProgressIndicator(
                                 color: Colors.teal,
                               ),
                             );
                           case Status.completed:
-                            return  Column(
+                            return Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -1013,37 +996,43 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       padding: const EdgeInsets.only(
                                           top: 10, bottom: 10, right: 10),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                            const EdgeInsets.only(left: 10),
                                             child: Row(
                                               mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Chip(
-                                                    backgroundColor:
-                                                    Colors.green.withOpacity(.2),
-                                                    label:  Text(
-                                                      '${value.dataList.data!.data?[0].status}',
-                                                      style: const TextStyle(color: Colors.green),
+                                                    backgroundColor: Colors.green
+                                                        .withOpacity(.2),
+                                                    label: Text(
+                                                      value.dataList2.data!.data[0]
+                                                          .status,
+                                                      style: const TextStyle(
+                                                          color: Colors.green),
                                                     )),
                                                 CircleAvatar(
                                                   radius: 20,
                                                   backgroundColor:
-                                                  const Color.fromARGB(255, 217, 217, 217),
+                                                  const Color.fromARGB(
+                                                      255, 217, 217, 217),
                                                   child: Image(
                                                       image: NetworkImage(
-                                                          "${AppUrl.imageListendPoint}${value.dataList.data!.data?[0].service_iconname}")),
+                                                          "${AppUrl.imageListendPoint}${widget.serviceIcon}")),
                                                 )
                                               ],
                                             ),
                                           ),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '${value.dataList.data!.data?[0].batch_name}',
+                                                value.dataList2.data!.batchName,
                                                 style: const TextStyle(
                                                     color: Colors.black,
                                                     fontStyle: FontStyle.normal,
@@ -1051,7 +1040,8 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                     fontSize: 16,
                                                     height: 2),
                                               ),
-                                              Text( '${value.dataList.data!.data?[0].program_name} - ${value.dataList.data!.data?[0].day_short} ,${value.dataList.data!.data?[0].sdd} ${value.dataList.data!.data?[0].smm} ${value.dataList.data!.data?[0].syy} ${value.dataList.data!.data?[0].batch_timing_from} to ${value.dataList.data!.data?[0].batch_timing_to}',
+                                              Text(
+                                                '${value.dataList2.data!.programName} - ${value.dataList2.data!.data[0].dayShort} ,${value.dataList2.data!.data[0].sdd} ${value.dataList2.data!.data[0].smm} ${value.dataList2.data!.data?[0].syy} ${value.dataList2.data!.data?[0].batchTimingFrom} to ${value.dataList2.data!.data?[0].batchTimingTo}',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontStyle: FontStyle.normal,
@@ -1066,7 +1056,8 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 15),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: const [
@@ -1085,7 +1076,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                             value: value1,
                                             onChanged: (value) {
                                               setState(() {
-                                                this.value1 = value!;
+                                                value1 = value!;
                                                 print('checked');
                                               });
                                             },
@@ -1100,116 +1091,143 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     height: height * .5,
                                     child: _foundUsers.isNotEmpty
                                         ? ListView.builder(
-                                        itemCount: value.dataList.data!.data?.length,
+                                        itemCount:
+                                        value.dataList2.data!.data.length,
                                         itemBuilder: (context, index) {
-                                          var nameText =
-                                          _foundUsers[index]['name'].split(' ');
+                                          //var nameText = _foundUsers[index]['name'].split(' ');
                                           return Card(
                                             // key: ValueKey(_foundUsers[index]["id"]),
                                             elevation: 0,
-                                            margin:
-                                            const EdgeInsets.symmetric(vertical: 0),
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 0),
                                             child: Column(
                                               children: [
                                                 ListTile(
-                                                  tileColor:
-                                                  (_selectedItems.contains(index))
+                                                  tileColor: (_selectedItems
+                                                      .contains(index))
                                                       ? const Color.fromARGB(
-                                                      255, 218, 218, 219)
+                                                      255,
+                                                      218,
+                                                      218,
+                                                      219)
                                                       .withOpacity(0.5)
                                                       : Colors.transparent,
                                                   leading: CircleAvatar(
-                                                      radius: 20.5,
-                                                      backgroundColor:
-                                                      const Color.fromRGBO(
-                                                          194, 235, 216, 1),
-                                                      child: _selectedItems
-                                                          .contains(index)
-                                                          ? const Icon(
-                                                        Icons.check,
-                                                        color: Color.fromRGBO(
-                                                            71, 192, 136, 1),
-                                                        size: 30.0,
-                                                      )
-                                                          : Text(
-                                                        (nameText[0][0].toString() +
-                                                            nameText[1][0]
-                                                                .toString())
-                                                            .toUpperCase(),
-                                                        style: const TextStyle(
-                                                            fontSize: 14),
-                                                      )),
+                                                    radius: 20.5,
+                                                    backgroundColor:
+                                                    const Color.fromRGBO(
+                                                        194, 235, 216, 1),
+                                                    child: _selectedItems
+                                                        .contains(index)
+                                                        ? const Icon(
+                                                      Icons.check,
+                                                      color:
+                                                      Color.fromRGBO(
+                                                          71,
+                                                          192,
+                                                          136,
+                                                          1),
+                                                      size: 30.0,
+                                                    )
+                                                        : Text(
+                                                      "${value.dataList2.data!.data[index].traineeName.split(" ")[0][0].toUpperCase()}"
+                                                          "${value.dataList2.data!.data[index].traineeName.split(" ")[1][0].toUpperCase()}",
+                                                      style:
+                                                      const TextStyle(
+                                                          fontSize:
+                                                          14),
+                                                    ),
+                                                  ),
                                                   title: Text(
-                                                    '${value.dataList.data!.data?[index].trainee_name}',
+                                                    value
+                                                        .dataList2
+                                                        .data!
+                                                        .data[index]
+                                                        .traineeName,
                                                     style: const TextStyle(
-                                                        color:
-                                                        Color.fromRGBO(57, 64, 74, 1),
+                                                        color: Color.fromRGBO(
+                                                            57, 64, 74, 1),
                                                         fontSize: 14,
-                                                        fontWeight: FontWeight.w700,
-                                                        fontFamily: 'Loto-Regular'),
+                                                        fontWeight:
+                                                        FontWeight.w700,
+                                                        fontFamily:
+                                                        'Loto-Regular'),
                                                   ),
                                                   subtitle: Text(
                                                     _foundUsers[index]["detail"]
                                                         .toString(),
                                                     style: const TextStyle(
-                                                        color:
-                                                        Color.fromRGBO(57, 64, 74, 1),
+                                                        color: Color.fromRGBO(
+                                                            57, 64, 74, 1),
                                                         fontSize: 12,
-                                                        fontWeight: FontWeight.w400,
-                                                        fontFamily: 'Loto-Regular'),
+                                                        fontWeight:
+                                                        FontWeight.w400,
+                                                        fontFamily:
+                                                        'Loto-Regular'),
                                                   ),
                                                   trailing: SizedBox(
-                                                    width: MediaQuery.of(context)
+                                                    width:
+                                                    MediaQuery.of(context)
                                                         .size
                                                         .width *
                                                         0.25,
                                                     child: Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                       children: [
                                                         CircleAvatar(
                                                             radius: 13,
-                                                            backgroundColor: Colors.green
-                                                                .withOpacity(0.1),
+                                                            backgroundColor:
+                                                            Colors.green
+                                                                .withOpacity(
+                                                                0.1),
                                                             child: const Text(
                                                               'P',
                                                               style: TextStyle(
-                                                                  color: Colors.green),
+                                                                  color: Colors
+                                                                      .green),
                                                             )),
                                                         CircleAvatar(
                                                             radius: 13,
-                                                            backgroundColor: Colors
-                                                                .redAccent
-                                                                .withOpacity(0.1),
-                                                            child: const Text('A',
+                                                            backgroundColor:
+                                                            Colors.redAccent
+                                                                .withOpacity(
+                                                                0.1),
+                                                            child: const Text(
+                                                                'A',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .redAccent))),
                                                         CircleAvatar(
                                                             radius: 13,
-                                                            backgroundColor: Colors.blue
-                                                                .withOpacity(0.1),
-                                                            child: const Text('L',
+                                                            backgroundColor:
+                                                            Colors.blue
+                                                                .withOpacity(
+                                                                0.1),
+                                                            child: const Text(
+                                                                'L',
                                                                 style: TextStyle(
-                                                                    color: Colors.blue))),
+                                                                    color: Colors
+                                                                        .blue))),
                                                       ],
                                                     ),
                                                   ),
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                            const ViewProfilenew()));
-                                                  },
+                                                  onTap: () {},
                                                   onLongPress: () {
-                                                    if (!_selectedItems.contains(index)) {
+                                                    if (!_selectedItems
+                                                        .contains(index)) {
                                                       setState(() {
-                                                        _selectedItems.add(index);
+                                                        _selectedItems
+                                                            .add(index);
                                                       });
                                                     } else {
                                                       setState(() {
-                                                        _selectedItems.removeWhere(
-                                                                (val) => val == index);
+                                                        _selectedItems
+                                                            .removeWhere(
+                                                                (val) =>
+                                                            val ==
+                                                                index);
                                                       });
                                                     }
                                                   },
@@ -1234,14 +1252,17 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                   // padding: const EdgeInsets.all(20),
                                     decoration: const BoxDecoration(
                                       color: Color.fromARGB(44, 98, 163, 243),
-                                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                       children: const [
                                         CircleAvatar(
                                             radius: 20,
-                                            backgroundColor: Color.fromARGB(44, 98, 163, 243),
+                                            backgroundColor:
+                                            Color.fromARGB(44, 98, 163, 243),
                                             child: Icon(
                                               Icons.upload,
                                               color: Colors.blueAccent,
@@ -1261,24 +1282,29 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                RoundButton(
+                                value1
+                                    ? RoundButton(
                                     loading: false,
                                     title: 'Submit Attendance',
                                     textColor: Colors.white,
                                     rounded: true,
-                                    color: Theme.of(context).primaryColor.withOpacity(0.5),
+                                    color: Theme.of(context).primaryColor,
                                     onPress: () {
-                                      /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (BuildContext context) => const Layout(
-                    selectedIndex: 0,
-                    ),
-                    ),
-                    );*/
-                                      Get.to(()=> const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
-
-                                    }),
+                                      Get.to(
+                                              () => const Layout(
+                                            selectedIndex: 0,
+                                          ),
+                                          transition: Transition.leftToRight);
+                                    })
+                                    : RoundButton(
+                                    loading: false,
+                                    title: 'Submit Attendance',
+                                    textColor: Colors.white,
+                                    rounded: true,
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.5),
+                                    onPress: () {}),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -1309,7 +1335,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     ),
                                     const NoData()
                                     // Text(
-                                    //   value.dataList.message.toString(),
+                                    //   value.dataList2.message.toString(),
                                     //   style: TextStyle(
                                     //       color: Theme.of(context).primaryColor,
                                     //       fontSize: 20,
@@ -1318,11 +1344,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                   ],
                                 ));
                         }
-
-
                       })),
-
-
             ),
           ),
         ),

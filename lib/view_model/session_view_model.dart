@@ -1,3 +1,4 @@
+import 'package:drona/model/session_details_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../data/response/api_response.dart';
@@ -16,12 +17,6 @@ class SessionViewViewModel with ChangeNotifier {
 
   setLoading(bool value){
     _loading = value;
-    notifyListeners();
-  }
-
-  ApiResponse<SessionListListModel> dataList = ApiResponse.loading();
-  setDataList(ApiResponse<SessionListListModel> response) {
-    dataList = response;
     notifyListeners();
   }
 
@@ -47,7 +42,17 @@ class SessionViewViewModel with ChangeNotifier {
     });
   }
 
+  ApiResponse<SessionListListModel> dataList = ApiResponse.loading();
+  setDataList(ApiResponse<SessionListListModel> response) {
+    dataList = response;
+    notifyListeners();
+  }
 
+  ApiResponse<SessionDetailsModel> dataList2 = ApiResponse.loading();
+  setDataList2(ApiResponse<SessionDetailsModel> response) {
+    dataList2 = response;
+    notifyListeners();
+  }
 
   Future<void> fetchSessionListSearchApi(dynamic data) async {
     setDataList(ApiResponse.loading());
@@ -63,11 +68,11 @@ class SessionViewViewModel with ChangeNotifier {
     });
   }
 
+/*
   Future<void> fetchSessionDetailsListhApi(String? id) async {
     setDataList(ApiResponse.loading());
 
     _myRepo.fetchSessionDetailsListApi(id).then((value) {
-      print("value==${value.data![0].batch_name.toString()}");
       setDataList(ApiResponse.completed(value));
 
       print("api session Details list success");
@@ -78,7 +83,23 @@ class SessionViewViewModel with ChangeNotifier {
       print("error${ApiResponse.error(error.toString())}");
     });
   }
+*/
+  Future<void> fetchSessionDetailsListhApi(String? id) async {
+    setDataList2(ApiResponse.loading());
+
+    _myRepo.fetchSessionDetailsListApi2(id).then((value) {
+      setDataList2(ApiResponse.completed(value));
+
+      print("api session Details list success");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      print("api  session Details list not success");
+      print(error);
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
 
 
 }
+
 
