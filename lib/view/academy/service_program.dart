@@ -64,7 +64,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                     MaterialPageRoute(
                         builder: (context) => const Facility_Program()),
                   );*/
-                  Get.to(()=> const Facility_Program(),transition: Transition.leftToRight);
+                  Get.to(()=> const FacilityProgram(),transition: Transition.leftToRight);
 
                 },
                 contentPadding: EdgeInsets.all(5),

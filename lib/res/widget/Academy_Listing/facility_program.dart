@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Facility_Program extends StatefulWidget {
-  const Facility_Program({super.key});
+class FacilityProgram extends StatefulWidget {
+  const FacilityProgram({super.key});
 
   @override
-  State<Facility_Program> createState() => _Facility_ProgramState();
+  State<FacilityProgram> createState() => _FacilityProgramState();
 }
 
-class _Facility_ProgramState extends State<Facility_Program> {
+class _FacilityProgramState extends State<FacilityProgram> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
