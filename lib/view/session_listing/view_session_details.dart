@@ -1153,24 +1153,56 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                         fontFamily:
                                                         'Loto-Regular'),
                                                   ),
-                                                  subtitle: Text(
-                                                    _foundUsers[index]["detail"]
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            57, 64, 74, 1),
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                        FontWeight.w400,
-                                                        fontFamily:
-                                                        'Loto-Regular'),
+                                                  subtitle: Row(
+                                                    children: [
+                                                      Text(
+                                                        value.dataList2.data!.data[index].gender.toString().toUpperCase(),
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),
+                                                      Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),)
+                                                      ,
+                                                      Text(
+                                                        "${value.dataList2.data!.data[index].dob}",
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),
+                                                      Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                      Text(
+                                                        "Due: ${value.dataList2.data!.data[index].fees}",
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),
+
+                                                    ],
                                                   ),
                                                   trailing: SizedBox(
                                                     width:
                                                     MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                        0.25,
+                                                        0.24,
                                                     child: Row(
                                                       mainAxisAlignment:
                                                       MainAxisAlignment
@@ -1352,4 +1384,5 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     );
   }
 }
+
 
