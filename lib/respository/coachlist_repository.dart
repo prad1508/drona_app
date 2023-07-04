@@ -1,5 +1,6 @@
 
 import '../data/network/base_apiservices.dart';
+import '../model/coach_list_model.dart';
 import '../model/coachlist_model.dart';
 import '../data/network/network_apiservice.dart';
 import '/res/app_url.dart';
@@ -11,10 +12,19 @@ class CoachlistRepository {
     try{
       dynamic response = await _apiServices.getGetApiResponse(AppUrl.coachlistListEndPoint);
       return response = CoachlistListModel.fromJson(response);
-      
     }catch(e){
       rethrow ;
     }
   }
+
+  Future<CoachlistModel> fetchCoachlistApi()async{
+    try{
+      dynamic response = await _apiServices.getGetApiResponse(AppUrl.coachlistListEndPoint);
+      return response = CoachlistModel.fromJson(response);
+    }catch(e){
+      rethrow ;
+    }
+  }
+
 
 }

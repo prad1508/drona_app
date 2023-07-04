@@ -23,6 +23,7 @@ import '../../utils/color.dart' as AppColor;
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
 import '../dashboard/layout.dart';
+import '../trainee_listing/add_trainee_in_existingBatch.dart';
 
 class AddTraineeList extends StatefulWidget {
   AddTraineeList({
@@ -106,6 +107,16 @@ class _AddTraineeListState extends State<AddTraineeList> {
               'Trainee Listing',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
+            actions: [
+              IconButton(
+                onPressed: (() {
+                  Get.to(()=> AddTrainneInExisitingBatch(),transition: Transition.leftToRight);
+                }),
+                icon: const Icon(Icons.add),
+                iconSize: 25,
+                color: Colors.black,
+              ),
+            ],
             centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
@@ -207,17 +218,17 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ),
                                                     child:  Center(
                                                       child: value.dataList.data!.data[index].status == "active" ?
-                                                      Text(
+                                                      const Text(
                                                        "Active",
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                           color: Color(0xffFBFBFC),
                                                           fontSize: 10,
                                                           fontFamily: 'Lato',
                                                           fontWeight: FontWeight.w600,
                                                         ),
-                                                      ) :  Text(
+                                                      ) :  const Text(
                                                         "Inactive",
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                           color: Color(0xffFBFBFC),
                                                           fontSize: 10,
                                                           fontFamily: 'Lato',
@@ -362,7 +373,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                      Padding(
                                                       padding: EdgeInsets.only(left: 15),
                                                       child: Text(
-                                                        '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_from}',
+                                                        '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_to}',
                                                         style: const TextStyle(
                                                           color: Color(0xff39404A),
                                                           fontSize: 12,

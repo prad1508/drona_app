@@ -1,3 +1,6 @@
+
+
+
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +17,23 @@ import 'package:image_picker/image_picker.dart';
 import '../../res/widget/synctextform.dart';
 import '../../utils/utils.dart';
 import '../../utils/validation.dart';
+import '../../view_model/batchList_view_model.dart';
 import '../../view_model/myservices_view_model.dart';
+import '../../view_model/trainee_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../dashboard/layout.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CreateProfile extends StatefulWidget {
+class AddTrainneInExisitingBatch extends StatefulWidget {
   int listindex;
   String pathPage;
-   CreateProfile({super.key , this.listindex=-1, this.pathPage=''});
+  AddTrainneInExisitingBatch({super.key , this.listindex=-1, this.pathPage=''});
   @override
-  State<CreateProfile> createState() => _CreateProfileState();
+  State<AddTrainneInExisitingBatch> createState() => _AddTrainneInExisitingBatchState();
 }
 
-class _CreateProfileState extends State<CreateProfile> {
+class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch> {
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -37,6 +42,8 @@ class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dob = TextEditingController();
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+  TraineeViewModel programViewViewModel = TraineeViewModel();
   UserViewModel userViewModel = UserViewModel();
   String? _genderValue = 'm';
   String userProfile = '';
@@ -45,11 +52,13 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   List<DropdownMenuItem<String>> dropdownItems = [];
+  List<DropdownMenuItem<String>> dropdownItems1 = [];
 
 //profille image picke
   File? imgFile;
   final imgPicker = ImagePicker();
   String? selectedService;
+  String? selectedService1;
   void openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
     userViewModel.fetchouserProfileimg(imgCamera!.path, context);
@@ -173,6 +182,7 @@ class _CreateProfileState extends State<CreateProfile> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    batchListViewViewModel.fetchBatchListListApi();
     myservicesViewViewModel.fetchMyservicesListApi();
   }
 
@@ -183,46 +193,23 @@ class _CreateProfileState extends State<CreateProfile> {
       onWillPop: () => showExitPopup(context),
       child:
       MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:  Scaffold(
+        debugShowCheckedModeBanner: false,
+        home:  Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            leading: widget.pathPage=='dashBoard'?
+            leading:
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
-            ):null,
+            ),
             title: Text(
-              AppLocale.addACoach.getString(context),
+              AppLocale.addTrainee.getString(context),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
-            // actions: [
-            //   TextButton(
-            //     style: TextButton.styleFrom(
-            //       textStyle: const TextStyle(fontSize: 20),
-            //     ),
-            //     onPressed: () {
-            //       /*Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (BuildContext context) => const Layout(selectedIndex: 0),
-            //         ),
-            //       );*/
-            //       Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.leftToRight);
-            //
-            //     },
-            //     child: Text(
-            //       AppLocale.skip.getString(context),
-            //       style: TextStyle(
-            //           color: Theme.of(context).primaryColor,
-            //           fontSize: 14,
-            //           fontWeight: FontWeight.w500),
-            //     ),
-            //   ),
-            // ],
+
           ),
           body: SingleChildScrollView(
             child: Material(
@@ -253,7 +240,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                     backgroundColor: Colors.white,
                                     backgroundImage: imgFile == null
                                         ? const AssetImage(
-                                            'assets/images/user_profile.png')
+                                        'assets/images/user_profile.png')
                                         : FileImage(imgFile!) as ImageProvider,
                                   ),
                                 ),
@@ -303,16 +290,16 @@ class _CreateProfileState extends State<CreateProfile> {
                         keyboardType: TextInputType.phone,
                         hintText: 'eg. 9876521233',
                         isValidatingMessage:
-                            'Enter a valid 10 digit mobile number',
+                        'Enter a valid 10 digit mobile number',
                         valueIsInvalidMessage:
-                            'Enter a valid 10 digit mobile number'),
+                        'Enter a valid 10 digit mobile number'),
                     const SizedBox(
                       height: 15,
                     ),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        AppLocale.title19.getString(context),
+                        "Full Name",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -352,101 +339,15 @@ class _CreateProfileState extends State<CreateProfile> {
                     const SizedBox(
                       height: 15,
                     ),
+
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        AppLocale.gender.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'm',
-                          groupValue: _genderValue,
-                          onChanged: _genderChangedHandler(),
-                          label: AppLocale.male.getString(context),
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'f',
-                          groupValue: _genderValue,
-                          onChanged: _genderChangedHandler(),
-                          label: AppLocale.female.getString(context),
-                        ),
-                        CustomRadio<String>(
-                          btnColor: Colors.black,
-                          value: 'o',
-                          groupValue: _genderValue,
-                          onChanged: _genderChangedHandler(),
-                          label: AppLocale.other.getString(context),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.emailId.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: email,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. xyz@email.com',
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.salaryMonth.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: salary,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. ₹200',
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.title33.getString(context),
+                        "Service",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -466,30 +367,115 @@ class _CreateProfileState extends State<CreateProfile> {
                           child: Consumer<MyservicesViewViewModel>(
                               builder: (context, value, child) {
                                 if(value.dataList.data!=null)
-                                  {
-                                    dropdownItems.clear();
-                                    for (var i = 0; i < value.dataList.data!.services!.length; i++) {
-                                      dropdownItems.add(DropdownMenuItem(
-                                          value: value.dataList.data!.services![i].uid.toString(),
-                                          child: Text(value.dataList.data!.services![i].serviceName.toString())));
-                                    }
+                                {
+                                  dropdownItems.clear();
+                                  for (var i = 0; i < value.dataList.data!.services!.length; i++) {
+                                    dropdownItems.add(DropdownMenuItem(
+                                        value: value.dataList.data!.services![i].uid.toString(),
+                                        child: Text(value.dataList.data!.services![i].serviceName.toString())));
                                   }
-                                    return DropdownButton(
-                                        isExpanded: true,
-                                        hint: const Text("Choose Your Service"),
-                                        underline: DropdownButtonHideUnderline(
-                                            child: Container()),
-                                        value: selectedService,
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            selectedService = newValue!;
-                                          });
-                                        },
-                                        items: dropdownItems);
+                                }
+                                return DropdownButton(
+                                    isExpanded: true,
+                                    hint: const Text("Choose Your Service"),
+                                    underline: DropdownButtonHideUnderline(
+                                        child: Container()),
+                                    value: selectedService,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedService = newValue!;
+                                      });
+                                    },
+                                    items: dropdownItems);
 
 
-                          })),
+                              })),
                     ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Batch",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: const Color.fromARGB(255, 218, 216, 216)),
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: ChangeNotifierProvider<BatchListViewViewModel>(
+                          create: (context) => batchListViewViewModel,
+                          child: Consumer<BatchListViewViewModel>(
+                              builder: (context, value, child) {
+                                if(value.dataList.data!=null)
+                                {
+                                  dropdownItems1.clear();
+                                  for (var i = 0; i < value.dataList.data!.data!.length; i++) {
+                                    /// check service with batch name
+                                    ///
+                                    dropdownItems1.add(DropdownMenuItem(
+                                        value: value.dataList.data!.data![i].uid.toString(),
+                                        child: Text(value.dataList.data!.data![i].batchName.toString()))
+                                    );
+                                  }
+                                }
+                                return DropdownButton(
+                                    isExpanded: true,
+                                    hint: const Text("Choose Your Service"),
+                                    underline: DropdownButtonHideUnderline(
+                                        child: Container()),
+                                    value: selectedService1,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedService1 = newValue!;
+                                      });
+                                    },
+                                    items: dropdownItems1);
+
+
+                              })),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        AppLocale.fee.getString(context),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      readOnly: true,
+                      controller: salary,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. ₹200',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+
                     const SizedBox(
                       height: 15,
                     ),
@@ -514,7 +500,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         rounded: true,
                         color: Theme.of(context).primaryColor,
                         onPress: ()  {
-                         // final SharedPreferences sp = await SharedPreferences.getInstance();
+                          // final SharedPreferences sp = await SharedPreferences.getInstance();
                           if (phone.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Fill Phone Number Name', context);
@@ -545,91 +531,91 @@ class _CreateProfileState extends State<CreateProfile> {
                                 'Please Select Service', context);
                           }
                           else
-                            {
-                              Map data = {
-                                "service_uid": selectedService.toString(),
-                                "fullname": coachName.text.toString(),
-                                "ccode": "91",
-                                "mobno": phone.text.toString(),
-                                "gender": _genderValue.toString(),
-                                "email": email.text.toString(),
-                                "salary": salary.text,
-                                "dateofjoining": doj.text.toString(),
-                                "dob": dob.text.toString(),
-                                // "img":sp.getString('uprofile'),
-                                "img": imgFile.toString(),
-                                "relation": "self"
-                              };
-                              // print(data);
-                              showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Center(
-                                    child: AlertDialog(
-                                      //  title: const Center(child: Text('')),
-                                      content:   Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            width: 50,
-                                            height: 50,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.green,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: const Icon(
-                                              Icons.check,
-                                              color: Colors.white,
-                                            ),
+                          {
+                            Map data = {
+                              "service_uid": selectedService.toString(),
+                              "fullname": coachName.text.toString(),
+                              "ccode": "91",
+                              "mobno": phone.text.toString(),
+                              "gender": _genderValue.toString(),
+                              "email": email.text.toString(),
+                              "salary": salary.text,
+                              "dateofjoining": doj.text.toString(),
+                              "dob": dob.text.toString(),
+                              // "img":sp.getString('uprofile'),
+                              "img": imgFile.toString(),
+                              "relation": "self"
+                            };
+                            // print(data);
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: AlertDialog(
+                                    //  title: const Center(child: Text('')),
+                                    content:   Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.green,
+                                            shape: BoxShape.circle,
                                           ),
-                                          const SizedBox(height: 5),
-                                          const Text("Send Invite",style: TextStyle(
-                                              fontSize: 14
-                                          ),),
-                                          const SizedBox(height: 5),
-
-                                          Text('Invite "${coachName.text}" To Your Academy',style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200
-                                          ),),
-                                          SizedBox(height: 5),
-
-                                        ],
-                                      ),
-                                      contentPadding: EdgeInsets.all(15),
-                                      actions: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Container(
-                                              width: double.infinity,
-                                              child: RoundButton(
-                                                title: 'Send Invitation',
-                                                onPress: () async {
-                                                  Navigator.pop(context);
-                                                  print(data);
-                                                  if(widget.listindex!=-1)
-                                                  {
-                                                    user.userProfileAdd(data, context , widget.pathPage,widget.listindex);
-                                                  }
-                                                  else
-                                                  {
-                                                    user.userProfileAdd(data, context , widget.pathPage);
-                                                  }
-                                                },
-                                                rounded: true,
-                                                color: Theme.of(context).primaryColor,
-                                                textColor: Colors.white,
-
-                                              )
+                                          child: const Icon(
+                                            Icons.check,
+                                            color: Colors.white,
                                           ),
                                         ),
+                                        const SizedBox(height: 5),
+                                        const Text("Send Invite",style: TextStyle(
+                                            fontSize: 14
+                                        ),),
+                                        const SizedBox(height: 5),
+
+                                        Text('Invite "${coachName.text}" To Your Academy',style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w200
+                                        ),),
+                                        SizedBox(height: 5),
+
                                       ],
                                     ),
-                                  );
-                                },
-                              );
-                            }
+                                    contentPadding: EdgeInsets.all(15),
+                                    actions: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                            width: double.infinity,
+                                            child: RoundButton(
+                                              title: 'Send Invitation',
+                                              onPress: () async {
+                                                Navigator.pop(context);
+                                                print(data);
+                                                if(widget.listindex!=-1)
+                                                {
+                                                  user.userProfileAdd(data, context , widget.pathPage,widget.listindex);
+                                                }
+                                                else
+                                                {
+                                                  user.userProfileAdd(data, context , widget.pathPage);
+                                                }
+                                              },
+                                              rounded: true,
+                                              color: Theme.of(context).primaryColor,
+                                              textColor: Colors.white,
+
+                                            )
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
 
 
                         }),

@@ -158,9 +158,15 @@ class _EditBatchListingState extends State<EditBatchListing> {
         debugShowCheckedModeBanner: false,
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,
-        home: ChangeNotifierProvider<BatchListViewViewModel>(
+        home:
+
+
+        ChangeNotifierProvider<BatchListViewViewModel>(
             create: (BuildContext context) => batchListViewViewModel,
+
+
             child: Consumer<BatchListViewViewModel>(builder: (context, value, _) {
+
               if (!isInitialized) {
                 assignSeviceId(
                     value.dataList.data!.data![widget.Listindex].serviceUid);
@@ -229,14 +235,6 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                 isInitialized = true;
               }
-
-              // _groupBatch = value.dataList.data!.data?[widget.Listindex].batch_type;
-
-              // controller: batchTo
-              //   ..text = value.dataList.data
-              //       ?.data![widget.Listindex].batchTimingTo
-              //       .toString() ?? batchTodata.toString(),
-
               selectedService =
                   value.dataList.data?.data![widget.Listindex].serviceName;
 

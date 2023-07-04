@@ -16,17 +16,19 @@ import '../view_model/registration_view_model.dart';
 import 'package:intl/intl.dart';
 
 class TrainAddManualy extends StatefulWidget {
+  String fees;
   String batchId;
   String batchName;
   String pathPage;
 
-  TrainAddManualy({super.key, required this.batchId, required this.batchName, this.pathPage=''});
+  TrainAddManualy({super.key, required this.batchId, required this.batchName, this.pathPage='',this.fees=''});
 
   @override
   State<TrainAddManualy> createState() => _TrainAddManualyState();
 }
 
 class _TrainAddManualyState extends State<TrainAddManualy> {
+  bool editFees = false;
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   final TextEditingController fullName = TextEditingController();
@@ -45,6 +47,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
   @override
   initState() {
     super.initState();
+    fee.text = widget.fees;
   }
 
   @override
@@ -58,6 +61,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
         localizationsDelegates: _localization.localizationsDelegates,
 
         home: Scaffold(
+
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           resizeToAvoidBottomInset : false ,
           appBar: AppBar(
@@ -306,17 +310,27 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                     const SizedBox(
                       height: 15,
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.fee.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            AppLocale.fee.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                        TextButton(onPressed: (){
+                          /// open modal
+                          _openModal(context);
+                        }, child: Text("Edit Fees"))
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                     TextFormField(
+                      readOnly: true,
                       controller: fee,
                       decoration: InputDecoration(
                         hintText: '₹ 1000',
@@ -507,6 +521,74 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
             ),
           );
         });
+  }
+
+  void _openModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: fee,
+                  decoration: InputDecoration(
+                    hintText: "Enter Fees",
+                    contentPadding: const EdgeInsets.all(10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: BorderSide(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Dismiss the modal
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                         // String enteredText = _textEditingController.text;
+                          if(fee.text.isEmpty || int.parse(fee.text) <=0)
+                          {
+                            Utils.flushBarErrorMessage("Please enter valid fees", context);
+                          }
+                          else
+                          {
+                            fee.text = fee.text;
+                            Navigator.of(context).pop();
+                          }
+
+                        },
+                        child: Text('OK'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

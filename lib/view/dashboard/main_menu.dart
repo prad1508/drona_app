@@ -3,6 +3,9 @@ import 'dart:core';
 import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:drona/view/registeration/login_view.dart';
+import 'package:drona/view/reports/attendance.dart';
+import 'package:drona/view/reports/finance_ledger.dart';
+import 'package:drona/view/reports/owner_edit_profile.dart';
 import 'package:drona/view/trainee_listing/record_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:drona/view/coach_listing/coach_listing.dart';
 import '../../view_model/user_view_model.dart';
 
+import '../batch_listing/add_trainee_list.dart';
 import '../batch_listing/batchlist_search.dart';
 
 import '../coach_listing/coach_listselected.dart';
@@ -21,14 +25,13 @@ import '../session_listing/session_list.dart';
 import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+List details = [];
 
-
-List details = [] ;
 class MainMenu extends StatefulWidget {
   final String? name;
   final String? academyName;
-  const MainMenu({super.key, this.name, this.academyName});
 
+  const MainMenu({super.key, this.name, this.academyName});
 
   @override
   State<MainMenu> createState() => _MainMenuState();
@@ -43,11 +46,13 @@ class _MainMenuState extends State<MainMenu> {
   final TextEditingController doj = TextEditingController();
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
+
   @override
   initState() {
     getData();
     super.initState();
   }
+
   getData() async {
     final prefs = await SharedPreferences.getInstance();
     details = prefs.getStringList('registerResponse')!;
@@ -61,10 +66,7 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-
-
     final userPrefernece = Provider.of<UserViewModel>(context);
-
 
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
@@ -97,8 +99,9 @@ class _MainMenuState extends State<MainMenu> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Get.to(() => const academy_setting(), transition: Transition.rightToLeft);
+                    onTap: () {
+                      Get.to(() => const academy_setting(),
+                          transition: Transition.rightToLeft);
                     },
                     child: Card(
                         shape: RoundedRectangleBorder(
@@ -116,7 +119,7 @@ class _MainMenuState extends State<MainMenu> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       children: [
@@ -132,7 +135,8 @@ class _MainMenuState extends State<MainMenu> {
                                         const Row(
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.only(left: 12),
+                                              padding:
+                                                  EdgeInsets.only(left: 12),
                                               child: Text(
                                                 'Services',
                                                 style: TextStyle(
@@ -172,8 +176,8 @@ class _MainMenuState extends State<MainMenu> {
                                                       color: Colors.green,
                                                       width: 2)),
                                               backgroundColor: Colors.green),
-                                          child: Row(
-                                            children: const [
+                                          child: const Row(
+                                            children: [
                                               Text("60%"),
                                               Icon(
                                                 Icons.arrow_forward_ios,
@@ -199,7 +203,7 @@ class _MainMenuState extends State<MainMenu> {
                     tileColor: Colors.grey.shade100,
                     leading: const Image(
                         image: AssetImage('assets/images/user_profile.png')),
-                    title:  Text(
+                    title: Text(
                       widget.name.toString(),
                     ),
                     trailing: IconButton(
@@ -211,8 +215,8 @@ class _MainMenuState extends State<MainMenu> {
                                 ViewProfileDetails(),
                           ),
                         );*/
-                        Get.to(()=> const ViewProfileDetails(),transition: Transition.leftToRight);
-
+                        Get.to(() => const ViewProfileDetails(),
+                            transition: Transition.leftToRight);
                       }),
                       icon: const Icon(Icons.arrow_forward_ios),
                       iconSize: 20,
@@ -245,9 +249,11 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Get.to(()=>   SearchBatchList(
-                                pathPage: 'dashBoard',
-                              ),transition: Transition.leftToRight);
+                              Get.to(
+                                  () => SearchBatchList(
+                                        pathPage: 'dashBoard',
+                                      ),
+                                  transition: Transition.leftToRight);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -277,8 +283,8 @@ class _MainMenuState extends State<MainMenu> {
                                   const SessionList(),
                                 ),
                               );*/
-                              Get.to(()=> const SessionList(),transition: Transition.leftToRight);
-
+                              Get.to(() => const SessionList(),
+                                  transition: Transition.leftToRight);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -337,26 +343,25 @@ class _MainMenuState extends State<MainMenu> {
                                       CoachListSelected(),
                                 ),
                               );*/
-                              Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
-
+                              Get.to(() => CoachListSelected(),
+                                  transition: Transition.leftToRight);
                             },
-
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                    image: AssetImage(
-                                        'assets/images/coach.png'),
+                                    image:
+                                        AssetImage('assets/images/coach.png'),
                                     width: 15,
                                   ),
                                 )),
                             title: const Text(
                               'Coach',
                             ),
-                            trailing: Icon(Icons.arrow_forward_ios, size: 20),
-
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                           ListTile(
                             onTap: () {
@@ -367,8 +372,9 @@ class _MainMenuState extends State<MainMenu> {
                                   const Trainee_Listing(),
                                 ),
                               );*/
-                              Get.to(()=> const Trainee_Listing(),transition: Transition.leftToRight);
-
+                              //   Get.to(()=> const Trainee_Listing(),transition: Transition.leftToRight);
+                              Get.to(() => AddTraineeList(),
+                                  transition: Transition.leftToRight);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -376,15 +382,15 @@ class _MainMenuState extends State<MainMenu> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                    image: AssetImage(
-                                        'assets/images/user.png'),
+                                    image: AssetImage('assets/images/user.png'),
                                     width: 15,
                                   ),
                                 )),
                             title: const Text(
                               'Trainee',
                             ),
-                            trailing: Icon(Icons.arrow_forward_ios, size: 20),
+                            trailing:
+                                const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                         ],
                       ),
@@ -438,8 +444,8 @@ class _MainMenuState extends State<MainMenu> {
                                       builder: (context) =>
                                       const Coach_Listing()),
                                 );*/
-                                Get.to(()=> const Record_Payment(),transition: Transition.leftToRight);
-
+                                Get.to(() => const Record_Payment(),
+                                    transition: Transition.leftToRight);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -453,7 +459,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                    AssetImage('assets/images/rupee.png'),
+                                        AssetImage('assets/images/rupee.png'),
                                     width: 10,
                                   ),
                                 )),
@@ -469,8 +475,8 @@ class _MainMenuState extends State<MainMenu> {
                                         CoachListSelected(),
                                   ),
                                 );*/
-                                Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
-
+                                Get.to(() => CoachListSelected(),
+                                    transition: Transition.leftToRight);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -506,6 +512,10 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           ListTile(
+                            onTap: () {
+                              Get.to(() => const Attendance(),
+                                  transition: Transition.leftToRight);
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -521,12 +531,19 @@ class _MainMenuState extends State<MainMenu> {
                               'Attendance reports',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                                Get.to(() => const Attendance(),
+                                    transition: Transition.leftToRight);
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
                           ),
                           ListTile(
+                            onTap: () {
+                              Get.to(() => const FinanceLedger(),
+                                  transition: Transition.leftToRight);
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -534,7 +551,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                    AssetImage('assets/images/finance.png'),
+                                        AssetImage('assets/images/finance.png'),
                                     width: 20,
                                   ),
                                 )),
@@ -542,13 +559,19 @@ class _MainMenuState extends State<MainMenu> {
                               'Finance reports',
                             ),
                             trailing: IconButton(
-                              onPressed: (() {}),
+                              onPressed: (() {
+                                Get.to(() => const FinanceLedger(),
+                                    transition: Transition.leftToRight);
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),
                           ),
                           ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const OwnerEditProfile(),
+                                  transition: Transition.leftToRight);
+                            },
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
@@ -563,7 +586,8 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-
+                                Get.to(() => const OwnerEditProfile(),
+                                    transition: Transition.leftToRight);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -627,7 +651,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                       image:
-                                      AssetImage('assets/images/info.png')),
+                                          AssetImage('assets/images/info.png')),
                                 )),
                             title: const Text(
                               'About',
@@ -663,8 +687,8 @@ class _MainMenuState extends State<MainMenu> {
 /*
                                 Navigator.pushNamed(context, RoutesName.login);
 */
-                                Get.to(() => const LoginView(), transition: Transition.leftToRight);
-
+                                Get.to(() => const LoginView(),
+                                    transition: Transition.leftToRight);
                               });
                             },
                             child: ListTile(
@@ -704,4 +728,3 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 }
-

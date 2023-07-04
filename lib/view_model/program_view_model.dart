@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/program_model.dart';
@@ -15,7 +13,6 @@ class ProgramViewViewModel with ChangeNotifier {
 
   set activeTabIndex(int index) {
     _activeTabIndex = index;
-
     print("my index is $_activeTabIndex");
     notifyListeners();
   }

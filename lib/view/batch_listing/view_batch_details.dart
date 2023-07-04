@@ -28,6 +28,7 @@ class ViewBatchDetails extends StatefulWidget {
 }
 
 class _ViewBatchDetailsState extends State<ViewBatchDetails> {
+  String batchFees ='';
   //multi language support
   late Map<String, dynamic> data;
   final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -111,6 +112,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                 create: (BuildContext context) => batchListViewViewModel,
                 child: Consumer<BatchListViewViewModel>(
                     builder: (context, value, _) {
+
                       // batchUid = value.dataList.data!.data![0].uid.toString();
                       //   print("object==$batchUid");
                       switch (value.dataList.status!) {
@@ -252,11 +254,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                               ),
                               TextFormField(
                                 enabled: false,
-                                controller: fee
-                                  ..text = value.dataList.data
-                                      ?.data![widget.ListIndex].fees
-                                      .toString() ??
-                                      '',
+                                controller: fee..text = value.dataList.data?.data![widget.ListIndex].fees.toString() ?? '',
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(10),
                                   border: OutlineInputBorder(
@@ -838,6 +836,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                               batchId: value.dataList.data!.data![0].uid.toString(),
                                                               batchName: "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
                                                               pathPage : widget.pathPage,
+                                                              fees: value.dataList.data?.data![widget.ListIndex].fees,
                                                             ),transition: Transition.leftToRight);
 
                                                           },

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
 
 import '../data/response/api_response.dart';
 import '../model/coachlist_model.dart';
@@ -15,6 +16,7 @@ import '../view/trainee_listing/trainee_list.dart';
 
 class TraineeViewModel with ChangeNotifier {
   final _myRepo = TraineeRepository();
+ // MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   bool _loading = false;
   bool get loading => _loading;
 

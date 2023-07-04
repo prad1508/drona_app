@@ -91,7 +91,7 @@ class UserViewModel with ChangeNotifier {
     }).onError((error, stackTrace) {
       setLoading(false);
 
-      print("api  not success");
+      print("api  not success for image ");
     });
     return true;
   }
@@ -104,8 +104,6 @@ class UserViewModel with ChangeNotifier {
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage(value['msg'], context);
       print("api success of adding coach");
-
-
    //if(listindex!=-1)
      //{
        /// create batch
@@ -122,15 +120,9 @@ class UserViewModel with ChangeNotifier {
     }).onError((error, stackTrace) {
       setLoading(false);
       print("api  not success");
+      print("error is $error");
 
       Utils.flushBarErrorMessage(error.toString(), context);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (BuildContext context) =>
-      //         CoachListSelected(),
-      //   ),
-      // );
     });
   }
 

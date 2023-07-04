@@ -849,7 +849,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         };
 
                         print(data);
-                        batch.fetchCreatebatchListApi(data, context ,batchName.text.toString(),widget.pathPage );
+                        batch.fetchCreatebatchListApi(data, context ,batchName.text.toString(),widget.pathPage ,_feesamount!);
                       },
                     ),
                   ],

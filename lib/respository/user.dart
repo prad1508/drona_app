@@ -37,9 +37,7 @@ class UserRepository {
   //ouser profile
   Future<dynamic> fetchouserProfileimg(data) async {
     try {
-
-      dynamic response =
-          await _apiServices.uploadImageHTTP(AppUrl.ouserProfileimgListEndPoint, data);
+      dynamic response = await _apiServices.uploadImageHTTP(AppUrl.ouserProfileimgListEndPoint, data);
       return response;
     } catch (e) {
       rethrow;
@@ -49,8 +47,7 @@ class UserRepository {
   //user logout
   Future<dynamic> fetchUserListApi() async {
     try {
-      dynamic response =
-          await _apiServices.getGetApiResponse(AppUrl.userLogout);
+      dynamic response = await _apiServices.getGetApiResponse(AppUrl.userLogout);
       return response;
     } catch (e) {
       rethrow;
@@ -64,6 +61,7 @@ class UserRepository {
           await _apiServices.getPostApiResponse(AppUrl.UserprofileAdd, data);
       return response;
     } catch (e) {
+      print("error is $e");
       rethrow;
     }
   }

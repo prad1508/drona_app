@@ -22,7 +22,7 @@ class BatchViewViewModel with ChangeNotifier {
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
 
   // create batch
-  Future<void> fetchCreatebatchListApi(dynamic data, BuildContext context, String batchName, String pathPage) async {
+  Future<void> fetchCreatebatchListApi(dynamic data, BuildContext context, String batchName, String pathPage , String Fees) async {
     setLoading(true);
     _myRepo.fetchCreatebatchListApi(data).then((value) {
       setLoading(false);
@@ -33,9 +33,8 @@ class BatchViewViewModel with ChangeNotifier {
       /// go to add trainee page
       pathPage=="onboarding" ?
        Get.to(()=>  TrainAddManualy(batchId: value['batch_uid'],
-         batchName: batchName,),transition: Transition.leftToRight) :
+         batchName: batchName,fees: Fees,),transition: Transition.leftToRight) :
       Get.to(()=>  SearchBatchList(pathPage: 'dashBoard',),transition: Transition.leftToRight);
-
     }).onError((error, stackTrace) {
       print("api of batch create not successfull");
       print(error);

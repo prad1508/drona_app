@@ -1,5 +1,5 @@
-class CoachlistListModel {
-  CoachlistListModel({
+class CoachlistModel {
+  CoachlistModel({
     required this.msg,
     required this.academyUid,
     required this.academyName,
@@ -10,11 +10,12 @@ class CoachlistListModel {
   late final String academyName;
   late final List<Coachlist> coachlist;
 
-  CoachlistListModel.fromJson(Map<String, dynamic> json) {
+  CoachlistModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     academyUid = json['academy_uid'];
     academyName = json['academy_name'];
-    coachlist = List.from(json['coachlist']).map((e) => Coachlist.fromJson(e)).toList();
+    coachlist =
+        List.from(json['coachlist']).map((e) => Coachlist.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +45,9 @@ class Coachlist {
     required this.img,
     required this.imgStatus,
     required this.status,
+    this.join_status ='',
+    this.totalTrainee = 0,
+    this.totalBatch =0,
     required this.salaryMonthly,
     required this.dateOfJoining,
     required this.services,
@@ -60,9 +64,12 @@ class Coachlist {
   late final int role;
   late final String relation;
   late final String academyUid;
-   String img = '';
+  late final String img;
   late final bool imgStatus;
   late final String status;
+  late final String join_status;
+  late final int totalTrainee;
+  late final int totalBatch;
   late final int salaryMonthly;
   late final String dateOfJoining;
   late final List<Services> services;
@@ -83,8 +90,11 @@ class Coachlist {
     img = json['img'];
     imgStatus = json['img_status'];
     status = json['status'];
+    join_status = json['join_status'];
+    totalTrainee = json['total_trainee'];
+    totalBatch = json['total_batch'];
     salaryMonthly = json['salary_monthly'];
-    dateOfJoining = json['date_of_joining'];
+    dateOfJoining =  json['date_of_joining']!=null ? json['date_of_joining'] : '-';
     services =
         List.from(json['services']).map((e) => Services.fromJson(e)).toList();
   }
@@ -106,6 +116,9 @@ class Coachlist {
     _data['img'] = img;
     _data['img_status'] = imgStatus;
     _data['status'] = status;
+    _data['total_batch'] = totalBatch;
+    _data['total_trainee'] = totalTrainee;
+    _data['join_status'] = join_status;
     _data['salary_monthly'] = salaryMonthly;
     _data['date_of_joining'] = dateOfJoining;
     _data['services'] = services.map((e) => e.toJson()).toList();
