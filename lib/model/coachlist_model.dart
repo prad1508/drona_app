@@ -41,11 +41,11 @@ class Coachlist {
     required this.role,
     required this.relation,
     required this.academyUid,
-    required this.img,
+     this.img = '',
     required this.imgStatus,
     required this.status,
     required this.salaryMonthly,
-    required this.dateOfJoining,
+    this.dateOfJoining = '',
     required this.services,
   });
   late final String uid;
@@ -63,7 +63,7 @@ class Coachlist {
    String img = '';
   late final bool imgStatus;
   late final String status;
-  late final int salaryMonthly;
+  late final String salaryMonthly;
   late final String dateOfJoining;
   late final List<Services> services;
 

@@ -434,7 +434,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                                   // "age": age.text,
                                                   "dob": dob.text,
                                                   "monthofbilling": dobilling.text,
-                                                  "img": "izf5azt0sy2iurz.jpeg",
+                                                  "img": "",
                                                   "relation": "self"
                                                 };
                                                 print(data);

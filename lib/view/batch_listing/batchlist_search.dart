@@ -338,112 +338,6 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                     child:  Column(
                                       children: [
                                         ListTile(
-
-                                          // tileColor:
-                                          // (_selectedItems.contains(index))
-                                          //     ? const Color.fromARGB(
-                                          //     255, 218, 218, 219)
-                                          //     .withOpacity(0.5)
-                                          //     : Colors.transparent,
-                                          // leading: CircleAvatar(
-                                          //   radius: 20,
-                                          //   backgroundColor:
-                                          //   Color.fromRGBO(
-                                          //       194, 235, 216, 1),
-                                          //   child: _selectedItems.contains(index)
-                                          //       ? const Icon(
-                                          //     Icons.check,
-                                          //     color: Color.fromRGBO(
-                                          //         71, 192, 136, 1),
-                                          //     size: 30.0,
-                                          //   )
-                                          //       : Image(
-                                          //
-                                          //       image: NetworkImage(
-                                          //           AppUrl.imageListendPoint +
-                                          //               _foundUsers[index]
-                                          //               ["batchImg"])),
-                                          // ),
-                                          // title: Row(
-                                          //   children: [
-                                          //     Text(
-                                          //       _foundUsers[index]['batchName'],
-                                          //       style: const TextStyle(
-                                          //           color: Color.fromRGBO(
-                                          //               57, 64, 74, 1),
-                                          //           fontSize: 14,
-                                          //           fontWeight: FontWeight.w700,
-                                          //           fontFamily: 'Loto-Regular'),
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                          // subtitle: Column(
-                                          //   mainAxisAlignment:
-                                          //   MainAxisAlignment.start,
-                                          //   crossAxisAlignment:
-                                          //   CrossAxisAlignment.start,
-                                          //   children: [
-                                          //     Text(
-                                          //       _foundUsers[index]["detail"]
-                                          //           .toString(),
-                                          //       style: const TextStyle(
-                                          //           color: Color.fromRGBO(
-                                          //               57, 64, 74, 1),
-                                          //           fontSize: 12,
-                                          //           fontWeight: FontWeight.w400,
-                                          //           fontFamily: 'Loto-Regular'),
-                                          //     ),
-                                          //     Row(
-                                          //       children: [
-                                          //         const Text("Coach Name:",
-                                          //             style: TextStyle(
-                                          //                 color: Colors.black)),
-                                          //         Text(
-                                          //           _foundUsers[index]
-                                          //           ["coach_name"],
-                                          //         ),
-                                          //       ],
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                          // trailing: Container(
-                                          //   height: 20,
-                                          //   width:60,
-                                          //   decoration: BoxDecoration(
-                                          //       color: Colors.green,
-                                          //       borderRadius: BorderRadius.circular(10)
-                                          //   ),
-                                          //   child: Center(
-                                          //     child: Text(_foundUsers[index]["status"]
-                                          //         .toString(),
-                                          //       maxLines: 2,
-                                          //       textAlign: TextAlign.center,
-                                          //       style: TextStyle(
-                                          //           fontSize: 10
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          // onTap: () {
-                                          //   Navigator.of(context).push(
-                                          //       MaterialPageRoute(
-                                          //           builder: (context) =>
-                                          //               ViewBatchDetails(
-                                          //                   ListIndex: index)));
-                                          // },
-                                          // onLongPress: () {
-                                          //   if (!_selectedItems.contains(index)) {
-                                          //     setState(() {
-                                          //       _selectedItems.add(index);
-                                          //     });
-                                          //   } else {
-                                          //     setState(() {
-                                          //       _selectedItems.removeWhere(
-                                          //               (val) => val == index);
-                                          //     });
-                                          //   }
-                                          // },
-
                                           tileColor: Color(0XFFDFE1E4).withOpacity(0.3),
                                           // isThreeLine: true,
                                           leading: Container(
@@ -498,7 +392,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                             height: 20,
                                             width:60,
                                             decoration: BoxDecoration(
-                                                color: Colors.green,
+                                                color: _foundUsers[index]["status"] =="Active" ?Colors.green : _foundUsers[index]["status"] =="New" ?Colors.blue :Colors.red,
                                                 borderRadius: BorderRadius.circular(10)
                                             ),
                                             child: Center(

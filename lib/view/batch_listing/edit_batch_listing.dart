@@ -104,14 +104,14 @@ class _EditBatchListingState extends State<EditBatchListing> {
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
-
+  Map<String, dynamic> data = {"search": ""};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     batchListViewViewModel.fetchBatchListListApi();
     academyViewViewModel.fetchAcademyListApi();
-    coachlistViewViewModel.fetchCoachlistListApi();
+    coachlistViewViewModel.fetchCoachlistApi(data);
   }
 
   @override
@@ -163,8 +163,6 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
         ChangeNotifierProvider<BatchListViewViewModel>(
             create: (BuildContext context) => batchListViewViewModel,
-
-
             child: Consumer<BatchListViewViewModel>(builder: (context, value, _) {
 
               if (!isInitialized) {
@@ -258,7 +256,11 @@ class _EditBatchListingState extends State<EditBatchListing> {
                   backgroundColor: Colors.white,
                   elevation: 0,
                 ),
-                body: SingleChildScrollView(
+                body:
+
+
+
+                SingleChildScrollView(
                   child: Material(
                     color: Colors.white,
                     child: Container(

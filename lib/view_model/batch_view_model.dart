@@ -24,6 +24,7 @@ class BatchViewViewModel with ChangeNotifier {
   // create batch
   Future<void> fetchCreatebatchListApi(dynamic data, BuildContext context, String batchName, String pathPage , String Fees) async {
     setLoading(true);
+    print("path page is $pathPage");
     _myRepo.fetchCreatebatchListApi(data).then((value) {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);

@@ -31,10 +31,11 @@ class CoachlistViewViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> fetchCoachlistApi() async {
+  Future<void> fetchCoachlistApi(Map<String, dynamic> data) async {
     setDataList1(ApiResponse.loading());
 
-    _myRepo.fetchCoachlistApi().then((value) {
+    _myRepo.fetchCoachlistApi(data).then((value) {
+      print(value);
       setDataList1(ApiResponse.completed(value));
       print("coachlist api succeed");
     }).onError((error, stackTrace) {

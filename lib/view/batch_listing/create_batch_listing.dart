@@ -104,13 +104,13 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   BatchViewViewModel batchViewViewModel = BatchViewViewModel();
-
+  Map<String, dynamic> data = {"search": ""};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     academyViewViewModel.fetchAcademyListApi();
-    coachlistViewViewModel.fetchCoachlistListApi();
+    coachlistViewViewModel.fetchCoachlistApi(data);
   }
 
   @override
@@ -133,6 +133,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
+
     setState(() {
       batchFromdata = timepick!.format(context);
     });
@@ -210,25 +211,19 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           create: (context) => academyViewViewModel,
                           child: Consumer<AcademyViewViewModel>(
                               builder: (context, value, child) {
+
                                 activeServiceValue.clear();
                                 activeServices.clear();
                                 // print(value.dataList.data!.services![0].status);
                                 if (value.dataList.data != null) {
-                                  for (var i = 0;
-                                  i < value.dataList.data!.services!.length;
-                                  i++) {
-                                    if (value.dataList.data!.services![i].status
-                                        .toString() ==
-                                        'active') {
-                                      activeServiceValue.add(value
-                                          .dataList.data!.services![i].uid
-                                          .toString());
+
+                                  for (var i = 0; i < value.dataList.data!.services!.length; i++) {
+                                    print(value.dataList.data!.services?[i].status);
+                                    if (value.dataList.data!.services![i].status.toString() == 'active') {
+                                      activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
                                       activeServices.add(DropdownMenuItem(
-                                          value: value.dataList.data!.services![i].uid
-                                              .toString(),
-                                          child: Text(value
-                                              .dataList.data!.services![i].serviceName
-                                              .toString())));
+                                          value: value.dataList.data!.services![i].uid.toString(),
+                                          child: Text(value.dataList.data!.services![i].serviceName.toString())));
                                     }
                                   }
                                 }
@@ -313,22 +308,18 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           create: (context) => coachlistViewViewModel,
                           child: Consumer<CoachlistViewViewModel>(
                               builder: (context, value, child) {
-                                value.dataList.data != null
-                                    ? profileUid = value
-                                    .dataList.data!.coachlist[0].uid
-                                    .toString()
-                                    : null;
-                                if (value.dataList.data != null) {
+                                value.dataList1.data != null ? profileUid = value.dataList1.data!.data[0].uid.toString() : null;
+                                if (value.dataList1.data != null) {
                                   List<DropdownMenuItem<String>> dropdownItems =
                                   List.generate(
-                                      value.dataList.data!.coachlist.length,
+                                      value.dataList1.data!.data.length,
                                           (index) {
                                         return DropdownMenuItem(
                                             value: value
-                                                .dataList.data!.coachlist[index].uid
+                                                .dataList1.data!.data[index].uid
                                                 .toString(),
                                             child: Text(value
-                                                .dataList.data!.coachlist[index].name
+                                                .dataList1.data!.data[index].name
                                                 .toString()));
                                       });
 

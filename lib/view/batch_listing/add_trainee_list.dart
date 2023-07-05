@@ -200,13 +200,23 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                 SizedBox(
                                                   width: 41,
                                                   height: 46,
-                                                  child: CircleAvatar(
+                                                  child: value.dataList.data!.data[index].image.isNotEmpty?
+                                                  CircleAvatar(
                                                     backgroundImage: NetworkImage(AppUrl.profileimageListendPoint +
                                                         value.dataList.data!.data[index].image,
                                                     ),
                                                     // AssetImage('assets/images/user_profile.png'),
+                                                  ) : CircleAvatar(
+                                                    backgroundColor: Colors.blue,
+                                                    child: Text(getInitials(value.dataList.data!.data[index].traineeName),style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      color: Colors.white
+                                                    ),),
+                                                   // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                                                    ),
+                                                    // AssetImage('assets/images/user_profile.png'),
                                                   ),
-                                                ),
+
                                                 Align(
                                                   alignment: Alignment.bottomLeft,
                                                   child: Container(
@@ -258,7 +268,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ),
                                                     const SizedBox(width: 10),
                                                     Container(
-                                                      width: 67,
+                                                      width: 75,
                                                       height: 20,
                                                       decoration: BoxDecoration(
                                                         color:  value.dataList.data!.data[index].join_status=="not_onboarded" ?Colors.redAccent.shade100.withOpacity(0.3) :const Color(0xffEDF9F3),
@@ -488,20 +498,24 @@ class _AddTraineeListState extends State<AddTraineeList> {
               ),
             ],
           )
-
-
-
-
-
-
-
-
-
-
-
-
       ),
     );
+  }
+
+  String getInitials(String name) {
+    List<String> nameParts = name.split(' ');
+    if (nameParts.length > 1) {
+      return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase();
+    } else if (nameParts.length == 1) {
+      String firstName = nameParts[0];
+      if (firstName.length >= 2) {
+        return firstName.substring(0, 2).toUpperCase();
+      } else {
+        return firstName[0].toUpperCase();
+      }
+    } else {
+      return '';
+    }
   }
 
   showAlertDialog(BuildContext context) {

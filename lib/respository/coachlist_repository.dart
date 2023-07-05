@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import '../data/network/base_apiservices.dart';
 import '../model/coach_list_model.dart';
 import '../model/coachlist_model.dart';
@@ -17,10 +19,12 @@ class CoachlistRepository {
     }
   }
 
-  Future<CoachlistModel> fetchCoachlistApi()async{
+  Future<CoachlistModel> fetchCoachlistApi(Map<String, dynamic> data)async{
     try{
-      dynamic response = await _apiServices.getGetApiResponse(AppUrl.coachlistListEndPoint);
+      dynamic response = await _apiServices.getPutApiResponseWithData(AppUrl.coachlistfilteroint,data);
+      log("response is $response");
       return response = CoachlistModel.fromJson(response);
+
     }catch(e){
       rethrow ;
     }

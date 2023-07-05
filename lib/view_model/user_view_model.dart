@@ -101,7 +101,7 @@ class UserViewModel with ChangeNotifier {
     setLoading(true);
     _myRepo.fetchUserprofileAddListApi(data).then((value) async {
       setLoading(false);
-      // ignore: use_build_context_synchronously
+      print(value);
       Utils.flushBarErrorMessage(value['msg'], context);
       print("api success of adding coach");
    //if(listindex!=-1)
