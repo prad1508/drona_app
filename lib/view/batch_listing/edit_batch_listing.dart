@@ -3,9 +3,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
+import '../../data/response/status.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
+import '../../utils/no_data.dart';
 import '../../utils/utils.dart';
 import '../../utils/validation.dart';
 import '../../view_model/academy_view_model.dart';
@@ -100,6 +102,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
   String profileUid = "";
   String selected = "";
   bool onlineSession = true;
+  String? _feesamount;
   AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
@@ -150,6 +153,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
   }
 
   String? selectedService;
+  String? selectedProgram;
 
   @override
   Widget build(BuildContext context) {
@@ -158,48 +162,56 @@ class _EditBatchListingState extends State<EditBatchListing> {
         debugShowCheckedModeBanner: false,
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,
-        home:
-
+        home:Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              title: Text('Edit Batch', style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            body:
 
         ChangeNotifierProvider<BatchListViewViewModel>(
             create: (BuildContext context) => batchListViewViewModel,
             child: Consumer<BatchListViewViewModel>(builder: (context, value, _) {
 
+            switch (value.dataList.status!) {
+            case Status.loading:
+            return const Center(
+            child: CircularProgressIndicator(
+            color: Colors.teal,
+            ),
+            );
+
+            case Status.completed:
+
               if (!isInitialized) {
-                assignSeviceId(
-                    value.dataList.data!.data![widget.Listindex].serviceUid);
-                profileUid = value
-                    .dataList.data!.data![widget.Listindex].coachProfileUid
-                    .toString();
-                onlineSession = value.dataList.data!.data![widget.Listindex]
-                    .provideOnlineSessions!;
-                print("batch type is");
-                print(value.dataList.data!.data![widget.Listindex].batch_type
-                    .toString());
-                print(value.dataList.data!.data![widget.Listindex].fees
-                    .toString());
-                batchName.text = value
-                    .dataList.data!.data![widget.Listindex].batchName
-                    .toString();
-                batchTo.text = value
-                    .dataList.data!.data![widget.Listindex].batchTimingTo
-                    .toString();
-                batchFrom.text = value
-                    .dataList.data!.data![widget.Listindex].batchTimingFrom
-                    .toString();
-                fee.text = value.dataList.data!.data![widget.Listindex].fees
-                    .toString();
-                editfee.text = value.dataList.data!.data![widget.Listindex].fees
-                    .toString();
-                onlineUrl.text = value
-                    .dataList.data!.data![widget.Listindex].onlineSessionUrl
-                    .toString();
-                int? size = value
-                    .dataList.data?.data![widget.Listindex].batchDays?.length;
+                assignSeviceId(value.dataList.data!.data![widget.Listindex].serviceUid);
+                profileUid = value.dataList.data!.data![widget.Listindex].coachProfileUid.toString();
+                onlineSession = value.dataList.data!.data![widget.Listindex].provideOnlineSessions!;
+                print(value.dataList.data!.data![widget.Listindex].batch_type.toString());
+                print(value.dataList.data!.data![widget.Listindex].fees.toString());
+                batchName.text = value.dataList.data!.data![widget.Listindex].batchName.toString();
+                batchTo.text = value.dataList.data!.data![widget.Listindex].batchTimingTo.toString();
+                batchFrom.text = value.dataList.data!.data![widget.Listindex].batchTimingFrom.toString();
+                fee.text = value.dataList.data!.data![widget.Listindex].fees.toString();
+                editfee.text = value.dataList.data!.data![widget.Listindex].fees.toString();
+                onlineUrl.text = value.dataList.data!.data![widget.Listindex].onlineSessionUrl.toString();
+                int? size = value.dataList.data?.data![widget.Listindex].batchDays?.length;
+                 _programUid = value.dataList.data?.data![widget.Listindex].programUid;
+                 print("program uid is $_programUid");
+                 _programName = value.dataList.data?.data![widget.Listindex].programName;
+                _feesamount = value.dataList.data?.data![widget.Listindex].fees;
+
                 // assignSeviceId(value.dataList.data!.data![widget.Listindex].serviceUid);
                 for (var i = 0; i < size!; i++) {
-                  switch (value
-                      .dataList.data?.data![widget.Listindex].batchDays?[i]) {
+                  switch (value.dataList.data?.data![widget.Listindex].batchDays?[i]) {
                     case '0':
                       sun = true;
                       batchDays.add("0");
@@ -236,30 +248,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
               selectedService =
                   value.dataList.data?.data![widget.Listindex].serviceName;
 
-              return Scaffold(
-                backgroundColor: Theme
-                    .of(context)
-                    .scaffoldBackgroundColor,
-                appBar: AppBar(
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  title: Text(
-                    'Edit Batch',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge,
-                  ),
-                  centerTitle: true,
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                ),
-                body:
-
-
-
+              return
                 SingleChildScrollView(
                   child: Material(
                     color: Colors.white,
@@ -273,10 +262,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Batch Name',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyMedium,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -290,9 +276,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
                                 borderSide: BorderSide(
-                                  color: Theme
-                                      .of(context)
-                                      .primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
@@ -368,46 +352,65 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                 create: (context) => coachlistViewViewModel,
                                 child: Consumer<CoachlistViewViewModel>(
                                     builder: (context, value, child) {
-                                      print(
-                                          "object==${value.dataList.data!
-                                              .coachlist.length}");
 
+                                 //  print(value);
+                                    switch (value.dataList1.status!) {
+                                      case Status.loading:
+                                        return const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.teal,
+                                          ),
+                                        );
+
+                                      case Status.completed:
                                       // profileUid =selected;
-                                      List<DropdownMenuItem<String>>
-                                      dropdownItems = List.generate(
-                                          value.dataList.data!.coachlist
-                                              .length ??
-                                              0, (index) {
-                                        return DropdownMenuItem(
-                                            value: value.dataList.data!
-                                                .coachlist[index].uid
-                                                .toString() ??
-                                                '',
-                                            child: Text(value.dataList.data!
-                                                .coachlist[index].name
-                                                .toString() ??
-                                                'add coach'));
-                                      });
-                                      return DropdownButton(
-                                          isExpanded: true,
-                                          underline:
-                                          DropdownButtonHideUnderline(
-                                              child: Container()),
-                                          value: profileUid,
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              profileUid = newValue!;
-                                            });
-                                          },
+                                        List<DropdownMenuItem<String>>
+                                        dropdownItems = List.generate(
+                                            value.dataList1.data!.data.length ?? 0, (index) {
+                                          return DropdownMenuItem(
+                                              value: value.dataList1.data!.data[index].uid.toString() ?? '',
+                                              child: Text(value.dataList1.data!.data[index].name.toString() ??
+                                                  'add coach'));
+                                        });
+                                        return DropdownButton(
+                                            isExpanded: true,
+                                            underline:
+                                            DropdownButtonHideUnderline(
+                                                child: Container()),
+                                            value: profileUid,
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                profileUid = newValue!;
+                                              });
+                                            },
 
-                                          // (String? newValue) {
-                                          //
-                                          //    profileUid = newValue!;
-                                          //    Provider.of<CoachlistViewViewModel>(context, listen: false).notifyListeners();
-                                          //
-                                          //  },
+                                            // (String? newValue) {
+                                            //
+                                            //    profileUid = newValue!;
+                                            //    Provider.of<CoachlistViewViewModel>(context, listen: false).notifyListeners();
+                                            //
+                                            //  },
 
-                                          items: dropdownItems);
+                                            items: dropdownItems);
+                                      case Status.error:
+                                        return Center(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.error_outline,
+                                                  color: Theme.of(context).primaryColorDark, size: 100.0,
+                                                ),
+                                                NoData(),
+                                                Text(
+                                                  value.dataList.message.toString(), style: TextStyle(color: Theme.of(context).primaryColor,
+                                                      fontSize: 20,
+                                                      height: 2),
+                                                )
+                                              ],
+                                            ));
+                                    }
                                     })),
                           ),
 
@@ -420,104 +423,45 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             myProgramViewViewModel,
                             child: Consumer<MyProgramViewViewModel>(
                                 builder: (context, value, _) {
-                                  _programid =
-                                      value.dataList.data?.data![0].uid
-                                          .toString();
-                                  _programName = value.dataList.data?.data![0]
-                                      .programs![0].programName
-                                      .toString();
+                                 // _programid = value.dataList.data?.data![0].uid.toString();
+                                 // _programName = value.dataList.data?.data![0].programs![0].programName.toString();
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Align(
                                         alignment: Alignment.topLeft,
-                                        child: (value.dataList.data?.data![0]
-                                            .name ??
-                                            '')
-                                            .isNotEmpty
-                                            ? Text(
-                                          'Program',
-                                          style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .bodyMedium,
+                                        child: (value.dataList.data?.data![0].name ?? '').isNotEmpty
+                                            ? Text('Program', style: Theme.of(context).textTheme.bodyMedium,
                                         )
                                         // 'What ${value.dataList.data?.data![0].name.toString()}',
-
                                             : Container(),
                                       ),
-                                      (value.dataList.data?.data![0].programs)
-                                          ?.isNotEmpty ??
-                                          false
-                                          ? SizedBox(
-                                        height: 15,
-                                      )
+                                      (value.dataList.data?.data![0].programs)?.isNotEmpty ?? false ? const SizedBox(height: 15,)
                                           : Container(),
-                                      (value.dataList.data?.data![0].programs)
-                                          ?.isNotEmpty ??
-                                          false
+                                      (value.dataList.data?.data![0].programs)?.isNotEmpty ?? false
                                           ? Container(
                                         height: 50,
                                         //color: Colors.amber,
                                         child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             shrinkWrap: true,
-                                            itemCount: value
-                                                .dataList
-                                                .data
-                                                ?.data![0]
-                                                .programs
-                                                ?.length ??
-                                                0,
+                                            itemCount: value.dataList.data?.data![0].programs?.length ?? 0,
                                             itemBuilder: (context, index) {
                                               return Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  value
-                                                      .dataList
-                                                      .data
-                                                      ?.data![0]
-                                                      .programs![
-                                                  index]
-                                                      .amount
-                                                      .toString() ==
-                                                      '0'
-                                                      ? Container()
-                                                      : CustomRadio<String>(
-                                                    btnColor:
+                                                  value.dataList.data?.data![0].programs![index].amount.toString() == '0' ? Container()
+                                                      : CustomRadio<String>(btnColor:
                                                     Colors.black,
-                                                    value: value
-                                                        .dataList
-                                                        .data
-                                                        ?.data![0]
-                                                        .programs![
-                                                    index]
-                                                        .uid
-                                                        .toString() ??
-                                                        '',
-                                                    groupValue:
-                                                    _programUid,
-                                                    onChanged:
-                                                    _valueChangedHandler(
-                                                        _programName),
-                                                    label: value
-                                                        .dataList
-                                                        .data
-                                                        ?.data![0]
-                                                        .programs![
-                                                    index]
-                                                        .programName
-                                                        .toString() ??
-                                                        '',
+                                                    value: value.dataList.data?.data![0].programs![index].uid.toString() ?? '',
+                                                  //  value: value.dataList.data?.data![0].programs![index].uid.toString() ?? '',
+                                                    groupValue: _programUid,
+                                                    onChanged: _valueChangedHandler(_programName),
+                                                    label: value.dataList.data?.data![0].programs![index].programName.toString() ?? '',
                                                   ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  )
+                                                  SizedBox(width: 10,)
                                                 ],
                                               );
                                             }),
@@ -585,47 +529,126 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           // const SizedBox(
                           //   height: 10,
                           // ),
+
+
+
                           ChangeNotifierProvider<MyProgramViewViewModel>(
-                              create: (BuildContext context) =>
-                              myProgramViewViewModel,
+                              create: (BuildContext context) => myProgramViewViewModel,
                               child: Consumer<MyProgramViewViewModel>(
                                   builder: (context, value, _) {
-                                    for (var fee in value
-                                        .dataList.data?.data![0].programs! ??
-                                        []) {
-                                      fee.amount;
-                                    }
-                                    return
 
-                                      TextFormField(
-                                        readOnly: true,
-                                        controller: fee..text = fee.text ?? '0',
-                                        decoration: InputDecoration(
-                                          contentPadding: const EdgeInsets.all(
-                                              10),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                5.0),
-                                            borderSide: BorderSide(
-                                              color: Theme
-                                                  .of(context)
-                                                  .primaryColor,
+                                      switch (value.dataList.status!) {
+                                        case Status.loading:
+                                          return const Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.teal,
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                  })),
+                                          );
+
+                                        case Status.completed:
+                                          if (value.dataList.data != null) {
+                                            for (int i = 0; i <
+                                                value.dataList.data!.data![0]
+                                                    .programs!.length; i++) {
+                                              //_feesamount = '';
+                                              if (value.dataList.data!.data![0]
+                                                  .programs?[i].uid ==
+                                                  _programUid) {
+                                                fee.text = value.dataList.data!
+                                                    .data![0].programs?[i]
+                                                    .amount;
+                                                break;
+                                              }
+                                            }
+                                          }
+                                          return TextFormField(
+                                            readOnly: true,
+                                            controller: fee,
+                                            //   controller: fee..text = _feesamount ?? '0',
+                                            decoration: InputDecoration(
+                                              contentPadding: const EdgeInsets
+                                                  .all(10),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius
+                                                    .circular(5.0),
+                                                borderSide: BorderSide(
+                                                  color: Theme
+                                                      .of(context)
+                                                      .primaryColor,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+
+                                        case Status.error:
+                                          return Center(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment
+                                                    .center,
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.error_outline,
+                                                    color: Theme
+                                                        .of(context)
+                                                        .primaryColorDark,
+                                                    size: 100.0,
+                                                  ),
+                                                  NoData(),
+                                                  Text(
+                                                    value.dataList.message
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Theme
+                                                            .of(context)
+                                                            .primaryColor,
+                                                        fontSize: 20,
+                                                        height: 2),
+                                                  )
+                                                ],
+                                              ));
+                                      }
+                                  }
+
+
+                                  )),
+
+
+
+                          // ChangeNotifierProvider<MyProgramViewViewModel>(
+                          //     create: (BuildContext context) => myProgramViewViewModel,
+                          //     child: Consumer<MyProgramViewViewModel>(
+                          //         builder: (context, value, _) {
+                          //           for (var fee in value.dataList.data?.data![0].programs! ?? []) {
+                          //             fee.amount;
+                          //           }
+                          //           return
+                          //
+                          //             TextFormField(
+                          //               readOnly: true,
+                          //               controller: fee..text = fee.text ?? '0',
+                          //               decoration: InputDecoration(
+                          //                 contentPadding: const EdgeInsets.all(
+                          //                     10),
+                          //                 border: OutlineInputBorder(
+                          //                   borderRadius: BorderRadius.circular(
+                          //                       5.0),
+                          //                   borderSide: BorderSide(
+                          //                     color: Theme
+                          //                         .of(context)
+                          //                         .primaryColor,
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             );
+                          //         })),
                           const SizedBox(
                             height: 15,
                           ),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'Type of Batch',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyMedium,
+                            child: Text('Type of Batch', style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -656,9 +679,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           Row(children: <Widget>[
                             Checkbox(
                               checkColor: Colors.white,
-                              activeColor: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              activeColor: Theme.of(context).primaryColor,
                               value: value1,
                               onChanged: (value) {
                                 setState(() {
@@ -677,11 +698,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Provide Online Sessions',
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .bodyMedium,
+                                  'Provide Online Sessions', style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             )
@@ -691,12 +708,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           ),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'Online Session Url',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyMedium,
+                            child: Text('Online Session Url',
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -890,12 +903,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           ),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'Batch Timing',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyMedium,
+                            child: Text('Batch Timing',
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                           const SizedBox(
@@ -905,21 +914,12 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.4,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: TextFormField(
-                                  controller: batchFrom
-                                    ..text = batchFromdata.toString(),
+                                  controller: batchFrom..text = batchFromdata.toString(),
                                   readOnly: true,
                                   decoration: InputDecoration(
-                                    hintText: value
-                                        .dataList
-                                        .data
-                                        ?.data![widget.Listindex]
-                                        .batchTimingFrom
-                                        .toString(),
+                                    hintText: value.dataList.data?.data![widget.Listindex].batchTimingFrom.toString(),
                                     contentPadding: const EdgeInsets.all(10),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
@@ -934,10 +934,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                 ),
                               ),
                               Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.4,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: TextFormField(
                                   readOnly: true,
                                   controller: batchTo
@@ -974,83 +971,62 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                 .of(context)
                                 .primaryColor,
                             onPress: () {
-                              /* Map<String, dynamic> data = {
-                                'batch_uid': value
-                                    .dataList.data!.data?[widget.Listindex].uid
-                                    .toString(),
-                                'batch_name': batchName.text.toString(),
-                                'coach_profile_uid': profileUid.toString(),
 
-                                'program_uid': value.dataList.data!
-                                    .data?[widget.Listindex].programUid
-                                    .toString(),
-                                'program_name': value.dataList.data!
-                                    .data?[widget.Listindex].programName
-                                    .toString(),
-                                'fees': value.dataList.data!
-                                    .data?[widget.Listindex].fees,
-
-                                /// because currently getting null
-                                'type_batch': 'Group',
-                                'provide_online_sessions':
-                                    onlineSession.toString(),
-                                'online_session_url': onlineSession
-                                    ? onlineUrl.text.toString()
-                                    : "n/a",
-                                'batch_days ': batchDays,
-
-                                //'batch_timing_from':batchFrom.text.isNotEmpty ? batchFrom.text:value.dataList.data!.data?[widget.Listindex].batchTimingFrom.toString(),
-                                // 'batch_timing_to':batchTo.text.isNotEmpty ?batchTo.text:value.dataList.data!.data?[widget.Listindex].batchTimingTo.toString(),
-                                'batch_timing_from': "10:30 am",
-                                'batch_timing_to': "10:30 pm",
-                              };*/
                               Map<String, dynamic> data = {
-                                "batch_uid": "${value
-                                    .dataList.data!.data?[widget.Listindex]
-                                    .uid}",
-                                "batch_name": batchName.text.isEmpty ? value
-                                    .dataList.data!.data![widget.Listindex]
-                                    .batchName : batchName.text,
+                                "batch_uid": "${value.dataList.data!.data?[widget.Listindex].uid}",
+                                "batch_name": batchName.text.isEmpty ? value.dataList.data!.data![widget.Listindex].batchName : batchName.text,
                                 "coach_profile_uid": profileUid,
-                                "program_uid": "${value.dataList.data!
-                                    .data?[widget.Listindex].programUid}",
-                                "program_name": "${value.dataList.data!
-                                    .data?[widget.Listindex].programName}",
-                                "fees": fee.text.isEmpty
-                                    ? value
-                                    .dataList.data!.data![widget.Listindex].fees
-                                    : fee.text,
-                                "type_batch": _groupBatch.toString() == ""
-                                    ? value
-                                    .dataList.data!.data![widget.Listindex]
-                                    .batch_type
-                                    : _groupBatch.toString(),
+                                "program_uid": _programUid,
+                                "program_name": _programName,
+                                "fees": fee.text.isEmpty ? value.dataList.data!.data![widget.Listindex].fees : fee.text,
+                                "type_batch": _groupBatch.toString() == "" ? value.dataList.data!.data![widget.Listindex].batch_type : _groupBatch.toString(),
                                 "provide_online_sessions": false,
-                                "online_session_url": onlineSession ? onlineUrl
-                                    .text : "n/a",
+                                "online_session_url": onlineSession ? onlineUrl.text : "n/a",
                                 "batch_days": batchDays,
-                                "batch_timing_from": batchFrom.text.isEmpty
-                                    ? value
-                                    .dataList.data!.data![widget.Listindex]
-                                    .batchTimingFrom
-                                    : batchFrom.text,
-                                "batch_timing_to": batchTo.text.isEmpty ? value
-                                    .dataList.data!.data![widget.Listindex]
-                                    .batchTimingTo : batchTo.text
+                                "batch_timing_from": batchFrom.text.isEmpty ? value.dataList.data!.data![widget.Listindex].batchTimingFrom : batchFrom.text,
+                                "batch_timing_to": batchTo.text.isEmpty ? value.dataList.data!.data![widget.Listindex].batchTimingTo : batchTo.text
                               };
 
                               print("data is");
                               print(data);
-                              batch.fetchEditebatchListApi(data, context);
+                            //  batch.fetchEditebatchListApi(data, context);
                             },
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ),
-              );
-            })));
+                  )
+               );
+              case Status.error:
+                return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center,
+                      mainAxisAlignment: MainAxisAlignment
+                          .center,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: Theme
+                              .of(context)
+                              .primaryColorDark,
+                          size: 100.0,
+                        ),
+                        NoData(),
+                        Text(
+                          value.dataList.message
+                              .toString(),
+                          style: TextStyle(
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
+                              fontSize: 20,
+                              height: 2),
+                        )
+                      ],
+                    ));
+            }
+            }))));
   }
 
   void _openModal(BuildContext context) {

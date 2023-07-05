@@ -483,17 +483,10 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                         child: Consumer<MyProgramViewViewModel>(
                             builder: (context, value, _) {
                               if (value.dataList.data != null) {
-                                for (int i = 0;
-                                i <
-                                    value
-                                        .dataList.data!.data![0].programs!.length;
-                                i++) {
+                                for (int i = 0; i < value.dataList.data!.data![0].programs!.length; i++) {
                                   _feesamount = '';
-                                  if (value
-                                      .dataList.data!.data![0].programs?[i].uid ==
-                                      _programUid) {
-                                    _feesamount = value
-                                        .dataList.data!.data![0].programs?[i].amount;
+                                  if (value.dataList.data!.data![0].programs?[i].uid == _programUid) {
+                                    _feesamount = value.dataList.data!.data![0].programs?[i].amount;
                                     break;
                                   }
                                 }

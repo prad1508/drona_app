@@ -61,7 +61,6 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
         localizationsDelegates: _localization.localizationsDelegates,
 
         home: Scaffold(
-
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           resizeToAvoidBottomInset : false ,
           appBar: AppBar(
@@ -323,7 +322,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                         TextButton(onPressed: (){
                           /// open modal
                           _openModal(context);
-                        }, child: Text("Edit Fees"))
+                        }, child: const Text("Edit Fees"))
                       ],
                     ),
                     // const SizedBox(
@@ -409,11 +408,11 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w200
                                         ),),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
 
                                       ],
                                     ),
-                                    contentPadding: EdgeInsets.all(15),
+                                    contentPadding: const EdgeInsets.all(15),
                                     actions: [
                                       Padding(
                                         padding: const EdgeInsets.all(10.0),
@@ -527,65 +526,70 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: fee,
-                  decoration: InputDecoration(
-                    hintText: "Enter Fees",
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-
+        return Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height*.4,
+            ),
+            Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Dismiss the modal
-                      },
-                      child: Text('Cancel'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: ElevatedButton(
-                        onPressed: () {
-
-                         // String enteredText = _textEditingController.text;
-                          if(fee.text.isEmpty || int.parse(fee.text) <=0)
-                          {
-                            Utils.flushBarErrorMessage("Please enter valid fees", context);
-                          }
-                          else
-                          {
-                            fee.text = fee.text;
-                            Navigator.of(context).pop();
-                          }
-
-                        },
-                        child: Text('OK'),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: fee,
+                      decoration: InputDecoration(
+                        hintText: "Enter Fees",
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                          ),
+                        ),
                       ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Dismiss the modal
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: ElevatedButton(
+                            onPressed: () {
+
+                              // String enteredText = _textEditingController.text;
+                              if(fee.text.isEmpty || int.parse(fee.text) <=0)
+                              {
+                                Utils.flushBarErrorMessage("Please enter valid fees", context);
+                              }
+                              else
+                              {
+                                fee.text = fee.text;
+                                Navigator.of(context).pop();
+                              }
+
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localization/flutter_localization.dart';
@@ -95,25 +97,25 @@ class _DetailFilledState extends State<DetailFilled> {
                         builder: (context, value, child) {
                           final List<Myservices> myservices = List.generate(
                               value.dataList.data?.services?.length ?? 0,
-                              (index) => Myservices(
+                                  (index) => Myservices(
                                   serviceuid: value
-                                          .dataList.data?.services?[index].uid
-                                          ?.toString() ??
+                                      .dataList.data?.services?[index].uid
+                                      ?.toString() ??
                                       '',
                                   servicename: value.dataList.data
-                                          ?.services?[index].serviceName
-                                          ?.toString() ??
+                                      ?.services?[index].serviceName
+                                      ?.toString() ??
                                       ''));
                           final items = myservices
                               .map((myservices) => MultiSelectItem<Myservices>(
-                                  myservices, myservices.servicename))
+                              myservices, myservices.servicename))
                               .toList();
                           // providerCreate.updateServicesList(items);
                           print("item.length==${items.length}");
                           return MultiSelectDialogField(
                             dialogWidth: MediaQuery.of(context).size.width * 2,
                             dialogHeight:
-                                MediaQuery.of(context).size.width * 0.7,
+                            MediaQuery.of(context).size.width * 0.7,
                             items: items,
                             title: Text(
                               AppLocale.title15.getString(context),
@@ -122,14 +124,14 @@ class _DetailFilledState extends State<DetailFilled> {
                             selectedColor: Colors.blue,
                             decoration: BoxDecoration(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
+                              const BorderRadius.all(Radius.circular(5)),
                               border: Border.all(
                                 color: const Color.fromARGB(255, 156, 156, 156),
                                 width: 1,
                               ),
                             ),
                             buttonIcon: const Icon(
-                              Icons.pets,
+                              Icons.arrow_drop_down,
                               color: Colors.blue,
                             ),
                             buttonText: Text(
@@ -190,15 +192,21 @@ class _DetailFilledState extends State<DetailFilled> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         List servicesUid =
-                            List.generate(_selectedAnimals2.length, (index) {
+                        List.generate(_selectedAnimals2.length, (index) {
                           return {
                             'service_uid':
-                                _selectedAnimals2[index].serviceuid.toString(),
+                            _selectedAnimals2[index].serviceuid.toString(),
                           };
                         });
                         Map data = {"dob": dob.text, "services": servicesUid};
 
                         registration.detailsOwner(data, context);
+                        final timer = Timer(
+                          const Duration(milliseconds: 50),
+                              () {
+                            _selectedAnimals2.clear();
+                          },
+                        );
                       }),
                 ],
               ),
