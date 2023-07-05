@@ -24,7 +24,7 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           AppUrl.sessionListEndPoint, data);
-
+      print("response==$response");
       return response = SessionListListModel.fromJson(response);
     } catch (e) {
       rethrow;
@@ -62,4 +62,6 @@ class SessionRepository {
   }
 
 }
+
+
 

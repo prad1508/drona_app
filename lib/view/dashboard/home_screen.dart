@@ -93,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "Powered by ",
                                   style: TextStyle(
                                       fontSize: 12,
-                                      color: Color.fromARGB(255, 121, 121, 121)),
+                                      color:
+                                      Color.fromARGB(255, 121, 121, 121)),
                                 ),
                                 Image(
                                   image: AssetImage('assets/images/drona2.png'),
@@ -164,10 +165,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              MainMenu(name: fullname, academyName: academicname,),
+                                              MainMenu(
+                                                name: fullname,
+                                                academyName: academicname,
+                                              ),
                                         ),
                                       );
-                                      Get.to(()=> MainMenu(name: fullname, academyName: academicname,), transition: Transition.rightToLeft);
+                                      Get.to(
+                                              () => MainMenu(
+                                            name: fullname,
+                                            academyName: academicname,
+                                          ),
+                                          transition: Transition.rightToLeft);
                                     },
                                     elevation: 2.0,
                                     fillColor: Colors.white,
@@ -218,21 +227,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                       },
-                                      child:  DashboardCard(
-                                          color: Colors.blueAccent,
-                                          icon: Icons.group_outlined,
-                                          title: 'Total Trainee',
-                                          subtitle: '${value.dataList.data!.totalOnboardedTrainee.toString()} Onboarded',
-                                          count: value.dataList.data!.totalTrainee.toString(),
-                                          line: value.dataList.data!.totalTrainee.toDouble()),
+                                      child: DashboardCard(
+                                        color: Colors.blueAccent,
+                                        icon: Icons.group_outlined,
+                                        title: 'Total Trainee',
+                                        count: value.dataList.data!.totalTrainee
+                                            .toString(),
+                                        line: value.dataList.data!.totalOnboardedTrainee
+                                            .toDouble(),
+                                        subtitle:
+                                        '${value.dataList.data!.totalOnboardedTrainee.toString()} Onboarded',
+                                      ),
                                     ),
                                     DashboardCard(
-                                        color: const Color.fromARGB(255, 7, 3, 244),
+                                        color: const Color.fromARGB(
+                                            255, 7, 3, 244),
                                         icon: Icons.currency_rupee_outlined,
                                         title: 'Fee Paid',
-                                        subtitle: '${value.dataList.data!.feeDue.toString()} Members Due',
-                                        count: value.dataList.data!.feePiad.toString(),
-                                        line: value.dataList.data!.feePiad.toDouble()),
+                                        subtitle:
+                                        '${value.dataList.data!.feeDue.toString()} Members Due',
+                                        count: value.dataList.data!.feePiad
+                                            .toString(),
+                                        line: value.dataList.data!.feePiad
+                                            .toDouble()),
                                   ],
                                 ),
                                 const SizedBox(
@@ -241,22 +258,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
-                                  children:  [
+                                  children: [
                                     DashboardCard(
                                         color: Colors.green,
                                         icon: Icons.calendar_month_outlined,
                                         title: 'Attendance',
-                                        subtitle: '${value.dataList.data!.monthAttendancePercentage}% Monthly Avg',
-                                        count: value.dataList.data!.todayAttendancePercentage.toString(),
-                                        line: value.dataList.data!.todayAttendancePercentage.toDouble()),
+                                        subtitle:
+                                        '${value.dataList.data!.monthAttendancePercentage}% Monthly Avg',
+                                        count: value.dataList.data!
+                                            .todayAttendancePercentage
+                                            .toString(),
+                                        line: value.dataList.data!
+                                            .todayAttendancePercentage
+                                            .toDouble()),
                                     DashboardCard(
-                                        color: const Color.fromARGB(255, 8, 174, 229),
+                                        color: const Color.fromARGB(
+                                            255, 8, 174, 229),
                                         icon: Icons
                                             .account_balance_wallet_outlined,
                                         title: 'Collection (M)',
-                                        subtitle: '${value.dataList.data!.collection} - Due Amount',
-                                        count: value.dataList.data!.totalCollection.toString(),
-                                        line: value.dataList.data!.totalCollection.toDouble()),
+                                        subtitle:
+                                        '${value.dataList.data!.totalDue} - Due Amount',
+                                        count: value
+                                            .dataList.data!.totalCollection
+                                            .toString(),
+                                        line: value
+                                            .dataList.data!.totalCollection
+                                            .toDouble()),
                                   ],
                                 ),
                                 const SizedBox(
@@ -738,4 +766,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 

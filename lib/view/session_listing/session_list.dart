@@ -451,6 +451,16 @@ class _SessionListState extends State<SessionList>
                                                                   color: Colors
                                                                       .black)),
                                                           TextSpan(
+                                                            text:
+                                                            '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].smm}',
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Colors.black),
+
+                                                          ),
+                                                          TextSpan(
                                                               text:
                                                               '  ${value.dataList.data!.data?[index].batch_timing_from} - ${value.dataList.data!.data?[index].batch_timing_to}',
                                                               style: const TextStyle(
@@ -1211,4 +1221,6 @@ class _SessionListState extends State<SessionList>
         });
   }
 }
+
+
 

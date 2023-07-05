@@ -38,6 +38,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   SessionViewViewModel sessionViewModel = SessionViewViewModel();
   final List<int> _selectedItems = <int>[];
   bool value1 = false;
+  bool present = false;
+  bool absent = false;
+  bool leave = false;
   final List<Map<String, dynamic>> _allUsers = [
     {
       "id": 1,
@@ -1077,6 +1080,8 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                             onChanged: (value) {
                                               setState(() {
                                                 value1 = value!;
+                                                present =! present;
+
                                                 print('checked');
                                               });
                                             },
@@ -1156,7 +1161,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                   subtitle: Row(
                                                     children: [
                                                       Text(
-                                                        value.dataList2.data!.data[index].gender.toString().toUpperCase(),
+                                                        value.dataList2.data!.data[index].gender.toUpperCase(),
                                                         // value.dataList2.data!.data[index].id,
                                                         style: const TextStyle(
                                                             color: Color.fromRGBO(
@@ -1167,10 +1172,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),
-                                                      Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),)
-                                                      ,
+                                                      Text(" - "),
                                                       Text(
-                                                        "${value.dataList2.data!.data[index].dob}",
+                                                        value.dataList2.data!.data[index].dob,
                                                         // value.dataList2.data!.data[index].id,
                                                         style: const TextStyle(
                                                             color: Color.fromRGBO(
@@ -1181,7 +1185,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),
-                                                      Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                      /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
                                                       Text(
                                                         "Due: ${value.dataList2.data!.data[index].fees}",
                                                         // value.dataList2.data!.data[index].id,
@@ -1193,7 +1197,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             FontWeight.w400,
                                                             fontFamily:
                                                             'Loto-Regular'),
-                                                      ),
+                                                      ),*/
 
                                                     ],
                                                   ),
@@ -1208,40 +1212,57 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                       children: [
-                                                        CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
-                                                            Colors.green
-                                                                .withOpacity(
-                                                                0.1),
-                                                            child: const Text(
-                                                              'P',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .green),
-                                                            )),
-                                                        CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
-                                                            Colors.redAccent
-                                                                .withOpacity(
-                                                                0.1),
-                                                            child: const Text(
+                                                        GestureDetector(
+                                                          onTap: (){
+                                                            setState(() {
+                                                              present =! present;
+                                                            });
+
+                                                          },
+                                                          child: CircleAvatar(
+                                                              radius: 13,
+                                                              backgroundColor: present
+                                                                  ? Colors.green : Colors.green.withOpacity(0.1),
+                                                              child:  Text(
+                                                                'P',
+                                                                style: TextStyle(
+                                                                    color: present ?Colors.white: Colors.green),
+                                                              )),
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: (){
+                                                            setState(() {
+                                                              absent =! absent;
+                                                            });
+
+                                                          },
+                                                          child: CircleAvatar(
+                                                              radius: 13,
+                                                              backgroundColor: absent
+                                                                  ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                              child:  Text(
                                                                 'A',
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .redAccent))),
-                                                        CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
-                                                            Colors.blue
-                                                                .withOpacity(
-                                                                0.1),
-                                                            child: const Text(
+                                                                    color: absent ?Colors.white: Colors.pink),
+                                                              )),
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: (){
+                                                            setState(() {
+                                                              leave =! leave;
+                                                            });
+
+                                                          },
+                                                          child: CircleAvatar(
+                                                              radius: 13,
+                                                              backgroundColor: leave
+                                                                  ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                              child:  Text(
                                                                 'L',
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .blue))),
+                                                                    color: leave ?Colors.white: Colors.blue),
+                                                              )),
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -1287,10 +1308,10 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
-                                      children: const [
+                                      children: [
                                         CircleAvatar(
                                             radius: 20,
                                             backgroundColor:
@@ -1384,5 +1405,6 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     );
   }
 }
+
 
 
