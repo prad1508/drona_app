@@ -54,10 +54,10 @@ class SessionViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchSessionListSearchApi(dynamic data) async {
+  Future<void> fetchSessionListSearchApi(dynamic data, var pageSize, var pageNo) async {
     setDataList(ApiResponse.loading());
 
-    _myRepo.fetchSessionListSearchApi(data).then((value) {
+    _myRepo.fetchSessionListSearchApi(data, pageSize , pageNo).then((value) {
       setDataList(ApiResponse.completed(value));
 
       print("api session serach list success");
@@ -101,5 +101,6 @@ class SessionViewViewModel with ChangeNotifier {
 
 
 }
+
 
 

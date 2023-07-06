@@ -41,7 +41,7 @@ class AppUrl {
 
   //session
   static var createsessionListEndPoint = "$baseUrl/session/create";
-  static var sessionListEndPoint = '$baseUrl/academy/session/10/1';
+  static var sessionListEndPoint = '$baseUrl/academy/session';
   static var sessionDetailsListEndPoint = '$baseUrl/academy/session/view';
 
   // dashboard

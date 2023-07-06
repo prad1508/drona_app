@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drona/model/session_details_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -100,6 +101,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     }
   ];
   List<Map<String, dynamic>> _foundUsers = [];
+  List<Data> attendanceList = [];
   @override
   initState() {
     print("widget.id==${widget.id}");
@@ -211,7 +213,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            markedAttendencePopup(context);
+                            // markedAttendencePopup(context);
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.redAccent),
@@ -232,7 +234,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   }
 
   //confirm marked attendence
-  Future<bool> markedAttendencePopup(context) async {
+  Future<bool> markedAttendencePopup(context, sessionViewModel) async {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return await showDialog(
@@ -910,6 +912,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.height;
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -1044,7 +1047,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                     height: 2),
                                               ),
                                               Text(
-                                                '${value.dataList2.data!.programName} - ${value.dataList2.data!.data[0].dayShort} ,${value.dataList2.data!.data[0].sdd} ${value.dataList2.data!.data[0].smm} ${value.dataList2.data!.data?[0].syy} ${value.dataList2.data!.data?[0].batchTimingFrom} to ${value.dataList2.data!.data?[0].batchTimingTo}',
+                                                '${value.dataList2.data!.programName} - ${value.dataList2.data!.data[0].dayShort} ,${value.dataList2.data!.data[0].sdd} ${value.dataList2.data!.data[0].smm} ${value.dataList2.data!.data[0].syy} ${value.dataList2.data!.data[0].batchTimingFrom} to ${value.dataList2.data!.data[0].batchTimingTo}',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontStyle: FontStyle.normal,
@@ -1077,9 +1080,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                           const Text('Mark all present'),
                                           Checkbox(
                                             value: value1,
-                                            onChanged: (value) {
+                                            onChanged: (v) {
                                               setState(() {
-                                                value1 = value!;
+                                                value1 = v!;
                                                 present =! present;
 
                                                 print('checked');
@@ -1099,6 +1102,10 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                         itemCount:
                                         value.dataList2.data!.data.length,
                                         itemBuilder: (context, index) {
+                                          attendanceList.clear();
+
+                                          value1 == true ? attendanceList.add(value.dataList2.data!.data[index]) :  null;
+
                                           //var nameText = _foundUsers[index]['name'].split(' ');
                                           return Card(
                                             // key: ValueKey(_foundUsers[index]["id"]),
@@ -1343,11 +1350,771 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     rounded: true,
                                     color: Theme.of(context).primaryColor,
                                     onPress: () {
-                                      Get.to(
-                                              () => const Layout(
-                                            selectedIndex: 0,
-                                          ),
-                                          transition: Transition.leftToRight);
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: SizedBox(
+                                                height: height * .8,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    const Text("Confirm Marked Attendance"),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    SizedBox(
+                                                      height: height * .7,
+                                                      width: width * 1,
+                                                      child: DefaultTabController(
+                                                          length: 3,
+                                                          initialIndex: 0,
+                                                          child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                              children: <Widget>[
+                                                                TabBar(
+                                                                  indicatorPadding: const EdgeInsets.all(10),
+                                                                  isScrollable: true,
+                                                                  labelColor: Colors.black,
+                                                                  indicatorColor: Colors.transparent,
+                                                                  labelPadding: const EdgeInsets.all(0),
+                                                                  unselectedLabelColor: Colors.grey,
+                                                                  tabs: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(
+                                                                          right: 10, left: 10),
+                                                                      child: Chip(
+                                                                        backgroundColor: const Color.fromARGB(
+                                                                            255, 242, 242, 242),
+                                                                        label: const Text(
+                                                                          'Present',
+                                                                          style: TextStyle(color: Colors.blue),
+                                                                        ),
+                                                                        avatar: CircleAvatar(
+                                                                          backgroundColor: Colors.blue.shade100,
+                                                                          child:
+                                                                          Text(attendanceList.length.toString()),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(right: 10),
+                                                                      child: Chip(
+                                                                        backgroundColor: const Color.fromARGB(
+                                                                            255, 242, 242, 242),
+                                                                        label: const Text(
+                                                                          'Absent',
+                                                                        ),
+                                                                        avatar: CircleAvatar(
+                                                                          backgroundColor: Colors.green.shade100,
+                                                                          child: const Text(
+                                                                            '01',
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(right: 10),
+                                                                      child: Chip(
+                                                                        backgroundColor: const Color.fromARGB(
+                                                                            255, 242, 242, 242),
+                                                                        label: const Text(
+                                                                          'Leave',
+                                                                        ),
+                                                                        avatar: CircleAvatar(
+                                                                          backgroundColor: Colors.brown.shade100,
+                                                                          child: const Text('01'),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Container(
+                                                                  height: height * .6,
+                                                                  decoration: const BoxDecoration(
+                                                                      border: Border(
+                                                                          top: BorderSide(
+                                                                              color: Colors.grey, width: 0.5))),
+                                                                  child: TabBarView(
+                                                                    children: <Widget>[
+                                                                      attendanceList.isNotEmpty
+                                                                          ? ListView.builder(
+                                                                          itemCount: attendanceList.length,
+                                                                          itemBuilder: (context, index) {
+
+                                                                            return Card(
+                                                                              // key: ValueKey(
+                                                                              //     _foundUsers[index]["id"]),
+                                                                              elevation: 0,
+                                                                              margin:
+                                                                              const EdgeInsets.symmetric(
+                                                                                  vertical: 0),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  ListTile(
+                                                                                    contentPadding:
+                                                                                    const EdgeInsets.all(
+                                                                                        0),
+                                                                                    tileColor: (_selectedItems
+                                                                                        .contains(index))
+                                                                                        ? const Color
+                                                                                        .fromARGB(
+                                                                                        255,
+                                                                                        218,
+                                                                                        218,
+                                                                                        219)
+                                                                                        .withOpacity(0.5)
+                                                                                        : Colors.transparent,
+                                                                                    leading: CircleAvatar(
+                                                                                        radius: 18,
+                                                                                        backgroundColor:
+                                                                                        const Color
+                                                                                            .fromRGBO(
+                                                                                            194,
+                                                                                            235,
+                                                                                            216,
+                                                                                            1),
+                                                                                        child:
+                                                                                        _selectedItems
+                                                                                            .contains(
+                                                                                            index)
+                                                                                            ? const Icon(
+                                                                                          Icons
+                                                                                              .check,
+                                                                                          color: Color.fromRGBO(
+                                                                                              71,
+                                                                                              192,
+                                                                                              136,
+                                                                                              1),
+                                                                                          size:
+                                                                                          30.0,
+                                                                                        )
+                                                                                            : Text(
+                                                                                          (attendanceList[index].traineeName[0][0].toString() +
+                                                                                              attendanceList[index].traineeName[1][0].toString())
+                                                                                              .toUpperCase(),
+                                                                                          style: const TextStyle(
+                                                                                              fontSize:
+                                                                                              12),
+                                                                                        )),
+                                                                                    title: Text(
+                                                                                      attendanceList[index].traineeName,
+                                                                                      style: const TextStyle(
+                                                                                          color:
+                                                                                          Color.fromRGBO(
+                                                                                              57,
+                                                                                              64,
+                                                                                              74,
+                                                                                              1),
+                                                                                          fontSize: 12,
+                                                                                          fontWeight:
+                                                                                          FontWeight.w700,
+                                                                                          fontFamily:
+                                                                                          'Loto-Regular'),
+                                                                                    ),
+                                                                                    subtitle: Row(
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          attendanceList[index].gender.toUpperCase(),
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        Text(" - "),
+                                                                                        Text(
+                                                                                          attendanceList[index].dob,
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                      Text(
+                                                        "Due: ${value.dataList2.data!.data[index].fees}",
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),*/
+
+                                                                                      ],
+                                                                                    ),
+                                                                                    trailing: SizedBox(
+                                                                                      width:
+                                                                                      MediaQuery.of(context)
+                                                                                          .size
+                                                                                          .width *
+                                                                                          0.24,
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment:
+                                                                                        MainAxisAlignment
+                                                                                            .spaceBetween,
+                                                                                        children: [
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                present =! present;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: present
+                                                                                                    ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'P',
+                                                                                                  style: TextStyle(
+                                                                                                      color: present ?Colors.white: Colors.green),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                absent =! absent;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: absent
+                                                                                                    ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'A',
+                                                                                                  style: TextStyle(
+                                                                                                      color: absent ?Colors.white: Colors.pink),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                leave =! leave;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: leave
+                                                                                                    ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'L',
+                                                                                                  style: TextStyle(
+                                                                                                      color: leave ?Colors.white: Colors.blue),
+                                                                                                )),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    onTap: () {},
+                                                                                    onLongPress: () {
+                                                                                      if (!_selectedItems
+                                                                                          .contains(index)) {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .add(index);
+                                                                                        });
+                                                                                      } else {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .removeWhere(
+                                                                                                  (val) =>
+                                                                                              val ==
+                                                                                                  index);
+                                                                                        });
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                  const Divider(
+                                                                                    height: 5,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            );
+                                                                          })
+                                                                          : const Text(
+                                                                        'No results found',
+                                                                        style: TextStyle(fontSize: 24),
+                                                                      ),
+                                                                      attendanceList.isNotEmpty
+                                                                          ? ListView.builder(
+                                                                          itemCount: attendanceList.length,
+                                                                          itemBuilder: (context, index) {
+
+                                                                            return Card(
+                                                                              // key: ValueKey(
+                                                                              //     _foundUsers[index]["id"]),
+                                                                              elevation: 0,
+                                                                              margin:
+                                                                              const EdgeInsets.symmetric(
+                                                                                  vertical: 0),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  ListTile(
+                                                                                    contentPadding:
+                                                                                    const EdgeInsets.all(
+                                                                                        0),
+                                                                                    tileColor: (_selectedItems
+                                                                                        .contains(index))
+                                                                                        ? const Color
+                                                                                        .fromARGB(
+                                                                                        255,
+                                                                                        218,
+                                                                                        218,
+                                                                                        219)
+                                                                                        .withOpacity(0.5)
+                                                                                        : Colors.transparent,
+                                                                                    leading: CircleAvatar(
+                                                                                        radius: 18,
+                                                                                        backgroundColor:
+                                                                                        const Color
+                                                                                            .fromRGBO(
+                                                                                            194,
+                                                                                            235,
+                                                                                            216,
+                                                                                            1),
+                                                                                        child:
+                                                                                        _selectedItems
+                                                                                            .contains(
+                                                                                            index)
+                                                                                            ? const Icon(
+                                                                                          Icons
+                                                                                              .check,
+                                                                                          color: Color.fromRGBO(
+                                                                                              71,
+                                                                                              192,
+                                                                                              136,
+                                                                                              1),
+                                                                                          size:
+                                                                                          30.0,
+                                                                                        )
+                                                                                            : Text(
+                                                                                          (attendanceList[index].traineeName[0][0].toString() +
+                                                                                              attendanceList[index].traineeName[1][0].toString())
+                                                                                              .toUpperCase(),
+                                                                                          style: const TextStyle(
+                                                                                              fontSize:
+                                                                                              12),
+                                                                                        )),
+                                                                                    title: Text(
+                                                                                      attendanceList[index].traineeName,
+                                                                                      style: const TextStyle(
+                                                                                          color:
+                                                                                          Color.fromRGBO(
+                                                                                              57,
+                                                                                              64,
+                                                                                              74,
+                                                                                              1),
+                                                                                          fontSize: 12,
+                                                                                          fontWeight:
+                                                                                          FontWeight.w700,
+                                                                                          fontFamily:
+                                                                                          'Loto-Regular'),
+                                                                                    ),
+                                                                                    subtitle: Row(
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          attendanceList[index].gender.toUpperCase(),
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        Text(" - "),
+                                                                                        Text(
+                                                                                          attendanceList[index].dob,
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                      Text(
+                                                        "Due: ${value.dataList2.data!.data[index].fees}",
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),*/
+
+                                                                                      ],
+                                                                                    ),
+                                                                                    trailing: SizedBox(
+                                                                                      width:
+                                                                                      MediaQuery.of(context)
+                                                                                          .size
+                                                                                          .width *
+                                                                                          0.24,
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment:
+                                                                                        MainAxisAlignment
+                                                                                            .spaceBetween,
+                                                                                        children: [
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                present =! present;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: present
+                                                                                                    ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'P',
+                                                                                                  style: TextStyle(
+                                                                                                      color: present ?Colors.white: Colors.green),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                absent =! absent;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: absent
+                                                                                                    ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'A',
+                                                                                                  style: TextStyle(
+                                                                                                      color: absent ?Colors.white: Colors.pink),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                leave =! leave;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: leave
+                                                                                                    ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'L',
+                                                                                                  style: TextStyle(
+                                                                                                      color: leave ?Colors.white: Colors.blue),
+                                                                                                )),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    onTap: () {},
+                                                                                    onLongPress: () {
+                                                                                      if (!_selectedItems
+                                                                                          .contains(index)) {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .add(index);
+                                                                                        });
+                                                                                      } else {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .removeWhere(
+                                                                                                  (val) =>
+                                                                                              val ==
+                                                                                                  index);
+                                                                                        });
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                  const Divider(
+                                                                                    height: 5,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            );
+                                                                          })
+                                                                          : const Text(
+                                                                        'No results found',
+                                                                        style: TextStyle(fontSize: 24),
+                                                                      ),
+                                                                      attendanceList.isNotEmpty
+                                                                          ? ListView.builder(
+                                                                          itemCount: attendanceList.length,
+                                                                          itemBuilder: (context, index) {
+
+                                                                            return Card(
+                                                                              // key: ValueKey(
+                                                                              //     _foundUsers[index]["id"]),
+                                                                              elevation: 0,
+                                                                              margin:
+                                                                              const EdgeInsets.symmetric(
+                                                                                  vertical: 0),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  ListTile(
+                                                                                    contentPadding:
+                                                                                    const EdgeInsets.all(
+                                                                                        0),
+                                                                                    tileColor: (_selectedItems
+                                                                                        .contains(index))
+                                                                                        ? const Color
+                                                                                        .fromARGB(
+                                                                                        255,
+                                                                                        218,
+                                                                                        218,
+                                                                                        219)
+                                                                                        .withOpacity(0.5)
+                                                                                        : Colors.transparent,
+                                                                                    leading: CircleAvatar(
+                                                                                        radius: 18,
+                                                                                        backgroundColor:
+                                                                                        const Color
+                                                                                            .fromRGBO(
+                                                                                            194,
+                                                                                            235,
+                                                                                            216,
+                                                                                            1),
+                                                                                        child:
+                                                                                        _selectedItems
+                                                                                            .contains(
+                                                                                            index)
+                                                                                            ? const Icon(
+                                                                                          Icons
+                                                                                              .check,
+                                                                                          color: Color.fromRGBO(
+                                                                                              71,
+                                                                                              192,
+                                                                                              136,
+                                                                                              1),
+                                                                                          size:
+                                                                                          30.0,
+                                                                                        )
+                                                                                            : Text(
+                                                                                          (attendanceList[index].traineeName[0][0].toString() +
+                                                                                              attendanceList[index].traineeName[1][0].toString())
+                                                                                              .toUpperCase(),
+                                                                                          style: const TextStyle(
+                                                                                              fontSize:
+                                                                                              12),
+                                                                                        )),
+                                                                                    title: Text(
+                                                                                      attendanceList[index].traineeName,
+                                                                                      style: const TextStyle(
+                                                                                          color:
+                                                                                          Color.fromRGBO(
+                                                                                              57,
+                                                                                              64,
+                                                                                              74,
+                                                                                              1),
+                                                                                          fontSize: 12,
+                                                                                          fontWeight:
+                                                                                          FontWeight.w700,
+                                                                                          fontFamily:
+                                                                                          'Loto-Regular'),
+                                                                                    ),
+                                                                                    subtitle: Row(
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          attendanceList[index].gender.toUpperCase(),
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        Text(" - "),
+                                                                                        Text(
+                                                                                          attendanceList[index].dob,
+                                                                                          // value.dataList2.data!.data[index].id,
+                                                                                          style: const TextStyle(
+                                                                                              color: Color.fromRGBO(
+                                                                                                  57, 64, 74, 1),
+                                                                                              fontSize: 12,
+                                                                                              fontWeight:
+                                                                                              FontWeight.w400,
+                                                                                              fontFamily:
+                                                                                              'Loto-Regular'),
+                                                                                        ),
+                                                                                        /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                      Text(
+                                                        "Due: ${value.dataList2.data!.data[index].fees}",
+                                                        // value.dataList2.data!.data[index].id,
+                                                        style: const TextStyle(
+                                                            color: Color.fromRGBO(
+                                                                57, 64, 74, 1),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            fontFamily:
+                                                            'Loto-Regular'),
+                                                      ),*/
+
+                                                                                      ],
+                                                                                    ),
+                                                                                    trailing: SizedBox(
+                                                                                      width:
+                                                                                      MediaQuery.of(context)
+                                                                                          .size
+                                                                                          .width *
+                                                                                          0.24,
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment:
+                                                                                        MainAxisAlignment
+                                                                                            .spaceBetween,
+                                                                                        children: [
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                present =! present;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: present
+                                                                                                    ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'P',
+                                                                                                  style: TextStyle(
+                                                                                                      color: present ?Colors.white: Colors.green),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                absent =! absent;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: absent
+                                                                                                    ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'A',
+                                                                                                  style: TextStyle(
+                                                                                                      color: absent ?Colors.white: Colors.pink),
+                                                                                                )),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: (){
+                                                                                              setState(() {
+                                                                                                leave =! leave;
+                                                                                              });
+
+                                                                                            },
+                                                                                            child: CircleAvatar(
+                                                                                                radius: 13,
+                                                                                                backgroundColor: leave
+                                                                                                    ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                child:  Text(
+                                                                                                  'L',
+                                                                                                  style: TextStyle(
+                                                                                                      color: leave ?Colors.white: Colors.blue),
+                                                                                                )),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    onTap: () {},
+                                                                                    onLongPress: () {
+                                                                                      if (!_selectedItems
+                                                                                          .contains(index)) {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .add(index);
+                                                                                        });
+                                                                                      } else {
+                                                                                        setState(() {
+                                                                                          _selectedItems
+                                                                                              .removeWhere(
+                                                                                                  (val) =>
+                                                                                              val ==
+                                                                                                  index);
+                                                                                        });
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                  const Divider(
+                                                                                    height: 5,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            );
+                                                                          })
+                                                                          : const Text(
+                                                                        'No results found',
+                                                                        style: TextStyle(fontSize: 24),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              ])),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: ElevatedButton(
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              style: ElevatedButton.styleFrom(
+                                                                backgroundColor: Color.fromARGB(255, 197, 196, 196),
+                                                              ),
+                                                              child: const Text("Cancel",
+                                                                  style: TextStyle(color: Colors.black)),
+                                                            )),
+                                                        const SizedBox(width: 15),
+                                                        Expanded(
+                                                          child: ElevatedButton(
+                                                            onPressed: () {},
+                                                            style: ElevatedButton.styleFrom(
+                                                                backgroundColor: Theme.of(context).primaryColor),
+                                                            child: const Text(
+                                                              "Submit",
+                                                              style: TextStyle(color: Colors.white),
+                                                              textAlign: TextAlign.center,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+
                                     })
                                     : RoundButton(
                                     loading: false,
@@ -1357,7 +2124,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     color: Theme.of(context)
                                         .primaryColor
                                         .withOpacity(0.5),
-                                    onPress: () {}),
+                                    onPress: () {
+                                      //  markedAttendencePopup(context, );
+                                    }),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -1405,6 +2174,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     );
   }
 }
+
 
 
 

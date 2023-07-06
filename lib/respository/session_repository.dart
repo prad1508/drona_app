@@ -20,10 +20,10 @@ class SessionRepository {
     }
   }
 
-  Future<SessionListListModel> fetchSessionListSearchApi(dynamic data) async {
+  Future<SessionListListModel> fetchSessionListSearchApi(dynamic data, var pageSize, var pageNo) async {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
-          AppUrl.sessionListEndPoint, data);
+          "${AppUrl.sessionListEndPoint}/$pageSize/$pageNo", data);
       print("response==$response");
       return response = SessionListListModel.fromJson(response);
     } catch (e) {
@@ -62,6 +62,7 @@ class SessionRepository {
   }
 
 }
+
 
 
 
