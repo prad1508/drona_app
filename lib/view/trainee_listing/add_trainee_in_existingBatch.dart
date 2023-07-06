@@ -41,6 +41,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
   final TextEditingController salary = TextEditingController();
   final TextEditingController doj = TextEditingController();
   final TextEditingController dob = TextEditingController();
+  final TextEditingController monthofBilling = TextEditingController();
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
   TraineeViewModel programViewViewModel = TraineeViewModel();
@@ -188,6 +189,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
 
   @override
   Widget build(BuildContext context) {
+    final traineeViewModel = Provider.of<TraineeViewModel>(context);
     final user = Provider.of<UserViewModel>(context);
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
@@ -377,7 +379,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                 }
                                 return DropdownButton(
                                     isExpanded: true,
-                                    hint: const Text("Choose Your Service"),
+                                    hint: const Text("Choose Service"),
                                     underline: DropdownButtonHideUnderline(
                                         child: Container()),
                                     value: selectedService,
@@ -422,17 +424,23 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                 {
                                   dropdownItems1.clear();
                                   for (var i = 0; i < value.dataList.data!.data!.length; i++) {
+                                    if(selectedService1 == value.dataList.data!.data?[i].uid )
+                                      {
+                                        salary.text =  value.dataList.data!.data?[i].fees;
+                                      }
                                     /// check service with batch name
-                                    ///
-                                    dropdownItems1.add(DropdownMenuItem(
+                                    if(value.dataList.data!.data?[i].serviceUid == selectedService) {
+                                      dropdownItems1.add(
+                                        DropdownMenuItem(
                                         value: value.dataList.data!.data![i].uid.toString(),
                                         child: Text(value.dataList.data!.data![i].batchName.toString()))
                                     );
+                                    }
                                   }
                                 }
                                 return DropdownButton(
                                     isExpanded: true,
-                                    hint: const Text("Choose Your Service"),
+                                    hint: const Text("Choose Batch"),
                                     underline: DropdownButtonHideUnderline(
                                         child: Container()),
                                     value: selectedService1,
@@ -479,17 +487,53 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                     const SizedBox(
                       height: 15,
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.doj.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  AppLocale.doj.getString(context),
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              DateOfjoining(controller: doj, hintText: 'Doj'),
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Month of Billing",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              YearMonthPicker(
+                                  controller: monthofBilling,
+                                  hintText: 'Month of Billing'),
+                              // DateOfjoining(
+                              //     controller: dobilling,
+                              //     hintText: 'Month of Billing'),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    DateOfjoining(controller: doj, hintText: 'Doj'),
                     const SizedBox(
                       height: 15,
                     ),
@@ -506,25 +550,23 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                 'Fill Phone Number Name', context);
                           } else if (coachName.text.isEmpty) {
                             Utils.flushBarErrorMessage(
-                                'Fill Coach Name', context);
+                                'Fill Trainee Name', context);
                           } else if (dob.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Please Enter DOB', context);
                           }
-                          else if (_genderValue!.isEmpty) {
-                            Utils.flushBarErrorMessage(
-                                'Please Select Gender', context);
-                          }
-                          else if (salary.text.isEmpty) {
-                            Utils.flushBarErrorMessage(
-                                'Please Enter Salary', context);
-                          }
+
+                          // else if (salary.text.isEmpty) {
+                          //   Utils.flushBarErrorMessage(
+                          //       'Please Enter Salary', context);
+                          // }
                           else if (doj.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Please Enter Date of Joining', context);
-                          } else if (email.text.isEmpty) {
+                          }
+                          else if (monthofBilling.text.isEmpty) {
                             Utils.flushBarErrorMessage(
-                                'Please Enter Email', context);
+                                'Please Enter Month of Billing', context);
                           }
                           else if (selectedService==null && selectedService!=''  ) {
                             Utils.flushBarErrorMessage(
@@ -532,89 +574,109 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                           }
                           else
                           {
-                            Map data = {
-                              "service_uid": selectedService.toString(),
-                              "fullname": coachName.text.toString(),
-                              "ccode": "91",
-                              "mobno": phone.text.toString(),
-                              "gender": _genderValue.toString(),
-                              "email": email.text.toString(),
-                              "salary": salary.text,
-                              "dateofjoining": doj.text.toString(),
-                              "dob": dob.text.toString(),
-                              // "img":sp.getString('uprofile'),
-                              "img": imgFile.toString(),
-                              "relation": "self"
-                            };
+
+                              Map<String, dynamic> data = {
+                                "batch_uid": selectedService1.toString(),
+                                "fullname": coachName.text,
+                                "ccode": "91",
+                                "mobno": phone.text,
+                                "gender": _genderValue,
+                                "fees": salary.text,
+                                "dateofjoining": doj.text,
+                                // "age": age.text,
+                                "dob": dob.text,
+                                "monthofbilling": monthofBilling.text,
+                                "img": "",
+                                "relation": "self"
+                              };
+
+                              traineeViewModel.fetchTraineeAddListApi(data, context ,"onboarding");
+
+                            //  traineeViewModel.fetchTraineeAddListApi(data, context ,"onboarding");
+
+                            // Map data = {
+                            //   "service_uid": selectedService.toString(),
+                            //   "fullname": coachName.text.toString(),
+                            //   "ccode": "91",
+                            //   "mobno": phone.text.toString(),
+                            //   "gender": _genderValue.toString(),
+                            //   "email": email.text.toString(),
+                            //   "salary": salary.text,
+                            //   "dateofjoining": doj.text.toString(),
+                            //   "dob": dob.text.toString(),
+                            //   // "img":sp.getString('uprofile'),
+                            //   "img": imgFile.toString(),
+                            //   "relation": "self"
+                            // };
                             // print(data);
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Center(
-                                  child: AlertDialog(
-                                    //  title: const Center(child: Text('')),
-                                    content:   Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          height: 50,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.green,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        const Text("Send Invite",style: TextStyle(
-                                            fontSize: 14
-                                        ),),
-                                        const SizedBox(height: 5),
-
-                                        Text('Invite "${coachName.text}" To Your Academy',style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w200
-                                        ),),
-                                        SizedBox(height: 5),
-
-                                      ],
-                                    ),
-                                    contentPadding: EdgeInsets.all(15),
-                                    actions: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                            width: double.infinity,
-                                            child: RoundButton(
-                                              title: 'Send Invitation',
-                                              onPress: () async {
-                                                Navigator.pop(context);
-                                                print(data);
-                                                if(widget.listindex!=-1)
-                                                {
-                                                  user.userProfileAdd(data, context , widget.pathPage,widget.listindex);
-                                                }
-                                                else
-                                                {
-                                                  user.userProfileAdd(data, context , widget.pathPage);
-                                                }
-                                              },
-                                              rounded: true,
-                                              color: Theme.of(context).primaryColor,
-                                              textColor: Colors.white,
-
-                                            )
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+                            // showDialog(
+                            //   barrierDismissible: false,
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return Center(
+                            //       child: AlertDialog(
+                            //         //  title: const Center(child: Text('')),
+                            //         content:   Column(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: [
+                            //             Container(
+                            //               width: 50,
+                            //               height: 50,
+                            //               decoration: const BoxDecoration(
+                            //                 color: Colors.green,
+                            //                 shape: BoxShape.circle,
+                            //               ),
+                            //               child: const Icon(
+                            //                 Icons.check,
+                            //                 color: Colors.white,
+                            //               ),
+                            //             ),
+                            //             const SizedBox(height: 5),
+                            //             const Text("Send Invite",style: TextStyle(
+                            //                 fontSize: 14
+                            //             ),),
+                            //             const SizedBox(height: 5),
+                            //
+                            //             Text('Invite "${coachName.text}" To Your Academy',style: const TextStyle(
+                            //                 fontSize: 14,
+                            //                 fontWeight: FontWeight.w200
+                            //             ),),
+                            //             SizedBox(height: 5),
+                            //
+                            //           ],
+                            //         ),
+                            //         contentPadding: EdgeInsets.all(15),
+                            //         actions: [
+                            //           Padding(
+                            //             padding: const EdgeInsets.all(10.0),
+                            //             child: Container(
+                            //                 width: double.infinity,
+                            //                 child: RoundButton(
+                            //                   title: 'Send Invitation',
+                            //                   onPress: () async {
+                            //                     Navigator.pop(context);
+                            //                     print(data);
+                            //                     if(widget.listindex!=-1)
+                            //                     {
+                            //                       user.userProfileAdd(data, context , widget.pathPage,widget.listindex);
+                            //                     }
+                            //                     else
+                            //                     {
+                            //                       user.userProfileAdd(data, context , widget.pathPage);
+                            //                     }
+                            //                   },
+                            //                   rounded: true,
+                            //                   color: Theme.of(context).primaryColor,
+                            //                   textColor: Colors.white,
+                            //
+                            //                 )
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     );
+                            //   },
+                            // );
                           }
 
 

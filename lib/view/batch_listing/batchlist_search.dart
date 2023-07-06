@@ -44,22 +44,36 @@ class _SearchBatchListState extends State<SearchBatchList> {
   }
 
   void dataFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
+    /// call api
+    batchListViewViewModel.fetchBatchSearchListApi({"data" : enteredKeyword});
+    // ChangeNotifierProvider<BatchListViewViewModel>(
+    //     create: (context) => batchListViewViewModel,
+    //     child: Consumer<BatchListViewViewModel>(
+    //         builder: (context, value, child)
+    //         {
+    //           notFound = false;
+    //           _foundUsers = value.dataList
+    //           print(value.dataList.data!.data?[0].batchName);
+    //           return Text("aaaa");
+    //
+    //         }));
+
+    List<Map<String, dynamic>>results = [];
     if (enteredKeyword.isEmpty) {
       setState(() {
         notFound = false;
       });
     } else {
-      results = _foundUsers
-          .where((user) =>
-          user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
+      results = _foundUsers.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       setState(() {
         notFound = results.isEmpty;
         _foundUsers = results;
       });
     }
-  }
+
+    }
+
+
 
   //bottomsheet popup
   showFilter() {

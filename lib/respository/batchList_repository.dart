@@ -17,4 +17,14 @@ class BatchListRepository {
     }
   }
 
+  Future<BatchListListModel> fetchBatchSearch(dynamic data)async{
+    try{
+      dynamic response = await _apiServices.getPutApiResponseWithData(AppUrl.batchsearch,data);
+      return response = BatchListListModel.fromJson(response);
+
+    }catch(e){
+      rethrow ;
+    }
+  }
+
 }

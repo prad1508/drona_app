@@ -29,6 +29,9 @@ class AppUrl {
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
   static var EditbatchListEndPoint = '$baseUrl/academy/batch';
   static var batchListListEndPoint = '$baseUrl/academy/batch';
+  static var batchsearch = '$baseUrl/academy/batch/10/1';
+
+
   static var userloginEndPint = '$baseUrl/ouser/login';
   static var academyRegistrationTrackEndPint = '$baseUrl/academy';
   static var userLogout = '$baseUrl/ouser/logout';

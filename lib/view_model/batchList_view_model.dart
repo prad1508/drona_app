@@ -23,4 +23,18 @@ class BatchListViewViewModel with ChangeNotifier {
       setDataList(ApiResponse.error(error.toString()));
     });
   }
+
+
+  Future<void> fetchBatchSearchListApi (dynamic data)async{
+    setDataList(ApiResponse.loading());
+    print("fetching batch search list api success");
+    _myRepo.fetchBatchSearch(data).then((value){
+      setDataList(ApiResponse.completed(value));
+    }).onError((error, stackTrace){
+      print("fetching batch search list api not success");
+      print(error);
+      setDataList(ApiResponse.error(error.toString()));
+    });
+  }
+
 }

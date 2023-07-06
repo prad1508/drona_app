@@ -606,6 +606,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                               child: RoundButton(
                                                 title: 'Send Invitation',
                                                 onPress: () async {
+                                                  print("page is ${widget.pathPage}");
                                                   Navigator.pop(context);
                                                   print(data);
                                                   if(widget.listindex!=-1)

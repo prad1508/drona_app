@@ -208,6 +208,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                  print("program uid is $_programUid");
                  _programName = value.dataList.data?.data![widget.Listindex].programName;
                 _feesamount = value.dataList.data?.data![widget.Listindex].fees;
+                _groupBatch = value.dataList.data?.data![widget.Listindex].batch_type;
 
                 // assignSeviceId(value.dataList.data!.data![widget.Listindex].serviceUid);
                 for (var i = 0; i < size!; i++) {
@@ -448,16 +449,19 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                             shrinkWrap: true,
                                             itemCount: value.dataList.data?.data![0].programs?.length ?? 0,
                                             itemBuilder: (context, index) {
+                                              print("id is ${value.dataList.data?.data![0].programs![index].uid.toString()}");
+                                              print("program uid is $_programUid ");
+                                           //   _programUid = value.dataList.data?.data![0].uid.toString();
                                               return Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   value.dataList.data?.data![0].programs![index].amount.toString() == '0' ? Container()
-                                                      : CustomRadio<String>(btnColor:
-                                                    Colors.black,
-                                                    value: value.dataList.data?.data![0].programs![index].uid.toString() ?? '',
-                                                  //  value: value.dataList.data?.data![0].programs![index].uid.toString() ?? '',
+                                                      : CustomRadio<String ?>(
+                                                    btnColor: Colors.black,
+                                                    value: value.dataList.data?.data![0].programs![index].uid.toString(),
                                                     groupValue: _programUid,
+                                                  //  groupValue: value.dataList.data?.data![0].uid.toString(),
                                                     onChanged: _valueChangedHandler(_programName),
                                                     label: value.dataList.data?.data![0].programs![index].programName.toString() ?? '',
                                                   ),
@@ -477,31 +481,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                           /// program
 
-                          // Align(
-                          //   alignment: Alignment.topLeft,
-                          //   child: Text(
-                          //     'Program',
-                          //     style: Theme.of(context).textTheme.bodyMedium,
-                          //   ),
-                          // ),
-                          // const SizedBox(
-                          //   height: 5,
-                          // ),
-                          // Align(
-                          //   alignment: Alignment.topLeft,
-                          //   child: ElevatedButton(
-                          //     onPressed: () {},
-                          //     style: ElevatedButton.styleFrom(
-                          //         backgroundColor:
-                          //         Colors.black.withOpacity(0.5),
-                          //         padding: const EdgeInsets.fromLTRB(
-                          //             25, 15, 25, 15)),
-                          //     child: Text(value.dataList.data
-                          //         ?.data![widget.Listindex].programName
-                          //         .toString() ??
-                          //         ''),
-                          //   ),
-                          // ),
+
 
                           Align(
                               alignment: Alignment.topLeft,
@@ -547,16 +527,10 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                                         case Status.completed:
                                           if (value.dataList.data != null) {
-                                            for (int i = 0; i <
-                                                value.dataList.data!.data![0]
-                                                    .programs!.length; i++) {
+                                            for (int i = 0; i < value.dataList.data!.data![0].programs!.length; i++) {
                                               //_feesamount = '';
-                                              if (value.dataList.data!.data![0]
-                                                  .programs?[i].uid ==
-                                                  _programUid) {
-                                                fee.text = value.dataList.data!
-                                                    .data![0].programs?[i]
-                                                    .amount;
+                                              if (value.dataList.data!.data![0].programs?[i].uid == _programUid) {
+                                                fee.text = value.dataList.data!.data![0].programs?[i].amount;
                                                 break;
                                               }
                                             }
@@ -659,14 +633,14 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             children: [
                               CustomRadio<String>(
                                 btnColor: Colors.black,
-                                value: 'Group',
+                                value: 'group',
                                 groupValue: _groupBatch,
                                 onChanged: _valueChangedBatch(),
                                 label: 'Group Coaching',
                               ),
                               CustomRadio<String>(
                                 btnColor: Colors.black,
-                                value: 'Private',
+                                value: 'private',
                                 groupValue: _groupBatch,
                                 onChanged: _valueChangedBatch(),
                                 label: 'Private Coaching',
@@ -989,7 +963,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                               print("data is");
                               print(data);
-                            //  batch.fetchEditebatchListApi(data, context);
+                              batch.fetchEditebatchListApi(data, context);
                             },
                           ),
                         ],

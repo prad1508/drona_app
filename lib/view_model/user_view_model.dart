@@ -107,9 +107,9 @@ class UserViewModel with ChangeNotifier {
    //if(listindex!=-1)
      //{
        /// create batch
-      pathPage == "dashBoard"?
-      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.leftToRight) :
-      Get.to(()=>  CreateBatchListing(),transition: Transition.leftToRight);
+    //  pathPage == "dashBoard"?
+      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.leftToRight);
+    //  Get.to(()=>  CreateBatchListing(pathPage: pathPage),transition: Transition.leftToRight);
      //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.leftToRight);
    //  }
    // else

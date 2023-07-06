@@ -205,13 +205,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 color: const Color.fromRGBO(241, 94, 83, 1),
                                 onPress: () {
                                   // Navigator.pushNamed(context, RoutesName.createProfile);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                      CreateProfile(),
-                                    ),
-                                  );
+                                  Get.to(()=>   CreateProfile(pathPage: "onboarding",),transition: Transition.leftToRight);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (BuildContext context) =>
+                                  //     CreateProfile(pathPage: "onboarding",),
+                                  //   ),
+                                  // );
                                 }),
                           ],
                         );

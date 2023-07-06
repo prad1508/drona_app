@@ -1273,25 +1273,20 @@ class _SessionListState extends State<SessionList>
                               );
                             case Status.error:
                               return Center(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.error_outline,
-                                        color: Theme.of(context).primaryColorDark,
-                                        size: 100.0,
-                                      ),
-                                      NoData()
-                                      // Text(
-                                      //   value.dataList.message.toString(),
-                                      //   style: TextStyle(
-                                      //       color: Theme.of(context).primaryColor,
-                                      //       fontSize: 20,
-                                      //       height: 2),
-                                      // )
-                                    ],
-                                  ));
+                                  child: Text(''),);
+                                  // Column(
+                                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     Icon(
+                                  //       Icons.error_outline,
+                                  //       color: Theme.of(context).primaryColorDark,
+                                  //       size: 100.0,
+                                  //     ),
+                                  //     NoData()
+                                  //
+                                  //   ],
+                                  // ));
                           }
                         },
                       ),
