@@ -5,6 +5,7 @@ class SessionDetailsModel {
     required this.batchUid,
     required this.serviceUid,
     required this.serviceName,
+    required this.serviceIconName,
     required this.catUid,
     required this.batchName,
     required this.programName,
@@ -28,6 +29,7 @@ class SessionDetailsModel {
   final String batchUid;
   final String serviceUid;
   final String serviceName;
+  final String serviceIconName;
   final String catUid;
   final String batchName;
   final String programName;
@@ -52,6 +54,7 @@ class SessionDetailsModel {
       batchUid: json['batch_uid'],
       serviceUid: json['service_uid'],
       serviceName: json['service_name'],
+      serviceIconName: json['service_iconname'],
       catUid: json['cat_uid'],
       batchName: json['batch_name'],
       programName: json['program_name'],
@@ -78,6 +81,7 @@ class SessionDetailsModel {
     data['batch_uid'] = batchUid;
     data['service_uid'] = serviceUid;
     data['service_name'] = serviceName;
+    data['service_iconname'] = serviceIconName;
     data['cat_uid'] = catUid;
     data['batch_name'] = batchName;
     data['program_name'] = programName;
@@ -128,7 +132,7 @@ class Data {
   final String traineeName;
   final String traineeUserid;
   final String sessionUid;
-   String attendance;
+  String attendance;
   final bool attendanceStatus;
   final String status;
   final String batchTimingFrom;
@@ -191,4 +195,5 @@ class Data {
     return data;
   }
 }
+
 

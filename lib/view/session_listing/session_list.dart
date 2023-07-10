@@ -270,7 +270,7 @@ class _SessionListState extends State<SessionList>
                                             'All',
                                             style: TextStyle(color: Colors.blue),
                                           ),
-                                          avatar: CircleAvatar(
+                                          /*avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 0
                                                 ? Colors.blue.shade100
@@ -278,7 +278,7 @@ class _SessionListState extends State<SessionList>
                                                 255, 242, 242, 242),
                                             child: Text(
                                                 '${value.dataList.data!.total_data_count}'),
-                                          ),
+                                          ),*/
                                         ),
                                       ),
                                       Padding(
@@ -291,7 +291,7 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Scheduled',
                                           ),
-                                          avatar: CircleAvatar(
+                                          /*avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 1
                                                 ? Colors.green.shade100
@@ -301,11 +301,11 @@ class _SessionListState extends State<SessionList>
                                                 .status ==
                                                 'scheduled'
                                                 ? Text(
-                                                '${value.dataList.data!.total_data_count}')
+                                                '0')
                                                 : const Text(
                                               "0",
                                             ),
-                                          ),
+                                          ),*/
                                         ),
                                       ),
                                       Padding(
@@ -318,7 +318,7 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Canceled',
                                           ),
-                                          avatar: CircleAvatar(
+                                          /*avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 2
                                                 ? Colors.brown.shade100
@@ -332,7 +332,7 @@ class _SessionListState extends State<SessionList>
                                                 : const Text(
                                               "0",
                                             ),
-                                          ),
+                                          ),*/
                                         ),
                                       ),
                                       Padding(
@@ -345,7 +345,7 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Closed',
                                           ),
-                                          avatar: CircleAvatar(
+                                          /*avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 3
                                                 ? Colors.redAccent.shade100
@@ -359,7 +359,7 @@ class _SessionListState extends State<SessionList>
                                                 : const Text(
                                               "0",
                                             ),
-                                          ),
+                                          ),*/
                                         ),
                                       ),
                                     ],
@@ -369,7 +369,7 @@ class _SessionListState extends State<SessionList>
                                   ),
                                   Container(
                                     height: h * .43,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       //color: Colors.green
                                     ),
                                     child: TabBarView(
@@ -382,6 +382,7 @@ class _SessionListState extends State<SessionList>
                                             itemBuilder: (context, index) {
                                               // print("uid of batch ==${value.dataList.data!.data?[index].sdd}");
                                               if(index < value.dataList.data!.data!.length) {
+
                                                 return Card(
                                                   // key: ValueKey(_foundUsers[index]["id"]),
                                                   elevation: 0,
@@ -554,17 +555,17 @@ class _SessionListState extends State<SessionList>
                                                             Get.to(
                                                                     () => ViewDetailClosed(
                                                                     id:
-                                                                    "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
+                                                                    "${value.dataList.data!.data?[index].uid}"),
                                                                 transition: Transition
                                                                     .leftToRight);
                                                           } else if (value
                                                               .dataList
                                                               .data!
-                                                              .data?[index]
+                                                              .data![index]
                                                               .status ==
                                                               'cancel') {
                                                             Get.to(() =>
-                                                                    const SessionDetailCancel(),
+                                                                SessionDetailCancel(uid: value.dataList.data!.data![index].uid.toString()),
                                                                 transition: Transition
                                                                     .leftToRight);
                                                           }
@@ -597,7 +598,7 @@ class _SessionListState extends State<SessionList>
                                                     ],
                                                   ),
                                                 );
-                                              }else {
+                                              } else {
                                                 return  Padding(
                                                   padding: const EdgeInsets.all(16.0),
                                                   child: Center(
@@ -610,695 +611,715 @@ class _SessionListState extends State<SessionList>
 
                                             }),
                                         ListView.builder(
+                                            controller:_scrollController,
                                             itemCount:
-                                            value.dataList.data?.data?.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                            value.dataList.data!.data?[0]
-                                                .status ==
-                                                'scheduled'
-                                                ? Card(
-                                              // key: ValueKey(_foundUsers[index]["id"]),
-                                              elevation: 0,
-                                              margin:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 0),
-                                              child: Column(
-                                                children: [
-                                                  ListTile(
-                                                    tileColor: (_selectedItems
-                                                        .contains(index))
-                                                        ? const Color.fromARGB(
-                                                        255,
-                                                        218,
-                                                        218,
-                                                        219)
-                                                        .withOpacity(0.5)
-                                                        : Colors.transparent,
-                                                    title: Row(
-                                                      children: [
-                                                        Text(
-                                                          '${value.dataList.data!.data?[index].batch_name}',
-                                                          style: const TextStyle(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                  57,
-                                                                  64,
-                                                                  74,
-                                                                  1),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              fontFamily:
-                                                              'Loto-Regular'),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Chip(
-                                                            backgroundColor: value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'scheduled'
-                                                                ? Colors.green
-                                                                .withOpacity(
-                                                                .2)
-                                                                : value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'canceled'
-                                                                ? Colors.red
-                                                                .withOpacity(
-                                                                .2)
-                                                                : Colors
-                                                                .brown
-                                                                .withOpacity(
-                                                                .2),
-                                                            label: Text(
-                                                              '${value.dataList.data!.data?[index].status}',
-                                                              style: TextStyle(
-                                                                  color: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .status ==
-                                                                      'scheduled'
-                                                                      ? Colors
-                                                                      .green
-                                                                      : value.dataList.data!.data?[index].status ==
-                                                                      'canceled'
-                                                                      ? Colors
-                                                                      .red
-                                                                      : Colors
-                                                                      .brown),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                    subtitle: RichText(
-                                                      text: TextSpan(
-                                                        children: <TextSpan>[
-                                                          TextSpan(
-                                                              text:
-                                                              '${value.dataList.data!.data?[index].program_name} ',
+                                            value.dataList.data!.data!.length + 1,
+                                            itemBuilder: (context, index) {
+
+
+
+                                              // print("uid of batch ==${value.dataList.data!.data?[index].sdd}");
+                                              if(index < value.dataList.data!.data!.length) {
+                                                return value.dataList.data!.data![index].status == "scheduled" ?
+                                                Card(
+                                                  // key: ValueKey(_foundUsers[index]["id"]),
+                                                  elevation: 0,
+                                                  margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      ListTile(
+                                                        tileColor: (_selectedItems
+                                                            .contains(index))
+                                                            ? const Color.fromARGB(
+                                                            255,
+                                                            218,
+                                                            218,
+                                                            219)
+                                                            .withOpacity(0.5)
+                                                            : Colors.transparent,
+                                                        title: Row(
+                                                          children: [
+                                                            Text(
+                                                              '${value.dataList.data!.data?[index].batch_name}',
                                                               style: const TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                      57,
+                                                                      64,
+                                                                      74,
+                                                                      1),
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                   FontWeight
-                                                                      .bold,
-                                                                  color: Colors
-                                                                      .black)),
-                                                          TextSpan(
-                                                            text:
-                                                            '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold,
-                                                                color: Colors.black),
+                                                                      .w700,
+                                                                  fontFamily:
+                                                                  'Loto-Regular'),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Chip(
+                                                                backgroundColor: value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'scheduled'
+                                                                    ? Colors.green
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'canceled'
+                                                                    ? Colors.red
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : Colors
+                                                                    .brown
+                                                                    .withOpacity(
+                                                                    .2),
+                                                                label: Text(
+                                                                  '${value.dataList.data!.data?[index].status}',
+                                                                  style: TextStyle(
+                                                                      color: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .status ==
+                                                                          'scheduled'
+                                                                          ? Colors
+                                                                          .green
+                                                                          : value.dataList.data!.data?[index].status ==
+                                                                          'canceled'
+                                                                          ? Colors
+                                                                          .red
+                                                                          : Colors
+                                                                          .brown),
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        subtitle: RichText(
+                                                          text: TextSpan(
+                                                            children: <TextSpan>[
+                                                              TextSpan(
+                                                                  text:
+                                                                  '${value.dataList.data!.data?[index].program_name} ',
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                text:
+                                                                '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                    color: Colors.black),
 
+                                                              ),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                  text:
+                                                                  '  ${value.dataList.data!.data?[index].batch_timing_from} to ${value.dataList.data!.data?[index].batch_timing_to}',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                            ],
                                                           ),
-                                                          TextSpan(
-                                                              text:
-                                                              '  ${value.dataList.data!.data?[index].batch_timing_from} - ${value.dataList.data!.data?[index].batch_timing_to}',
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black)),
-                                                        ],
+                                                        ),
+                                                        trailing: CircleAvatar(
+                                                          backgroundColor: Colors.transparent,
+                                                          radius: 14,
+                                                          child: Image(
+                                                              image: NetworkImage(
+                                                                  "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                        ),
+                                                        onTap: () {
+                                                          print(value.dataList.data!
+                                                              .data?[index].status);
+                                                          if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'scheduled') {
+                                                            Get.to(
+                                                                    () =>
+                                                                    ViewSessionalDetails(
+                                                                      id: "${value.dataList.data!.data?[index].uid}",
+                                                                      serviceIcon: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .service_iconname,
+                                                                    ),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'close') {
+                                                            Get.to(
+                                                                    () => ViewDetailClosed(
+                                                                    id:
+                                                                    "${value.dataList.data!.data?[index].uid}"),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data![index]
+                                                              .status ==
+                                                              'cancel') {
+                                                            Get.to(() =>
+                                                                SessionDetailCancel(uid: value.dataList.data!.data![index].uid.toString()),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          }
+                                                        },
+                                                        onLongPress: () {
+                                                          if (!_selectedItems
+                                                              .contains(index)) {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .add(index);
+                                                            });
+                                                          } else {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .removeWhere(
+                                                                      (val) =>
+                                                                  val ==
+                                                                      index);
+                                                            });
+                                                          }
+                                                        },
                                                       ),
-                                                    ),
-                                                    trailing: CircleAvatar(
-                                                      backgroundColor: Colors.transparent,
-                                                      radius: 14,
-                                                      child: Image(
-                                                          image: NetworkImage(
-                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
-                                                    ),
-                                                    onTap: () {
-                                                      print(value.dataList.data!
-                                                          .data?[index].id);
-                                                      if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'scheduled') {
-                                                        /*Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                   ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      const Divider(
+                                                        height: 5,
+                                                        thickness: 1,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ): const SizedBox();
+                                              } else {
+                                                return  Padding(
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child: Center(
+                                                      child: value.loading ?
+                                                      const CircularProgressIndicator() : const SizedBox()
+                                                    // Empty SizedBox when not loading
+                                                  ),
+                                                );
+                                              }
 
-                                                        Get.to(
-                                                                () =>
-                                                                ViewSessionalDetails(
-                                                                  id: "${value.dataList.data!.data?[index].uid}",
-                                                                  serviceIcon: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .service_iconname,
-                                                                ),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'closed') {
-                                                        /*  Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                               ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () => ViewDetailClosed(
-                                                                id:
-                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'cancelled') {
-                                                        /*Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                              const SessionDetailCancel(),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () =>
-                                                                SessionDetailCancel(),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      }
-                                                    },
-                                                    onLongPress: () {
-                                                      if (!_selectedItems
-                                                          .contains(index)) {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .add(index);
-                                                        });
-                                                      } else {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .removeWhere(
-                                                                  (val) =>
-                                                              val ==
-                                                                  index);
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  const Divider(
-                                                    height: 5,
-                                                    thickness: 1,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                                : null),
+                                            }),
                                         ListView.builder(
+                                            controller:_scrollController,
                                             itemCount:
-                                            value.dataList.data?.data?.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                            value.dataList.data!.data?[0]
-                                                .status ==
-                                                'cancelled'
-                                                ? Card(
-                                              // key: ValueKey(_foundUsers[index]["id"]),
-                                              elevation: 0,
-                                              margin:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 0),
-                                              child: Column(
-                                                children: [
-                                                  ListTile(
-                                                    tileColor: (_selectedItems
-                                                        .contains(index))
-                                                        ? const Color.fromARGB(
-                                                        255,
-                                                        218,
-                                                        218,
-                                                        219)
-                                                        .withOpacity(0.5)
-                                                        : Colors.transparent,
-                                                    title: Row(
-                                                      children: [
-                                                        Text(
-                                                          '${value.dataList.data!.data?[index].batch_name}',
-                                                          style: const TextStyle(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                  57,
-                                                                  64,
-                                                                  74,
-                                                                  1),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              fontFamily:
-                                                              'Loto-Regular'),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Chip(
-                                                            backgroundColor: value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'scheduled'
-                                                                ? Colors.green
-                                                                .withOpacity(
-                                                                .2)
-                                                                : value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'canceled'
-                                                                ? Colors.red
-                                                                .withOpacity(
-                                                                .2)
-                                                                : Colors
-                                                                .brown
-                                                                .withOpacity(
-                                                                .2),
-                                                            label: Text(
-                                                              '${value.dataList.data!.data?[index].status}',
-                                                              style: TextStyle(
-                                                                  color: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .status ==
-                                                                      'scheduled'
-                                                                      ? Colors
-                                                                      .green
-                                                                      : value.dataList.data!.data?[index].status ==
-                                                                      'canceled'
-                                                                      ? Colors
-                                                                      .red
-                                                                      : Colors
-                                                                      .brown),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                    subtitle: RichText(
-                                                      text: TextSpan(
-                                                        children: <TextSpan>[
-                                                          TextSpan(
-                                                              text:
-                                                              '${value.dataList.data!.data?[index].program_name} ',
+                                            value.dataList.data!.data!.length + 1,
+                                            itemBuilder: (context, index) {
+                                              // print("uid of batch ==${value.dataList.data!.data?[index].sdd}");
+                                              if(index < value.dataList.data!.data!.length) {
+
+                                                return value.dataList.data!.data![index].status == "cancel" ?
+                                                Card(
+                                                  // key: ValueKey(_foundUsers[index]["id"]),
+                                                  elevation: 0,
+                                                  margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      ListTile(
+                                                        tileColor: (_selectedItems
+                                                            .contains(index))
+                                                            ? const Color.fromARGB(
+                                                            255,
+                                                            218,
+                                                            218,
+                                                            219)
+                                                            .withOpacity(0.5)
+                                                            : Colors.transparent,
+                                                        title: Row(
+                                                          children: [
+                                                            Text(
+                                                              '${value.dataList.data!.data?[index].batch_name}',
                                                               style: const TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                      57,
+                                                                      64,
+                                                                      74,
+                                                                      1),
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                   FontWeight
-                                                                      .bold,
-                                                                  color: Colors
-                                                                      .black)),
-                                                          TextSpan(
-                                                            text:
-                                                            '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold,
-                                                                color: Colors.black),
+                                                                      .w700,
+                                                                  fontFamily:
+                                                                  'Loto-Regular'),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Chip(
+                                                                backgroundColor: value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'scheduled'
+                                                                    ? Colors.green
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'canceled'
+                                                                    ? Colors.red
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : Colors
+                                                                    .brown
+                                                                    .withOpacity(
+                                                                    .2),
+                                                                label: Text(
+                                                                  '${value.dataList.data!.data?[index].status}',
+                                                                  style: TextStyle(
+                                                                      color: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .status ==
+                                                                          'scheduled'
+                                                                          ? Colors
+                                                                          .green
+                                                                          : value.dataList.data!.data?[index].status ==
+                                                                          'canceled'
+                                                                          ? Colors
+                                                                          .red
+                                                                          : Colors
+                                                                          .brown),
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        subtitle: RichText(
+                                                          text: TextSpan(
+                                                            children: <TextSpan>[
+                                                              TextSpan(
+                                                                  text:
+                                                                  '${value.dataList.data!.data?[index].program_name} ',
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                text:
+                                                                '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                    color: Colors.black),
 
+                                                              ),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                  text:
+                                                                  '  ${value.dataList.data!.data?[index].batch_timing_from} to ${value.dataList.data!.data?[index].batch_timing_to}',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                            ],
                                                           ),
-                                                          TextSpan(
-                                                              text:
-                                                              '  ${value.dataList.data!.data?[index].batch_timing_from} - ${value.dataList.data!.data?[index].batch_timing_to}',
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black)),
-                                                        ],
+                                                        ),
+                                                        trailing: CircleAvatar(
+                                                          backgroundColor: Colors.transparent,
+                                                          radius: 14,
+                                                          child: Image(
+                                                              image: NetworkImage(
+                                                                  "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                        ),
+                                                        onTap: () {
+                                                          print(value.dataList.data!
+                                                              .data?[index].status);
+                                                          if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'scheduled') {
+                                                            Get.to(
+                                                                    () =>
+                                                                    ViewSessionalDetails(
+                                                                      id: "${value.dataList.data!.data?[index].uid}",
+                                                                      serviceIcon: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .service_iconname,
+                                                                    ),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'close') {
+                                                            Get.to(
+                                                                    () => ViewDetailClosed(
+                                                                    id:
+                                                                    "${value.dataList.data!.data?[index].uid}"),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data![index]
+                                                              .status ==
+                                                              'cancel') {
+                                                            Get.to(() =>
+                                                                SessionDetailCancel(uid: value.dataList.data!.data![index].uid.toString()),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          }
+                                                        },
+                                                        onLongPress: () {
+                                                          if (!_selectedItems
+                                                              .contains(index)) {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .add(index);
+                                                            });
+                                                          } else {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .removeWhere(
+                                                                      (val) =>
+                                                                  val ==
+                                                                      index);
+                                                            });
+                                                          }
+                                                        },
                                                       ),
-                                                    ),
-                                                    trailing: CircleAvatar(
-                                                      backgroundColor: Colors.transparent,
-                                                      radius: 14,
-                                                      child: Image(
-                                                          image: NetworkImage(
-                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
-                                                    ),
-                                                    onTap: () {
-                                                      print(value.dataList.data!
-                                                          .data?[index].id);
-                                                      if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'scheduled') {
-                                                        /*Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                   ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      const Divider(
+                                                        height: 5,
+                                                        thickness: 1,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ): const SizedBox();
+                                              } else {
+                                                return  Padding(
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child: Center(
+                                                      child: value.loading ?
+                                                      const CircularProgressIndicator() : const SizedBox()
+                                                    // Empty SizedBox when not loading
+                                                  ),
+                                                );
+                                              }
 
-                                                        Get.to(
-                                                                () =>
-                                                                ViewSessionalDetails(
-                                                                  id: "${value.dataList.data!.data?[index].uid}",
-                                                                  serviceIcon: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .service_iconname,
-                                                                ),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'closed') {
-                                                        /*  Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                               ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () => ViewDetailClosed(
-                                                                id:
-                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'cancelled') {
-                                                        /*Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                              const SessionDetailCancel(),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () =>
-                                                                SessionDetailCancel(),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      }
-                                                    },
-                                                    onLongPress: () {
-                                                      if (!_selectedItems
-                                                          .contains(index)) {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .add(index);
-                                                        });
-                                                      } else {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .removeWhere(
-                                                                  (val) =>
-                                                              val ==
-                                                                  index);
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  const Divider(
-                                                    height: 5,
-                                                    thickness: 1,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                                : null),
+                                            }),
                                         ListView.builder(
+                                            controller:_scrollController,
                                             itemCount:
-                                            value.dataList.data?.data?.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                            value
-                                                .dataList
-                                                .data!
-                                                .data?[index]
-                                                .status ==
-                                                'closed'
-                                                ? Card(
-                                              // key: ValueKey(_foundUsers[index]["id"]),
-                                              elevation: 0,
-                                              margin:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 0),
-                                              child: Column(
-                                                children: [
-                                                  ListTile(
-                                                    tileColor: (_selectedItems
-                                                        .contains(index))
-                                                        ? const Color.fromARGB(
-                                                        255,
-                                                        218,
-                                                        218,
-                                                        219)
-                                                        .withOpacity(0.5)
-                                                        : Colors.transparent,
-                                                    title: Row(
-                                                      children: [
-                                                        Text(
-                                                          '${value.dataList.data!.data?[index].batch_name}',
-                                                          style: const TextStyle(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                  57,
-                                                                  64,
-                                                                  74,
-                                                                  1),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              fontFamily:
-                                                              'Loto-Regular'),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Chip(
-                                                            backgroundColor: value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'scheduled'
-                                                                ? Colors.green
-                                                                .withOpacity(
-                                                                .2)
-                                                                : value
-                                                                .dataList
-                                                                .data!
-                                                                .data?[
-                                                            index]
-                                                                .status ==
-                                                                'canceled'
-                                                                ? Colors.red
-                                                                .withOpacity(
-                                                                .2)
-                                                                : Colors
-                                                                .brown
-                                                                .withOpacity(
-                                                                .2),
-                                                            label: Text(
-                                                              '${value.dataList.data!.data?[index].status}',
-                                                              style: TextStyle(
-                                                                  color: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .status ==
-                                                                      'scheduled'
-                                                                      ? Colors
-                                                                      .green
-                                                                      : value.dataList.data!.data?[index].status ==
-                                                                      'canceled'
-                                                                      ? Colors
-                                                                      .red
-                                                                      : Colors
-                                                                      .brown),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                    subtitle: RichText(
-                                                      text: TextSpan(
-                                                        children: <TextSpan>[
-                                                          TextSpan(
-                                                              text:
-                                                              '${value.dataList.data!.data?[index].program_name} ',
+                                            value.dataList.data!.data!.length + 1,
+                                            itemBuilder: (context, index) {
+                                              // print("uid of batch ==${value.dataList.data!.data?[index].sdd}");
+                                              if(index < value.dataList.data!.data!.length) {
+                                                return value.dataList.data!.data![index].status == "close" ?
+                                                Card(
+                                                  // key: ValueKey(_foundUsers[index]["id"]),
+                                                  elevation: 0,
+                                                  margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      ListTile(
+                                                        tileColor: (_selectedItems
+                                                            .contains(index))
+                                                            ? const Color.fromARGB(
+                                                            255,
+                                                            218,
+                                                            218,
+                                                            219)
+                                                            .withOpacity(0.5)
+                                                            : Colors.transparent,
+                                                        title: Row(
+                                                          children: [
+                                                            Text(
+                                                              '${value.dataList.data!.data?[index].batch_name}',
                                                               style: const TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                      57,
+                                                                      64,
+                                                                      74,
+                                                                      1),
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                   FontWeight
-                                                                      .bold,
-                                                                  color: Colors
-                                                                      .black)),
-                                                          TextSpan(
-                                                            text:
-                                                            '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold,
-                                                                color: Colors.black),
+                                                                      .w700,
+                                                                  fontFamily:
+                                                                  'Loto-Regular'),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Chip(
+                                                                backgroundColor: value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'scheduled'
+                                                                    ? Colors.green
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : value
+                                                                    .dataList
+                                                                    .data!
+                                                                    .data?[
+                                                                index]
+                                                                    .status ==
+                                                                    'canceled'
+                                                                    ? Colors.red
+                                                                    .withOpacity(
+                                                                    .2)
+                                                                    : Colors
+                                                                    .brown
+                                                                    .withOpacity(
+                                                                    .2),
+                                                                label: Text(
+                                                                  '${value.dataList.data!.data?[index].status}',
+                                                                  style: TextStyle(
+                                                                      color: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .status ==
+                                                                          'scheduled'
+                                                                          ? Colors
+                                                                          .green
+                                                                          : value.dataList.data!.data?[index].status ==
+                                                                          'canceled'
+                                                                          ? Colors
+                                                                          .red
+                                                                          : Colors
+                                                                          .brown),
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        subtitle: RichText(
+                                                          text: TextSpan(
+                                                            children: <TextSpan>[
+                                                              TextSpan(
+                                                                  text:
+                                                                  '${value.dataList.data!.data?[index].program_name} ',
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                text:
+                                                                '${value.dataList.data!.data?[index].syy}-${value.dataList.data!.data?[index].smm}-${value.dataList.data!.data?[index].sdd}',
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                    color: Colors.black),
 
+                                                              ),
+                                                              TextSpan(
+                                                                  text: " - ",
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      color: Colors
+                                                                          .black)
+                                                              ),
+                                                              TextSpan(
+                                                                  text:
+                                                                  '  ${value.dataList.data!.data?[index].batch_timing_from} to ${value.dataList.data!.data?[index].batch_timing_to}',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                            ],
                                                           ),
-                                                          TextSpan(
-                                                              text:
-                                                              '  ${value.dataList.data!.data?[index].batch_timing_from} - ${value.dataList.data!.data?[index].batch_timing_to}',
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black)),
-                                                        ],
+                                                        ),
+                                                        trailing: CircleAvatar(
+                                                          backgroundColor: Colors.transparent,
+                                                          radius: 14,
+                                                          child: Image(
+                                                              image: NetworkImage(
+                                                                  "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                        ),
+                                                        onTap: () {
+                                                          print(value.dataList.data!
+                                                              .data?[index].status);
+                                                          if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'scheduled') {
+                                                            Get.to(
+                                                                    () =>
+                                                                    ViewSessionalDetails(
+                                                                      id: "${value.dataList.data!.data?[index].uid}",
+                                                                      serviceIcon: value
+                                                                          .dataList
+                                                                          .data!
+                                                                          .data?[
+                                                                      index]
+                                                                          .service_iconname,
+                                                                    ),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data?[index]
+                                                              .status ==
+                                                              'close') {
+                                                            Get.to(
+                                                                    () => ViewDetailClosed(
+                                                                    id:
+                                                                    "${value.dataList.data!.data?[index].uid}"),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          } else if (value
+                                                              .dataList
+                                                              .data!
+                                                              .data![index]
+                                                              .status ==
+                                                              'cancel') {
+                                                            Get.to(() =>
+                                                                SessionDetailCancel(uid: value.dataList.data!.data![index].uid.toString()),
+                                                                transition: Transition
+                                                                    .leftToRight);
+                                                          }
+                                                        },
+                                                        onLongPress: () {
+                                                          if (!_selectedItems
+                                                              .contains(index)) {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .add(index);
+                                                            });
+                                                          } else {
+                                                            setState(() {
+                                                              _selectedItems
+                                                                  .removeWhere(
+                                                                      (val) =>
+                                                                  val ==
+                                                                      index);
+                                                            });
+                                                          }
+                                                        },
                                                       ),
-                                                    ),
-                                                    trailing: CircleAvatar(
-                                                      backgroundColor: Colors.transparent,
-                                                      radius: 14,
-                                                      child: Image(
-                                                          image: NetworkImage(
-                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
-                                                    ),
-                                                    onTap: () {
-                                                      print(value.dataList.data!
-                                                          .data?[index].id);
-                                                      if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'scheduled') {
-                                                        /*Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                   ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      const Divider(
+                                                        height: 5,
+                                                        thickness: 1,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ): const SizedBox();
+                                              } else {
+                                                return  Padding(
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child: Center(
+                                                      child: value.loading ?
+                                                      const CircularProgressIndicator() : const SizedBox()
+                                                    // Empty SizedBox when not loading
+                                                  ),
+                                                );
+                                              }
 
-                                                        Get.to(
-                                                                () =>
-                                                                ViewSessionalDetails(
-                                                                  id: "${value.dataList.data!.data?[index].uid}",
-                                                                  serviceIcon: value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data?[
-                                                                  index]
-                                                                      .service_iconname,
-                                                                ),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'closed') {
-                                                        /*  Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                               ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () => ViewDetailClosed(
-                                                                id:
-                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      } else if (value
-                                                          .dataList
-                                                          .data!
-                                                          .data?[index]
-                                                          .status ==
-                                                          'cancelled') {
-                                                        /*Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                              const SessionDetailCancel(),
-                                                            ),
-                                                          );*/
-                                                        Get.to(
-                                                                () =>
-                                                                SessionDetailCancel(),
-                                                            transition: Transition
-                                                                .leftToRight);
-                                                      }
-                                                    },
-                                                    onLongPress: () {
-                                                      if (!_selectedItems
-                                                          .contains(index)) {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .add(index);
-                                                        });
-                                                      } else {
-                                                        setState(() {
-                                                          _selectedItems
-                                                              .removeWhere(
-                                                                  (val) =>
-                                                              val ==
-                                                                  index);
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  const Divider(
-                                                    height: 5,
-                                                    thickness: 1,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                                : null),
+                                            }),
+
                                       ],
                                     ),
                                   ),
@@ -1389,6 +1410,7 @@ class _SessionListState extends State<SessionList>
         });
   }
 }
+
 
 
 

@@ -148,31 +148,31 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
           actions: [
             _selectedItems.isEmpty
                 ? IconButton(
-                    onPressed: (() {
-                      /*Navigator.push(
+              onPressed: (() {
+                /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       const SessionDetailEdit(),
                                 ),
                               );*/
-                      Get.to(() => const SessionDetailEdit(),
-                          transition: Transition.leftToRight);
-                    }),
-                    icon: const Icon(Icons.edit),
-                    iconSize: 25,
-                    color: Colors.black,
-                  )
+                Get.to(() => const SessionDetailEdit(),
+                    transition: Transition.leftToRight);
+              }),
+              icon: const Icon(Icons.edit),
+              iconSize: 25,
+              color: Colors.black,
+            )
                 : IconButton(
-                    onPressed: (() {
-                      if (kDebugMode) {
-                        print('add coach list');
-                      }
-                    }),
-                    icon: const Icon(Icons.delete_outline),
-                    iconSize: 25,
-                    color: Colors.black,
-                  ),
+              onPressed: (() {
+                if (kDebugMode) {
+                  print('add coach list');
+                }
+              }),
+              icon: const Icon(Icons.delete_outline),
+              iconSize: 25,
+              color: Colors.black,
+            ),
           ],
         ),
         body: SingleChildScrollView(
@@ -184,225 +184,225 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                   create: (BuildContext context) => sessionViewModel,
                   child: Consumer<SessionViewViewModel>(
                       builder: (context, value, _) {
-                    // print(value.dataList2.data!.data?[0].batch_name);
-                    switch (value.dataList2.status!) {
-                      case Status.loading:
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.teal,
-                          ),
-                        );
-                      case Status.completed:
-                        if (attendanceList.isEmpty) {
-                          attendanceList.addAll(value.dataList2.data!.data);
-                        }
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                color: const Color.fromARGB(255, 244, 247, 245),
-                                elevation: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
+                        // print(value.dataList2.data!.data?[0].batch_name);
+                        switch (value.dataList2.status!) {
+                          case Status.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.teal,
+                              ),
+                            );
+                          case Status.completed:
+                            if (attendanceList.isEmpty) {
+                              attendanceList.addAll(value.dataList2.data!.data);
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    color: const Color.fromARGB(255, 244, 247, 245),
+                                    elevation: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10, right: 10),
+                                      child: Column(
+                                        mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
+                                        children: [
+                                          Padding(
+                                            padding:
                                             const EdgeInsets.only(left: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
+                                            child: Row(
+                                              mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Chip(
-                                                backgroundColor: Colors.green
-                                                    .withOpacity(.2),
-                                                label: Text(
-                                                  attendanceList[0].status,
-                                                  style: const TextStyle(
-                                                      color: Colors.green),
-                                                )),
-                                            CircleAvatar(
-                                              radius: 20,
-                                              backgroundColor:
+                                              children: [
+                                                Chip(
+                                                    backgroundColor: Colors.green
+                                                        .withOpacity(.2),
+                                                    label: Text(
+                                                      attendanceList[0].status,
+                                                      style: const TextStyle(
+                                                          color: Colors.green),
+                                                    )),
+                                                CircleAvatar(
+                                                  radius: 20,
+                                                  backgroundColor:
                                                   const Color.fromARGB(
                                                       255, 217, 217, 217),
-                                              child: Image(
-                                                  image: NetworkImage(
-                                                      "${AppUrl.serviceIconEndPoint}${widget.serviceIcon}")),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            value.dataList2.data!.batchName,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                                height: 2),
-                                          ),
-                                          Text(
-                                            '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} ,${attendanceList[0].sdd} ${attendanceList[0].smm} ${attendanceList[0].syy} ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13,
+                                                  child: Image(
+                                                      image: NetworkImage(
+                                                          "${AppUrl.serviceIconEndPoint}${widget.serviceIcon}")),
+                                                )
+                                              ],
                                             ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                value.dataList2.data!.batchName,
+                                                style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                    height: 2),
+                                              ),
+                                              Text(
+                                                '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} ,${attendanceList[0].sdd} ${attendanceList[0].smm} ${attendanceList[0].syy} ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: Colors.grey,
+                                            size: 25.0,
+                                          ),
+                                          Text('Attendance Pending')
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('Mark all present'),
+                                          Checkbox(
+                                            value: isMarkAllPresent,
+                                            onChanged: (v) {
+                                              setState(() {
+                                                value1 = v!;
+                                                isMarkAllPresent = v;
+                                                //present = !present;
+                                                if (v == true) {
+                                                  presentCount =
+                                                      attendanceList.length;
+                                                  count = attendanceList.length;
+                                                  ;
+                                                  //  attendanceList.addAll(value.dataList2.data!.data);
+                                                  attendanceList.forEach((element) {
+                                                    element.attendance = 'P';
+                                                  });
+                                                } else {
+                                                  attendanceList.forEach((element) {
+                                                    element.attendance = '';
+                                                  });
+                                                  presentCount = 0;
+                                                  count = 0;
+                                                }
+                                                print('checked');
+                                              });
+                                            },
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.check_circle,
-                                        color: Colors.grey,
-                                        size: 25.0,
-                                      ),
-                                      Text('Attendance Pending')
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text('Mark all present'),
-                                      Checkbox(
-                                        value: isMarkAllPresent,
-                                        onChanged: (v) {
-                                          setState(() {
-                                            value1 = v!;
-                                            isMarkAllPresent = v;
-                                            //present = !present;
-                                            if (v == true) {
-                                              presentCount =
-                                                  attendanceList.length;
-                                              count = attendanceList.length;
-                                              ;
-                                              //  attendanceList.addAll(value.dataList2.data!.data);
-                                              attendanceList.forEach((element) {
-                                                element.attendance = 'P';
-                                              });
-                                            } else {
-                                              attendanceList.forEach((element) {
-                                                element.attendance = '';
-                                              });
-                                              presentCount = 0;
-                                              count = 0;
-                                            }
-                                            print('checked');
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              child: SizedBox(
-                                  height: height * .5,
-                                  child: ListView.builder(
-                                      itemCount: attendanceList.length,
-                                      itemBuilder: (context, index) {
-                                        // value1 == true ? attendanceList.add(value.dataList2.data!.data[index]) : null;
+                                ),
+                                SingleChildScrollView(
+                                  child: SizedBox(
+                                      height: height * .5,
+                                      child: ListView.builder(
+                                          itemCount: attendanceList.length,
+                                          itemBuilder: (context, index) {
+                                            // value1 == true ? attendanceList.add(value.dataList2.data!.data[index]) : null;
 
-                                        //var nameText = _foundUsers[index]['name'].split(' ');
-                                        return Card(
-                                          // key: ValueKey(_foundUsers[index]["id"]),
-                                          elevation: 0,
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 0),
-                                          child: Column(
-                                            children: [
-                                              ListTile(
-                                                tileColor: (_selectedItems
+                                            //var nameText = _foundUsers[index]['name'].split(' ');
+                                            return Card(
+                                              // key: ValueKey(_foundUsers[index]["id"]),
+                                              elevation: 0,
+                                              margin: const EdgeInsets.symmetric(
+                                                  vertical: 0),
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    tileColor: (_selectedItems
                                                         .contains(index))
-                                                    ? const Color.fromARGB(
-                                                            255, 218, 218, 219)
+                                                        ? const Color.fromARGB(
+                                                        255, 218, 218, 219)
                                                         .withOpacity(0.5)
-                                                    : Colors.transparent,
-                                                leading: CircleAvatar(
-                                                  radius: 20.5,
-                                                  backgroundColor:
+                                                        : Colors.transparent,
+                                                    leading: CircleAvatar(
+                                                      radius: 20.5,
+                                                      backgroundColor:
                                                       const Color.fromRGBO(
                                                           194, 235, 216, 1),
-                                                  child: _selectedItems
+                                                      child: _selectedItems
                                                           .contains(index)
-                                                      ? const Icon(
-                                                          Icons.check,
-                                                          color: Color.fromRGBO(
-                                                              71, 192, 136, 1),
-                                                          size: 30.0,
-                                                        )
-                                                      : Text(
-                                                          "${attendanceList[index].traineeName.split(" ")[0][0].toUpperCase()}"
-                                                          "${attendanceList[index].traineeName.split(" ")[1][0].toUpperCase()}",
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 14),
-                                                        ),
-                                                ),
-                                                title: Text(
-                                                  attendanceList[index]
-                                                      .traineeName,
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
-                                                ),
-                                                subtitle: Row(
-                                                  children: [
-                                                    Text(
+                                                          ? const Icon(
+                                                        Icons.check,
+                                                        color: Color.fromRGBO(
+                                                            71, 192, 136, 1),
+                                                        size: 30.0,
+                                                      )
+                                                          : Text(
+                                                        "${attendanceList[index].traineeName.split(" ")[0][0].toUpperCase()}"
+                                                            "${attendanceList[index].traineeName.split(" ")[1][0].toUpperCase()}",
+                                                        style:
+                                                        const TextStyle(
+                                                            fontSize: 14),
+                                                      ),
+                                                    ),
+                                                    title: Text(
                                                       attendanceList[index]
-                                                          .gender
-                                                          .toUpperCase(),
-                                                      // value.dataList2.data!.data[index].id,
+                                                          .traineeName,
                                                       style: const TextStyle(
                                                           color: Color.fromRGBO(
                                                               57, 64, 74, 1),
-                                                          fontSize: 12,
+                                                          fontSize: 14,
                                                           fontWeight:
-                                                              FontWeight.w400,
+                                                          FontWeight.w700,
                                                           fontFamily:
-                                                              'Loto-Regular'),
+                                                          'Loto-Regular'),
                                                     ),
-                                                    Text(" - "),
-                                                    Text(
-                                                      attendanceList[index].dob,
-                                                      // value.dataList2.data!.data[index].id,
-                                                      style: const TextStyle(
-                                                          color: Color.fromRGBO(
-                                                              57, 64, 74, 1),
-                                                          fontSize: 12,
-                                                          fontWeight:
+                                                    subtitle: Row(
+                                                      children: [
+                                                        Text(
+                                                          attendanceList[index]
+                                                              .gender
+                                                              .toUpperCase(),
+                                                          // value.dataList2.data!.data[index].id,
+                                                          style: const TextStyle(
+                                                              color: Color.fromRGBO(
+                                                                  57, 64, 74, 1),
+                                                              fontSize: 12,
+                                                              fontWeight:
                                                               FontWeight.w400,
-                                                          fontFamily:
+                                                              fontFamily:
                                                               'Loto-Regular'),
-                                                    ),
-                                                    /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                        ),
+                                                        Text(" - "),
+                                                        Text(
+                                                          attendanceList[index].dob,
+                                                          // value.dataList2.data!.data[index].id,
+                                                          style: const TextStyle(
+                                                              color: Color.fromRGBO(
+                                                                  57, 64, 74, 1),
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                              FontWeight.w400,
+                                                              fontFamily:
+                                                              'Loto-Regular'),
+                                                        ),
+                                                        /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
                                                       Text(
                                                         "Due: ${value.dataList2.data!.data[index].fees}",
                                                         // value.dataList2.data!.data[index].id,
@@ -415,167 +415,167 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),*/
-                                                  ],
-                                                ),
-                                                trailing: SizedBox(
-                                                  width: MediaQuery.of(context)
+                                                      ],
+                                                    ),
+                                                    trailing: SizedBox(
+                                                      width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.24,
-                                                  child: Row(
-                                                    mainAxisAlignment:
+                                                          0.24,
+                                                      child: Row(
+                                                        mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceBetween,
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _onTapPresnet(
-                                                                index);
-                                                          });
-                                                        },
-                                                        child: CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _onTapPresnet(
+                                                                    index);
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                                radius: 13,
+                                                                backgroundColor:
                                                                 attendanceList[index]
-                                                                            .attendance ==
-                                                                        'P'
+                                                                    .attendance ==
+                                                                    'P'
                                                                     ? Colors
-                                                                        .green
+                                                                    .green
                                                                     : Colors
-                                                                        .green
-                                                                        .withOpacity(
-                                                                            0.1),
-                                                            child: Text(
-                                                              'P',
-                                                              style: TextStyle(
-                                                                  color: attendanceList[index]
-                                                                              .attendance ==
+                                                                    .green
+                                                                    .withOpacity(
+                                                                    0.1),
+                                                                child: Text(
+                                                                  'P',
+                                                                  style: TextStyle(
+                                                                      color: attendanceList[index]
+                                                                          .attendance ==
                                                                           'P'
-                                                                      ? Colors
+                                                                          ? Colors
                                                                           .white
-                                                                      : Colors
+                                                                          : Colors
                                                                           .green),
-                                                            )),
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _onTapAbsent(index);
-                                                          });
-                                                        },
-                                                        child: CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
+                                                                )),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _onTapAbsent(index);
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                                radius: 13,
+                                                                backgroundColor:
                                                                 attendanceList[index]
-                                                                            .attendance ==
-                                                                        'A'
+                                                                    .attendance ==
+                                                                    'A'
                                                                     ? Colors
-                                                                        .pink
+                                                                    .pink
                                                                     : Colors
-                                                                        .pink
-                                                                        .withOpacity(
-                                                                            0.1),
-                                                            child: Text(
-                                                              'A',
-                                                              style: TextStyle(
-                                                                  color: attendanceList[index]
-                                                                              .attendance ==
+                                                                    .pink
+                                                                    .withOpacity(
+                                                                    0.1),
+                                                                child: Text(
+                                                                  'A',
+                                                                  style: TextStyle(
+                                                                      color: attendanceList[index]
+                                                                          .attendance ==
                                                                           'A'
-                                                                      ? Colors
+                                                                          ? Colors
                                                                           .white
-                                                                      : Colors
+                                                                          : Colors
                                                                           .pink),
-                                                            )),
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _onTapLeave(index);
-                                                          });
-                                                        },
-                                                        child: CircleAvatar(
-                                                            radius: 13,
-                                                            backgroundColor:
+                                                                )),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _onTapLeave(index);
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                                radius: 13,
+                                                                backgroundColor:
                                                                 leaveBG(index),
-                                                            child: Text(
-                                                              'L',
-                                                              style: TextStyle(
-                                                                  color: attendanceList[index]
-                                                                              .attendance ==
+                                                                child: Text(
+                                                                  'L',
+                                                                  style: TextStyle(
+                                                                      color: attendanceList[index]
+                                                                          .attendance ==
                                                                           'L'
-                                                                      ? Colors
+                                                                          ? Colors
                                                                           .white
-                                                                      : Colors
+                                                                          : Colors
                                                                           .blue),
-                                                            )),
+                                                                )),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
+                                                    ),
+                                                    onTap: () {},
+                                                    onLongPress: () {
+                                                      if (!_selectedItems
+                                                          .contains(index)) {
+                                                        setState(() {
+                                                          _selectedItems.add(index);
+                                                        });
+                                                      } else {
+                                                        setState(() {
+                                                          _selectedItems
+                                                              .removeWhere((val) =>
+                                                          val == index);
+                                                        });
+                                                      }
+                                                    },
                                                   ),
-                                                ),
-                                                onTap: () {},
-                                                onLongPress: () {
-                                                  if (!_selectedItems
-                                                      .contains(index)) {
-                                                    setState(() {
-                                                      _selectedItems.add(index);
-                                                    });
-                                                  } else {
-                                                    setState(() {
-                                                      _selectedItems
-                                                          .removeWhere((val) =>
-                                                              val == index);
-                                                    });
-                                                  }
-                                                },
+                                                  const Divider(
+                                                    height: 5,
+                                                  ),
+                                                ],
                                               ),
-                                              const Divider(
-                                                height: 5,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      })),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                                // padding: const EdgeInsets.all(20),
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(44, 98, 163, 243),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
+                                            );
+                                          })),
                                 ),
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor:
-                                            Color.fromARGB(44, 98, 163, 243),
-                                        child: Icon(
-                                          Icons.upload,
-                                          color: Colors.blueAccent,
-                                          size: 20.0,
-                                        )),
-                                    Text(
-                                      'Click to upload your attachment',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  // padding: const EdgeInsets.all(20),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(44, 98, 163, 243),
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
                                     ),
-                                  ],
-                                )),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            value1
-                                ? RoundButton(
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      children: [
+                                        CircleAvatar(
+                                            radius: 20,
+                                            backgroundColor:
+                                            Color.fromARGB(44, 98, 163, 243),
+                                            child: Icon(
+                                              Icons.upload,
+                                              color: Colors.blueAccent,
+                                              size: 20.0,
+                                            )),
+                                        Text(
+                                          'Click to upload your attachment',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                value1
+                                    ? RoundButton(
                                     loading: false,
                                     title: 'Submit Attendance',
                                     textColor: Colors.white,
@@ -587,50 +587,50 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                           builder: (BuildContext context) {
                                             return StatefulBuilder(
                                                 builder: (context, setState) {
-                                              return AlertDialog(
-                                                content: SizedBox(
-                                                  height: height * .8,
-                                                  child: Column(
-                                                    crossAxisAlignment:
+                                                  return AlertDialog(
+                                                    content: SizedBox(
+                                                      height: height * .8,
+                                                      child: Column(
+                                                        crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .center,
-                                                    children: [
-                                                      const Text(
-                                                          "Confirm Marked Attendance"),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      SizedBox(
-                                                        height: height * .7,
-                                                        width: width * 1,
-                                                        child:
+                                                        children: [
+                                                          const Text(
+                                                              "Confirm Marked Attendance"),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          SizedBox(
+                                                            height: height * .7,
+                                                            width: width * 1,
+                                                            child:
                                                             DefaultTabController(
                                                                 length: 3,
                                                                 initialIndex: 0,
                                                                 child: Column(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .stretch,
+                                                                    CrossAxisAlignment
+                                                                        .stretch,
                                                                     children: <Widget>[
                                                                       TabBar(
                                                                         indicatorPadding:
-                                                                            const EdgeInsets.all(10),
+                                                                        const EdgeInsets.all(10),
                                                                         isScrollable:
-                                                                            true,
+                                                                        true,
                                                                         labelColor:
-                                                                            Colors.black,
+                                                                        Colors.black,
                                                                         indicatorColor:
-                                                                            Colors.transparent,
+                                                                        Colors.transparent,
                                                                         labelPadding:
-                                                                            const EdgeInsets.all(0),
+                                                                        const EdgeInsets.all(0),
                                                                         unselectedLabelColor:
-                                                                            Colors.grey,
+                                                                        Colors.grey,
                                                                         tabs: [
                                                                           Padding(
                                                                             padding:
-                                                                                const EdgeInsets.only(right: 10, left: 10),
+                                                                            const EdgeInsets.only(right: 10, left: 10),
                                                                             child:
-                                                                                Chip(
+                                                                            Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
                                                                               label: const Text(
                                                                                 'Present',
@@ -644,9 +644,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                           ),
                                                                           Padding(
                                                                             padding:
-                                                                                const EdgeInsets.only(right: 10),
+                                                                            const EdgeInsets.only(right: 10),
                                                                             child:
-                                                                                Chip(
+                                                                            Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
                                                                               label: const Text(
                                                                                 'Absent',
@@ -661,9 +661,9 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                           ),
                                                                           Padding(
                                                                             padding:
-                                                                                const EdgeInsets.only(right: 10),
+                                                                            const EdgeInsets.only(right: 10),
                                                                             child:
-                                                                                Chip(
+                                                                            Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
                                                                               label: const Text(
                                                                                 'Leave',
@@ -678,61 +678,61 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                       ),
                                                                       Container(
                                                                         height:
-                                                                            height *
-                                                                                .6,
+                                                                        height *
+                                                                            .6,
                                                                         decoration:
-                                                                            const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+                                                                        const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
                                                                         child:
-                                                                            TabBarView(
+                                                                        TabBarView(
                                                                           children: <Widget>[
                                                                             attendanceList.isNotEmpty
                                                                                 ? ListView.builder(
-                                                                                    itemCount: attendanceList.length,
-                                                                                    itemBuilder: (context, index) {
-                                                                                      return Visibility(
-                                                                                        visible: attendanceList[index].attendance == "P",
-                                                                                        //replacement: Text('No one is present'),
-                                                                                        child: Card(
-                                                                                          // key: ValueKey(
-                                                                                          //     _foundUsers[index]["id"]),
-                                                                                          elevation: 0,
-                                                                                          margin: const EdgeInsets.symmetric(vertical: 0),
-                                                                                          child: Column(
-                                                                                            children: [
-                                                                                              ListTile(
-                                                                                                contentPadding: const EdgeInsets.all(0),
-                                                                                                tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
-                                                                                                leading: CircleAvatar(
-                                                                                                    radius: 18,
-                                                                                                    backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
-                                                                                                    child: _selectedItems.contains(index)
-                                                                                                        ? const Icon(
-                                                                                                            Icons.check,
-                                                                                                            color: Color.fromRGBO(71, 192, 136, 1),
-                                                                                                            size: 30.0,
-                                                                                                          )
-                                                                                                        : Text(
-                                                                                                            (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
-                                                                                                            style: const TextStyle(fontSize: 12),
-                                                                                                          )),
-                                                                                                title: Text(
-                                                                                                  attendanceList[index].traineeName,
-                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                itemCount: attendanceList.length,
+                                                                                itemBuilder: (context, index) {
+                                                                                  return Visibility(
+                                                                                    visible: attendanceList[index].attendance == "P",
+                                                                                    //replacement: Text('No one is present'),
+                                                                                    child: Card(
+                                                                                      // key: ValueKey(
+                                                                                      //     _foundUsers[index]["id"]),
+                                                                                      elevation: 0,
+                                                                                      margin: const EdgeInsets.symmetric(vertical: 0),
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          ListTile(
+                                                                                            contentPadding: const EdgeInsets.all(0),
+                                                                                            tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
+                                                                                            leading: CircleAvatar(
+                                                                                                radius: 18,
+                                                                                                backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
+                                                                                                child: _selectedItems.contains(index)
+                                                                                                    ? const Icon(
+                                                                                                  Icons.check,
+                                                                                                  color: Color.fromRGBO(71, 192, 136, 1),
+                                                                                                  size: 30.0,
+                                                                                                )
+                                                                                                    : Text(
+                                                                                                  (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
+                                                                                                  style: const TextStyle(fontSize: 12),
+                                                                                                )),
+                                                                                            title: Text(
+                                                                                              attendanceList[index].traineeName,
+                                                                                              style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                            ),
+                                                                                            subtitle: Row(
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  attendanceList[index].gender.toUpperCase(),
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
                                                                                                 ),
-                                                                                                subtitle: Row(
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      attendanceList[index].gender.toUpperCase(),
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    Text(" - "),
-                                                                                                    Text(
-                                                                                                      attendanceList[index].dob,
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                                                                Text(" - "),
+                                                                                                Text(
+                                                                                                  attendanceList[index].dob,
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
+                                                                                                ),
+                                                                                                /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
                                                       Text(
                                                         "Due: ${value.dataList2.data!.data[index].fees}",
                                                         // value.dataList2.data!.data[index].id,
@@ -745,155 +745,155 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),*/
-                                                                                                  ],
-                                                                                                ),
-                                                                                                trailing: SizedBox(
-                                                                                                  width: MediaQuery.of(context).size.width * 0.24,
-                                                                                                  child: Row(
-                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                    children: [
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapPresnet(index);
-                                                                                                          });
-                                                                                                          // setState(() {
-                                                                                                          //   if (attendanceList[index].attendance == 'P') {
-                                                                                                          //     attendanceList[index].attendance = '';
-                                                                                                          //     presentCount--;
-                                                                                                          //     count--;
-                                                                                                          //   } else {
-                                                                                                          //     if (attendanceList[index].attendance == '') {
-                                                                                                          //       count++;
-                                                                                                          //     }
-                                                                                                          //     attendanceList[index].attendance = 'P';
-                                                                                                          //     presentCount++;
-                                                                                                          //   }
-                                                                                                          //
-                                                                                                          //   // if all the attandance is complete than value1 = true otherwise false
-                                                                                                          //   if (count == attendanceList.length) {
-                                                                                                          //     value1 = true;
-                                                                                                          //   } else {
-                                                                                                          //     value1 = false;
-                                                                                                          //   }
-                                                                                                          //   if (presentCount == attendanceList.length) {
-                                                                                                          //     isMarkAllPresent = true;
-                                                                                                          //   } else {
-                                                                                                          //     isMarkAllPresent = false;
-                                                                                                          //   }
-                                                                                                          // });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'P',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapAbsent(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'A',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapLeave(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'L',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                    ],
+                                                                                              ],
+                                                                                            ),
+                                                                                            trailing: SizedBox(
+                                                                                              width: MediaQuery.of(context).size.width * 0.24,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapPresnet(index);
+                                                                                                      });
+                                                                                                      // setState(() {
+                                                                                                      //   if (attendanceList[index].attendance == 'P') {
+                                                                                                      //     attendanceList[index].attendance = '';
+                                                                                                      //     presentCount--;
+                                                                                                      //     count--;
+                                                                                                      //   } else {
+                                                                                                      //     if (attendanceList[index].attendance == '') {
+                                                                                                      //       count++;
+                                                                                                      //     }
+                                                                                                      //     attendanceList[index].attendance = 'P';
+                                                                                                      //     presentCount++;
+                                                                                                      //   }
+                                                                                                      //
+                                                                                                      //   // if all the attandance is complete than value1 = true otherwise false
+                                                                                                      //   if (count == attendanceList.length) {
+                                                                                                      //     value1 = true;
+                                                                                                      //   } else {
+                                                                                                      //     value1 = false;
+                                                                                                      //   }
+                                                                                                      //   if (presentCount == attendanceList.length) {
+                                                                                                      //     isMarkAllPresent = true;
+                                                                                                      //   } else {
+                                                                                                      //     isMarkAllPresent = false;
+                                                                                                      //   }
+                                                                                                      // });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'P',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
+                                                                                                        )),
                                                                                                   ),
-                                                                                                ),
-                                                                                                onTap: () {},
-                                                                                                onLongPress: () {
-                                                                                                  if (!_selectedItems.contains(index)) {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.add(index);
-                                                                                                    });
-                                                                                                  } else {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.removeWhere((val) => val == index);
-                                                                                                    });
-                                                                                                  }
-                                                                                                },
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapAbsent(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'A',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapLeave(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'L',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                ],
                                                                                               ),
-                                                                                              const Divider(
-                                                                                                height: 5,
-                                                                                              ),
-                                                                                            ],
+                                                                                            ),
+                                                                                            onTap: () {},
+                                                                                            onLongPress: () {
+                                                                                              if (!_selectedItems.contains(index)) {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.add(index);
+                                                                                                });
+                                                                                              } else {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.removeWhere((val) => val == index);
+                                                                                                });
+                                                                                              }
+                                                                                            },
                                                                                           ),
-                                                                                        ),
-                                                                                      );
-                                                                                    })
+                                                                                          const Divider(
+                                                                                            height: 5,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                })
                                                                                 : const Text(
-                                                                                    'No results found',
-                                                                                    style: TextStyle(fontSize: 24),
-                                                                                  ),
+                                                                              'No results found',
+                                                                              style: TextStyle(fontSize: 24),
+                                                                            ),
                                                                             attendanceList.isNotEmpty
                                                                                 ? ListView.builder(
-                                                                                    itemCount: attendanceList.length,
-                                                                                    itemBuilder: (context, index) {
-                                                                                      return Visibility(
-                                                                                        visible: attendanceList[index].attendance == "A",
-                                                                                        child: Card(
-                                                                                          // key: ValueKey(
-                                                                                          //     _foundUsers[index]["id"]),
-                                                                                          elevation: 0,
-                                                                                          margin: const EdgeInsets.symmetric(vertical: 0),
-                                                                                          child: Column(
-                                                                                            children: [
-                                                                                              ListTile(
-                                                                                                contentPadding: const EdgeInsets.all(0),
-                                                                                                tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
-                                                                                                leading: CircleAvatar(
-                                                                                                    radius: 18,
-                                                                                                    backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
-                                                                                                    child: _selectedItems.contains(index)
-                                                                                                        ? const Icon(
-                                                                                                            Icons.check,
-                                                                                                            color: Color.fromRGBO(71, 192, 136, 1),
-                                                                                                            size: 30.0,
-                                                                                                          )
-                                                                                                        : Text(
-                                                                                                            (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
-                                                                                                            style: const TextStyle(fontSize: 12),
-                                                                                                          )),
-                                                                                                title: Text(
-                                                                                                  attendanceList[index].traineeName,
-                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                itemCount: attendanceList.length,
+                                                                                itemBuilder: (context, index) {
+                                                                                  return Visibility(
+                                                                                    visible: attendanceList[index].attendance == "A",
+                                                                                    child: Card(
+                                                                                      // key: ValueKey(
+                                                                                      //     _foundUsers[index]["id"]),
+                                                                                      elevation: 0,
+                                                                                      margin: const EdgeInsets.symmetric(vertical: 0),
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          ListTile(
+                                                                                            contentPadding: const EdgeInsets.all(0),
+                                                                                            tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
+                                                                                            leading: CircleAvatar(
+                                                                                                radius: 18,
+                                                                                                backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
+                                                                                                child: _selectedItems.contains(index)
+                                                                                                    ? const Icon(
+                                                                                                  Icons.check,
+                                                                                                  color: Color.fromRGBO(71, 192, 136, 1),
+                                                                                                  size: 30.0,
+                                                                                                )
+                                                                                                    : Text(
+                                                                                                  (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
+                                                                                                  style: const TextStyle(fontSize: 12),
+                                                                                                )),
+                                                                                            title: Text(
+                                                                                              attendanceList[index].traineeName,
+                                                                                              style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                            ),
+                                                                                            subtitle: Row(
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  attendanceList[index].gender.toUpperCase(),
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
                                                                                                 ),
-                                                                                                subtitle: Row(
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      attendanceList[index].gender.toUpperCase(),
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    Text(" - "),
-                                                                                                    Text(
-                                                                                                      attendanceList[index].dob,
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                                                                Text(" - "),
+                                                                                                Text(
+                                                                                                  attendanceList[index].dob,
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
+                                                                                                ),
+                                                                                                /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
                                                       Text(
                                                         "Due: ${value.dataList2.data!.data[index].fees}",
                                                         // value.dataList2.data!.data[index].id,
@@ -906,130 +906,130 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),*/
-                                                                                                  ],
-                                                                                                ),
-                                                                                                trailing: SizedBox(
-                                                                                                  width: MediaQuery.of(context).size.width * 0.24,
-                                                                                                  child: Row(
-                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                    children: [
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapPresnet(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'P',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapAbsent(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'A',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapLeave(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'L',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                    ],
+                                                                                              ],
+                                                                                            ),
+                                                                                            trailing: SizedBox(
+                                                                                              width: MediaQuery.of(context).size.width * 0.24,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapPresnet(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'P',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
+                                                                                                        )),
                                                                                                   ),
-                                                                                                ),
-                                                                                                onTap: () {},
-                                                                                                onLongPress: () {
-                                                                                                  if (!_selectedItems.contains(index)) {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.add(index);
-                                                                                                    });
-                                                                                                  } else {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.removeWhere((val) => val == index);
-                                                                                                    });
-                                                                                                  }
-                                                                                                },
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapAbsent(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'A',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapLeave(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'L',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                ],
                                                                                               ),
-                                                                                              const Divider(
-                                                                                                height: 5,
-                                                                                              ),
-                                                                                            ],
+                                                                                            ),
+                                                                                            onTap: () {},
+                                                                                            onLongPress: () {
+                                                                                              if (!_selectedItems.contains(index)) {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.add(index);
+                                                                                                });
+                                                                                              } else {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.removeWhere((val) => val == index);
+                                                                                                });
+                                                                                              }
+                                                                                            },
                                                                                           ),
-                                                                                        ),
-                                                                                      );
-                                                                                    })
+                                                                                          const Divider(
+                                                                                            height: 5,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                })
                                                                                 : const Text(
-                                                                                    'No results found',
-                                                                                    style: TextStyle(fontSize: 24),
-                                                                                  ),
+                                                                              'No results found',
+                                                                              style: TextStyle(fontSize: 24),
+                                                                            ),
                                                                             attendanceList.isNotEmpty
                                                                                 ? ListView.builder(
-                                                                                    itemCount: attendanceList.length,
-                                                                                    itemBuilder: (context, index) {
-                                                                                      return Visibility(
-                                                                                        visible: attendanceList[index].attendance == "L",
-                                                                                        child: Card(
-                                                                                          // key: ValueKey(
-                                                                                          //     _foundUsers[index]["id"]),
-                                                                                          elevation: 0,
-                                                                                          margin: const EdgeInsets.symmetric(vertical: 0),
-                                                                                          child: Column(
-                                                                                            children: [
-                                                                                              ListTile(
-                                                                                                contentPadding: const EdgeInsets.all(0),
-                                                                                                tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
-                                                                                                leading: CircleAvatar(
-                                                                                                    radius: 18,
-                                                                                                    backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
-                                                                                                    child: _selectedItems.contains(index)
-                                                                                                        ? const Icon(
-                                                                                                            Icons.check,
-                                                                                                            color: Color.fromRGBO(71, 192, 136, 1),
-                                                                                                            size: 30.0,
-                                                                                                          )
-                                                                                                        : Text(
-                                                                                                            (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
-                                                                                                            style: const TextStyle(fontSize: 12),
-                                                                                                          )),
-                                                                                                title: Text(
-                                                                                                  attendanceList[index].traineeName,
-                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                itemCount: attendanceList.length,
+                                                                                itemBuilder: (context, index) {
+                                                                                  return Visibility(
+                                                                                    visible: attendanceList[index].attendance == "L",
+                                                                                    child: Card(
+                                                                                      // key: ValueKey(
+                                                                                      //     _foundUsers[index]["id"]),
+                                                                                      elevation: 0,
+                                                                                      margin: const EdgeInsets.symmetric(vertical: 0),
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          ListTile(
+                                                                                            contentPadding: const EdgeInsets.all(0),
+                                                                                            tileColor: (_selectedItems.contains(index)) ? const Color.fromARGB(255, 218, 218, 219).withOpacity(0.5) : Colors.transparent,
+                                                                                            leading: CircleAvatar(
+                                                                                                radius: 18,
+                                                                                                backgroundColor: const Color.fromRGBO(194, 235, 216, 1),
+                                                                                                child: _selectedItems.contains(index)
+                                                                                                    ? const Icon(
+                                                                                                  Icons.check,
+                                                                                                  color: Color.fromRGBO(71, 192, 136, 1),
+                                                                                                  size: 30.0,
+                                                                                                )
+                                                                                                    : Text(
+                                                                                                  (attendanceList[index].traineeName[0][0].toString() + attendanceList[index].traineeName[1][0].toString()).toUpperCase(),
+                                                                                                  style: const TextStyle(fontSize: 12),
+                                                                                                )),
+                                                                                            title: Text(
+                                                                                              attendanceList[index].traineeName,
+                                                                                              style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w700, fontFamily: 'Loto-Regular'),
+                                                                                            ),
+                                                                                            subtitle: Row(
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  attendanceList[index].gender.toUpperCase(),
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
                                                                                                 ),
-                                                                                                subtitle: Row(
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      attendanceList[index].gender.toUpperCase(),
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    Text(" - "),
-                                                                                                    Text(
-                                                                                                      attendanceList[index].dob,
-                                                                                                      // value.dataList2.data!.data[index].id,
-                                                                                                      style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
-                                                                                                    ),
-                                                                                                    /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
+                                                                                                Text(" - "),
+                                                                                                Text(
+                                                                                                  attendanceList[index].dob,
+                                                                                                  // value.dataList2.data!.data[index].id,
+                                                                                                  style: const TextStyle(color: Color.fromRGBO(57, 64, 74, 1), fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'Loto-Regular'),
+                                                                                                ),
+                                                                                                /*Container(height: 10,width: 1,color: Colors.grey,margin: EdgeInsets.all(2),),
                                                       Text(
                                                         "Due: ${value.dataList2.data!.data[index].fees}",
                                                         // value.dataList2.data!.data[index].id,
@@ -1042,187 +1042,187 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             fontFamily:
                                                             'Loto-Regular'),
                                                       ),*/
-                                                                                                  ],
-                                                                                                ),
-                                                                                                trailing: SizedBox(
-                                                                                                  width: MediaQuery.of(context).size.width * 0.24,
-                                                                                                  child: Row(
-                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                    children: [
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapPresnet(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'P',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapAbsent(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'A',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                      GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          setState(() {
-                                                                                                            _onTapLeave(index);
-                                                                                                          });
-                                                                                                        },
-                                                                                                        child: CircleAvatar(
-                                                                                                            radius: 13,
-                                                                                                            backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
-                                                                                                            child: Text(
-                                                                                                              'L',
-                                                                                                              style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
-                                                                                                            )),
-                                                                                                      ),
-                                                                                                    ],
+                                                                                              ],
+                                                                                            ),
+                                                                                            trailing: SizedBox(
+                                                                                              width: MediaQuery.of(context).size.width * 0.24,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapPresnet(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'P' ? Colors.green : Colors.green.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'P',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'P' ? Colors.white : Colors.green),
+                                                                                                        )),
                                                                                                   ),
-                                                                                                ),
-                                                                                                onTap: () {},
-                                                                                                onLongPress: () {
-                                                                                                  if (!_selectedItems.contains(index)) {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.add(index);
-                                                                                                    });
-                                                                                                  } else {
-                                                                                                    setState(() {
-                                                                                                      _selectedItems.removeWhere((val) => val == index);
-                                                                                                    });
-                                                                                                  }
-                                                                                                },
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapAbsent(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'A' ? Colors.pink : Colors.pink.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'A',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'A' ? Colors.white : Colors.pink),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      setState(() {
+                                                                                                        _onTapLeave(index);
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: CircleAvatar(
+                                                                                                        radius: 13,
+                                                                                                        backgroundColor: attendanceList[index].attendance == 'L' ? Colors.blue : Colors.blue.withOpacity(0.1),
+                                                                                                        child: Text(
+                                                                                                          'L',
+                                                                                                          style: TextStyle(color: attendanceList[index].attendance == 'L' ? Colors.white : Colors.blue),
+                                                                                                        )),
+                                                                                                  ),
+                                                                                                ],
                                                                                               ),
-                                                                                              const Divider(
-                                                                                                height: 5,
-                                                                                              ),
-                                                                                            ],
+                                                                                            ),
+                                                                                            onTap: () {},
+                                                                                            onLongPress: () {
+                                                                                              if (!_selectedItems.contains(index)) {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.add(index);
+                                                                                                });
+                                                                                              } else {
+                                                                                                setState(() {
+                                                                                                  _selectedItems.removeWhere((val) => val == index);
+                                                                                                });
+                                                                                              }
+                                                                                            },
                                                                                           ),
-                                                                                        ),
-                                                                                      );
-                                                                                    })
+                                                                                          const Divider(
+                                                                                            height: 5,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                })
                                                                                 : const Text(
-                                                                                    'No results found',
-                                                                                    style: TextStyle(fontSize: 24),
-                                                                                  ),
+                                                                              'No results found',
+                                                                              style: TextStyle(fontSize: 24),
+                                                                            ),
                                                                           ],
                                                                         ),
                                                                       )
                                                                     ])),
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                              child:
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                  child:
                                                                   ElevatedButton(
-                                                            onPressed: () {
-                                                              /*  attendanceList
+                                                                    onPressed: () {
+                                                                      /*  attendanceList
                                                                 .clear();*/
 
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              backgroundColor:
-                                                                  Color
-                                                                      .fromARGB(
+                                                                      Navigator.of(
+                                                                          context)
+                                                                          .pop();
+                                                                    },
+                                                                    style:
+                                                                    ElevatedButton
+                                                                        .styleFrom(
+                                                                      backgroundColor:
+                                                                      Color
+                                                                          .fromARGB(
                                                                           255,
                                                                           197,
                                                                           196,
                                                                           196),
-                                                            ),
-                                                            child: const Text(
-                                                                "Cancel",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
-                                                          )),
-                                                          const SizedBox(
-                                                              width: 15),
-                                                          Expanded(
-                                                            child:
+                                                                    ),
+                                                                    child: const Text(
+                                                                        "Cancel",
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .black)),
+                                                                  )),
+                                                              const SizedBox(
+                                                                  width: 15),
+                                                              Expanded(
+                                                                child:
                                                                 ElevatedButton(
-                                                              onPressed: () {
-                                                                for (int i = 0;
+                                                                  onPressed: () {
+                                                                    for (int i = 0;
                                                                     i <
                                                                         attendanceList
                                                                             .length;
                                                                     i++) {
-                                                                  Map<String,
+                                                                      Map<String,
                                                                           dynamic>
                                                                       data = {
-                                                                    "session_uid":
+                                                                        "session_uid":
                                                                         attendanceList[i]
                                                                             .sessionUid,
-                                                                    "attendance":
+                                                                        "attendance":
                                                                         [
-                                                                      {
-                                                                        "uid": attendanceList[i]
-                                                                            .uid,
-                                                                        "markattendance":
+                                                                          {
+                                                                            "uid": attendanceList[i]
+                                                                                .uid,
+                                                                            "markattendance":
                                                                             attendanceList[i].attendance
-                                                                      }
-                                                                    ]
-                                                                  };
+                                                                          }
+                                                                        ]
+                                                                      };
 
-                                                                  print(
-                                                                      "data==$data");
+                                                                      print(
+                                                                          "data==$data");
 
-                                                                  sessionViewModel
-                                                                      .postMarkAttendanceApi(
+                                                                      sessionViewModel
+                                                                          .postMarkAttendanceApi(
                                                                           data,
                                                                           context)
-                                                                      .then((value) => Get.to(
-                                                                          () => ViewDetailClosed(
-                                                                                id: attendanceList[i].sessionUid,
-                                                                            serviceIcon: widget.serviceIcon.toString(), attendanceList: attendanceList,
-                                                                              ),
+                                                                          .then((value) => Get.to(
+                                                                              () => ViewDetailClosed(
+                                                                            id: attendanceList[i].sessionUid,
+
+                                                                          ),
                                                                           transition: Transition.rightToLeft));
-                                                                }
-                                                              },
-                                                              style: ElevatedButton.styleFrom(
-                                                                  backgroundColor:
+                                                                    }
+                                                                  },
+                                                                  style: ElevatedButton.styleFrom(
+                                                                      backgroundColor:
                                                                       Theme.of(
-                                                                              context)
+                                                                          context)
                                                                           .primaryColor),
-                                                              child: const Text(
-                                                                "Submit",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
-                                                                textAlign:
+                                                                  child: const Text(
+                                                                    "Submit",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                    textAlign:
                                                                     TextAlign
                                                                         .center,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
+                                                            ],
+                                                          )
                                                         ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            });
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
                                           });
                                     })
-                                : RoundButton(
+                                    : RoundButton(
                                     loading: false,
                                     title: 'Submit Attendance',
                                     textColor: Colors.white,
@@ -1233,221 +1233,220 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     onPress: () {
                                       //  markedAttendencePopup(context, );
                                     }),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            RoundButton(
-                                loading: false,
-                                title: 'Cancel Session',
-                                textColor: Colors.white,
-                                rounded: true,
-                                color: Colors.redAccent,
-                                onPress: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          content: SizedBox(
-                                            height: 270,
-                                            child: Column(
-                                              crossAxisAlignment:
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                RoundButton(
+                                    loading: false,
+                                    title: 'Cancel Session',
+                                    textColor: Colors.white,
+                                    rounded: true,
+                                    color: Colors.redAccent,
+                                    onPress: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: SizedBox(
+                                                height: 270,
+                                                child: Column(
+                                                  crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              children: [
-                                                const Align(
-                                                  alignment: Alignment.center,
-                                                  child: CircleAvatar(
-                                                      radius: 18,
-                                                      backgroundColor:
+                                                  children: [
+                                                    const Align(
+                                                      alignment: Alignment.center,
+                                                      child: CircleAvatar(
+                                                          radius: 18,
+                                                          backgroundColor:
                                                           Colors.redAccent,
-                                                      child: Icon(
-                                                        Icons.close_sharp,
-                                                        color: Colors.white,
-                                                        size: 18.0,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                const Text("Are you sure?"),
-                                                const Text(
-                                                  " you want to cancel this session?",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment:
+                                                          child: Icon(
+                                                            Icons.close_sharp,
+                                                            color: Colors.white,
+                                                            size: 18.0,
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    const Text("Are you sure?"),
+                                                    const Text(
+                                                      " you want to cancel this session?",
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
+                                                      children: [
+                                                        Padding(
+                                                          padding:
                                                           const EdgeInsets.only(
                                                               left: 10),
-                                                      child: Row(
-                                                        mainAxisAlignment:
+                                                          child: Row(
+                                                            mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
-                                                        children: [
-                                                          Chip(
-                                                              backgroundColor:
+                                                            children: [
+                                                              Chip(
+                                                                  backgroundColor:
                                                                   Colors.green
                                                                       .withOpacity(
-                                                                          .2),
-                                                              label: Text(
-                                                                value
-                                                                    .dataList2
-                                                                    .data!
-                                                                    .status
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .green),
-                                                              )),
-                                                          CircleAvatar(
-                                                            radius: 20,
-                                                            backgroundColor:
+                                                                      .2),
+                                                                  label: Text(
+                                                                    value
+                                                                        .dataList2
+                                                                        .data!
+                                                                        .status
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .green),
+                                                                  )),
+                                                              CircleAvatar(
+                                                                radius: 20,
+                                                                backgroundColor:
                                                                 Color.fromARGB(
                                                                     255,
                                                                     217,
                                                                     217,
                                                                     217),
-                                                            child: Image(
-                                                                height: 20,
-                                                                image: NetworkImage(AppUrl
+                                                                child: Image(
+                                                                    height: 20,
+                                                                    image: NetworkImage(AppUrl
                                                                         .serviceIconEndPoint +
-                                                                    widget
-                                                                        .serviceIcon
-                                                                        .toString())),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
+                                                                        widget
+                                                                            .serviceIcon
+                                                                            .toString())),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
-                                                      children: [
-                                                        Text(
-                                                          value.dataList2.data!
-                                                              .batchName
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              color:
+                                                          children: [
+                                                            Text(
+                                                              value.dataList2.data!
+                                                                  .batchName
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color:
                                                                   Colors.black,
-                                                              fontStyle:
+                                                                  fontStyle:
                                                                   FontStyle
                                                                       .normal,
-                                                              fontWeight:
+                                                                  fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 16,
-                                                              height: 2),
-                                                        ),
-                                                        Text(
-                                                          '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} ,${attendanceList[0].sdd} ${attendanceList[0].smm} ${attendanceList[0].syy} ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontStyle: FontStyle
-                                                                .normal,
-                                                            fontSize: 13,
-                                                          ),
+                                                                  fontSize: 16,
+                                                                  height: 2),
+                                                            ),
+                                                            Text(
+                                                              '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} ,${attendanceList[0].sdd} ${attendanceList[0].smm} ${attendanceList[0].syy} ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontStyle: FontStyle
+                                                                    .normal,
+                                                                fontSize: 13,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 19),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: ElevatedButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            Color.fromARGB(255,
-                                                                197, 196, 196),
-                                                      ),
-                                                      child: const Text("No",
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black)),
-                                                    )),
-                                                    const SizedBox(width: 15),
-                                                    Expanded(
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          Map<String, dynamic>
+                                                    const SizedBox(height: 19),
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: ElevatedButton(
+                                                              onPressed: () {
+                                                                Get.back();
+                                                              },
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                backgroundColor:
+                                                                Color.fromARGB(255,
+                                                                    197, 196, 196),
+                                                              ),
+                                                              child: const Text("No",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black)),
+                                                            )),
+                                                        const SizedBox(width: 15),
+                                                        Expanded(
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              Map<String, dynamic>
                                                               data = {
-                                                            "session_uid":
+                                                                "session_uid":
                                                                 attendanceList[
-                                                                        0]
+                                                                0]
                                                                     .sessionUid
                                                                     .toString()
-                                                          };
-                                                          sessionViewModel
-                                                              .sessionCancelApi(
+                                                              };
+                                                              sessionViewModel
+                                                                  .sessionCancelApi(
                                                                   data,
                                                                   context);
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
+                                                            },
+                                                            style: ElevatedButton
+                                                                .styleFrom(
                                                                 backgroundColor:
-                                                                    Colors
-                                                                        .redAccent),
-                                                        child: const Text(
-                                                          "Yes",
-                                                          style: TextStyle(
-                                                              color:
+                                                                Colors
+                                                                    .redAccent),
+                                                            child: const Text(
+                                                              "Yes",
+                                                              style: TextStyle(
+                                                                  color:
                                                                   Colors.white),
-                                                          textAlign:
+                                                              textAlign:
                                                               TextAlign.center,
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
+                                                      ],
+                                                    )
                                                   ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      });
-                                }),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                          ],
-                        );
-                      case Status.error:
-                        return Center(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Theme.of(context).primaryColorDark,
-                              size: 100.0,
-                            ),
-                            const NoData()
-                            // Text(
-                            //   value.dataList2.message.toString(),
-                            //   style: TextStyle(
-                            //       color: Theme.of(context).primaryColor,
-                            //       fontSize: 20,
-                            //       height: 2),
-                            // )
-                          ],
-                        ));
-                    }
-                  })),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    }),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            );
+                          case Status.error:
+                            return Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Theme.of(context).primaryColorDark,
+                                      size: 100.0,
+                                    ),
+                                    const NoData()
+                                    // Text(
+                                    //   value.dataList2.message.toString(),
+                                    //   style: TextStyle(
+                                    //       color: Theme.of(context).primaryColor,
+                                    //       fontSize: 20,
+                                    //       height: 2),
+                                    // )
+                                  ],
+                                ));
+                        }
+                      })),
             ),
           ),
         ),
@@ -1569,3 +1568,4 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     return count.toString();
   }
 }
+
