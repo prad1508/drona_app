@@ -521,23 +521,17 @@ class _SessionListState extends State<SessionList>
                                                           radius: 14,
                                                           child: Image(
                                                               image: NetworkImage(
-                                                                  "${AppUrl.imageListendPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                                  "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
                                                         ),
                                                         onTap: () {
                                                           print(value.dataList.data!
-                                                              .data?[index].id);
+                                                              .data?[index].status);
                                                           if (value
                                                               .dataList
                                                               .data!
                                                               .data?[index]
                                                               .status ==
                                                               'scheduled') {
-                                                            /*Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                   ViewSessionalDetails(id : "${value.dataList.data!.data?[index].uid}")));*/
-
                                                             Get.to(
                                                                     () =>
                                                                     ViewSessionalDetails(
@@ -556,19 +550,11 @@ class _SessionListState extends State<SessionList>
                                                               .data!
                                                               .data?[index]
                                                               .status ==
-                                                              'closed') {
-                                                            /*  Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                               ViewDetailClosed(id :"${value.dataList.data!.data?[index].uid}" ),
-                                                            ),
-                                                          );*/
+                                                              'close') {
                                                             Get.to(
                                                                     () => ViewDetailClosed(
                                                                     id:
-                                                                    "${value.dataList.data!.data?[index].uid}"),
+                                                                    "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
                                                                 transition: Transition
                                                                     .leftToRight);
                                                           } else if (value
@@ -576,18 +562,9 @@ class _SessionListState extends State<SessionList>
                                                               .data!
                                                               .data?[index]
                                                               .status ==
-                                                              'cancelled') {
-                                                            /*Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                              const SessionDetailCancel(),
-                                                            ),
-                                                          );*/
-                                                            Get.to(
-                                                                    () =>
-                                                                    SessionDetailCancel(),
+                                                              'cancel') {
+                                                            Get.to(() =>
+                                                                    const SessionDetailCancel(),
                                                                 transition: Transition
                                                                     .leftToRight);
                                                           }
@@ -761,7 +738,7 @@ class _SessionListState extends State<SessionList>
                                                       radius: 14,
                                                       child: Image(
                                                           image: NetworkImage(
-                                                              "${AppUrl.imageListendPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
                                                     ),
                                                     onTap: () {
                                                       print(value.dataList.data!
@@ -808,7 +785,7 @@ class _SessionListState extends State<SessionList>
                                                         Get.to(
                                                                 () => ViewDetailClosed(
                                                                 id:
-                                                                "${value.dataList.data!.data?[index].uid}"),
+                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
                                                             transition: Transition
                                                                 .leftToRight);
                                                       } else if (value
@@ -990,7 +967,7 @@ class _SessionListState extends State<SessionList>
                                                       radius: 14,
                                                       child: Image(
                                                           image: NetworkImage(
-                                                              "${AppUrl.imageListendPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
                                                     ),
                                                     onTap: () {
                                                       print(value.dataList.data!
@@ -1037,7 +1014,7 @@ class _SessionListState extends State<SessionList>
                                                         Get.to(
                                                                 () => ViewDetailClosed(
                                                                 id:
-                                                                "${value.dataList.data!.data?[index].uid}"),
+                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
                                                             transition: Transition
                                                                 .leftToRight);
                                                       } else if (value
@@ -1222,7 +1199,7 @@ class _SessionListState extends State<SessionList>
                                                       radius: 14,
                                                       child: Image(
                                                           image: NetworkImage(
-                                                              "${AppUrl.imageListendPoint}${value.dataList.data!.data?[index].service_iconname}")),
+                                                              "${AppUrl.serviceIconEndPoint}${value.dataList.data!.data?[index].service_iconname}")),
                                                     ),
                                                     onTap: () {
                                                       print(value.dataList.data!
@@ -1269,7 +1246,7 @@ class _SessionListState extends State<SessionList>
                                                         Get.to(
                                                                 () => ViewDetailClosed(
                                                                 id:
-                                                                "${value.dataList.data!.data?[index].uid}"),
+                                                                "${value.dataList.data!.data?[index].uid}", serviceIcon: '', attendanceList: [],),
                                                             transition: Transition
                                                                 .leftToRight);
                                                       } else if (value

@@ -11,8 +11,8 @@ class AppUrl {
   static var categoryListEndPoint = '$baseUrl/academy/cat';
   static var basicDetailsListEndPoint = '$baseUrl/academy/basicdetail';
   static var serviceListEndPoint = '$baseUrl/academy/service/';
-  static var imageListendPoint = '$baseUrl/static/service/';
-  static var profileimageListendPoint = '$baseUrl/static/profile/';
+  static var serviceIconEndPoint = '$baseUrl/static/service/';
+  static var profileserviceIconEndPoint = '$baseUrl/static/profile/';
 
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
@@ -43,6 +43,9 @@ class AppUrl {
   static var createsessionListEndPoint = "$baseUrl/session/create";
   static var sessionListEndPoint = '$baseUrl/academy/session';
   static var sessionDetailsListEndPoint = '$baseUrl/academy/session/view';
+  static var markAttendance = '$baseUrl/session/markattendance';
+  static var sessionCancel = '$baseUrl/session/cancel';
+  static var sessionClose = '$baseUrl/session/close';
 
   // dashboard
   static var dashBoardHome = "$baseUrl/academy/dashboard";

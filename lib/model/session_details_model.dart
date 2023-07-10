@@ -128,7 +128,7 @@ class Data {
   final String traineeName;
   final String traineeUserid;
   final String sessionUid;
-  final String attendance;
+   String attendance;
   final bool attendanceStatus;
   final String status;
   final String batchTimingFrom;

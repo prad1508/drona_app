@@ -367,7 +367,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                                 // backgroundColor: Color.fromRGBO(194, 235, 216, 1),
                                                 child: _selectedItems.contains(index)
                                                     ? Icon(Icons.check, color: Color.fromRGBO(71, 192, 136, 1), size: 30.0)
-                                                    : Image(image: NetworkImage(AppUrl.imageListendPoint + _foundUsers[index]["batchImg"])),
+                                                    : Image(image: NetworkImage(AppUrl.serviceIconEndPoint + _foundUsers[index]["batchImg"])),
                                               ),
                                             ),
                                           ),

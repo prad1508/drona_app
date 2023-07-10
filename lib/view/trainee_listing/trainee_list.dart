@@ -206,7 +206,7 @@ class _TraineeNewListState extends State<TraineeNewList> {
                         //                               )
                         //                             : Image(
                         //                                 image: NetworkImage(AppUrl
-                        //                                         .imageListendPoint +
+                        //                                         .serviceIconEndPoint +
                         //                                     _foundUsers[index]
                         //                                         ["img"]))),
                         //                     title: Row(

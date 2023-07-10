@@ -114,7 +114,7 @@ class _ChooseServiceState extends State<ChooseService> {
                                         value: _selectedItems.contains(index),
                                         checkedFillColor:
                                         const Color.fromRGBO(42, 98, 184, 1),
-                                        imageUrl: AppUrl.imageListendPoint + value.dataList.data!.data![index].iconname!.toString(),
+                                        imageUrl: AppUrl.serviceIconEndPoint + value.dataList.data!.data![index].iconname!.toString(),
                                         name: value.dataList.data!.data![index].serviceName!.toString(),
                                         onChanged: (val) {
                                           //do your stuff here

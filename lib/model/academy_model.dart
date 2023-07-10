@@ -11,6 +11,10 @@ class AcademyListModel {
   String? pincode;
   String? billingDate;
   String? bcatname;
+  // String? registeredNumber;
+  String? alternateNumber;
+  String? academyinTime;
+  String? academyoutTime;
   String? busscategoryid;
   int? onboardingCompleted;
   int? totalOnboardingStep;
@@ -24,26 +28,30 @@ class AcademyListModel {
 
   AcademyListModel(
       {this.msg,
-      this.academyUid,
-      this.academyname,
-      this.address,
-      this.city,
-      this.state,
-      this.pincode,
-      this.billingDate,
-      this.bcatname,
-      this.busscategoryid,
-      this.onboardingCompleted,
-      this.totalOnboardingStep,
-      this.onboardingSetupFinish,
-      this.cDate,
-      this.email = 'demo',
-      this.website = 'demo',
-      this.cTime,
-      this.uDate,
-      this.uTime,
-      this.totalService,
-      this.services});
+        this.academyUid,
+        this.academyname,
+        this.address,
+        this.city,
+        this.state,
+        this.pincode,
+        this.billingDate,
+        this.bcatname,
+        this.busscategoryid,
+        this.onboardingCompleted,
+        this.totalOnboardingStep,
+        this.onboardingSetupFinish,
+        this.alternateNumber,
+        //  this.registeredNumber,
+        this.academyinTime,
+        this.academyoutTime,
+        this.cDate,
+        this.email = 'demo',
+        this.website = 'demo',
+        this.cTime,
+        this.uDate,
+        this.uTime,
+        this.totalService,
+        this.services});
 
   AcademyListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
@@ -57,6 +65,10 @@ class AcademyListModel {
     pincode = json['pincode'];
     billingDate = json['billing_date'];
     bcatname = json['bcatname'];
+    academyoutTime = json['academy_close_time'];
+    academyinTime = json['academy_open_time'];
+    alternateNumber = json['alt_mobno'];
+    // registeredNumber = json['bcatname'];
     busscategoryid = json['busscategoryid'];
     onboardingCompleted = json['onboarding_completed'];
     totalOnboardingStep = json['total_onboarding_step'];
@@ -87,6 +99,9 @@ class AcademyListModel {
     data['pincode'] = this.pincode;
     data['billing_date'] = this.billingDate;
     data['bcatname'] = this.bcatname;
+    data['academy_close_time'] = this.academyoutTime;
+    data['academy_open_time'] = this.academyinTime;
+    data['alt_mobno'] = this.alternateNumber;
     data['busscategoryid'] = this.busscategoryid;
     data['onboarding_completed'] = this.onboardingCompleted;
     data['total_onboarding_step'] = this.totalOnboardingStep;
@@ -120,18 +135,18 @@ class Services {
 
   Services(
       {this.sId,
-      this.uid,
-      this.academyUid,
-      this.catUid,
-      this.serviceName,
-      this.serviceIconname,
-      this.programAdded,
-      this.facilityAdded,
-      this.status,
-      this.cDate,
-      this.cTime,
-      this.uDate,
-      this.uTime});
+        this.uid,
+        this.academyUid,
+        this.catUid,
+        this.serviceName,
+        this.serviceIconname,
+        this.programAdded,
+        this.facilityAdded,
+        this.status,
+        this.cDate,
+        this.cTime,
+        this.uDate,
+        this.uTime});
 
   Services.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

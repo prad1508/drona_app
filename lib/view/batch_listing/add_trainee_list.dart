@@ -202,7 +202,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                   height: 46,
                                                   child: value.dataList.data!.data[index].image.isNotEmpty?
                                                   CircleAvatar(
-                                                    backgroundImage: NetworkImage(AppUrl.profileimageListendPoint +
+                                                    backgroundImage: NetworkImage(AppUrl.profileserviceIconEndPoint +
                                                         value.dataList.data!.data[index].image,
                                                     ),
                                                     // AssetImage('assets/images/user_profile.png'),
@@ -303,7 +303,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                         width: 24,
                                                         height: 24,
                                                         child: CircleAvatar(
-                                                          backgroundImage: NetworkImage(AppUrl.imageListendPoint +
+                                                          backgroundImage: NetworkImage(AppUrl.serviceIconEndPoint +
                                                               value.dataList.data!.data[index].serviceicon,
                                                           ),
                                                           // AssetImage('assets/images/tennis.png'),

@@ -249,7 +249,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                         child: CircleAvatar(
                                                           backgroundImage:
                                                           NetworkImage(AppUrl
-                                                              .profileimageListendPoint +
+                                                              .profileserviceIconEndPoint +
                                                               value.dataList1
                                                                   .data!
                                                                   .data[index]
@@ -429,7 +429,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
 
                                                                 // child: CircleAvatar(
                                                                 //   backgroundImage:
-                                                                //       // NetworkImage(AppUrl.imageListendPoint +
+                                                                //       // NetworkImage(AppUrl.serviceIconEndPoint +
                                                                 //       //     value.dataList.data!.data[index].serviceicon,
                                                                 //       // ),
                                                                 //       AssetImage(
