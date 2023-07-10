@@ -6,13 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Bank_Details extends StatefulWidget {
-  const Bank_Details({super.key});
+  const Bank_Details(
+      {super.key,
+      this.editData = const
+        ['John Academy',
+        'Ifsc1234',
+        '123456789',
+        '554433',
+        'HDFC',
+        'Indore',
+        '123456',
+        '123456',]
+      });
+
+  final List<dynamic>? editData;
 
   @override
   State<Bank_Details> createState() => _Bank_DetailsState();
 }
 
 class _Bank_DetailsState extends State<Bank_Details> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +51,8 @@ class _Bank_DetailsState extends State<Bank_Details> {
                     MaterialPageRoute(
                         builder: (context) => const Edit_Bank_Details()),
                   );*/
-                  Get.to(()=> const Edit_Bank_Details(),transition: Transition.leftToRight);
-
+                  Get.off(() => const Edit_Bank_Details(),
+                      transition: Transition.leftToRight);
                 },
                 icon: Icon(Icons.edit)),
           )
@@ -64,6 +83,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+                    initialValue: widget.editData![0],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,
@@ -101,6 +121,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+                    initialValue: widget.editData![4],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,
@@ -138,6 +159,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+                    initialValue: widget.editData![2],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,
@@ -175,6 +197,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+                    initialValue: widget.editData![1],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,
@@ -212,6 +235,8 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+
+                    initialValue: widget.editData![5],
                     style: TextStyle(
                         color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
@@ -249,6 +274,8 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+
+                    initialValue: widget.editData![3],
                     style: TextStyle(
                         color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
@@ -286,6 +313,8 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+
+                    initialValue: widget.editData![6],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,
@@ -323,6 +352,8 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
+
+                    initialValue: widget.editData![3],
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontStyle: FontStyle.normal,

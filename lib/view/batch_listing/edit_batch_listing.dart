@@ -207,7 +207,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                  _programUid = value.dataList.data?.data![widget.Listindex].programUid;
                  print("program uid is $_programUid");
                  _programName = value.dataList.data?.data![widget.Listindex].programName;
-                _feesamount = value.dataList.data?.data![widget.Listindex].fees;
+                _feesamount = value.dataList.data?.data![widget.Listindex].fees.toString();
                 _groupBatch = value.dataList.data?.data![widget.Listindex].batch_type;
 
                 // assignSeviceId(value.dataList.data!.data![widget.Listindex].serviceUid);
@@ -460,8 +460,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                                       : CustomRadio<String ?>(
                                                     btnColor: Colors.black,
                                                     value: value.dataList.data?.data![0].programs![index].uid.toString(),
+                                                    //groupValue: _programUid,
                                                     groupValue: _programUid,
-                                                  //  groupValue: value.dataList.data?.data![0].uid.toString(),
+                                                    //groupValue: value.dataList.data?.data![0].uid.toString(),
                                                     onChanged: _valueChangedHandler(_programName),
                                                     label: value.dataList.data?.data![0].programs![index].programName.toString() ?? '',
                                                   ),

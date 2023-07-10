@@ -49,7 +49,7 @@ class AppUrl {
 
   // dashboard
   static var dashBoardHome = "$baseUrl/academy/dashboard";
-
+  static var bankDetails = "$baseUrl/academy/bankdetails";
   // academy
   static var academydetails = "$baseUrl/academy/academy";
 

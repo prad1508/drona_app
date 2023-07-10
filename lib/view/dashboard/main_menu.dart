@@ -4,6 +4,7 @@ import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:drona/view/registeration/login_view.dart';
 import 'package:drona/view/reports/attendance.dart';
+import 'package:drona/view/reports/finance.dart';
 import 'package:drona/view/reports/finance_ledger.dart';
 import 'package:drona/view/reports/owner_edit_profile.dart';
 import 'package:drona/view/trainee_listing/record_payment.dart';
@@ -119,7 +120,7 @@ class _MainMenuState extends State<MainMenu> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       children: [
@@ -136,7 +137,7 @@ class _MainMenuState extends State<MainMenu> {
                                           children: [
                                             Padding(
                                               padding:
-                                                  EdgeInsets.only(left: 12),
+                                              EdgeInsets.only(left: 12),
                                               child: Text(
                                                 'Services',
                                                 style: TextStyle(
@@ -250,9 +251,9 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(
-                                  () => SearchBatchList(
-                                        pathPage: 'dashBoard',
-                                      ),
+                                      () => SearchBatchList(
+                                    pathPage: 'dashBoard',
+                                  ),
                                   transition: Transition.leftToRight);
                             },
                             leading: CircleAvatar(
@@ -353,7 +354,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                        AssetImage('assets/images/coach.png'),
+                                    AssetImage('assets/images/coach.png'),
                                     width: 15,
                                   ),
                                 )),
@@ -361,7 +362,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Coach',
                             ),
                             trailing:
-                                const Icon(Icons.arrow_forward_ios, size: 20),
+                            const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                           ListTile(
                             onTap: () {
@@ -390,7 +391,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Trainee',
                             ),
                             trailing:
-                                const Icon(Icons.arrow_forward_ios, size: 20),
+                            const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                         ],
                       ),
@@ -459,7 +460,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                        AssetImage('assets/images/rupee.png'),
+                                    AssetImage('assets/images/rupee.png'),
                                     width: 10,
                                   ),
                                 )),
@@ -551,7 +552,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                        AssetImage('assets/images/finance.png'),
+                                    AssetImage('assets/images/finance.png'),
                                     width: 20,
                                   ),
                                 )),
@@ -569,7 +570,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Get.to(() => const OwnerEditProfile(),
+                              Get.to(() => const Finance(),
                                   transition: Transition.leftToRight);
                             },
                             leading: CircleAvatar(
@@ -651,7 +652,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                       image:
-                                          AssetImage('assets/images/info.png')),
+                                      AssetImage('assets/images/info.png')),
                                 )),
                             title: const Text(
                               'About',
