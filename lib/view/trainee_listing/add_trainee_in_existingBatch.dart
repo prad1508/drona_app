@@ -426,7 +426,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                   for (var i = 0; i < value.dataList.data!.data!.length; i++) {
                                     if(selectedService1 == value.dataList.data!.data?[i].uid )
                                       {
-                                        salary.text =  value.dataList.data!.data?[i].fees;
+                                        salary.text =  value.dataList.data!.data![i].fees.toString();
                                       }
                                     /// check service with batch name
                                     if(value.dataList.data!.data?[i].serviceUid == selectedService) {

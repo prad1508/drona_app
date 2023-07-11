@@ -35,6 +35,141 @@ class AddTraineeList extends StatefulWidget {
 }
 
 class _AddTraineeListState extends State<AddTraineeList> {
+
+
+  //bottomsheet popup
+  showBottomSheet({bool? status}) {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 3,
+                          width: 50,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Select Option',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Loto-Regular'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(color: Colors.grey),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'View Profile',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      status == true?Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'Remind For Payment',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ):Container(),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'Record A Payment',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'View Ledger',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      status == true?Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'Edit Batch',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ):Container(),
+                      status == true?Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'Deactivate',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ):Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: (){},
+                          child: Text(
+                            'Activate',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   final TextEditingController FullName = TextEditingController();
@@ -184,206 +319,183 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             child: ListView.builder(
                               itemCount: value.dataList.data?.data.length,
                               itemBuilder: (context, index) {
+                                print(' Batch UID ${value.dataList.data!.data[index].batchUid}  Trainee Name ${value.dataList.data!.data[index].traineeName}');
                                 return Column(
                                   children: [
-                                    Container(
-                                      color: const Color(0XFFDFE1E4).withOpacity(0.3),
-                                      height: 110,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top:8.0,left: 20),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: 41,
-                                                  height: 46,
-                                                  child: value.dataList.data!.data[index].image.isNotEmpty?
-                                                  CircleAvatar(
-                                                    backgroundImage: NetworkImage(AppUrl.profileserviceIconEndPoint +
-                                                        value.dataList.data!.data[index].image,
-                                                    ),
-                                                    // AssetImage('assets/images/user_profile.png'),
-                                                  ) : CircleAvatar(
-                                                    backgroundColor: Colors.blue,
-                                                    child: Text(getInitials(value.dataList.data!.data[index].traineeName),style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      color: Colors.white
-                                                    ),),
-                                                   // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                                    InkWell(
+                                      onTap: (){
+                                        showBottomSheet(status: value.dataList.data!.data[index].status == 'active' ? true : false);
+                                      },
+                                      child: Container(
+                                        color: const Color(0XFFDFE1E4).withOpacity(0.3),
+                                        height: 110,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top:8.0,left: 20),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 41,
+                                                    height: 46,
+                                                    child: value.dataList.data!.data[index].image.isNotEmpty?
+                                                    CircleAvatar(
+                                                      backgroundImage: NetworkImage(AppUrl.profileserviceIconEndPoint +
+                                                          value.dataList.data!.data[index].image,
+                                                      ),
+                                                      // AssetImage('assets/images/user_profile.png'),
+                                                    ) : CircleAvatar(
+                                                      backgroundColor: Colors.blue,
+                                                      child: Text(getInitials(value.dataList.data!.data[index].traineeName),style: const TextStyle(
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Colors.white
+                                                      ),),
+                                                      // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
                                                     ),
                                                     // AssetImage('assets/images/user_profile.png'),
                                                   ),
 
-                                                Align(
-                                                  alignment: Alignment.bottomLeft,
-                                                  child: Container(
-                                                    width: 44,
-                                                    height: 20,
-                                                    decoration: BoxDecoration(
-                                                      color:value.dataList.data!.data[index].status=="active" ? const Color(0xff47C088) : Colors.redAccent,
-                                                      borderRadius: BorderRadius.circular(4),
-                                                    ),
-                                                    child:  Center(
-                                                      child: value.dataList.data!.data[index].status == "active" ?
-                                                      const Text(
-                                                       "Active",
-                                                        style: TextStyle(
-                                                          color: Color(0xffFBFBFC),
-                                                          fontSize: 10,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight: FontWeight.w600,
-                                                        ),
-                                                      ) :  const Text(
-                                                        "Inactive",
-                                                        style: TextStyle(
-                                                          color: Color(0xffFBFBFC),
-                                                          fontSize: 10,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight: FontWeight.w600,
-                                                        ),
-                                                      )
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding:  const EdgeInsets.only(left: 15.0),
-                                                      child: Text(value.dataList.data!.data[index].traineeName,
-                                                        style: const TextStyle(
-                                                          color: Color(0xff39404A),
-                                                          fontSize: 14,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight: FontWeight.w700,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Container(
-                                                      width: 75,
+                                                  Align(
+                                                    alignment: Alignment.bottomLeft,
+                                                    child: Container(
+                                                      width: 44,
                                                       height: 20,
                                                       decoration: BoxDecoration(
-                                                        color:  value.dataList.data!.data[index].join_status=="not_onboarded" ?Colors.redAccent.shade100.withOpacity(0.3) :const Color(0xffEDF9F3),
+                                                        color:value.dataList.data!.data[index].status=="active" ? const Color(0xff47C088) : Colors.redAccent,
                                                         borderRadius: BorderRadius.circular(4),
                                                       ),
                                                       child:  Center(
-                                                        child:  value.dataList.data!.data[index].join_status=="not_onboarded"?
-                                                        const Text(
-                                                         "Not Onboarded",
-                                                          style:  TextStyle(
-                                                            color:  Colors.redAccent,
-                                                            fontSize: 10,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                        ):  const Text(
-                                                          "Onboarded",
-                                                          style:  TextStyle(
-                                                            color:  Color(0xff47C088),
-                                                            fontSize: 10,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                        )
-
+                                                          child: value.dataList.data!.data[index].status == "active" ?
+                                                          const Text(
+                                                            "Active",
+                                                            style: TextStyle(
+                                                              color: Color(0xffFBFBFC),
+                                                              fontSize: 10,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w600,
+                                                            ),
+                                                          ) :  const Text(
+                                                            "Inactive",
+                                                            style: TextStyle(
+                                                              color: Color(0xffFBFBFC),
+                                                              fontSize: 10,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w600,
+                                                            ),
+                                                          )
                                                       ),
                                                     ),
-                                                    Align(
-                                                      alignment: Alignment.centerRight,
-                                                      widthFactor: 4.5,
-                                                      child: SizedBox(
-                                                        width: 24,
-                                                        height: 24,
-                                                        child: CircleAvatar(
-                                                          backgroundImage: NetworkImage(AppUrl.serviceIconEndPoint +
-                                                              value.dataList.data!.data[index].serviceicon,
-                                                          ),
-                                                          // AssetImage('assets/images/tennis.png'),
-                                                          //  backgroundColor: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 1),
-                                                Row(
-                                                  children:  [
-                                                    Padding(
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Padding(
                                                         padding:  const EdgeInsets.only(left: 15.0),
-                                                        child: value.dataList.data?.data[index].gender =='male' ?
-                                                        const Text(
-                                                          "Male",
-                                                          style: TextStyle(
+                                                        child: Text(value.dataList.data!.data[index].traineeName,
+                                                          style: const TextStyle(
                                                             color: Color(0xff39404A),
-                                                            fontSize: 12,
+                                                            fontSize: 14,
                                                             fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w400,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
-                                                        ) : value.dataList.data?.data[index].gender =='female'?
-                                                        const Text(
-                                                          "Female",
-                                                          style: TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontSize: 12,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                        ) :  const Text(
-                                                          "Others",
-                                                          style: TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontSize: 12,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                        )
-                                                    ),
-                                                    const Text(
-                                                      " | ",
-                                                      style: TextStyle(
-                                                        color: Color(0xff39404A),
-                                                        fontSize: 12,
-                                                        fontFamily: 'Lato',
-                                                        fontWeight: FontWeight.w400,
-                                                      ),
-                                                    ),
-                                                    Text(value.dataList.data!.data[index].dob,
-                                                      style: const TextStyle(
-                                                        color: Color(0xff39404A),
-                                                        fontSize: 12,
-                                                        fontFamily: 'Lato',
-                                                        fontWeight: FontWeight.w400,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 12),
-                                                Row(
-                                                  children:  [
-                                                    Padding(
-                                                      padding:  const EdgeInsets.only(left: 15.0),
-                                                      child: Text(
-                                                        value.dataList.data!.data[index].batchname,
-                                                        style: const TextStyle(
-                                                          color: Color(0xff39404A),
-                                                          fontSize: 14,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight: FontWeight.w700,
                                                         ),
                                                       ),
-                                                    ),
-                                                     Padding(
-                                                      padding: EdgeInsets.only(left: 15),
-                                                      child: Text(
-                                                        '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_to}',
+                                                      const SizedBox(width: 10),
+                                                      Container(
+                                                        width: 75,
+                                                        height: 20,
+                                                        decoration: BoxDecoration(
+                                                          color:  value.dataList.data!.data[index].join_status=="not_onboarded" ?Colors.redAccent.shade100.withOpacity(0.3) :const Color(0xffEDF9F3),
+                                                          borderRadius: BorderRadius.circular(4),
+                                                        ),
+                                                        child:  Center(
+                                                            child:  value.dataList.data!.data[index].join_status=="not_onboarded"?
+                                                            const Text(
+                                                              "Not Onboarded",
+                                                              style:  TextStyle(
+                                                                color:  Colors.redAccent,
+                                                                fontSize: 10,
+                                                                fontFamily: 'Lato',
+                                                                fontWeight: FontWeight.w400,
+                                                              ),
+                                                            ):  const Text(
+                                                              "Onboarded",
+                                                              style:  TextStyle(
+                                                                color:  Color(0xff47C088),
+                                                                fontSize: 10,
+                                                                fontFamily: 'Lato',
+                                                                fontWeight: FontWeight.w400,
+                                                              ),
+                                                            )
+
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment.centerRight,
+                                                        widthFactor: 4.5,
+                                                        child: SizedBox(
+                                                          width: 24,
+                                                          height: 24,
+                                                          child: CircleAvatar(
+                                                            backgroundImage: NetworkImage(AppUrl.serviceIconEndPoint +
+                                                                value.dataList.data!.data[index].serviceicon,
+                                                            ),
+                                                            // AssetImage('assets/images/tennis.png'),
+                                                            //  backgroundColor: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 1),
+                                                  Row(
+                                                    children:  [
+                                                      Padding(
+                                                          padding:  const EdgeInsets.only(left: 15.0),
+                                                          child: value.dataList.data?.data[index].gender =='male' ?
+                                                          const Text(
+                                                            "Male",
+                                                            style: TextStyle(
+                                                              color: Color(0xff39404A),
+                                                              fontSize: 12,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                          ) : value.dataList.data?.data[index].gender =='female'?
+                                                          const Text(
+                                                            "Female",
+                                                            style: TextStyle(
+                                                              color: Color(0xff39404A),
+                                                              fontSize: 12,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                          ) :  const Text(
+                                                            "Others",
+                                                            style: TextStyle(
+                                                              color: Color(0xff39404A),
+                                                              fontSize: 12,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                          )
+                                                      ),
+                                                      const Text(
+                                                        " | ",
+                                                        style: TextStyle(
+                                                          color: Color(0xff39404A),
+                                                          fontSize: 12,
+                                                          fontFamily: 'Lato',
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                      Text(value.dataList.data!.data[index].dob,
                                                         style: const TextStyle(
                                                           color: Color(0xff39404A),
                                                           fontSize: 12,
@@ -391,71 +503,100 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                           fontWeight: FontWeight.w400,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 5),
-                                                //const SizedBox(height: 5),
-                                                Container(
-                                                  width: 300,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 15),
-                                                    child:Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children:  [
-                                                            const Text(
-                                                              "Fee : ",
-                                                              style: TextStyle(
-                                                                color: Color(0xff39404A),
-                                                                fontSize: 14,
-                                                                fontFamily: 'Lato',
-                                                                fontWeight: FontWeight.w700,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              '₹ ${value.dataList.data?.data[index].fees}',
-                                                              style: const TextStyle(
-                                                                color: Color(0xff39404A),
-                                                                fontSize: 12,
-                                                                fontFamily: 'Lato',
-                                                                fontWeight: FontWeight.w400,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 12),
+                                                  Row(
+                                                    children:  [
+                                                      Padding(
+                                                        padding:  const EdgeInsets.only(left: 15.0),
+                                                        child: Text(
+                                                          value.dataList.data!.data[index].batchname,
+                                                          style: const TextStyle(
+                                                            color: Color(0xff39404A),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w700,
+                                                          ),
                                                         ),
-                                                        // Row(
-                                                        //   children: [
-                                                        //     const Text(
-                                                        //       "Due : ",
-                                                        //       style: TextStyle(
-                                                        //         color: Color(0xff39404A),
-                                                        //         fontSize: 14,
-                                                        //         fontFamily: 'Lato',
-                                                        //         fontWeight: FontWeight.w700,
-                                                        //       ),
-                                                        //     ),
-                                                        //     Text(
-                                                        //       '₹ ${value.dataList.data?.data[index].fees}',
-                                                        //       style: const TextStyle(
-                                                        //         color: Color(0xff39404A),
-                                                        //         fontSize: 12,
-                                                        //         fontFamily: 'Lato',
-                                                        //         fontWeight: FontWeight.w400,
-                                                        //       ),
-                                                        //     ),
-                                                        //   ],
-                                                        // )
-                                                      ],
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 15),
+                                                        child: Text(
+                                                          '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_to}',
+                                                          style: const TextStyle(
+                                                            color: Color(0xff39404A),
+                                                            fontSize: 12,
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  //const SizedBox(height: 5),
+                                                  Container(
+                                                    width: 300,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 15),
+                                                      child:Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children:  [
+                                                              const Text(
+                                                                "Fee : ",
+                                                                style: TextStyle(
+                                                                  color: Color(0xff39404A),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Lato',
+                                                                  fontWeight: FontWeight.w700,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                '₹ ${value.dataList.data?.data[index].fees}',
+                                                                style: const TextStyle(
+                                                                  color: Color(0xff39404A),
+                                                                  fontSize: 12,
+                                                                  fontFamily: 'Lato',
+                                                                  fontWeight: FontWeight.w400,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          // Row(
+                                                          //   children: [
+                                                          //     const Text(
+                                                          //       "Due : ",
+                                                          //       style: TextStyle(
+                                                          //         color: Color(0xff39404A),
+                                                          //         fontSize: 14,
+                                                          //         fontFamily: 'Lato',
+                                                          //         fontWeight: FontWeight.w700,
+                                                          //       ),
+                                                          //     ),
+                                                          //     Text(
+                                                          //       '₹ ${value.dataList.data?.data[index].fees}',
+                                                          //       style: const TextStyle(
+                                                          //         color: Color(0xff39404A),
+                                                          //         fontSize: 12,
+                                                          //         fontFamily: 'Lato',
+                                                          //         fontWeight: FontWeight.w400,
+                                                          //       ),
+                                                          //     ),
+                                                          //   ],
+                                                          // )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
 
-                                              ],
-                                            ),
-                                          ],
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -481,7 +622,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                   color: Theme.of(context).primaryColorDark,
                                   size: 100.0,
                                 ),
-                                NoData()
+                                const NoData()
                                 // Text(
                                 //   value.dataList.message.toString(),
                                 //   style: TextStyle(
@@ -524,10 +665,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          insetPadding: EdgeInsets.all(10),
+          insetPadding: const EdgeInsets.all(10),
 
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Confirm Addition Of The Trainee",
             style: TextStyle(fontSize: 14),
           ),
@@ -542,7 +683,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                 height: 115,
                 decoration: BoxDecoration(
                     color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -551,7 +692,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       children: [
                         Column(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundImage:
                               AssetImage("assets/images/user_profile.png"),
                             ),
@@ -566,7 +707,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                 decoration: BoxDecoration(
                                     color: Colors.green.shade700,
                                     borderRadius: BorderRadius.circular(5)),
-                                child: Text(
+                                child: const Text(
                                   "Active",
                                   style: TextStyle(
                                       fontSize: 10, color: Colors.white),
@@ -575,18 +716,18 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             ),
                           ],
                         ),
-                        Column(
+                        const Column(
                           children: [
                             Padding(
                               padding:
-                              const EdgeInsets.only(right: 5, bottom: 10),
+                              EdgeInsets.only(right: 5, bottom: 10),
                               child: Text(
                                 "Shivendra Singh",
                                 style: TextStyle(fontSize: 14),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 50),
+                              padding: EdgeInsets.only(right: 50),
                               child: Text(
                                 "Male | 34 Year",
                                 style: TextStyle(fontSize: 10),
@@ -597,19 +738,19 @@ class _AddTraineeListState extends State<AddTraineeList> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Container(
-                            padding: EdgeInsets.only(),
+                            padding: const EdgeInsets.only(),
                             decoration: BoxDecoration(
                                 color: Colors.green.shade100,
                                 borderRadius: BorderRadius.circular(5)),
-                            child: Text(
+                            child: const Text(
                               "Onboarded",
                               style:
                               TextStyle(fontSize: 10, color: Colors.green),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        const Padding(
+                          padding: EdgeInsets.only(
                             bottom: 10,
                             top: 5,
                           ),
@@ -623,8 +764,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 55),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 55),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -639,8 +780,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 50),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 50),
                       child: Row(
                         //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -664,7 +805,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                 style: TextStyle(fontSize: 12),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10),
                                 child: Text(
                                   "10 Jan,23",
                                   style: TextStyle(
@@ -676,7 +817,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                         ],
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.grey,
                     )
                   ],
@@ -698,10 +839,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Colors.grey.shade300,
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       // fontSize: 20,
                         fontWeight: FontWeight.bold)),
-                child: Text(
+                child: const Text(
                   "Cancle",
                   style: TextStyle(
                     fontSize: 16,
@@ -719,10 +860,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       // fontSize: 20,
                         fontWeight: FontWeight.bold)),
-                child: Text("Confirm",
+                child: const Text("Confirm",
                     style: TextStyle(
                       //    color: Colors.white,
                       fontSize: 16,
@@ -786,9 +927,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                           color: Colors.grey[400],
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
                             'Filters',
                             style: TextStyle(
@@ -808,7 +949,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                       Container(
                         width: 342,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffDFE1E4)),
+                            border: Border.all(color: const Color(0xffDFE1E4)),
                             borderRadius: BorderRadius.circular(8)),
                         child: const Batch_DropDown(),
                       ),
