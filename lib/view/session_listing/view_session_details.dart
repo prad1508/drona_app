@@ -107,6 +107,17 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   List<Data> attendanceApiList = [];
   int count = 0;
   int presentCount = 0;
+
+  String status = '';
+  String batchName = '';
+  String level = '';
+  String timingFrom = '';
+  String timingTo = '';
+  String onlineSessionUrl = '';
+
+
+
+
   @override
   initState() {
     print("widget.id==${widget.id}");
@@ -156,7 +167,13 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       const SessionDetailEdit(),
                                 ),
                               );*/
-                Get.to(() => const SessionDetailEdit(),
+                Get.to(() =>  SessionDetailEdit(status: status,
+                  batchName: batchName,
+                  level: level,
+                  batchTimingTo: timingTo,
+                  batchTimingFrom: timingFrom,
+                  sDate: "",
+                  coachProfileUid: '',),
                     transition: Transition.leftToRight);
               }),
               icon: const Icon(Icons.edit),
@@ -193,6 +210,13 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                               ),
                             );
                           case Status.completed:
+                            status = value.dataList2.data!.data[0].status;
+                            batchName = value.dataList2.data!.batchName;
+                            level = value.dataList2.data!.programName;
+                            timingFrom = value.dataList2.data!.batchTimingFrom;
+                            timingTo = value.dataList2.data!.batchTimingTo;
+                            // coachProfileUid = value.dataList2.data!.data[0].
+                            //sDate = "${value.dataList2.data!.sdd}-${value.dataList2.data!.smm}-${value.dataList2.data!.syy}";
                             if (attendanceList.isEmpty) {
                               attendanceList.addAll(value.dataList2.data!.data);
                             }
@@ -323,6 +347,8 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       child: ListView.builder(
                                           itemCount: attendanceList.length,
                                           itemBuilder: (context, index) {
+
+
                                             // value1 == true ? attendanceList.add(value.dataList2.data!.data[index]) : null;
 
                                             //var nameText = _foundUsers[index]['name'].split(' ');
@@ -1568,4 +1594,5 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
     return count.toString();
   }
 }
+
 

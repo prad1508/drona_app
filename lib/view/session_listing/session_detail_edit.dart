@@ -6,7 +6,22 @@ import 'package:flutter_localization/flutter_localization.dart';
 import '../../res/widget/round_button.dart';
 
 class SessionDetailEdit extends StatefulWidget {
-  const SessionDetailEdit({super.key});
+  String status;
+  String batchName;
+  String level;
+  String batchTimingFrom;
+  String batchTimingTo;
+  String sDate;
+  String coachProfileUid;
+
+  SessionDetailEdit({super.key,required this.status,
+    required this.batchName,
+    required this.level,
+    required this.batchTimingTo,
+    required this.batchTimingFrom,
+    required this.sDate,
+    required this.coachProfileUid
+  });
 
   @override
   State<SessionDetailEdit> createState() => _SessionDetailEditState();
@@ -66,7 +81,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                     elevation: 1,
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                      const EdgeInsets.only(top: 10, bottom: 10, right: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -77,7 +92,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                               children: [
                                 Chip(
                                     backgroundColor:
-                                        Colors.green.withOpacity(.2),
+                                    Colors.green.withOpacity(.2),
                                     label: const Text(
                                       'Scheduled',
                                       style: TextStyle(color: Colors.green),
@@ -85,7 +100,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                                 const CircleAvatar(
                                   radius: 20,
                                   backgroundColor:
-                                      Color.fromARGB(255, 217, 217, 217),
+                                  Color.fromARGB(255, 217, 217, 217),
                                   child: Image(
                                       image: AssetImage(
                                           'assets/images/tennis.png')),
@@ -220,26 +235,26 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                   height: 15,
                 ),
                 RoundButton(
-                      loading: false,
-                      title: 'Update',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                       
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  RoundButton(
-                      loading: false,
-                      title: 'Cancel Session',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Colors.redAccent,
-                      onPress: () {
-                       
-                      }),
+                    loading: false,
+                    title: 'Update',
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Theme.of(context).primaryColor,
+                    onPress: () {
+
+                    }),
+                const SizedBox(
+                  height: 10,
+                ),
+                RoundButton(
+                    loading: false,
+                    title: 'Cancel Session',
+                    textColor: Colors.white,
+                    rounded: true,
+                    color: Colors.redAccent,
+                    onPress: () {
+
+                    }),
                 const SizedBox(height: 30),
               ],
             ),
@@ -249,3 +264,4 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
     );
   }
 }
+
