@@ -208,7 +208,6 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                           const SizedBox(
                             height: 15,
                           ),
-
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -216,7 +215,6 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
-
                           const SizedBox(
                             height: 10,
                           ),
@@ -251,7 +249,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                             controller: dateschedule,
                             decoration: InputDecoration(
                               hintText: '04-02-2023',
-                              suffixIcon: Icon(Icons.date_range_outlined),
+                              suffixIcon:  const Icon(Icons.date_range_outlined),
                               contentPadding: const EdgeInsets.all(10),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -300,8 +298,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: TextFormField(
-                                  controller: toBatch
-                                    ..text = batchTodata.toString(),
+                                  controller: toBatch..text = batchTodata.toString(),
                                   readOnly: true,
                                   decoration: InputDecoration(
                                     hintText: 'To',
@@ -318,7 +315,6 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               ),
                             ],
                           ),
-
                           const SizedBox(
                             height: 15,
                           ),
