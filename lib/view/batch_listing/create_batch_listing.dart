@@ -221,12 +221,12 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                                   print(value.dataList.data?.services);
                                   for (var i = 0; i < value.dataList.data!.services!.length; i++) {
                                     print(value.dataList.data!.services?[i].status);
-                                  //  if (value.dataList.data!.services![i].status.toString() == 'active') {
+                                    if (value.dataList.data!.services![i].status.toString() == 'active') {
                                       activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
                                       activeServices.add(DropdownMenuItem(
                                           value: value.dataList.data!.services![i].uid.toString(),
                                           child: Text(value.dataList.data!.services![i].serviceName.toString())));
-                                //    }
+                                    }
                                   }
                                 }
                                 value.dataList.data == null
