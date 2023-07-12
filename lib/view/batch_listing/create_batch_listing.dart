@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import '../../data/response/status.dart';
 import '../../res/widget/customradio.dart';
 import '../../res/widget/round_button.dart';
 import '../../res/widget/textcheckbox.dart';
@@ -213,57 +212,39 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                           child: Consumer<AcademyViewViewModel>(
                               builder: (context, value, child) {
 
+
                                 activeServiceValue.clear();
                                 activeServices.clear();
                                 // print(value.dataList.data!.services![0].status);
-                                switch (value.dataList.status!) {
-                                case Status.loading:
-                                          return const Center(
-                                          child: CircularProgressIndicator(
-                                          color: Colors.teal,
-                                          ),
-                                          );
+                                if (value.dataList.data != null) {
 
-                                case Status.completed:
+                                  print(value.dataList.data?.services);
                                   for (var i = 0; i < value.dataList.data!.services!.length; i++) {
                                     print(value.dataList.data!.services?[i].status);
-                                    if (value.dataList.data!.services![i].status.toString() == 'active') {
+                                  //  if (value.dataList.data!.services![i].status.toString() == 'active') {
                                       activeServiceValue.add(value.dataList.data!.services![i].uid.toString());
                                       activeServices.add(DropdownMenuItem(
                                           value: value.dataList.data!.services![i].uid.toString(),
                                           child: Text(value.dataList.data!.services![i].serviceName.toString())));
-                                    }
+                                //    }
                                   }
-                                  value.dataList.data == null
-                                      ? null
-                                      : assignSeviceId(activeServiceValue[0]);
-                                  return DropdownButton(
-                                      isExpanded: true,
-                                      underline: DropdownButtonHideUnderline(
-                                          child: Container()),
-                                      value: selectedService,
-                                      hint: const Text("Choose Your Service"),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          selectedService = newValue!;
-                                          _refresh = true;
-                                        });
-                                      },
-                                      items: activeServices);
-
-                                  case Status.error:
-                                    return const Center(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text('')
-                                          ],
-                                        ));
                                 }
-
-
-
+                                value.dataList.data == null
+                                    ? null
+                                    : assignSeviceId(activeServiceValue[0]);
+                                return DropdownButton(
+                                    isExpanded: true,
+                                    underline: DropdownButtonHideUnderline(
+                                        child: Container()),
+                                    value: selectedService,
+                                    hint: const Text("Choose Your Service"),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedService = newValue!;
+                                        _refresh = true;
+                                      });
+                                    },
+                                    items: activeServices);
                               })),
                     ),
                     const SizedBox(

@@ -17,9 +17,12 @@ class AcademyViewViewModel with ChangeNotifier {
 
     _myRepo.fetchAcademyListApi().then((value){
          print(value);
+         print("fetch academy list success");
       setDataList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){
+      print(error);
+      print("fetch academy list not success");
       setDataList(ApiResponse.error(error.toString()));
     });
   }

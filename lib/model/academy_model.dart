@@ -1,215 +1,230 @@
-//model class AcademyListModel
+// To parse this JSON data, do
+//
+//     final academyListModel = academyListModelFromJson(jsonString);
+
+import 'package:meta/meta.dart';
+import 'dart:convert';
+
+AcademyListModel academyListModelFromJson(String str) => AcademyListModel.fromJson(json.decode(str));
+
+String academyListModelToJson(AcademyListModel data) => json.encode(data.toJson());
+
 class AcademyListModel {
-  String? msg;
-  String? academyUid;
-  String? academyname;
-  String? address;
-  String? city;
-  String? email;
-  String? website;
-  String? state;
-  String? pincode;
-  String? billingDate;
-  String? bcatname;
-  // String? registeredNumber;
-  String? alternateNumber;
-  String? academyinTime;
-  String? academyoutTime;
-  String? busscategoryid;
-  int? onboardingCompleted;
-  int? totalOnboardingStep;
-  bool? onboardingSetupFinish;
-  String? cDate;
-  String? cTime;
-  String? uDate;
-  String? uTime;
-  int? totalService;
-  List<Services>? services;
-  String? registered_number;
-  int? academy_progress;
-  bool? academy_details_completed;
-  bool? service_program_facility_completed;
-  bool? bank_details_completed;
-  bool? communication_completed;
-  bool? billing_invoice_completed;
-  List<String>? working_days;
+  final String msg;
+  final String academyUid;
+  final String academyname;
+  final String address;
+  final String city;
+  final String state;
+  final String pincode;
+  final String billingDate;
+  final String bcatname;
+  final String busscategoryid;
+  final int onboardingCompleted;
+  final int totalOnboardingStep;
+  final bool onboardingSetupFinish;
+  final String altMobno;
+  final String email;
+  final String website;
+  final String academyOpenTime;
+  final String academyCloseTime;
+  final String logo;
+  final bool islogo;
+  final List<dynamic> workingDays;
+  final String registeredNumber;
+  final int academyProgress;
+  final bool academyDetailsCompleted;
+  final bool serviceProgramFacilityCompleted;
+  final bool bankDetailsCompleted;
+  final bool communicationCompleted;
+  final bool billingInvoiceCompleted;
+  final String cDate;
+  final String cTime;
+  final String uDate;
+  final String uTime;
+  final int totalService;
+  final List<Service> services;
+  final List<dynamic> bankDetails;
 
-  AcademyListModel(
-      {this.msg,
-        this.academyUid,
-        this.academyname,
-        this.address,
-        this.city,
-        this.state,
-        this.pincode,
-        this.billingDate,
-        this.bcatname,
-        this.busscategoryid,
-        this.onboardingCompleted,
-        this.totalOnboardingStep,
-        this.onboardingSetupFinish,
-        this.alternateNumber,
-        //  this.registeredNumber,
-        this.academyinTime,
-        this.academyoutTime,
-        this.cDate,
-        this.email = 'demo',
-        this.website = 'demo',
-        this.cTime,
-        this.uDate,
-        this.uTime,
-        this.registered_number,
-        this.academy_progress,
-        this.academy_details_completed,
-        this.service_program_facility_completed,
-        this.bank_details_completed,
-        this.communication_completed,
-        this.totalService,
-        this.billing_invoice_completed,
-        this.working_days,
-        this.services});
+  AcademyListModel({
+    required this.msg,
+    required this.academyUid,
+    required this.academyname,
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.pincode,
+    required this.billingDate,
+    required this.bcatname,
+    required this.busscategoryid,
+    required this.onboardingCompleted,
+    required this.totalOnboardingStep,
+    required this.onboardingSetupFinish,
+    required this.altMobno,
+    required this.email,
+    required this.website,
+    required this.academyOpenTime,
+    required this.academyCloseTime,
+    required this.logo,
+    required this.islogo,
+    required this.workingDays,
+    required this.registeredNumber,
+    required this.academyProgress,
+    required this.academyDetailsCompleted,
+    required this.serviceProgramFacilityCompleted,
+    required this.bankDetailsCompleted,
+    required this.communicationCompleted,
+    required this.billingInvoiceCompleted,
+    required this.cDate,
+    required this.cTime,
+    required this.uDate,
+    required this.uTime,
+    required this.totalService,
+    required this.services,
+    required this.bankDetails,
+  });
 
-  AcademyListModel.fromJson(Map<String, dynamic> json) {
-    msg = json['msg'];
-    academyUid = json['academy_uid'];
-    academyname = json['academyname'];
-    address = json['address'];
-    city = json['city'];
-    email = json['email'];
-    website = json['website'];
-    state = json['state'];
-    pincode = json['pincode'];
-    billingDate = json['billing_date'];
-    bcatname = json['bcatname'];
-    academyoutTime = json['academy_close_time'];
-    academyinTime = json['academy_open_time'];
-    alternateNumber = json['alt_mobno'];
-    // registeredNumber = json['bcatname'];
-    busscategoryid = json['busscategoryid'];
-    onboardingCompleted = json['onboarding_completed'];
-    totalOnboardingStep = json['total_onboarding_step'];
-    onboardingSetupFinish = json['onboarding_setup_finish'];
-    cDate = json['cDate'];
-    cTime = json['cTime'];
-    uDate = json['uDate'];
-    uTime = json['uTime'];
-    academy_progress = json['academy_progress'];
-    academy_details_completed = json['academy_details_completed'];
-    service_program_facility_completed = json['service_program_facility_completed'];
-    bank_details_completed = json['bank_details_completed'];
-    communication_completed = json['communication_completed'];
-    billing_invoice_completed = json['billing_invoice_completed'];
-    working_days = json['working_days'];
-    services = json['services'];
-    totalService = json['total_service'];
-    if (json['services'] != null) {
-      services = <Services>[];
-      json['services'].forEach((v) {
-        services!.add(new Services.fromJson(v));
-      });
-    }
-  }
+  factory AcademyListModel.fromJson(Map<String, dynamic> json) => AcademyListModel(
+    msg: json["msg"],
+    academyUid: json["academy_uid"],
+    academyname: json["academyname"],
+    address: json["address"],
+    city: json["city"],
+    state: json["state"],
+    pincode: json["pincode"],
+    billingDate: json["billing_date"],
+    bcatname: json["bcatname"],
+    busscategoryid: json["busscategoryid"],
+    onboardingCompleted: json["onboarding_completed"],
+    totalOnboardingStep: json["total_onboarding_step"],
+    onboardingSetupFinish: json["onboarding_setup_finish"],
+    altMobno: json["alt_mobno"],
+    email: json["email"],
+    website: json["website"],
+    academyOpenTime: json["academy_open_time"],
+    academyCloseTime: json["academy_close_time"],
+    logo: json["logo"],
+    islogo: json["islogo"],
+    workingDays: List<dynamic>.from(json["working_days"].map((x) => x)),
+    registeredNumber: json["registered_number"],
+    academyProgress: json["academy_progress"],
+    academyDetailsCompleted: json["academy_details_completed"],
+    serviceProgramFacilityCompleted: json["service_program_facility_completed"],
+    bankDetailsCompleted: json["bank_details_completed"],
+    communicationCompleted: json["communication_completed"],
+    billingInvoiceCompleted: json["billing_invoice_completed"],
+    cDate: json["cDate"],
+    cTime: json["cTime"],
+    uDate: json["uDate"],
+    uTime: json["uTime"],
+    totalService: json["total_service"],
+    services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
+    bankDetails: List<dynamic>.from(json["bank_details"].map((x) => x)),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg'] = this.msg;
-    data['academy_uid'] = this.academyUid;
-    data['academyname'] = this.academyname;
-    data['address'] = this.address;
-    data['email'] = this.email;
-    data['website'] = this.website;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['pincode'] = this.pincode;
-    data['billing_date'] = this.billingDate;
-    data['bcatname'] = this.bcatname;
-    data['academy_close_time'] = this.academyoutTime;
-    data['academy_open_time'] = this.academyinTime;
-    data['alt_mobno'] = this.alternateNumber;
-    data['busscategoryid'] = this.busscategoryid;
-    data['onboarding_completed'] = this.onboardingCompleted;
-    data['total_onboarding_step'] = this.totalOnboardingStep;
-    data['onboarding_setup_finish'] = this.onboardingSetupFinish;
-    data['cDate'] = this.cDate;
-    data['cTime'] = this.cTime;
-    data['uDate'] = this.uDate;
-    data['uTime'] = this.uTime;
-    data['academy_progress'] = this.academy_progress;
-    data['academy_details_completed'] = this.academy_details_completed;
-    data['service_program_facility_completed'] = this.service_program_facility_completed;
-    data['bank_details_completed'] = this.bank_details_completed;
-    data['communication_completed'] = this.communication_completed;
-    data['billing_invoice_completed'] = this.billing_invoice_completed;
-    data['working_days'] = this.working_days;
-    data['total_service'] = this.totalService;
-    if (this.services != null) {
-      data['services'] = this.services!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+
+
+
+
+  Map<String, dynamic> toJson() => {
+    "msg": msg,
+    "academy_uid": academyUid,
+    "academyname": academyname,
+    "address": address,
+    "city": city,
+    "state": state,
+    "pincode": pincode,
+    "billing_date": billingDate,
+    "bcatname": bcatname,
+    "busscategoryid": busscategoryid,
+    "onboarding_completed": onboardingCompleted,
+    "total_onboarding_step": totalOnboardingStep,
+    "onboarding_setup_finish": onboardingSetupFinish,
+    "alt_mobno": altMobno,
+    "email": email,
+    "website": website,
+    "academy_open_time": academyOpenTime,
+    "academy_close_time": academyCloseTime,
+    "logo": logo,
+    "islogo": islogo,
+    "working_days": List<dynamic>.from(workingDays.map((x) => x)),
+    "registered_number": registeredNumber,
+    "academy_progress": academyProgress,
+    "academy_details_completed": academyDetailsCompleted,
+    "service_program_facility_completed": serviceProgramFacilityCompleted,
+    "bank_details_completed": bankDetailsCompleted,
+    "communication_completed": communicationCompleted,
+    "billing_invoice_completed": billingInvoiceCompleted,
+    "cDate": cDate,
+    "cTime": cTime,
+    "uDate": uDate,
+    "uTime": uTime,
+    "total_service": totalService,
+    "services": List<dynamic>.from(services.map((x) => x.toJson())),
+    "bank_details": List<dynamic>.from(bankDetails.map((x) => x)),
+  };
 }
 
-class Services {
-  String? sId;
-  String? uid;
-  String? academyUid;
-  String? catUid;
-  String? serviceName;
-  String? serviceIconname;
-  bool? programAdded;
-  bool? facilityAdded;
-  String? status;
-  String? cDate;
-  String? cTime;
-  String? uDate;
-  String? uTime;
+class Service {
+  final String id;
+  final String uid;
+  final String academyUid;
+  final String catUid;
+  final String serviceName;
+  final String serviceIconname;
+  final bool programAdded;
+  final bool facilityAdded;
+  final String status;
+  final String cDate;
+  final String cTime;
+  final String uDate;
+  final String uTime;
 
-  Services(
-      {this.sId,
-        this.uid,
-        this.academyUid,
-        this.catUid,
-        this.serviceName,
-        this.serviceIconname,
-        this.programAdded,
-        this.facilityAdded,
-        this.status,
-        this.cDate,
-        this.cTime,
-        this.uDate,
-        this.uTime});
+  Service({
+    required this.id,
+    required this.uid,
+    required this.academyUid,
+    required this.catUid,
+    required this.serviceName,
+    required this.serviceIconname,
+    required this.programAdded,
+    required this.facilityAdded,
+    required this.status,
+    required this.cDate,
+    required this.cTime,
+    required this.uDate,
+    required this.uTime,
+  });
 
-  Services.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    uid = json['uid'];
-    academyUid = json['academy_uid'];
-    catUid = json['cat_uid'];
-    serviceName = json['service_name'];
-    serviceIconname = json['service_iconname'];
-    programAdded = json['program_added'];
-    facilityAdded = json['facility_added'];
-    status = json['status'];
-    cDate = json['cDate'];
-    cTime = json['cTime'];
-    uDate = json['uDate'];
-    uTime = json['uTime'];
-  }
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
+    id: json["_id"],
+    uid: json["uid"],
+    academyUid: json["academy_uid"],
+    catUid: json["cat_uid"],
+    serviceName: json["service_name"],
+    serviceIconname: json["service_iconname"],
+    programAdded: json["program_added"],
+    facilityAdded: json["facility_added"],
+    status: json["status"],
+    cDate: json["cDate"],
+    cTime: json["cTime"],
+    uDate: json["uDate"],
+    uTime: json["uTime"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['uid'] = this.uid;
-    data['academy_uid'] = this.academyUid;
-    data['cat_uid'] = this.catUid;
-    data['service_name'] = this.serviceName;
-    data['service_iconname'] = this.serviceIconname;
-    data['program_added'] = this.programAdded;
-    data['facility_added'] = this.facilityAdded;
-    data['status'] = this.status;
-    data['cDate'] = this.cDate;
-    data['cTime'] = this.cTime;
-    data['uDate'] = this.uDate;
-    data['uTime'] = this.uTime;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "uid": uid,
+    "academy_uid": academyUid,
+    "cat_uid": catUid,
+    "service_name": serviceName,
+    "service_iconname": serviceIconname,
+    "program_added": programAdded,
+    "facility_added": facilityAdded,
+    "status": status,
+    "cDate": cDate,
+    "cTime": cTime,
+    "uDate": uDate,
+    "uTime": uTime,
+  };
 }

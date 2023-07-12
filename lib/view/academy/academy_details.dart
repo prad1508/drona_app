@@ -175,7 +175,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                         ),
                                       ),
                                     ),
-                                    hintText: '${value.dataList.data!.registered_number}',
+                                    hintText: '${value.dataList.data!.registeredNumber}',
                                     hintStyle: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -216,9 +216,9 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: '${value.dataList.data
-                                        ?.alternateNumber}' == 'undefined'
+                                        ?.altMobno}' == 'undefined'
                                         ? '___'
-                                        : '${value.dataList.data?.alternateNumber}',
+                                        : '${value.dataList.data?.altMobno}',
                                     hintStyle: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -513,10 +513,10 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                           height: 2),
                                       decoration: InputDecoration(
                                         hintText: '${value.dataList.data
-                                            ?.academyinTime}' == 'undefined'
+                                            ?.academyOpenTime}' == 'undefined'
                                             ? '___'
                                             : '${value.dataList.data
-                                            ?.academyinTime}',
+                                            ?.academyOpenTime}',
                                         hintStyle: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
@@ -546,10 +546,10 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                           height: 2),
                                       decoration: InputDecoration(
                                         hintText: '${value.dataList.data
-                                            ?.academyoutTime}' == 'undefined'
+                                            ?.academyCloseTime}' == 'undefined'
                                             ? '___'
                                             : '${value.dataList.data
-                                            ?.academyoutTime}',
+                                            ?.academyCloseTime}',
                                         hintStyle: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,

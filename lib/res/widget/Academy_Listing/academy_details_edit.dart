@@ -90,7 +90,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                         if (!hasDataBeenSet && value.dataList.data != null) {
                           academyName.text = value.dataList.data!.academyname!;
                           //registerNumber
-                          AlternateNumber.text = value.dataList.data!.alternateNumber! == 'undefined' ?'':value.dataList.data!.alternateNumber! ;
+                          AlternateNumber.text = value.dataList.data!.altMobno! == 'undefined' ?'':value.dataList.data!.altMobno! ;
                           email.text =
                           value.dataList.data!.email! == 'undefined'
                               ? ''
@@ -104,13 +104,13 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                           city.text = value.dataList.data!.city!;
                           pincode.text = value.dataList.data!.pincode!;
                           inTime.text =
-                          value.dataList.data!.academyinTime! == 'undefined'
+                          value.dataList.data!.academyOpenTime! == 'undefined'
                               ? ''
-                              : value.dataList.data!.academyinTime!;
+                              : value.dataList.data!.academyOpenTime!;
                           outTime.text =
-                          value.dataList.data!.academyoutTime! == 'undefined'
+                          value.dataList.data!.academyCloseTime! == 'undefined'
                               ? ''
-                              : value.dataList.data!.academyoutTime!;
+                              : value.dataList.data!.academyCloseTime!;
                           joiningDate.text = value.dataList.data!.cDate!;
                           cat.text = value.dataList.data!.bcatname!;
 
