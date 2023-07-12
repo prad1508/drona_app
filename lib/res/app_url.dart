@@ -46,6 +46,7 @@ class AppUrl {
   static var markAttendance = '$baseUrl/session/markattendance';
   static var sessionCancel = '$baseUrl/session/cancel';
   static var sessionClose = '$baseUrl/session/close';
+  static var sessionUpdate = '$baseUrl/session/update';
 
   // dashboard
   static var dashBoardHome = "$baseUrl/academy/dashboard";

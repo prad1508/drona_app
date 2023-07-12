@@ -21,6 +21,11 @@ class SessionDetailsModel {
     required this.feedbackAcademy,
     required this.attachfileStatus,
     required this.attachfile,
+    required this.onlineSessionUrl,
+    required this.provideOnlineSessions,
+    required this.coachProfileUid,
+    required this.coachName,
+    required this.sessionUid,
     required this.data,
   });
 
@@ -45,7 +50,17 @@ class SessionDetailsModel {
   final String feedbackAcademy;
   final bool attachfileStatus;
   final List<dynamic> attachfile;
+  final String onlineSessionUrl;
+  final bool provideOnlineSessions;
+  final String coachProfileUid;
+  final String coachName;
+  final String sessionUid;
   final List<Data> data;
+/*  "online_session_url": "",
+  "provide_online_sessions": false,
+  "coach_profile_uid": "0vyvcz5j9w",
+  "coach_name": "deepak kumar ",
+  "session_uid": "ws289bquz1zdypur53a8",*/
 
   factory SessionDetailsModel.fromJson(Map<String, dynamic> json) {
     return SessionDetailsModel(
@@ -70,6 +85,11 @@ class SessionDetailsModel {
       feedbackAcademy: json['feedback_academy'],
       attachfileStatus: json['attachfile_status'],
       attachfile: List.castFrom<dynamic, dynamic>(json['attachfile']),
+      onlineSessionUrl: json['online_session_url'],
+      provideOnlineSessions: json['provide_online_sessions'],
+      coachProfileUid: json['coach_profile_uid'],
+      coachName: json['coach_name'],
+      sessionUid: json['session_uid'],
       data: List<Data>.from(json['Data'].map((e) => Data.fromJson(e))),
     );
   }
@@ -97,6 +117,11 @@ class SessionDetailsModel {
     data['feedback_academy'] = feedbackAcademy;
     data['attachfile_status'] = attachfileStatus;
     data['attachfile'] = attachfile;
+    data['online_session_url'] = onlineSessionUrl;
+    data['provide_online_sessions'] = provideOnlineSessions;
+    data['coach_profile_uid'] = coachProfileUid;
+    data['coach_name'] = coachName;
+    data['session_uid'] = sessionUid;
     data['Data'] = data.map((key, value) => MapEntry(key.toString(), value));
     return data;
   }

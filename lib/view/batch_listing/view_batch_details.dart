@@ -854,8 +854,9 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                               batchId: value.dataList.data!.data![0].uid.toString(),
                                                               batchName: "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
                                                               pathPage : widget.pathPage,
-                                                              fees: value.dataList.data?.data![widget.ListIndex].fees,
-                                                            ),transition: Transition.leftToRight);
+                                                             fees: value.dataList.data!.data![widget.ListIndex].fees.toString(),
+                                                            ),
+                                                                transition: Transition.leftToRight);
 
                                                           },
                                                           child: Text(

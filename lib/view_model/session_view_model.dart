@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../data/response/api_response.dart';
 import '../model/sessionList_model.dart';
+import '../model/update_session_model.dart';
 import '../respository/session_repository.dart';
 import '../utils/utils.dart';
 import '../view/batch_listing/batchlist_search.dart';
@@ -67,6 +68,11 @@ class SessionViewViewModel with ChangeNotifier {
   ApiResponse<CancelSessionModel> dataList4 = ApiResponse.loading();
   setDataList4(ApiResponse<CancelSessionModel> response) {
     dataList4 = response;
+    notifyListeners();
+  }
+  ApiResponse<UpdateSessionModel> dataList6 = ApiResponse.loading();
+  setDataList6(ApiResponse<UpdateSessionModel> response) {
+    dataList6 = response;
     notifyListeners();
   }
 
@@ -145,13 +151,32 @@ class SessionViewViewModel with ChangeNotifier {
     _myRepo.putSessionCancelApi(data).then((value) {
       setDataList4(ApiResponse.completed(value));
       Utils.flushBarErrorMessage(value.msg, context);
-      Get.back();
+      //Navigator.pop(context);
       print("api sessionCancelApi success");
     }).onError((error, stackTrace) {
       setDataList4(ApiResponse.error(error.toString()));
       Utils.toastMessage(error.toString());
+      //Navigator.pop(context);
+
 
       print("api  sessionCancelApi not success");
+      print(error);
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+  Future<void> sessionEditApi(dynamic data, BuildContext context) async {
+    setDataList6(ApiResponse.loading());
+
+    _myRepo.putSessionUpdateApi(data).then((value) {
+      setDataList6(ApiResponse.completed(value));
+      Utils.flushBarErrorMessage(value.msg, context);
+      //Get.back();i
+      print("api sessionEditApi success");
+    }).onError((error, stackTrace) {
+      setDataList6(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+
+      print("api  sessionEditApi not success");
       print(error);
       print("error${ApiResponse.error(error.toString())}");
     });

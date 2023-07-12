@@ -109,11 +109,19 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   int presentCount = 0;
 
   String status = '';
+  String sessionUid = '';
   String batchName = '';
   String level = '';
   String timingFrom = '';
   String timingTo = '';
   String onlineSessionUrl = '';
+  String sDate = '';
+  String  coachProfileUid = '';
+  String  sessionUrl = '';
+  bool provideSessionUrl = false;
+  String dayShort = '';
+  String serviceIcon = '';
+
 
 
 
@@ -160,20 +168,20 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
             _selectedItems.isEmpty
                 ? IconButton(
               onPressed: (() {
-                /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const SessionDetailEdit(),
-                                ),
-                              );*/
-                Get.to(() =>  SessionDetailEdit(status: status,
+                Get.to(() =>  SessionDetailEdit(
+                  status: status,
+                  sessionUid: sessionUid,
                   batchName: batchName,
                   level: level,
                   batchTimingTo: timingTo,
                   batchTimingFrom: timingFrom,
-                  sDate: "",
-                  coachProfileUid: '',),
+                  sDate: sDate,
+                  coachProfileUid: coachProfileUid,
+                  onlineSessionUrl: sessionUrl,
+                  dayShort:dayShort,
+                  serviceIcon: serviceIcon,
+                  provideSessionUrl: provideSessionUrl,
+                ),
                     transition: Transition.leftToRight);
               }),
               icon: const Icon(Icons.edit),
@@ -211,12 +219,18 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                             );
                           case Status.completed:
                             status = value.dataList2.data!.data[0].status;
+                            sessionUid = value.dataList2.data!.sessionUid;
                             batchName = value.dataList2.data!.batchName;
                             level = value.dataList2.data!.programName;
                             timingFrom = value.dataList2.data!.batchTimingFrom;
                             timingTo = value.dataList2.data!.batchTimingTo;
-                            // coachProfileUid = value.dataList2.data!.data[0].
-                            //sDate = "${value.dataList2.data!.sdd}-${value.dataList2.data!.smm}-${value.dataList2.data!.syy}";
+                            coachProfileUid = value.dataList2.data!.coachProfileUid;
+                            sDate = "${value.dataList2.data!.sdd}-${value.dataList2.data!.smm}-${value.dataList2.data!.syy}";
+                            sessionUrl  = value.dataList2.data!.onlineSessionUrl;
+                            provideSessionUrl = value.dataList2.data!.provideOnlineSessions;
+                            dayShort = value.dataList2.data!.data[0].dayShort;
+                            serviceIcon = value.dataList2.data!.serviceIconName;
+
                             if (attendanceList.isEmpty) {
                               attendanceList.addAll(value.dataList2.data!.data);
                             }
@@ -1215,12 +1229,20 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                           .postMarkAttendanceApi(
                                                                           data,
                                                                           context)
-                                                                          .then((value) => Get.to(
-                                                                              () => ViewDetailClosed(
-                                                                            id: attendanceList[i].sessionUid,
+                                                                          .then((value) {
+                                                                        Navigator.of(
+                                                                            context)
+                                                                            .pop();
+                                                                            Get.to(() =>
+                                                                                ViewDetailClosed(
+                                                                                  id: attendanceList[i]
+                                                                                      .sessionUid,
 
-                                                                          ),
-                                                                          transition: Transition.rightToLeft));
+                                                                                ),
+                                                                            transition: Transition
+                                                                                .rightToLeft);
+                                                                      }
+                                                                      );
                                                                     }
                                                                   },
                                                                   style: ElevatedButton.styleFrom(

@@ -2,6 +2,7 @@
 import 'package:drona/model/attendance_model.dart';
 import 'package:drona/model/closeSession_model.dart';
 import 'package:drona/model/session_details_model.dart';
+import 'package:drona/model/update_session_model.dart';
 
 import '../data/network/base_apiservices.dart';
 import '../data/network/network_apiservice.dart';
@@ -85,6 +86,20 @@ class SessionRepository {
           AppUrl.sessionCancel, data);
       print("object==$response");
       return response = CancelSessionModel.fromJson(response);
+      print("object==$response");
+
+    } catch (e) {
+      print("error is$e");
+      print(e);
+      rethrow;
+    }
+  }
+  Future<UpdateSessionModel> putSessionUpdateApi(dynamic data) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          AppUrl.sessionUpdate, data);
+      print("object==$response");
+      return response = UpdateSessionModel.fromJson(response);
       print("object==$response");
 
     } catch (e) {
