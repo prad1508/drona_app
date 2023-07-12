@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:drona/view/academy/bank_detail.dart';
 import 'package:drona/view_model/bankdetails_view_model.dart';
+import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -154,6 +155,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
   final TextEditingController qr = TextEditingController();
 
   BankDetailsViewModel bankDetailsViewModel = BankDetailsViewModel();
+  TraineeViewModel traineeViewModel = TraineeViewModel();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -219,7 +221,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -264,7 +266,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -310,7 +312,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -355,7 +357,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -385,7 +387,6 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                             },
                             // readOnly: true,
                             style: TextStyle(
-                                color: Color(0xffC0C4CB),
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -400,7 +401,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -432,7 +433,6 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                             keyboardType: TextInputType.number,
                             // readOnly: true,
                             style: TextStyle(
-                                color: Color(0xffC0C4CB),
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -447,7 +447,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -494,7 +494,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -539,7 +539,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: Color(0xffD0D3D8))),
+                                  BorderSide(color: Color(0xffD0D3D8))),
                               contentPadding: EdgeInsets.all(10),
                             ),
                           ),
@@ -553,24 +553,24 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                 width: 334,
                                 height: 62,
                                 decoration:
-                                    BoxDecoration(color: Color(0xffECEEF0)),
+                                BoxDecoration(color: Color(0xffECEEF0)),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 15.0, right: 15.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: const [
                                           SizedBox(
                                               width: 40,
                                               height: 40,
                                               child: CircleAvatar(
                                                 backgroundColor:
-                                                    Color(0xffDFE1E4),
+                                                Color(0xffDFE1E4),
                                                 child: Icon(
                                                   Icons.attach_file_outlined,
                                                   color: Color(0xff39404A),
@@ -592,9 +592,9 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                         height: 30,
                                         decoration: BoxDecoration(
                                             border:
-                                                Border.all(color: Colors.grey),
+                                            Border.all(color: Colors.grey),
                                             borderRadius:
-                                                BorderRadius.circular(8)),
+                                            BorderRadius.circular(8)),
                                         child: TextButton(
                                             onPressed: () {},
                                             child: Text(
@@ -627,39 +627,39 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                 if (_formKey.currentState!.validate()) {
                                   Map data = {
                                     'ac_holder_name': acHolderName.text,
-                                    'ifsc_code': ifsc.text,
-                                    'ac_number': accountNumber.text,
-                                    'upi': upi.text,
                                     'bank_name': bankName.text,
+                                    'ac_number': accountNumber.text,
+                                    'ifsc_code': ifsc.text,
                                     'bank_branch': bankBranch.text,
                                     'googlepay_no': googlePayNo.text,
                                     'paytm_no': paytmNo.text,
+                                    'upi': upi.text,
                                     'qr': '1234',
                                   };
                                   List editedData = [
                                     acHolderName.text,
-                                    ifsc.text,
-                                    accountNumber.text,
-                                    upi.text,
                                     bankName.text,
+                                    accountNumber.text,
+                                    ifsc.text,
                                     bankBranch.text,
                                     googlePayNo.text,
                                     paytmNo.text,
+                                    upi.text,
                                   ];
                                   print(data);
                                   bankDetailsViewModel.fetchBankDetailsApi(
                                       data, context);
                                   Get.off(
-                                      () => Bank_Details(
-                                            editData: editedData,
-                                          ),
+                                          () => Bank_Details(
+                                        editData: editedData,
+                                      ),
                                       transition: Transition.rightToLeft);
                                 }
                               },
                               child: const Text(
                                 "Submit",
                                 style:
-                                    TextStyle(fontSize: 15, fontFamily: 'Lato'),
+                                TextStyle(fontSize: 15, fontFamily: 'Lato'),
                               )),
                         ),
                       ],

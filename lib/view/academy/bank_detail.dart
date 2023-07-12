@@ -8,15 +8,15 @@ import 'package:get/get.dart';
 class Bank_Details extends StatefulWidget {
   const Bank_Details(
       {super.key,
-      this.editData = const
-        ['John Academy',
-        'Ifsc1234',
-        '123456789',
-        '554433',
-        'HDFC',
-        'Indore',
-        '123456',
-        '123456',]
+        this.editData = const
+        ['',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',]
       });
 
   final List<dynamic>? editData;
@@ -85,7 +85,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                     readOnly: true,
                     initialValue: widget.editData![0],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -121,9 +121,9 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
-                    initialValue: widget.editData![4],
+                    initialValue: widget.editData![1],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -161,7 +161,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                     readOnly: true,
                     initialValue: widget.editData![2],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -197,9 +197,9 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   height: 48,
                   child: TextFormField(
                     readOnly: true,
-                    initialValue: widget.editData![1],
+                    initialValue: widget.editData![3],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -236,7 +236,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   child: TextFormField(
                     readOnly: true,
 
-                    initialValue: widget.editData![5],
+                    initialValue: widget.editData![4],
                     style: TextStyle(
                         color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
@@ -275,7 +275,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   child: TextFormField(
                     readOnly: true,
 
-                    initialValue: widget.editData![3],
+                    initialValue: widget.editData![5],
                     style: TextStyle(
                         color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
@@ -316,7 +316,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
 
                     initialValue: widget.editData![6],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -353,9 +353,9 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   child: TextFormField(
                     readOnly: true,
 
-                    initialValue: widget.editData![3],
+                    initialValue: widget.editData![7],
                     style: TextStyle(
-                        color: Color(0xff23282E),
+                        color: Color(0xffC0C4CB),
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

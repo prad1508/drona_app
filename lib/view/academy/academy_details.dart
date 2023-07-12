@@ -175,7 +175,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                         ),
                                       ),
                                     ),
-                                    hintText: '1478523690',
+                                    hintText: '${value.dataList.data!.registered_number}',
                                     hintStyle: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -650,8 +650,12 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 50,
+                              )
                             ],
                           ),
+
                         );
                       case Status.error:
                         return Center(

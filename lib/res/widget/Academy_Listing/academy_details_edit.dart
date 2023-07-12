@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +25,6 @@ class Edit_Academy_Detail extends StatefulWidget {
 
 class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
   bool hasDataBeenSet = false; // Define the variable here
-
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
   final TextEditingController academyName = TextEditingController();
   final TextEditingController registerNumber = TextEditingController();
@@ -89,8 +90,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                         if (!hasDataBeenSet && value.dataList.data != null) {
                           academyName.text = value.dataList.data!.academyname!;
                           //registerNumber
-                          AlternateNumber.text =
-                          value.dataList.data!.alternateNumber!;
+                          AlternateNumber.text = value.dataList.data!.alternateNumber! == 'undefined' ?'':value.dataList.data!.alternateNumber! ;
                           email.text =
                           value.dataList.data!.email! == 'undefined'
                               ? ''
@@ -215,9 +215,10 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
                                                       5.0),
-                                                  child: SvgPicture.asset(
-                                                      'assets/images/whatsapp.svg'),
-                                                ),
+                                                child: Text(''),
+                                                //   child: SvgPicture.asset(
+                                                //       'assets/images/whatsapp.svg'),
+                                                 ),
                                               ),
                                             ),
                                             hintText: '987654253',
@@ -262,7 +263,6 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                       height: 48,
                                       child: TextFormField(
                                         controller: AlternateNumber,
-                                        readOnly: true,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontStyle: FontStyle.normal,
@@ -347,7 +347,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                           .width * 0.9,
                                       height: 48,
                                       child: TextFormField(
-                                        controller: email,
+                                        controller: website,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontStyle: FontStyle.normal,
@@ -593,6 +593,12 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                           child: TextFormField(
                                             controller: inTime,
                                             readOnly: true,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                height: 2),
                                             decoration: InputDecoration(
                                               hintText: 'In Time',
                                               hintStyle: TextStyle(
@@ -614,8 +620,15 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                         Container(
                                           width: MediaQuery.of(context).size.width * 0.4,
                                           child: TextFormField(
+
                                             readOnly: true,
                                             controller: outTime,
+                                            style: TextStyle(
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            height: 2),
                                              // ..text = batchTodata.toString(),
                                             decoration: InputDecoration(
                                               hintText: 'Out Time',
@@ -828,6 +841,9 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             else if (address.text.isEmpty) {
                                               Utils.flushBarErrorMessage("Please enter address", context);
                                             }
+                                            else if (AlternateNumber.text.trim().length !=10) {
+                                              Utils.flushBarErrorMessage("Please enter correct number ", context);
+                                            }
                                             else if (city.text.isEmpty) {
                                               Utils.flushBarErrorMessage("Please enter city", context);
                                             }
@@ -850,10 +866,12 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                 "website": website.text,
                                                 "academy_open_time": inTime.text,
                                                 "academy_close_time": outTime.text,
-                                               // "working_days":[1,2,3],
+                                                "working_days":[1,2,3],
                                               };
                                               print("data is");
                                               print(data);
+                                            academyListViewViewModel.fetchEditAcademy(data);
+                                            Get.back();
                                             //  batch.fetchEditebatchListApi(data, context);
                                             }
                                             // address
@@ -1025,8 +1043,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                     pincode.text = value.dataList.data?.postOffice?[index].pincode?.toString() ?? '';
                                                     address.text = value.dataList.data?.postOffice?[index].name?.toString() ?? '';
                                                     city.text = value.dataList.data?.postOffice?[index].district?.toString() ?? '';
-                                                    state.text= value.dataList.data?.postOffice?[index].state?.toString() ??
-                                                   '';
+                                                    state.text= value.dataList.data?.postOffice?[index].state?.toString() ?? '';
                                                   });
                                                   Navigator.pop(context);
                                                 },

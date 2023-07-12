@@ -25,6 +25,14 @@ class AcademyListModel {
   String? uTime;
   int? totalService;
   List<Services>? services;
+  String? registered_number;
+  int? academy_progress;
+  bool? academy_details_completed;
+  bool? service_program_facility_completed;
+  bool? bank_details_completed;
+  bool? communication_completed;
+  bool? billing_invoice_completed;
+  List<String>? working_days;
 
   AcademyListModel(
       {this.msg,
@@ -50,7 +58,15 @@ class AcademyListModel {
         this.cTime,
         this.uDate,
         this.uTime,
+        this.registered_number,
+        this.academy_progress,
+        this.academy_details_completed,
+        this.service_program_facility_completed,
+        this.bank_details_completed,
+        this.communication_completed,
         this.totalService,
+        this.billing_invoice_completed,
+        this.working_days,
         this.services});
 
   AcademyListModel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +93,14 @@ class AcademyListModel {
     cTime = json['cTime'];
     uDate = json['uDate'];
     uTime = json['uTime'];
+    academy_progress = json['academy_progress'];
+    academy_details_completed = json['academy_details_completed'];
+    service_program_facility_completed = json['service_program_facility_completed'];
+    bank_details_completed = json['bank_details_completed'];
+    communication_completed = json['communication_completed'];
+    billing_invoice_completed = json['billing_invoice_completed'];
+    working_days = json['working_days'];
+    services = json['services'];
     totalService = json['total_service'];
     if (json['services'] != null) {
       services = <Services>[];
@@ -110,6 +134,13 @@ class AcademyListModel {
     data['cTime'] = this.cTime;
     data['uDate'] = this.uDate;
     data['uTime'] = this.uTime;
+    data['academy_progress'] = this.academy_progress;
+    data['academy_details_completed'] = this.academy_details_completed;
+    data['service_program_facility_completed'] = this.service_program_facility_completed;
+    data['bank_details_completed'] = this.bank_details_completed;
+    data['communication_completed'] = this.communication_completed;
+    data['billing_invoice_completed'] = this.billing_invoice_completed;
+    data['working_days'] = this.working_days;
     data['total_service'] = this.totalService;
     if (this.services != null) {
       data['services'] = this.services!.map((v) => v.toJson()).toList();

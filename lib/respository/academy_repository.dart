@@ -23,6 +23,7 @@ class AcademyRepository {
       return response = AcademyListModel.fromJson(response);
 
     }catch(e){
+      print("error is $e");
       rethrow ;
     }
   }
