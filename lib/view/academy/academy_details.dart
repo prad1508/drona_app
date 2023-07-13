@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/response/status.dart';
+import '../../model/academy_model.dart';
 import '../../res/widget/customradio.dart';
 import '../../view_model/academy_view_model.dart';
 
@@ -20,6 +21,7 @@ class Academy_Detail_Page extends StatefulWidget {
 }
 
 class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
+  bool isset = false;
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
   Map<String, bool> values = {
     'MO': false,
@@ -37,21 +39,23 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
   }
 
   ValueChanged<String?> Working_Days(String key) {
-    return (value) => setState(() {
-      value == 'false'? 'true': 'false';
+    return (value) => null;
 
-      if(value == 'true'){
-        values[key] = false;
-        // print(values);
-      }else{
-        values[key] = true;
-        // print(values);
-      }
-    });
+    //   value == 'false'? 'true': 'false';
+    //
+    //   if(value == 'true'){
+    //     values[key] = false;
+    //     // print(values);
+    //   }else{
+    //     values[key] = true;
+    //     // print(values);
+    //   }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+   // academyListViewViewModel.fetchAcademyListApi();
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -77,6 +81,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
               child :  ChangeNotifierProvider<AcademyViewViewModel>(
                   create: (BuildContext context) => academyListViewViewModel,
                   child: Consumer<AcademyViewViewModel>(builder: (context, value, _) {
+
                     switch (value.dataList.status!) {
                       case Status.loading:
                         return const Center(
@@ -86,12 +91,78 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                         );
 
                       case Status.completed:
+                        if(!isset)
+                        {
+                          for (WorkingDay day in value.dataList.data!.workingDays) {
+                            var dayCode = day.dayNameShort;
+
+                            switch (dayCode) {
+                              case 'Mon':
+                                values['MO'] = true;
+                                break;
+                              case 'Tue':
+                                values['TU'] = true;
+                                break;
+                              case 'Wed':
+                                values['WE'] = true;
+                                break;
+                              case 'Thu':
+                                values['TH'] = true;
+                                break;
+                              case 'Fri':
+                                values['FR'] = true;
+                                break;
+                              case 'Sat':
+                                values['ST'] = true;
+                                break;
+                              case 'Sun':
+                                values['SU'] = true;
+                                break;
+                              default:
+                              // Handle any other cases if needed
+                                break;
+                            }
+                          }
+
+
+
+                          isset = true;
+                          print("value is $values");
+                        }
                         return Padding(
                           padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0, top: 10, bottom: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Center(
+                                child: Container(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: SizedBox(
+                                    height: 120,
+                                    width: 120,
+                                    child: Stack(
+                                      clipBehavior: Clip.none,
+                                      fit: StackFit.expand,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: Colors.grey[500],
+                                          radius: 70,
+                                          child: const CircleAvatar(
+                                            radius: 65,
+                                            backgroundColor: Colors.white,
+                                            backgroundImage: AssetImage(
+                                                'assets/images/coachlogo.png'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
                               Text(
                                 "Academy Name",
                                 style: TextStyle(
@@ -166,11 +237,10 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                         backgroundColor: Color(0xff25D366),
                                         child: Padding(
                                           padding: const EdgeInsets.all(5.0),
-                                          child: SvgPicture.asset(
-                                            'assets/images/whatsapp.svg',
-                                            width: 24,
+                                          child: Image.asset('assets/images/WhatsApp.png',
+                                            width: 34,
                                             // Specify the desired width for the icon
-                                            height: 24, // Specify the desired height for the icon
+                                            height: 34, // Specify the desired height for the icon
                                           ),
                                         ),
                                       ),
@@ -589,22 +659,26 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   children: [
                                     //CheckButton for Months selection;
                                     Expanded(
-                                      child: ListView(
+                                      child:
+                                      ListView(
                                         scrollDirection: Axis.horizontal,
                                         children: values.keys.map((String key) {
                                           return Row(
                                             children: [
                                               CustomRadio(
+                                                  
                                                   value: values[key].toString(),
-                                                  groupValue: 'false',
+                                                  groupValue: 'true',
                                                   label: key,
                                                   onChanged: Working_Days(key),
-                                                  btnColor: Colors.black),
+                                                  btnColor: Colors.black
+                                              ),
                                               SizedBox(width: 10)
                                             ],
                                           );
                                         }).toList(),
-                                      ),
+                                      )
+
                                     ),
                                   ],
                                 ),
@@ -636,7 +710,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                       fontSize: 14,
                                       height: 2),
                                   decoration: InputDecoration(
-                                    hintText: '---',
+                                    hintText: '${value.dataList.data?.cDate}',
                                     contentPadding: EdgeInsets.all(10),
                                     suffixIcon: InkWell(
                                       child: Icon(Icons.calendar_month_outlined),

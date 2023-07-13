@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:drona/res/widget/customradio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,10 +9,12 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/response/status.dart';
+import '../../../model/academy_model.dart';
 import '../../../utils/utils.dart';
 import '../../../view_model/academy_view_model.dart';
 import '../../../view_model/postoffice_view_model.dart';
@@ -24,6 +28,131 @@ class Edit_Academy_Detail extends StatefulWidget {
 }
 
 class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
+
+  //academy image picker
+  File? imgFile;
+  final imgPicker = ImagePicker();
+  String? selectedService;
+  void openCamera() async {
+    var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
+
+    academyListViewViewModel.fetchouserProfileimg(imgCamera!.path, context);
+    // ignore: use_build_context_synchronously
+
+    setState(() {
+      imgFile = File(imgCamera!.path);
+      print("imgFile$imgFile");
+    });
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+  void openGallery() async {
+    var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
+
+    // userViewModel.fetchouserProfileimg(imgGallery!.path, context);
+    setState(() {
+      imgFile = File(imgGallery!.path);
+      print("imgFile$imgFile");
+    });
+    Navigator.of(context).pop();
+  }
+
+  //bottomsheet popup
+  showcameraoption() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 200,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 3,
+                          width: 50,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Profile Picture',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Loto-Regular'),
+                          ),
+                          IconButton(
+                            onPressed: (() {
+                              setState(() {
+                                imgFile = null;
+                                Navigator.pop(context);
+                              });
+                            }),
+                            icon: const Icon(Icons.delete_outline),
+                            color: Colors.black,
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(color: Colors.grey),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: openCamera,
+                          child: Text(
+                            'Camera',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: openGallery,
+                          child: Text(
+                            'Gallery',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   bool hasDataBeenSet = false; // Define the variable here
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
   final TextEditingController academyName = TextEditingController();
@@ -39,6 +168,8 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
   final TextEditingController outTime = TextEditingController();
   final TextEditingController joiningDate = TextEditingController();
   final TextEditingController cat = TextEditingController();
+  String logo = '';
+  bool isLogo = false;
   Map<String, bool> values = {
     'MO': false,
     'TU': false,
@@ -48,6 +179,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
     'ST': false,
     'SU': false,
   };
+  List batchDays = [];
 
   initState() {
     super.initState();
@@ -58,6 +190,34 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
     return (value) =>
         setState(() {
           value == 'false' ? 'true' : 'false';
+             if(key =='MO')
+               {
+                 if (!batchDays.contains("1")) {batchDays.add("1");} else {batchDays.remove("1");}
+               }
+             if(key == 'TU')
+               {
+                 if (!batchDays.contains("2")) {batchDays.add("2");} else {batchDays.remove("2");}
+               }
+          if(key == 'WE')
+          {
+            if (!batchDays.contains("3")) {batchDays.add("3");} else {batchDays.remove("3");}
+          }
+          if(key == 'TH')
+          {
+            if (!batchDays.contains("4")) {batchDays.add("4");} else {batchDays.remove("4");}
+          }
+          if(key == 'FR')
+          {
+            if (!batchDays.contains("5")) {batchDays.add("5");} else {batchDays.remove("5");}
+          }
+          if(key == 'ST')
+          {
+            if (!batchDays.contains("6")) {batchDays.add("6");} else {batchDays.remove("6");}
+          }
+          if(key == 'SU')
+          {
+            if (!batchDays.contains("0")) {batchDays.add("0");} else {batchDays.remove("0");}
+          }
 
           if (value == 'true') {
             values[key] = false;
@@ -66,7 +226,11 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
             values[key] = true;
             // print(values);
           }
+          print(key);
+          print(values);
+          print(batchDays);
         });
+
   }
 
   @override
@@ -88,31 +252,65 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                   child: Consumer<AcademyViewViewModel>(
                       builder: (context, value, _) {
                         if (!hasDataBeenSet && value.dataList.data != null) {
-                          academyName.text = value.dataList.data!.academyname!;
+                          academyName.text = value.dataList.data!.academyname;
                           //registerNumber
-                          AlternateNumber.text = value.dataList.data!.altMobno! == 'undefined' ?'':value.dataList.data!.altMobno! ;
+                          AlternateNumber.text = value.dataList.data!.altMobno == 'undefined' ?'':value.dataList.data!.altMobno;
                           email.text =
-                          value.dataList.data!.email! == 'undefined'
-                              ? ''
-                              : value.dataList.data!.email!;
-                          website.text =
-                          value.dataList.data!.website! == 'undefined'
-                              ? ''
-                              : value.dataList.data!.website!;
-                          address.text = value.dataList.data!.address!;
-                          state.text = value.dataList.data!.state!;
-                          city.text = value.dataList.data!.city!;
-                          pincode.text = value.dataList.data!.pincode!;
+                          value.dataList.data!.email == 'undefined' ? '' : value.dataList.data!.email;
+                          website.text = value.dataList.data!.website == 'undefined' ? '' : value.dataList.data!.website;
+                          address.text = value.dataList.data!.address;
+                          state.text = value.dataList.data!.state;
+                          city.text = value.dataList.data!.city;
+                          pincode.text = value.dataList.data!.pincode;
                           inTime.text =
-                          value.dataList.data!.academyOpenTime! == 'undefined'
+                          value.dataList.data!.academyOpenTime == 'undefined'
                               ? ''
-                              : value.dataList.data!.academyOpenTime!;
+                              : value.dataList.data!.academyOpenTime;
                           outTime.text =
-                          value.dataList.data!.academyCloseTime! == 'undefined'
+                          value.dataList.data!.academyCloseTime == 'undefined'
                               ? ''
-                              : value.dataList.data!.academyCloseTime!;
-                          joiningDate.text = value.dataList.data!.cDate!;
-                          cat.text = value.dataList.data!.bcatname!;
+                              : value.dataList.data!.academyCloseTime;
+                          joiningDate.text = value.dataList.data!.cDate;
+                          cat.text = value.dataList.data!.bcatname;
+                          logo = value.dataList.data!.logo;
+                          isLogo = value.dataList.data!.islogo;
+                          for (WorkingDay day in value.dataList.data!.workingDays) {
+                            var dayCode = day.dayNameShort;
+
+                            switch (dayCode) {
+                              case 'Mon':
+                                values['MO'] = true;
+                                batchDays.add("1");
+                                break;
+                              case 'Tue':
+                                values['TU'] = true;
+                                batchDays.add("2");
+                                break;
+                              case 'Wed':
+                                values['WE'] = true;
+                                batchDays.add("3");
+                                break;
+                              case 'Thu':
+                                values['TH'] = true;
+                                batchDays.add("4");
+                                break;
+                              case 'Fri':
+                                values['FR'] = true;
+                                batchDays.add("5");
+                                break;
+                              case 'Sat':
+                                values['ST'] = true;
+                                batchDays.add("6");
+                                break;
+                              case 'Sun':
+                                values['SU'] = true;
+                                batchDays.add("0");
+                                break;
+                              default:
+                              // Handle any other cases if needed
+                                break;
+                            }
+                          }
 
                           hasDataBeenSet = true;
                         }
@@ -136,6 +334,63 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Center(
+                                      child: Stack(
+                                        alignment: AlignmentDirectional.bottomCenter,
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                            child: SizedBox(
+                                              height: 120,
+                                              width: 120,
+                                              child: Stack(
+                                                clipBehavior: Clip.none,
+                                                fit: StackFit.expand,
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundColor: Colors.grey[500],
+                                                    radius: 70,
+                                                    child: CircleAvatar(
+                                                      radius: 65,
+                                                      backgroundColor: Colors.white,
+                                                      backgroundImage: imgFile == null
+                                                          ?
+                                                      const AssetImage(
+                                                          'assets/images/coachlogo.png')
+
+                                                          : FileImage(imgFile!) as ImageProvider,
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      top: -5,
+                                                      right: -10,
+                                                      height: 182,
+                                                      width: 40,
+                                                      child: RawMaterialButton(
+                                                        onPressed: showcameraoption,
+                                                        elevation: 2.0,
+                                                        fillColor: Theme.of(context).primaryColor,
+                                                        padding: const EdgeInsets.all(10),
+
+                                                        // padding: EdgeInsets.all(1.0),
+                                                        shape: const CircleBorder(
+                                                            side: BorderSide(
+                                                                color: Colors.white, width: 2)),
+
+                                                        child: Image.asset(
+                                                            'assets/images/add_a_photo.png',
+                                                            fit: BoxFit.contain),
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
                                     Text(
                                       "Academy Name", style: TextStyle(
                                         color: Colors.black,
@@ -215,9 +470,8 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
                                                       5.0),
-                                                child: Text(''),
-                                                //   child: SvgPicture.asset(
-                                                //       'assets/images/whatsapp.svg'),
+                                                  child: Image.asset(
+                                                      'assets/images/WhatsApp.png'),
                                                  ),
                                               ),
                                             ),
@@ -449,7 +703,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: 'DropDown State',
+                                          hintText: ' State',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -480,7 +734,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: 'DropDown State',
+                                          hintText: 'City',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -757,10 +1011,9 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                     CustomRadio(
                                                         value: values[key]
                                                             .toString(),
-                                                        groupValue: 'false',
+                                                        groupValue: 'true',
                                                         label: key,
-                                                        onChanged: Working_Days(
-                                                            key),
+                                                        onChanged: Working_Days(key),
                                                         btnColor: Colors.black),
                                                     SizedBox(width: 10)
                                                   ],
@@ -841,7 +1094,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             else if (address.text.isEmpty) {
                                               Utils.flushBarErrorMessage("Please enter address", context);
                                             }
-                                            else if (AlternateNumber.text.trim().length !=10) {
+                                            else if (AlternateNumber.text.isNotEmpty && AlternateNumber.text.trim().length !=10) {
                                               Utils.flushBarErrorMessage("Please enter correct number ", context);
                                             }
                                             else if (city.text.isEmpty) {
@@ -861,18 +1114,18 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                 "city": city.text,
                                                 "state": state.text,
                                                 "pincode": pincode.text,
-                                                "alt_mobno": AlternateNumber.text,
-                                                "email": email.text,
-                                                "website": website.text,
-                                                "academy_open_time": inTime.text,
-                                                "academy_close_time": outTime.text,
-                                                "working_days":[1,2,3],
+                                                "alt_mobno": AlternateNumber.text.isNotEmpty ? AlternateNumber.text : '',
+                                                "email": email.text.isNotEmpty ?email.text:'' ,
+                                                "website": website.text.isNotEmpty ? website.text : '',
+                                                "academy_open_time": inTime.text.isNotEmpty ? inTime.text : '',
+                                                "academy_close_time": outTime.text.isNotEmpty ? outTime.text : '',
+                                                "working_days":batchDays,
                                               };
-                                              print("data is");
-                                              print(data);
-                                            academyListViewViewModel.fetchEditAcademy(data);
-                                            Get.back();
-                                            //  batch.fetchEditebatchListApi(data, context);
+
+
+                                             academyListViewViewModel.fetchEditAcademy(data);
+                                             // Get.back();
+
                                             }
                                             // address
                                             // city

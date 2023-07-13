@@ -1,4 +1,5 @@
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
+import 'package:drona/view/batch_listing/viewprofile_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -38,131 +39,147 @@ class _AddTraineeListState extends State<AddTraineeList> {
 
 
   //bottomsheet popup
-  showBottomSheet({bool? status}) {
+  //bottomsheet popup
+  showBottomSheet({bool? status, int? index}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
         return Scaffold(
           backgroundColor: Colors.transparent,
-          body: Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
+          body: SingleChildScrollView(
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30.0),
+                        topLeft: Radius.circular(30.0),
+                      ),
                     ),
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 3,
-                          width: 50,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Select Option',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Loto-Regular'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Divider(color: Colors.grey),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'View Profile',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Container(
+                            height: 3,
+                            width: 50,
+                            color: Colors.grey[400],
                           ),
                         ),
-                      ),
-                      status == true?Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'Remind For Payment',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Select Option',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Loto-Regular'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Divider(color: Colors.grey),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() => ViewProfileDetails(index: index!),
+                                  transition: Transition.leftToRight);
+                            },
+                            child: Text(
+                              'View Profile',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
                         ),
-                      ):Container(),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'Record A Payment',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                        status == true
+                            ? Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Remind For Payment',
+                              style:
+                              Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        )
+                            : Container(),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Record A Payment',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'View Ledger',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'View Ledger',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
                         ),
-                      ),
-                      status == true?Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'Edit Batch',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                        status == true
+                            ? Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Edit Batch',
+                              style:
+                              Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        )
+                            : Container(),
+                        status == true
+                            ? Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Deactivate',
+                              style:
+                              Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        )
+                            : Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Activate',
+                              style:
+                              Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
                         ),
-                      ):Container(),
-                      status == true?Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'Deactivate',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ):Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: (){},
-                          child: Text(
-                            'Activate',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -324,7 +341,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                   children: [
                                     InkWell(
                                       onTap: (){
-                                        showBottomSheet(status: value.dataList.data!.data[index].status == 'active' ? true : false);
+                                        showBottomSheet(status: value.dataList.data!.data[index].status == 'active' ? true : false, index: index);
                                       },
                                       child: Container(
                                         color: const Color(0XFFDFE1E4).withOpacity(0.3),

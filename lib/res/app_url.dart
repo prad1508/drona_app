@@ -53,6 +53,7 @@ class AppUrl {
   static var bankDetails = "$baseUrl/academy/bankdetails";
   // academy
   static var academydetails = "$baseUrl/academy/academy";
+  static var uploadLogo = "$baseUrl/academy/logo";
 
 
 

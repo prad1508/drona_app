@@ -5,6 +5,7 @@ import 'package:drona/view/academy/bank_detail.dart';
 import 'package:drona/view/academy/billing_invoice.dart';
 import 'package:drona/view/academy/communication.dart';
 import 'package:drona/view/academy/service_program.dart';
+import 'package:drona/view/reports/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -144,16 +145,16 @@ class _academy_settingState extends State<academy_setting> {
                                       padding: const EdgeInsets.all(10),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: const [
+                                        children:  [
                                           Text("Process"),
-                                          Text("60%"),
+                                          Text("${value.dataList.data?.academyProgress} %"),
                                         ],
                                       ),
                                     ),
                                     LinearPercentIndicator(
                                       barRadius: Radius.circular(20),
                                       lineHeight: 6,
-                                      percent: 0.6,
+                                      percent: (value.dataList.data!.academyProgress/100),
                                       progressColor: Color(0xff2A62B8),
                                     ),
                                   ],
@@ -184,15 +185,60 @@ class _academy_settingState extends State<academy_setting> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                    title: Text(
-                                      "Add 10%",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: Color(0xffB48A3F),
-                                          fontSize: 10,
-                                          fontFamily: 'Lato',
-                                          fontWeight: FontWeight.w400),
+                                    title: value.dataList.data!.academyDetailsCompleted ?
+                                        Container(
+                                        width: 100, // Adjust the width as needed
+                                        child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                        Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        decoration: BoxDecoration(
+                                        color: AppColors.contentColorGreen.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(4.0),
+                                        ),
+                                        child: Text(
+                                        "complete",
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 10,
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w400,
+                                        ),
+                                        ),
+                                        ),
+                                        ],
+                                        ),
+                                        )
+                                        :
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.redAccent.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "Incomplete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+
+
                                     trailing: Icon(
                                       Icons.arrow_forward_ios,
                                       size: 15,
@@ -220,14 +266,57 @@ class _academy_settingState extends State<academy_setting> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                    title: Text(
-                                      "Add 10%",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: Color(0xffB48A3F),
-                                          fontSize: 10,
-                                          fontFamily: 'Lato',
-                                          fontWeight: FontWeight.w400),
+                                    title: value.dataList.data!.serviceProgramFacilityCompleted ?
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.contentColorGreen.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "complete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                        :
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.redAccent.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "Incomplete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     trailing: Icon(
                                       Icons.arrow_forward_ios,
@@ -255,14 +344,57 @@ class _academy_settingState extends State<academy_setting> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                    title: Text(
-                                      "Add 10%",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: Color(0xffB48A3F),
-                                          fontSize: 10,
-                                          fontFamily: 'Lato',
-                                          fontWeight: FontWeight.w400),
+                                    title: value.dataList.data!.bankDetailsCompleted ?
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.contentColorGreen.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "complete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                        :
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.redAccent.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "Incomplete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     trailing: Icon(
                                       Icons.arrow_forward_ios,
@@ -282,7 +414,7 @@ class _academy_settingState extends State<academy_setting> {
                                       leading: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "Communicatio",
+                                            "Communication",
                                             style: TextStyle(
                                                 color: Color(0xff39404A),
                                                 fontSize: 14,
@@ -290,14 +422,57 @@ class _academy_settingState extends State<academy_setting> {
                                                 fontWeight: FontWeight.w600),
                                           )
                                       ),
-                                      title: Text(
-                                        "Add 10%",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            color: Color(0xffB48A3F),
-                                            fontSize: 10,
-                                            fontFamily: 'Lato',
-                                            fontWeight: FontWeight.w400),
+                                      title: value.dataList.data!.communicationCompleted ?
+                                      Container(
+                                        width: 100, // Adjust the width as needed
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.contentColorGreen.withOpacity(0.2),
+                                                borderRadius: BorderRadius.circular(4.0),
+                                              ),
+                                              child: Text(
+                                                "complete",
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontSize: 10,
+                                                  fontFamily: 'Lato',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                          :
+                                      Container(
+                                        width: 100, // Adjust the width as needed
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.redAccent.withOpacity(0.2),
+                                                borderRadius: BorderRadius.circular(4.0),
+                                              ),
+                                              child: Text(
+                                                "Incomplete",
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 10,
+                                                  fontFamily: 'Lato',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       trailing: Icon(
                                         Icons.arrow_forward_ios,
@@ -322,14 +497,57 @@ class _academy_settingState extends State<academy_setting> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                    title: Text(
-                                      "Complete",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: Color(0xff47C088),
-                                          fontSize: 10,
-                                          fontFamily: 'Lato',
-                                          fontWeight: FontWeight.w400),
+                                    title: value.dataList.data!.billingInvoiceCompleted ?
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.contentColorGreen.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "complete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                        :
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.redAccent.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "Incomplete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.redAccent,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     trailing: Icon(Icons.arrow_forward_ios,
                                       size: 15,

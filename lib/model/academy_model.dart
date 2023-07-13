@@ -30,7 +30,7 @@ class AcademyListModel {
   final String academyCloseTime;
   final String logo;
   final bool islogo;
-  final List<dynamic> workingDays;
+  final List<WorkingDay> workingDays;
   final String registeredNumber;
   final int academyProgress;
   final bool academyDetailsCompleted;
@@ -105,7 +105,7 @@ class AcademyListModel {
     academyCloseTime: json["academy_close_time"],
     logo: json["logo"],
     islogo: json["islogo"],
-    workingDays: List<dynamic>.from(json["working_days"].map((x) => x)),
+    workingDays: List<WorkingDay>.from(json["working_days"].map((x) => WorkingDay.fromJson(x))),
     registeredNumber: json["registered_number"],
     academyProgress: json["academy_progress"],
     academyDetailsCompleted: json["academy_details_completed"],
@@ -121,10 +121,6 @@ class AcademyListModel {
     services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
     bankDetails: List<dynamic>.from(json["bank_details"].map((x) => x)),
   );
-
-
-
-
 
   Map<String, dynamic> toJson() => {
     "msg": msg,
@@ -147,7 +143,7 @@ class AcademyListModel {
     "academy_close_time": academyCloseTime,
     "logo": logo,
     "islogo": islogo,
-    "working_days": List<dynamic>.from(workingDays.map((x) => x)),
+    "working_days": List<dynamic>.from(workingDays.map((x) => x.toJson())),
     "registered_number": registeredNumber,
     "academy_progress": academyProgress,
     "academy_details_completed": academyDetailsCompleted,
@@ -226,5 +222,25 @@ class Service {
     "cTime": cTime,
     "uDate": uDate,
     "uTime": uTime,
+  };
+}
+
+class WorkingDay {
+  final dynamic code;
+  final String dayNameShort;
+
+  WorkingDay({
+    required this.code,
+    required this.dayNameShort,
+  });
+
+  factory WorkingDay.fromJson(Map<String, dynamic> json) => WorkingDay(
+    code: json["code"],
+    dayNameShort: json["day_name_short"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "code": code,
+    "day_name_short": dayNameShort,
   };
 }
