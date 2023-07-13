@@ -380,7 +380,7 @@ class _SessionListState extends State<SessionList>
                                             style:
                                             TextStyle(color: Colors.blue),
                                           ),
-                                          /*avatar: CircleAvatar(
+                                          avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 0
                                                 ? Colors.blue.shade100
@@ -388,7 +388,7 @@ class _SessionListState extends State<SessionList>
                                                 255, 242, 242, 242),
                                             child: Text(
                                                 '${value.dataList.data!.total_data_count}'),
-                                          ),*/
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -403,21 +403,14 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Scheduled',
                                           ),
-                                          /*avatar: CircleAvatar(
+                                          avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 1
                                                 ? Colors.green.shade100
                                                 : const Color.fromARGB(
                                                 255, 242, 242, 242),
-                                            child: value.dataList.data!.data?[0]
-                                                .status ==
-                                                'scheduled'
-                                                ? Text(
-                                                '0')
-                                                : const Text(
-                                              "0",
-                                            ),
-                                          ),*/
+                                            child: Text(value.dataList.data!.scheduled.toString()),
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -432,21 +425,15 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Canceled',
                                           ),
-                                          /*avatar: CircleAvatar(
+                                          avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 2
                                                 ? Colors.brown.shade100
                                                 : const Color.fromARGB(
                                                 255, 242, 242, 242),
-                                            child: value.dataList.data!.data?[0]
-                                                .status ==
-                                                'cancelled'
-                                                ? Text(
-                                                '${value.dataList.data!.data!.length}')
-                                                : const Text(
-                                              "0",
-                                            ),
-                                          ),*/
+                                            child: Text(value.dataList.data!.cancel.toString()),
+
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -461,21 +448,15 @@ class _SessionListState extends State<SessionList>
                                           label: const Text(
                                             'Closed',
                                           ),
-                                          /*avatar: CircleAvatar(
+                                          avatar: CircleAvatar(
                                             backgroundColor:
                                             _controller.index != 3
                                                 ? Colors.redAccent.shade100
                                                 : const Color.fromARGB(
                                                 255, 242, 242, 242),
-                                            child: value.dataList.data!.data?[0]
-                                                .status ==
-                                                'closed'
-                                                ? Text(
-                                                '${value.dataList.data!.data!.length}')
-                                                : const Text(
-                                              "0",
-                                            ),
-                                          ),*/
+                                            child: Text(value.dataList.data!.close.toString()),
+
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -727,9 +708,7 @@ class _SessionListState extends State<SessionList>
                                             itemBuilder:
                                                 (context, index) {
                                               // print("uid of batch ==${value.dataList.data!.data?[index].sdd}");
-                                              if (index <
-                                                  value.dataList.data!
-                                                      .data!.length) {
+                                              if (index < value.dataList.data!.data!.length) {
                                                 return Card(
                                                   // key: ValueKey(_foundUsers[index]["id"]),
                                                   elevation: 0,
@@ -775,7 +754,7 @@ class _SessionListState extends State<SessionList>
                                                                 backgroundColor: value.dataList.data!.data?[index].status ==
                                                                     'scheduled'
                                                                     ? Colors.green.withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -783,7 +762,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -996,7 +975,7 @@ class _SessionListState extends State<SessionList>
                                                                     .withOpacity(
                                                                     .2)
                                                                     : value.dataList.data!.data?[index].status ==
-                                                                    'canceled'
+                                                                    'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -1004,7 +983,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -1241,7 +1220,7 @@ class _SessionListState extends State<SessionList>
                                                                     ? Colors
                                                                     .green
                                                                     .withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -1249,7 +1228,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -1709,7 +1688,7 @@ class _SessionListState extends State<SessionList>
                                                                     ? Colors
                                                                     .green
                                                                     .withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -1717,7 +1696,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -2419,7 +2398,7 @@ class _SessionListState extends State<SessionList>
                                                                     ? Colors
                                                                     .green
                                                                     .withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -2427,7 +2406,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -2661,7 +2640,7 @@ class _SessionListState extends State<SessionList>
                                                                     ? Colors
                                                                     .green
                                                                     .withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -2669,7 +2648,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),
@@ -2895,7 +2874,7 @@ class _SessionListState extends State<SessionList>
                                                                     ? Colors
                                                                     .green
                                                                     .withOpacity(.2)
-                                                                    : value.dataList.data!.data?[index].status == 'canceled'
+                                                                    : value.dataList.data!.data?[index].status == 'cancel'
                                                                     ? Colors.red.withOpacity(.2)
                                                                     : Colors.brown.withOpacity(.2),
                                                                 label: Text(
@@ -2903,7 +2882,7 @@ class _SessionListState extends State<SessionList>
                                                                   style: TextStyle(
                                                                       color: value.dataList.data!.data?[index].status == 'scheduled'
                                                                           ? Colors.green
-                                                                          : value.dataList.data!.data?[index].status == 'canceled'
+                                                                          : value.dataList.data!.data?[index].status == 'cancel'
                                                                           ? Colors.red
                                                                           : Colors.brown),
                                                                 )),

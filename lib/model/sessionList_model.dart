@@ -2,6 +2,9 @@
 
 class SessionListListModel {
   String? msg;
+  int? cancel;
+  int? close;
+  int? scheduled;
   String? search;
   String? pagefilter;
   bool? next_page_available;
@@ -12,10 +15,13 @@ class SessionListListModel {
 
   List<DataSessionList>? data;
 
-  SessionListListModel({this.msg, this.search="",this.next_page_available=false,this.pagesize=10, this.current_pageno=1,this.data_count=1 ,this.total_data_count=1, this.data});
+  SessionListListModel({this.msg, this.cancel,this.close, this.scheduled ,this.search="",this.next_page_available=false,this.pagesize=10, this.current_pageno=1,this.data_count=1 ,this.total_data_count=1, this.data});
 
   SessionListListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
+    cancel =json['cancel'];
+    close = json['close'];
+    scheduled = json['scheduled'];
     search = json['search'];
     pagefilter = json['pagefilter'];
     next_page_available = json['next_page_available'];
@@ -35,6 +41,9 @@ class SessionListListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['msg'] = this.msg;
+    data['cancel'] = this.cancel;
+    data['close'] = this.close;
+    data['scheduled'] = this.scheduled;
     data['search'] = this.search;
     data['pagefilter'] = this.pagefilter;
     data['next_page_available'] = this.next_page_available;
