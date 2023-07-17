@@ -1,38 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'dart:io';
 
 import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
@@ -133,7 +98,7 @@ class _LayoutState extends State<Layout> {
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: Scaffold(
-        resizeToAvoidBottomInset : false ,
+        //resizeToAvoidBottomInset : false ,
         body: Center(
             child: pages[pageIndex],
           ),

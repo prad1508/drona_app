@@ -425,48 +425,45 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                       ),
                                                       const SizedBox(width: 10),
                                                       Container(
-                                                        width: 75,
                                                         height: 20,
+                                                        padding: const EdgeInsets.only(
+                                                            left: 5, right: 5, top: 2),
                                                         decoration: BoxDecoration(
-                                                          color:  value.dataList.data!.data[index].join_status=="not_onboarded" ?Colors.redAccent.shade100.withOpacity(0.3) :const Color(0xffEDF9F3),
-                                                          borderRadius: BorderRadius.circular(4),
-                                                        ),
-                                                        child:  Center(
-                                                            child:  value.dataList.data!.data[index].join_status=="not_onboarded"?
-                                                            const Text(
-                                                              "Not Onboarded",
-                                                              style:  TextStyle(
-                                                                color:  Colors.redAccent,
-                                                                fontSize: 10,
-                                                                fontFamily: 'Lato',
-                                                                fontWeight: FontWeight.w400,
-                                                              ),
-                                                            ):  const Text(
-                                                              "Onboarded",
-                                                              style:  TextStyle(
-                                                                color:  Color(0xff47C088),
-                                                                fontSize: 10,
-                                                                fontFamily: 'Lato',
-                                                                fontWeight: FontWeight.w400,
-                                                              ),
-                                                            )
-
+                                                            color: value.dataList.data!.data[index]
+                                                                .join_status ==
+                                                                'not_onboarded'? const Color.fromRGBO(255, 232, 231, 1):const Color(0xffEDF9F3),
+                                                            borderRadius:
+                                                            BorderRadius.circular(5)),
+                                                        child: Text(
+                                                          value.dataList.data!.data[index]
+                                                              .join_status ==
+                                                              'not_onboarded'
+                                                              ? 'Not Onboarded'
+                                                              : 'Onboarded',
+                                                          style: TextStyle(
+                                                              color: value
+                                                                  .dataList
+                                                                  .data!
+                                                                  .data[index]
+                                                                  .join_status ==
+                                                                  'not_onboarded'
+                                                                  ? const Color.fromRGBO(253, 29, 13, 1)
+                                                                  : Colors.green,
+                                                              fontSize: 12),
+                                                          textAlign: TextAlign.center,
                                                         ),
                                                       ),
                                                       Align(
                                                         alignment: Alignment.centerRight,
-                                                        widthFactor: 4.5,
+                                                        widthFactor: 3.5,
                                                         child: SizedBox(
-                                                          width: 24,
-                                                          height: 24,
-                                                          child: CircleAvatar(
-                                                            backgroundImage: NetworkImage(AppUrl.serviceIconEndPoint +
-                                                                value.dataList.data!.data[index].serviceicon,
-                                                            ),
-                                                            // AssetImage('assets/images/tennis.png'),
-                                                            //  backgroundColor: Colors.white,
-                                                          ),
-                                                        ),
+                                                            width: 24,
+                                                            height: 24,
+                                                            child: Image.network(
+                                                              AppUrl.serviceIconEndPoint +
+                                                                  value.dataList.data!.data[index]
+                                                                      .serviceicon,
+                                                            )),
                                                       ),
                                                     ],
                                                   ),
@@ -523,23 +520,24 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     ],
                                                   ),
                                                   const SizedBox(height: 12),
-                                                  Row(
-                                                    children:  [
-                                                      Padding(
-                                                        padding:  const EdgeInsets.only(left: 15.0),
-                                                        child: Text(
-                                                          value.dataList.data!.data[index].batchname,
-                                                          style: const TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight: FontWeight.w700,
+                                                  SizedBox(
+                                                    width: MediaQuery.sizeOf(context).width*.75,
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children:  [
+                                                        Padding(
+                                                          padding:  const EdgeInsets.only(left: 15.0),
+                                                          child: Text(
+                                                            value.dataList.data!.data[index].batchname,
+                                                            style: const TextStyle(
+                                                              color: Color(0xff39404A),
+                                                              fontSize: 14,
+                                                              fontFamily: 'Lato',
+                                                              fontWeight: FontWeight.w700,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(left: 15),
-                                                        child: Text(
+                                                        Text(
                                                           '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_to}',
                                                           style: const TextStyle(
                                                             color: Color(0xff39404A),
@@ -548,8 +546,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             fontWeight: FontWeight.w400,
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                   const SizedBox(height: 5),
                                                   //const SizedBox(height: 5),

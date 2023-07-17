@@ -29,7 +29,7 @@ class AppUrl {
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
   static var EditbatchListEndPoint = '$baseUrl/academy/batch';
   static var batchListListEndPoint = '$baseUrl/academy/batch';
-  static var batchsearch = '$baseUrl/academy/batch/10/1';
+  static var batchsearch = '$baseUrl/academy/batch';
 
 
   static var userloginEndPint = '$baseUrl/ouser/login';
@@ -54,6 +54,7 @@ class AppUrl {
   // academy
   static var academydetails = "$baseUrl/academy/academy";
   static var uploadLogo = "$baseUrl/academy/logo";
+  static var academylogo = "$baseUrl/static/logo/";
 
 
 

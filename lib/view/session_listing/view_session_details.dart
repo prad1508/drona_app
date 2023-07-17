@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:drona/model/session_details_model.dart';
+import 'package:drona/view/session_listing/session_list.dart';
 import 'package:drona/view/session_listing/view_detailsclosed.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -1442,7 +1443,10 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                               sessionViewModel
                                                                   .sessionCancelApi(
                                                                   data,
-                                                                  context);
+                                                                  context).then((value) => {
+                                                               Navigator.of(context).pop(),
+                                                                  Get.to(()=>  SessionList(), transition: Transition.rightToLeft)
+                                                              });
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(

@@ -132,9 +132,12 @@ class _academy_settingState extends State<academy_setting> {
                                         ),
                                         Column(
                                           children: [
-                                            Image(
-                                              image: AssetImage('assets/images/coachlogo.png'),
-                                              width: 80,
+                                            CircleAvatar(
+                                              radius: 40,
+                                              backgroundColor: Colors.white,
+                                              backgroundImage: NetworkImage(
+                                                AppUrl.academylogo + value.dataList.data!.logo,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -186,31 +189,31 @@ class _academy_settingState extends State<academy_setting> {
                                       ),
                                     ),
                                     title: value.dataList.data!.academyDetailsCompleted ?
-                                        Container(
-                                        width: 100, // Adjust the width as needed
-                                        child: Row(
+                                    Container(
+                                      width: 100, // Adjust the width as needed
+                                      child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                        Container(
-                                        padding: EdgeInsets.all(4.0),
-                                        decoration: BoxDecoration(
-                                        color: AppColors.contentColorGreen.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(4.0),
-                                        ),
-                                        child: Text(
-                                        "complete",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 10,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w400,
-                                        ),
-                                        ),
-                                        ),
+                                          Container(
+                                            padding: EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.contentColorGreen.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(4.0),
+                                            ),
+                                            child: Text(
+                                              "complete",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
                                         ],
-                                        ),
-                                        )
+                                      ),
+                                    )
                                         :
                                     Container(
                                       width: 100, // Adjust the width as needed

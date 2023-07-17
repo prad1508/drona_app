@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 class ViewProfileDetails extends StatefulWidget {
   const ViewProfileDetails({super.key, required this.index});
+
   final int index;
 
   @override
@@ -62,8 +63,11 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
               child: IconButton(
                 icon: const Icon(Icons.edit, color: Colors.black),
                 onPressed: () {
-
-                  Get.to(()=> EditProfileDetails(index: widget.index,),transition: Transition.leftToRight);
+                  Get.to(
+                          () => EditProfileDetails(
+                        index: widget.index,
+                      ),
+                      transition: Transition.leftToRight);
                 },
               ))
         ],
@@ -100,27 +104,30 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                   SizedBox(
                                     width: 41,
                                     height: 46,
-                                    child: value.dataList.data!.data[widget.index].image
-                                            .isNotEmpty
+                                    child: value.dataList.data!
+                                        .data[widget.index].image.isNotEmpty
                                         ? CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              AppUrl.profileserviceIconEndPoint +
-                                                  value.dataList.data!.data[widget.index]
-                                                      .image,
-                                            ),
-                                            // AssetImage('assets/images/user_profile.png'),
-                                          )
+                                      backgroundImage: NetworkImage(
+                                        AppUrl.profileserviceIconEndPoint +
+                                            value.dataList.data!
+                                                .data[widget.index].image,
+                                      ),
+                                      // AssetImage('assets/images/user_profile.png'),
+                                    )
                                         : CircleAvatar(
-                                            backgroundColor: Colors.blue,
-                                            child: Text(
-                                              getInitials(value.dataList.data!
-                                                  .data[widget.index].traineeName),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white),
-                                            ),
-                                            // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
-                                          ),
+                                      backgroundColor: Colors.blue,
+                                      child: Text(
+                                        getInitials(value
+                                            .dataList
+                                            .data!
+                                            .data[widget.index]
+                                            .traineeName),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                      // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                                    ),
                                     // AssetImage('assets/images/user_profile.png'),
                                   ),
                                   Container(
@@ -130,7 +137,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                         color: const Color(0xff47C088),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: Text(
-                                      value.dataList.data!.data[widget.index].status,
+                                      value.dataList.data!.data[widget.index]
+                                          .status == 'active'?'Active':'Not Active',
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 11),
                                     ),
@@ -143,17 +151,21 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    value.dataList.data!.data[widget.index].traineeName,
+                                    value.dataList.data!.data[widget.index]
+                                        .traineeName,
                                     style: const TextStyle(fontSize: 12),
                                   ),
-                                  const Padding(padding: EdgeInsets.only(top: 5)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(top: 5)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        value.dataList.data!.data[widget.index].gender ==
-                                                'm'
+                                        value.dataList.data!.data[widget.index]
+                                            .gender ==
+                                            'm'
                                             ? 'Male'
                                             : 'Female',
                                         style: const TextStyle(
@@ -162,7 +174,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       ),
                                       const Text("|"),
                                       Text(
-                                        value.dataList.data!.data[widget.index].dob,
+                                        value.dataList.data!.data[widget.index]
+                                            .dob,
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
@@ -171,10 +184,12 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
-                                    value.dataList.data!.data[widget.index].batchname,
+                                    value.dataList.data!.data[widget.index]
+                                        .batchname,
                                     style: const TextStyle(fontSize: 12),
                                   ),
-                                  const Padding(padding: EdgeInsets.only(top: 5)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(top: 5)),
                                   Row(children: [
                                     const Text(
                                       "Fees : ",
@@ -198,19 +213,29 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       Container(
                                         height: 20,
                                         padding: const EdgeInsets.only(
-                                            left: 5, right: 5),
+                                            left: 5, right: 5, top: 2),
                                         decoration: BoxDecoration(
-                                            color: const Color(0xffEDF9F3),
+                                            color: value.dataList.data!.data[widget.index]
+                                                .join_status ==
+                                                'not_onboarded'? const Color.fromRGBO(255, 232, 231, 1):const Color(0xffEDF9F3),
                                             borderRadius:
-                                                BorderRadius.circular(5)),
+                                            BorderRadius.circular(5)),
                                         child: Text(
                                           value.dataList.data!.data[widget.index]
-                                                      .join_status ==
-                                                  'not_onboarded'
+                                              .join_status ==
+                                              'not_onboarded'
                                               ? 'Not Onboarded'
                                               : 'Onboarded',
-                                          style: const TextStyle(
-                                              color: Colors.green, fontSize: 12),
+                                          style: TextStyle(
+                                              color: value
+                                                  .dataList
+                                                  .data!
+                                                  .data[widget.index]
+                                                  .join_status ==
+                                                  'not_onboarded'
+                                                  ? const Color.fromRGBO(253, 29, 13, 1)
+                                                  : Colors.green,
+                                              fontSize: 12),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -233,14 +258,11 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                 child: SizedBox(
                                     width: 34,
                                     height: 34,
-                                    child: Image.network(AppUrl.serviceIconEndPoint +
-                                        value
-                                            .dataList
-                                            .data!
-                                            .data[
-                                        widget.index]
-                                            .serviceicon,)
-                                ),
+                                    child: Image.network(
+                                      AppUrl.serviceIconEndPoint +
+                                          value.dataList.data!
+                                              .data[widget.index].serviceicon,
+                                    )),
                               ),
                             ],
                           ),
@@ -270,16 +292,23 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     keyboardType: TextInputType.number,
                                     readOnly: true,
                                     decoration: InputDecoration(
+                                      hintText: '+91-999 999 9999',
+                                      hintStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff626D7E),
+                                      ),
+                                      contentPadding: const EdgeInsets.all(10),
+                                      border: const OutlineInputBorder(),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D3D8)),
+                                      ),
                                       filled: true,
-                                        hintText: '+91-999 999 9999',
-                                        contentPadding: const EdgeInsets.all(15),
-                                        hintStyle: const TextStyle(fontSize: 14),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xffD0D3D8))),
-                                        fillColor: const Color.fromRGBO(236, 238, 240, 1)),
+                                      // Add this line
+                                      fillColor: Colors.grey[200],
+                                    ),
                                   )),
                               const SizedBox(height: 15),
                               const Text(
@@ -298,15 +327,17 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     style: const TextStyle(fontSize: 14),
                                     readOnly: true,
                                     decoration: InputDecoration(
-                                      filled: true,
-                                        hintText: value.dataList.data!.data[widget.index]
-                                            .traineeName,
-                                        contentPadding: const EdgeInsets.all(15),
-                                        hintStyle: const TextStyle(fontSize: 14),
+                                        filled: true,
+                                        hintText: value.dataList.data!
+                                            .data[widget.index].traineeName,
+                                        contentPadding:
+                                        const EdgeInsets.all(15),
+                                        hintStyle:
+                                        const TextStyle(fontSize: 14),
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(8)),
-                                        fillColor: const Color.fromRGBO(236, 238, 240, 1)),
+                                            BorderRadius.circular(8)),
+                                        fillColor: Colors.grey[200]),
                                   )),
                               const SizedBox(height: 15),
                               const Text(
@@ -326,17 +357,24 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     readOnly: true,
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
+                                      hintText: value.dataList.data!
+                                          .data[widget.index].dob,
+                                      hintStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff626D7E),
+                                      ),
+                                      contentPadding: const EdgeInsets.all(10),
+                                      border: const OutlineInputBorder(),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D3D8)),
+                                      ),
                                       filled: true,
-                                        hintText:
-                                            value.dataList.data!.data[widget.index].dob,
-                                        contentPadding: const EdgeInsets.all(15),
-                                        hintStyle: const TextStyle(fontSize: 14),
-                                        suffixIcon: const Icon(
-                                            Icons.calendar_month_outlined),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        fillColor: const Color.fromRGBO(236, 238, 240, 1)),
+                                      // Add this line
+                                      fillColor: Colors.grey[200],
+                                    ),
                                   )),
                               const SizedBox(
                                 height: 15,
@@ -346,7 +384,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 10),
                                       const Text(
@@ -359,34 +398,47 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       ),
                                       const SizedBox(height: 4),
                                       SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  .4,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              .4,
                                           height: 48,
                                           child: TextField(
-                                            style: const TextStyle(fontSize: 14),
+                                            style:
+                                            const TextStyle(fontSize: 14),
                                             readOnly: true,
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
+                                              hintText: value
+                                                  .dataList
+                                                  .data!
+                                                  .data[widget.index]
+                                                  .dateOfJoining,
+                                              hintStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xff626D7E),
+                                              ),
+                                              contentPadding:
+                                              const EdgeInsets.all(10),
+                                              border: const OutlineInputBorder(),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color: Color(0xffD0D3D8)),
+                                              ),
                                               filled: true,
-                                                hintText: value.dataList.data!
-                                                    .data[widget.index].dateOfJoining,
-                                                contentPadding:
-                                                    const EdgeInsets.all(15),
-                                                hintStyle:
-                                                    const TextStyle(fontSize: 14),
-                                                suffixIcon: const Icon(Icons
-                                                    .calendar_month_outlined),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(8)),
-                                                fillColor: const Color.fromRGBO(236, 238, 240, 1)),
+                                              // Add this line
+                                              fillColor: Colors.grey[200],
+                                            ),
                                           )),
                                     ],
                                   ),
                                   const SizedBox(width: 20),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 10),
                                       const Text(
@@ -399,28 +451,40 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       ),
                                       const SizedBox(height: 4),
                                       SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  .4,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              .4,
                                           height: 48,
                                           child: TextField(
-                                            style: const TextStyle(fontSize: 14),
+                                            style:
+                                            const TextStyle(fontSize: 14),
                                             readOnly: true,
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
-                                              filled: true,
-                                                hintText: value.dataList.data!
-                                                    .data[widget.index].monthOfBilling,
+                                                hintText: value
+                                                    .dataList
+                                                    .data!
+                                                    .data[widget.index]
+                                                    .monthOfBilling,
+                                                hintStyle: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xff626D7E),
+                                                ),
                                                 contentPadding:
-                                                    const EdgeInsets.all(15),
-                                                hintStyle:
-                                                    const TextStyle(fontSize: 14),
-                                                suffixIcon: const Icon(Icons
-                                                    .calendar_month_outlined),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(8)),
-                                                fillColor: const Color.fromRGBO(236, 238, 240, 1)),
+                                                const EdgeInsets.all(10),
+                                                border: const OutlineInputBorder(),
+                                                enabledBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(8),
+                                                  borderSide: const BorderSide(
+                                                      color: Color(0xffD0D3D8)),
+                                                ),
+                                                filled: true,
+                                                // Add this line
+                                                fillColor: Colors.grey[200]),
                                           )),
                                     ],
                                   )
@@ -440,20 +504,29 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                   width: 342,
                                   height: 48,
                                   child: TextField(
-                                    style: const TextStyle(fontSize: 14),
-                                    readOnly: true,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      filled: true,
+                                      style: const TextStyle(fontSize: 14),
+                                      readOnly: true,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
                                         hintText:
-                                            '₹${value.dataList.data!.data[widget.index].fees}',
-                                        contentPadding: const EdgeInsets.all(15),
-                                        hintStyle: const TextStyle(fontSize: 14),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        fillColor: const Color.fromRGBO(236, 238, 240, 1)),
-                                  )),
+                                        '₹${value.dataList.data!.data[widget.index].fees}',
+                                        hintStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff626D7E),
+                                        ),
+                                        contentPadding: const EdgeInsets.all(10),
+                                        border: const OutlineInputBorder(),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                              color: Color(0xffD0D3D8)),
+                                        ),
+                                        filled: true,
+                                        // Add this line
+                                        fillColor: Colors.grey[200],
+                                      ))),
                             ],
                           ),
                         )
@@ -463,24 +536,24 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                 case Status.error:
                   return Center(
                       child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: Theme.of(context).primaryColorDark,
-                        size: 100.0,
-                      ),
-                      const NoData()
-                      // Text(
-                      //   value.dataList.message.toString(),
-                      //   style: TextStyle(
-                      //       color: Theme.of(context).primaryColor,
-                      //       fontSize: 20,
-                      //       height: 2),
-                      // )
-                    ],
-                  ));
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            color: Theme.of(context).primaryColorDark,
+                            size: 100.0,
+                          ),
+                          const NoData()
+                          // Text(
+                          //   value.dataList.message.toString(),
+                          //   style: TextStyle(
+                          //       color: Theme.of(context).primaryColor,
+                          //       fontSize: 20,
+                          //       height: 2),
+                          // )
+                        ],
+                      ));
               }
             },
           ),

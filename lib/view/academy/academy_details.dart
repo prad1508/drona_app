@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/response/status.dart';
 import '../../model/academy_model.dart';
+import '../../res/app_url.dart';
 import '../../res/widget/customradio.dart';
 import '../../view_model/academy_view_model.dart';
 
@@ -55,7 +56,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
 
   @override
   Widget build(BuildContext context) {
-   // academyListViewViewModel.fetchAcademyListApi();
+    // academyListViewViewModel.fetchAcademyListApi();
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -148,11 +149,13 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                         CircleAvatar(
                                           backgroundColor: Colors.grey[500],
                                           radius: 70,
-                                          child: const CircleAvatar(
+                                          child:  CircleAvatar(
                                             radius: 65,
                                             backgroundColor: Colors.white,
-                                            backgroundImage: AssetImage(
-                                                'assets/images/coachlogo.png'),
+                                            backgroundImage: NetworkImage(
+                                              AppUrl.academylogo +
+                                                  value.dataList.data!.logo,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -659,25 +662,25 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   children: [
                                     //CheckButton for Months selection;
                                     Expanded(
-                                      child:
-                                      ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: values.keys.map((String key) {
-                                          return Row(
-                                            children: [
-                                              CustomRadio(
-                                                  
-                                                  value: values[key].toString(),
-                                                  groupValue: 'true',
-                                                  label: key,
-                                                  onChanged: Working_Days(key),
-                                                  btnColor: Colors.black
-                                              ),
-                                              SizedBox(width: 10)
-                                            ],
-                                          );
-                                        }).toList(),
-                                      )
+                                        child:
+                                        ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: values.keys.map((String key) {
+                                            return Row(
+                                              children: [
+                                                CustomRadio(
+
+                                                    value: values[key].toString(),
+                                                    groupValue: 'true',
+                                                    label: key,
+                                                    onChanged: Working_Days(key),
+                                                    btnColor: Colors.black
+                                                ),
+                                                SizedBox(width: 10)
+                                              ],
+                                            );
+                                          }).toList(),
+                                        )
 
                                     ),
                                   ],

@@ -151,7 +151,6 @@ class SessionViewViewModel with ChangeNotifier {
     _myRepo.putSessionCancelApi(data).then((value) {
       setDataList4(ApiResponse.completed(value));
       Utils.flushBarErrorMessage(value.msg, context);
-      //Navigator.pop(context);
       print("api sessionCancelApi success");
     }).onError((error, stackTrace) {
       setDataList4(ApiResponse.error(error.toString()));

@@ -6,18 +6,15 @@ import 'package:drona/res/widget/customradio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/response/status.dart';
 import '../../../model/academy_model.dart';
 import '../../../utils/utils.dart';
 import '../../../view_model/academy_view_model.dart';
 import '../../../view_model/postoffice_view_model.dart';
+import '../../app_url.dart';
 import '../../language/language.dart';
 
 class Edit_Academy_Detail extends StatefulWidget {
@@ -49,7 +46,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
 
   void openGallery() async {
     var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
-
+    academyListViewViewModel.fetchouserProfileimg(imgGallery!.path, context);
     // userViewModel.fetchouserProfileimg(imgGallery!.path, context);
     setState(() {
       imgFile = File(imgGallery!.path);
@@ -190,14 +187,14 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
     return (value) =>
         setState(() {
           value == 'false' ? 'true' : 'false';
-             if(key =='MO')
-               {
-                 if (!batchDays.contains("1")) {batchDays.add("1");} else {batchDays.remove("1");}
-               }
-             if(key == 'TU')
-               {
-                 if (!batchDays.contains("2")) {batchDays.add("2");} else {batchDays.remove("2");}
-               }
+          if(key =='MO')
+          {
+            if (!batchDays.contains("1")) {batchDays.add("1");} else {batchDays.remove("1");}
+          }
+          if(key == 'TU')
+          {
+            if (!batchDays.contains("2")) {batchDays.add("2");} else {batchDays.remove("2");}
+          }
           if(key == 'WE')
           {
             if (!batchDays.contains("3")) {batchDays.add("3");} else {batchDays.remove("3");}
@@ -355,10 +352,11 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                       backgroundColor: Colors.white,
                                                       backgroundImage: imgFile == null
                                                           ?
-                                                      const AssetImage(
-                                                          'assets/images/coachlogo.png')
-
-                                                          : FileImage(imgFile!) as ImageProvider,
+                                                      NetworkImage(
+                                                        AppUrl.academylogo +
+                                                            value.dataList.data!.logo,
+                                                      )
+                                                          :FileImage(imgFile!) as ImageProvider,
                                                     ),
                                                   ),
                                                   Positioned(
@@ -472,10 +470,10 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                       5.0),
                                                   child: Image.asset(
                                                       'assets/images/WhatsApp.png'),
-                                                 ),
+                                                ),
                                               ),
                                             ),
-                                            hintText: '987654253',
+                                            hintText: '${value.dataList.data!.registeredNumber}',
                                             hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -878,18 +876,18 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             readOnly: true,
                                             controller: outTime,
                                             style: TextStyle(
-                                            color: Colors.black,
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            height: 2),
-                                             // ..text = batchTodata.toString(),
+                                                color: Colors.black,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                height: 2),
+                                            // ..text = batchTodata.toString(),
                                             decoration: InputDecoration(
                                               hintText: 'Out Time',
                                               hintStyle: TextStyle(
-                                                              fontSize: 13,
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Color(0xff626D7E)),
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xff626D7E)),
 
                                               contentPadding: const EdgeInsets.all(10),
                                               border: OutlineInputBorder(),
@@ -1086,7 +1084,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                       .circular(8)),
                                               backgroundColor: Color(
                                                   0xff2A62B8)),
-                                          onPressed: () {
+                                          onPressed: () async {
                                             if(academyName.text.isEmpty)
                                             {
                                               Utils.flushBarErrorMessage("Please enter academy name", context);
@@ -1104,11 +1102,14 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                               Utils.flushBarErrorMessage("Please enter state", context);
                                             }
                                             else if (pincode.text.isEmpty)
-                                              {
-                                                Utils.flushBarErrorMessage("Please enter pincode", context);
-                                              }
+                                            {
+                                              Utils.flushBarErrorMessage("Please enter pincode", context);
+                                            }
                                             else {
-                                            Map<String, dynamic> data = {
+                                              /// change academy name from shared pref
+                                              final prefsData = await SharedPreferences.getInstance();
+                                              prefsData.setString('acadmicName',academyName.text);
+                                              Map<String, dynamic> data = {
                                                 "academyname": academyName.text,
                                                 "address": address.text,
                                                 "city": city.text,
@@ -1123,8 +1124,8 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                               };
 
 
-                                             academyListViewViewModel.fetchEditAcademy(data);
-                                             // Get.back();
+                                              academyListViewViewModel.fetchEditAcademy(data);
+                                              // Get.back();
 
                                             }
                                             // address
@@ -1138,7 +1139,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             // academy_close_time
                                             // working_days
 
-                                            },
+                                          },
                                           child: const Text(
                                             "Submit",
                                             style: TextStyle(fontSize: 15,

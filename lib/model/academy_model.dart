@@ -44,7 +44,7 @@ class AcademyListModel {
   final String uTime;
   final int totalService;
   final List<Service> services;
-  final List<dynamic> bankDetails;
+  final List<BankModel> bankDetails;
 
   AcademyListModel({
     required this.msg,
@@ -119,7 +119,7 @@ class AcademyListModel {
     uTime: json["uTime"],
     totalService: json["total_service"],
     services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
-    bankDetails: List<dynamic>.from(json["bank_details"].map((x) => x)),
+    bankDetails: List<BankModel>.from(json["bank_details"].map((x) => BankModel.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -157,7 +157,7 @@ class AcademyListModel {
     "uTime": uTime,
     "total_service": totalService,
     "services": List<dynamic>.from(services.map((x) => x.toJson())),
-    "bank_details": List<dynamic>.from(bankDetails.map((x) => x)),
+    "bank_details": List<dynamic>.from(bankDetails.map((x) => x.toJson())),
   };
 }
 
@@ -222,6 +222,76 @@ class Service {
     "cTime": cTime,
     "uDate": uDate,
     "uTime": uTime,
+  };
+}
+
+// To parse this JSON data, do
+//
+//     final bankModel = bankModelFromJson(jsonString);
+
+
+
+class BankModel {
+  final String id;
+  final String academyUid;
+  final String acHolderName;
+  final String ifscCode;
+  final String acNumber;
+  final String upi;
+  final bool qrStatus;
+  final String qr;
+  final String qrFilePath;
+  final String bankName;
+  final String bankBranch;
+  final String googlepayNo;
+  final String paytmNo;
+
+  BankModel({
+    this.id = '',
+    this.academyUid ='',
+    this.acHolderName ='',
+    this.ifscCode ='',
+    this.acNumber ='',
+    this.upi ='',
+    this.qrStatus =false,
+    this.qr ='',
+    this.qrFilePath = '',
+    this.bankName = '',
+    this.bankBranch = '',
+    this.googlepayNo = '',
+    this.paytmNo = '',
+  });
+
+  factory BankModel.fromJson(Map<String, dynamic> json) => BankModel(
+    id: json["_id"] == null ? '' : json["_id"],
+    academyUid: json["academy_uid"] == null ? '' : json["academy_uid"],
+    acHolderName: json["ac_holder_name"] == null ? '' :  json["ac_holder_name"],
+    ifscCode: json["ifsc_code"] ==null ? '' : json["ifsc_code"],
+    acNumber: json["ac_number"] == null ? '' : json['ac_number'],
+    upi: json["upi"] == null ? '' :json['upi'],
+    qrStatus: json["qr_status"] == null ? '' : json["qr_status"],
+    qr: json["qr"] == null ? '' : json["qr"],
+    qrFilePath: json["qr_file_path"]==null ? '' : json["qr_file_path"],
+    bankName: json["bank_name"] == null ? '' : json["bank_name"],
+    bankBranch: json["bank_branch"] == null ? '' :json["bank_branch"],
+    googlepayNo: json["googlepay_no"] == null ? '' : json["googlepay_no"],
+    paytmNo: json["paytm_no"] == null ? '' : json["paytm_no"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "academy_uid": academyUid,
+    "ac_holder_name": acHolderName,
+    "ifsc_code": ifscCode,
+    "ac_number": acNumber,
+    "upi": upi,
+    "qr_status": qrStatus,
+    "qr": qr,
+    "qr_file_path": qrFilePath,
+    "bank_name": bankName,
+    "bank_branch": bankBranch,
+    "googlepay_no": googlepayNo,
+    "paytm_no": paytmNo,
   };
 }
 
