@@ -1,19 +1,39 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
 import 'package:drona/res/widget/dashboard_card.dart';
+import 'package:drona/view_model/billing_invoice_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/response/status.dart';
 
 class Payment_Invoice_Page extends StatefulWidget {
+  String billingMonth;
   String totalFeePaid;
   String totalFeeDue;
   String totalCollectionDue;
   String totalCollectionPaid;
-   Payment_Invoice_Page({super.key, required this.totalFeePaid, required this.totalFeeDue, required this.totalCollectionDue, required this.totalCollectionPaid});
+   Payment_Invoice_Page({super.key,required this.billingMonth, required this.totalFeePaid, required this.totalFeeDue, required this.totalCollectionDue, required this.totalCollectionPaid});
    @override
   State<Payment_Invoice_Page> createState() => _Payment_Invoice_PageState();
 }
 
 class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
+
+  BillingInvoiceViewModel billingInvoiceViewModel = BillingInvoiceViewModel();
+
+  int pageSize = 10;
+  int pageNo = 1;
+
+  @override
+  void initState() {
+    print("billingMonth==${widget.billingMonth}");
+    billingInvoiceViewModel.fetchBillingViewInvoiceApi({"filter": widget.billingMonth.toString()}, pageSize, pageNo);
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,947 +48,139 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
       body: SafeArea(
           child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 10),
-              child: Text(
-                "May, 23",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Lato',
-                    color: Color(0xff39404A)),
-              ),
-            ),
-            SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
-                  DashboardCard(
-                      color: Color(0xff173564),
-                      icon: Icons.currency_rupee_outlined,
-                      count: widget.totalFeePaid,
-                      title: 'Fee Paid',
-                      subtitle: '${widget.totalFeeDue} Trainee Due',
-                      line: .8),
-                  DashboardCard(
-                      color: Color(0xff0095F7),
-                      icon: Icons.account_balance_wallet_outlined,
-                      count: widget.totalCollectionPaid,
-                      title: 'Collection',
-                      subtitle: '${widget.totalCollectionDue} - Due Amount',
-                      line: .8)
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.98,
-                child: DataTable(
-                    columnSpacing: 40,
-                    dataRowHeight: 45,
-                    headingRowColor:
-                        MaterialStatePropertyAll(Color(0xffEAEFF8)),
-                    headingRowHeight: 35,
-                    dividerThickness: double.infinity,
-                    columns: <DataColumn>[
-                      DataColumn(label: Text("#")),
-                      DataColumn(label: Text("TRAINEE")),
-                      DataColumn(label: Text("FEE")),
-                      DataColumn(label: Text("PAID")),
-                      DataColumn(label: Text("DUE")),
+        child: ChangeNotifierProvider<BillingInvoiceViewModel>(
+           create: (context) => billingInvoiceViewModel,
+
+
+          child: Consumer<BillingInvoiceViewModel>(
+            builder: (context, value, _){
+
+              switch(value.dataList1.status!){
+
+                case Status.loading:
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case Status.completed:
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 10),
+                        child: Text(
+                          widget.billingMonth,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Lato',
+                              color: Color(0xff39404A)),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            DashboardCard(
+                                color: Color(0xff173564),
+                                icon: Icons.currency_rupee_outlined,
+                                count: widget.totalFeePaid,
+                                title: 'Fee Paid',
+                                subtitle: '${widget.totalFeeDue} Trainee Due',
+                                line: .8),
+                            DashboardCard(
+                                color: Color(0xff0095F7),
+                                icon: Icons.account_balance_wallet_outlined,
+                                count: widget.totalCollectionPaid,
+                                title: 'Collection',
+                                subtitle: '${widget.totalCollectionDue} - Due Amount',
+                                line: .8)
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.98,
+                          child: DataTable(
+                              columnSpacing: 40,
+                              dataRowHeight: 45,
+                              headingRowColor: MaterialStatePropertyAll(Color(0xffEAEFF8)),
+                              headingRowHeight: 35,
+                              dividerThickness: double.infinity,
+                              columns: <DataColumn>[
+                                DataColumn(label: Text("#")),
+                                DataColumn(label: Text("TRAINEE")),
+                                DataColumn(label: Text("FEE")),
+                                DataColumn(label: Text("PAID")),
+                                DataColumn(label: Text("DUE")),
+                              ],
+                              //Data Table Row;
+                              rows: value.dataList1.data!.data.map((e) {
+                                return  DataRow(
+                                  cells: <DataCell>[
+                                    DataCell(
+                                        Text(
+                                          "1",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Lato',
+                                              color: Color(0xff39404A)),
+                                        )),
+                                    DataCell(Text(
+                                      e.traineeName,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: Color(0xff39404A)),
+                                    )),
+                                    DataCell(
+                                      Text(
+                                        e.fees.toString(),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Lato',
+                                            color: Color(0xff39404A)),
+                                      ),
+                                    ),
+                                    DataCell(Text(
+                                      e.paid.toString(),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: Color(0xff47C088)),
+                                    )),
+                                    DataCell(Text(
+                                      e.due.toString(),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: Color(0xff39404A)),
+                                    ))]);}
+
+                              ).toList(),
+
+
+                              ),
+                        ),
+                      )
                     ],
-                    //Data Table Row;
-                    rows: <DataRow>[
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "1",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Arya Sharma",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "2",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Supriya Jha",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          " 0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "3",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Yamini Gowda",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "4",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Rupa chandrasekar",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "5",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Priyanka Jadhav",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "6",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Ramesh Sharma",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "7",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Yamini Gowda",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "8",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Suraj Pandey",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "9",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Kanishka Kapoor",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "10",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Anuja Shinde",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "11",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Aarav saxena",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "12",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Swapnaja Shirode",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "13",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Kapil Ojha",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "14",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Raghu Nadh",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "15",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Rajveer mishra",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff47C088)),
-                        )),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "16",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Richa Verma",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "17",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Ramesh Sharma",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "18",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Kishore Kumar",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "19",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Pappu Yadav",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                      DataRow(cells: <DataCell>[
-                        DataCell(Text(
-                          "20",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "Aaradhya Anand",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(
-                          Text(
-                            "₹1,800",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        DataCell(Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                        DataCell(Text(
-                          "+ ₹1,800",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lato',
-                              color: Color(0xff39404A)),
-                        )),
-                      ]),
-                    ]),
-              ),
-            )
-          ],
+                  );
+                case Status.error:
+                  return Center(child: Text("No Data Found"));
+
+              }
+
+
+            },
+
+          ),
         ),
       )),
     );

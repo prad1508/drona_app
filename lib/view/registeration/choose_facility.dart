@@ -127,9 +127,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         alignment: Alignment.center,
                         child: Consumer<FacilityViewViewModel>(
                             builder: (context, value, _) {
-                          facilityname =
-                              value.dataList.data?.inputtextname.toString() ??
-                                  '';
+                          facilityname = value.dataList.data?.inputtextname.toString() ?? '';
                             switch (value.dataList.status!) {
                               case Status.loading:
 
@@ -523,27 +521,15 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                           .removeWhere((value) => value == null);
                                       List.filled(_otherLength ?? 0, false);
                                       data = {
-                                        'cat_name':
-                                        value.dataList.data?.catName.toString(),
-                                        'cat_uid':
-                                        value.dataList.data?.catUid.toString(),
-                                        'service_name': value
-                                            .dataList.data?.serviceName
-                                            .toString(),
-                                        'service_id': value.dataList.data?.serviceId
-                                            .toString(),
-                                        'facility_uid':
-                                        value.dataList.data?.uid.toString(),
-                                        'inputtextname': value
-                                            .dataList.data?.inputtextname
-                                            .toString(),
-                                        'inputtextdata': '1',
+                                        'cat_name': value.dataList.data?.catName.toString(),
+                                        'cat_uid': value.dataList.data?.catUid.toString(),
+                                        'service_name': value.dataList.data?.serviceName.toString(),
+                                        'service_id': value.dataList.data?.serviceId.toString(),
+                                        'facility_uid': value.dataList.data?.uid.toString(),
+                                        'inputtextname': value.dataList.data?.inputtextname.toString(),
+                                        'inputtextdata': nofacility.toString(),
                                         'checkboxwithselectoption': checkboxOption,
-                                        'checkboxwithselectoptionname': value
-                                            .dataList
-                                            .data
-                                            ?.checkboxwithselectoptionname
-                                            .toString(),
+                                        'checkboxwithselectoptionname': value.dataList.data?.checkboxwithselectoptionname.toString(),
                                         'other': checkboxOptionOther
                                       };
                                     }),

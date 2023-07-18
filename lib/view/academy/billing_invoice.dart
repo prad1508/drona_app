@@ -52,7 +52,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
 
   @override
   void initState() {
-    billingInvoiceViewModel.fetchBatchSearchListApi(data, pageSize, pageNo);
+    billingInvoiceViewModel.fetchBillingInvoiceApi(data, pageSize, pageNo);
     super.initState();
   }
 
@@ -418,7 +418,8 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                                     totalFeePaid: value.dataList.data!.data[index].totalTraineeFeePaid.toString(),
                                                     totalFeeDue: value.dataList.data!.data[index].totalTraineeFeeDue.toString(),
                                                     totalCollectionDue: value.dataList.data!.data[index].totalDue.toString(),
-                                                    totalCollectionPaid: value.dataList.data!.data[index].totalCollection.toString(),),
+                                                    totalCollectionPaid: value.dataList.data!.data[index].totalCollection.toString(),
+                                                    billingMonth: "${value.dataList.data!.data[index].mm}-${value.dataList.data!.data[index].yy}",),
                                               transition: Transition.leftToRight);
                                         },
                                       )),

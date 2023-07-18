@@ -69,7 +69,9 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
               padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
                   onPressed: () {
-                    Get.to(()=> const Edit_Academy_Detail(),transition: Transition.leftToRight);
+                    Get.to(()=> const Edit_Academy_Detail(
+
+                    ),transition: Transition.leftToRight);
                   },
                   icon: Icon(Icons.edit)),
             )
@@ -138,7 +140,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                             children: [
                               Center(
                                 child: Container(
-                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  padding:  EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   child: SizedBox(
                                     height: 120,
                                     width: 120,
@@ -146,18 +148,26 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                       clipBehavior: Clip.none,
                                       fit: StackFit.expand,
                                       children: [
+                                        value.dataList.data!.islogo ?
                                         CircleAvatar(
                                           backgroundColor: Colors.grey[500],
                                           radius: 70,
-                                          child:  CircleAvatar(
+                                          child:
+                                          CircleAvatar(
                                             radius: 65,
                                             backgroundColor: Colors.white,
-                                            backgroundImage: NetworkImage(
+                                            backgroundImage:
+
+                                            NetworkImage(
                                               AppUrl.academylogo +
                                                   value.dataList.data!.logo,
-                                            ),
-                                          ),
-                                        ),
+                                            )
+                                          )
+                                        ):Image (
+                                          image :
+                                          AssetImage(
+                                              'assets/images/coachlogo.png'),
+                                          width: 80,)
                                       ],
                                     ),
                                   ),

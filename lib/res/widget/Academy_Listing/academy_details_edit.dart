@@ -99,17 +99,17 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Loto-Regular'),
                           ),
-                          IconButton(
-                            onPressed: (() {
-                              setState(() {
-                                imgFile = null;
-                                Navigator.pop(context);
-                              });
-                            }),
-                            icon: const Icon(Icons.delete_outline),
-                            color: Colors.black,
-                            iconSize: 30,
-                          ),
+                          // IconButton(
+                          //   onPressed: (() {
+                          //     setState(() {
+                          //       imgFile = null;
+                          //       Navigator.pop(context);
+                          //     });
+                          //   }),
+                          //   icon: const Icon(Icons.delete_outline),
+                          //   color: Colors.black,
+                          //   iconSize: 30,
+                          // ),
                         ],
                       ),
                       const SizedBox(

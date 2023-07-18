@@ -1,4 +1,5 @@
 
+import 'package:drona/model/billing_view_model.dart';
 import 'package:drona/model/invoice_model.dart';
 
 import '../data/network/base_apiservices.dart';
@@ -15,6 +16,17 @@ class BillingRepository {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           "${AppUrl.billingInvoiceMonthly}/$pageSize/$pageNo",data);
       return response = InvoiceModel.fromJson(response);
+
+    }catch(e){
+      rethrow ;
+    }
+  }
+  Future<InvoiceViewModel> fetchBillingViewInvoiceApi(dynamic data, var pageSize, var pageNo)async{
+    try{
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          "${AppUrl.billingViewInvoiceMonthly}/$pageSize/$pageNo",data);
+      print("respons==$response");
+      return response = InvoiceViewModel.fromJson(response);
 
     }catch(e){
       rethrow ;
