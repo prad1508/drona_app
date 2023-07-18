@@ -16,6 +16,7 @@ class AppUrl {
 
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
+  static var facilityGetEndPoint = '$baseUrl/academy/myfacility/';
   static var programListEndPoint = '$baseUrl/academy/program/';
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
@@ -55,8 +56,6 @@ class AppUrl {
   static var academydetails = "$baseUrl/academy/academy";
   static var uploadLogo = "$baseUrl/academy/logo";
   static var academylogo = "$baseUrl/static/logo/";
-
-
-
+  static var uploadQr = "$baseUrl/static/qr";
 
 }

@@ -5,6 +5,7 @@ import '../model/Edit_academy_model.dart';
 import '../model/academy_model.dart';
 import '../utils/utils.dart';
 import '../view/academy/academy_details.dart';
+
 import '/data/response/api_response.dart';
 import '/respository/academy_repository.dart';
 class AcademyViewViewModel with ChangeNotifier {
@@ -61,6 +62,17 @@ class AcademyViewViewModel with ChangeNotifier {
       // Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
+      print("api  not success for image ");
+    });
+    return true;
+  }
+
+  Future<bool> fetchouserQrimg(data, context) async {
+    _myRepo.uploadQr(data).then((value) async {
+      // Utils.flushBarErrorMessage(value['msg'], context);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      print("error is $error");
       print("api  not success for image ");
     });
     return true;

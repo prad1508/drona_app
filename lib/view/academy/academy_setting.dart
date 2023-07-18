@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:drona/view/academy/academy_details.dart';
-import 'package:drona/view/academy/bank_detail.dart';
+
 import 'package:drona/view/academy/billing_invoice.dart';
 import 'package:drona/view/academy/communication.dart';
 import 'package:drona/view/academy/service_program.dart';
+import 'package:drona/view/academy/academy_details.dart';
 import 'package:drona/view/reports/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
+import 'bank_detail.dart';
+
 
 class academy_setting extends StatefulWidget {
   const academy_setting({super.key});
@@ -132,13 +134,20 @@ class _academy_settingState extends State<academy_setting> {
                                         ),
                                         Column(
                                           children: [
+                                            value.dataList.data!.islogo ?
                                             CircleAvatar(
                                               radius: 40,
                                               backgroundColor: Colors.white,
-                                              backgroundImage: NetworkImage(
+                                              backgroundImage:
+
+                                              NetworkImage(
                                                 AppUrl.academylogo + value.dataList.data!.logo,
                                               ),
-                                            ),
+                                            ) :
+                                            Image (
+                                            image :
+                                            AssetImage(
+                                            'assets/images/coachlogo.png'), width: 80,)
                                           ],
                                         ),
                                       ],
@@ -409,8 +418,9 @@ class _academy_settingState extends State<academy_setting> {
                                       //   MaterialPageRoute(
                                       //       builder: (context) => const Bank_Details()),
                                       // );
-                                      Get.to(() => const Bank_Details(),
+                                      Get.to(() =>  Bank_Details(),
                                           transition: Transition.leftToRight);
+
                                     },
                                   ),
                                   ListTile(
