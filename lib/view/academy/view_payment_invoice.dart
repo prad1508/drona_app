@@ -4,9 +4,12 @@ import 'package:drona/res/widget/dashboard_card.dart';
 import 'package:flutter/material.dart';
 
 class Payment_Invoice_Page extends StatefulWidget {
-  const Payment_Invoice_Page({super.key});
-
-  @override
+  String totalFeePaid;
+  String totalFeeDue;
+  String totalCollectionDue;
+  String totalCollectionPaid;
+   Payment_Invoice_Page({super.key, required this.totalFeePaid, required this.totalFeeDue, required this.totalCollectionDue, required this.totalCollectionPaid});
+   @override
   State<Payment_Invoice_Page> createState() => _Payment_Invoice_PageState();
 }
 
@@ -44,20 +47,20 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
               padding: const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children:  [
                   DashboardCard(
                       color: Color(0xff173564),
                       icon: Icons.currency_rupee_outlined,
-                      count: '8',
+                      count: widget.totalFeePaid,
                       title: 'Fee Paid',
-                      subtitle: '12 Trainee Due',
+                      subtitle: '${widget.totalFeeDue} Trainee Due',
                       line: .8),
                   DashboardCard(
                       color: Color(0xff0095F7),
                       icon: Icons.account_balance_wallet_outlined,
-                      count: '14,000',
+                      count: widget.totalCollectionPaid,
                       title: 'Collection',
-                      subtitle: '21,600 - Due Amount',
+                      subtitle: '${widget.totalCollectionDue} - Due Amount',
                       line: .8)
                 ],
               ),

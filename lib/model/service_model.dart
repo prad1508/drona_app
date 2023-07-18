@@ -35,7 +35,7 @@ class Data {
   String? uid;
   String? serviceName;
   String? iconname;
-  bool? status;
+  dynamic status;
   String? timestamp;
   String? cDate;
   String? cTime;

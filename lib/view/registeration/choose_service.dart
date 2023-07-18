@@ -43,6 +43,7 @@ class _ChooseServiceState extends State<ChooseService> {
   async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userUid = prefs.getString('uid')!;
+    print("userid==$userUid");
     serviceViewViewModel.fetchServiceListApi(userUid);
   }
 

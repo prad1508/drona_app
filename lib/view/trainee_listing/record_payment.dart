@@ -1,54 +1,41 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:drona/res/widget/customradio.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_localization/flutter_localization.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-import '../../data/response/status.dart';
-import '../../res/language/language.dart';
+
+import '../../model/trainee_list_model.dart';
+import '../../res/app_url.dart';
+import '../../res/widget/datefield.dart';
 import '../../res/widget/progress_pills.dart';
-import '../../view_model/postoffice_view_model.dart';
 
-class Record_Payment extends StatefulWidget {
-  const Record_Payment({super.key});
+class RecordPayment extends StatefulWidget {
+  int index;
+  List<Datum> traineeList;
+   RecordPayment({super.key, required this.traineeList, required this.index});
 
   @override
-  State<Record_Payment> createState() => _Record_PaymentState();
+  State<RecordPayment> createState() => _RecordPaymentState();
 }
 
-class _Record_PaymentState extends State<Record_Payment> {
-  List<DropdownMenuItem<String>> get sportsItem {
-    List<DropdownMenuItem<String>> serviceDetails = [
-      const DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
-      const DropdownMenuItem(value: "Golf", child: Text("Golf")),
-    ];
-    return serviceDetails;
-  }
-
-  List<DropdownMenuItem<String>> get batchTime {
-    List<DropdownMenuItem<String>> sportsTiming = [
-      const DropdownMenuItem(
-          value: "Tennis Batch Morning", child: Text("Tennis Batch Morning")),
-      const DropdownMenuItem(
-          value: "Golf Batch Morning", child: Text("Golf Batch Morning")),
-      const DropdownMenuItem(
-          value: "Tennis Batch Evening", child: Text("Tennis Batch Evening")),
-      const DropdownMenuItem(
-          value: "Golf Batch Evening", child: Text("Golf Batch Evening")),
-    ];
-    return sportsTiming;
-  }
-
+class _RecordPaymentState extends State<RecordPayment> {
   // ignore: non_constant_identifier_names
-  List<String> PMode = ["Cash", "Online", "Cheque/Draft"];
+  List<String> PMode = ["Cash", "Online", "Cheque/\nDraft"];
   String selectedItem = 'Tennis';
   String selectedTiming = "Tennis Batch Morning";
   bool isCheckBox = false;
-  String? payment = 'p';
-  ValueChanged<String?> Record_Payment() {
+  bool isCheckBox2 = false;
+  String? payment = 'cash';
+
+  TextEditingController mController = TextEditingController();
+  TextEditingController cController = TextEditingController();
+  TextEditingController tDateController = TextEditingController();
+  TextEditingController feeController = TextEditingController();
+  TextEditingController dateOfBilling = TextEditingController();
+
+
+  ValueChanged<String?> RecordPayment() {
     return (value) => setState(() => payment = value!);
   }
 
@@ -56,7 +43,7 @@ class _Record_PaymentState extends State<Record_Payment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
@@ -77,92 +64,291 @@ class _Record_PaymentState extends State<Record_Payment> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
-                Text(
-                  "Trainee's Full Name",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff39404A),
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Lato'),
-                ),
-                SizedBox(height: 4),
-                SizedBox(
-                  width: 342,
-                  height: 48,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
+
+                Container(
+                  color:   const Color(0XFFDFE1E4).withOpacity(0.3),
+                  //padding: const EdgeInsets.all(5),
+                  height: 110,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 5),
+                          Padding(
+                            padding:  EdgeInsets.only(top: 8.0),
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child:  CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                child: Text(getInitials(widget.traineeList[widget.index].traineeName),style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white
+                                ),
+                                ),
+                                // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                              ),
+                              // AssetImage('assets/images/user_profile.png'),
+                            ),
+                          ),
+
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Container(
+                              width: 40,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color:widget.traineeList[widget.index].status=="active" ? const Color(0xff47C088) : Colors.redAccent,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child:  Center(
+                                  child: widget.traineeList[widget.index].status == "active" ?
+                                  const Text(
+                                    "Active",
+                                    style: TextStyle(
+                                      color: Color(0xffFBFBFC),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ) :  const Text(
+                                    "Inactive",
+                                    style: TextStyle(
+                                      color: Color(0xffFBFBFC),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Padding(
+                                padding:  const EdgeInsets.only(left: 10.0),
+                                child: Text(widget.traineeList[widget.index].traineeName,
+                                  style: const TextStyle(
+                                    color: Color(0xff39404A),
+                                    fontSize: 14,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Container(
+                                height: 20,
+                                padding: const EdgeInsets.only(
+                                    left: 5, right: 0, top: 2),
+                                decoration: BoxDecoration(
+                                    color: widget.traineeList[widget.index]
+                                        .join_status ==
+                                        'not_onboarded'? const Color.fromRGBO(255, 232, 231, 1):const Color(0xffEDF9F3),
+                                    borderRadius:
+                                    BorderRadius.circular(5)),
+                                child: Text(
+                                  widget.traineeList[widget.index]
+                                      .join_status ==
+                                      'not_onboarded'
+                                      ? 'Not Onboarded'
+                                      : 'Onboarded',
+                                  style: TextStyle(
+                                      color: widget.traineeList[widget.index]
+                                          .join_status ==
+                                          'not_onboarded'
+                                          ? const Color.fromRGBO(253, 29, 13, 1)
+                                          : Colors.green,
+                                      fontSize: 12),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                widthFactor: 3.5,
+                                child: SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: Image.network(
+                                      AppUrl.serviceIconEndPoint +
+                                          widget.traineeList[widget.index]
+                                              .serviceicon,
+                                    )),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 1),
+                          Row(
+                            children:  [
+                              Padding(
+                                  padding:  const EdgeInsets.only(left: 15.0),
+                                  child:widget.traineeList[widget.index].gender =='male' ?
+                                  const Text(
+                                    "Male",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ) : widget.traineeList[widget.index].gender =='female'?
+                                  const Text(
+                                    "Female",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ) :  const Text(
+                                    "Others",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                              ),
+                              const Text(
+                                " | ",
+                                style: TextStyle(
+                                  color: Color(0xff39404A),
+                                  fontSize: 12,
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(widget.traineeList[widget.index].dob,
+                                style: const TextStyle(
+                                  color: Color(0xff39404A),
+                                  fontSize: 12,
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width*.75,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children:  [
+                                Padding(
+                                  padding:  const EdgeInsets.only(left: 15.0),
+                                  child: Text(
+                                    widget.traineeList[widget.index].batchname,
+                                    style: const TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 14,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${widget.traineeList[widget.index].batch_timing_from} to ${widget.traineeList[widget.index].batch_timing_to}',
+                                  style: const TextStyle(
+                                    color: Color(0xff39404A),
+                                    fontSize: 12,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          //const SizedBox(height: 5),
+                          Container(
+                            width: 300,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child:Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children:  [
+                                      const Text(
+                                        "Fee : ",
+                                        style: TextStyle(
+                                          color: Color(0xff39404A),
+                                          fontSize: 14,
+                                          fontFamily: 'Lato',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        '₹ ${widget.traineeList[widget.index].fees}',
+                                        style: const TextStyle(
+                                          color: Color(0xff39404A),
+                                          fontSize: 12,
+                                          fontFamily: 'Lato',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     const Text(
+                                  //       "Due : ",
+                                  //       style: TextStyle(
+                                  //         color: Color(0xff39404A),
+                                  //         fontSize: 14,
+                                  //         fontFamily: 'Lato',
+                                  //         fontWeight: FontWeight.w700,
+                                  //       ),
+                                  //     ),
+                                  //     Text(
+                                  //       '₹ ${value.dataList.data?.data[index].fees}',
+                                  //       style: const TextStyle(
+                                  //         color: Color(0xff39404A),
+                                  //         fontSize: 12,
+                                  //         fontFamily: 'Lato',
+                                  //         fontWeight: FontWeight.w400,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 16),
-                Text(
-                  "Service",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff39404A),
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Lato'),
+                SizedBox(height: 12,),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Month of Billing",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
-                SizedBox(height: 4),
-                SizedBox(
-                    width: 342,
-                    height: 48,
-                    child: InputDecorator(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(5),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
-                              icon: Icon(Icons.expand_more),
-                              isExpanded: true,
-                              value: selectedItem,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedItem = newValue!;
-                                });
-                              },
-                              items: sportsItem),
-                        ))),
-                SizedBox(height: 16),
-                //Batch Timing Selected;
-                Text(
-                  "Batch",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff39404A),
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Lato'),
+                const SizedBox(
+                  height: 10,
                 ),
-                SizedBox(height: 4),
-                SizedBox(
-                    width: 342,
-                    height: 48,
-                    child: InputDecorator(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(5),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
-                              icon: Icon(Icons.expand_more),
-                              isExpanded: true,
-                              value: selectedTiming,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedTiming = newValue!;
-                                });
-                              },
-                              items: batchTime),
-                        ))),
-                SizedBox(height: 16),
-                Text(
+                YearMonthPicker(
+                    controller: dateOfBilling,
+                    hintText: 'Month of Billing'),
+                SizedBox(height: 12,),
+
+                const Text(
                   "Last 6 Months Payment Status",
                   style: TextStyle(
                       fontSize: 14,
@@ -184,18 +370,18 @@ class _Record_PaymentState extends State<Record_Payment> {
                   ),
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   width: 342,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xff2A62B8)),
+                      border: Border.all(color: const Color(0xff2A62B8)),
                       borderRadius: BorderRadius.circular(8)),
                   child: ExpansionTile(
-                    childrenPadding: EdgeInsets.all(8),
+                    childrenPadding: const EdgeInsets.all(8),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Total Fees",
                           style: TextStyle(
                             fontStyle: FontStyle.normal,
@@ -206,8 +392,8 @@ class _Record_PaymentState extends State<Record_Payment> {
                           ),
                         ),
                         Text(
-                          "₹1,000",
-                          style: TextStyle(
+                          widget.traineeList[widget.index].fees.toString(),
+                          style: const TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
@@ -219,130 +405,34 @@ class _Record_PaymentState extends State<Record_Payment> {
                     ),
                     children: <Widget>[
                       SizedBox(
-                        width: 342,
-                        height: 256,
+                        width: 300,
+                        height: 180,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 17),
                             Row(
                               children: [
                                 Checkbox(
                                   value: isCheckBox,
-                                  onChanged: (value) {
+                                  activeColor: Colors
+                                      .blue, // Sets the background color when the checkbox is selected
+                                  checkColor: Colors
+                                      .white, // Sets the color of the checkmark when the checkbox is selected
+                                  fillColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      // Sets the background color of the checkbox
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return Colors.blue.withOpacity(0.8);
+                                      }
+                                      return Colors.grey;
+                                    },
+                                  ),
+                                  onChanged: (v) {
                                     setState(() {
-                                      value = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  "Add Fee",
-                                  style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Lato'),
-                                ),
-                                SizedBox(width: 77),
-                                Container(
-                                  width: 33,
-                                  height: 41,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff2A62B8)),
-                                      color: Color(0xff2A62B8),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(8),
-                                          bottomLeft: Radius.circular(8))),
-                                  child: Center(
-                                    child: Text(
-                                      "₹",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 118,
-                                  height: 41,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff2A62B8)),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(8),
-                                          bottomRight: Radius.circular(8))),
-                                  child: Container(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          border: UnderlineInputBorder(
-                                              borderSide: BorderSide.none)),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: isCheckBox,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      value = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  "Service Fee",
-                                  style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Lato'),
-                                ),
-                                SizedBox(width: 59),
-                                Container(
-                                  width: 33,
-                                  height: 41,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff2A62B8)),
-                                      color: Color(0xff2A62B8),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(8),
-                                          bottomLeft: Radius.circular(8))),
-                                  child: Center(
-                                    child: Text(
-                                      "₹",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 118,
-                                  height: 41,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xff2A62B8)),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(8),
-                                          bottomRight: Radius.circular(8))),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        border: UnderlineInputBorder(
-                                            borderSide: BorderSide.none)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: isCheckBox,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      value = value;
+                                      isCheckBox = v!;
                                     });
                                   },
                                 ),
@@ -354,7 +444,7 @@ class _Record_PaymentState extends State<Record_Payment> {
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'Lato'),
                                 ),
-                                SizedBox(width: 66),
+                                SizedBox(width: 40),
                                 Container(
                                   width: 33,
                                   height: 41,
@@ -374,20 +464,22 @@ class _Record_PaymentState extends State<Record_Payment> {
                                   ),
                                 ),
                                 Container(
-                                  width: 118,
+                                  width: 100,
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
                                           Border.all(color: Color(0xff2A62B8)),
-                                      borderRadius: BorderRadius.only(
+                                      borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(8),
                                           bottomRight: Radius.circular(8))),
-                                  child: Container(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          border: UnderlineInputBorder(
-                                              borderSide: BorderSide.none)),
-                                    ),
+                                  child: TextField(
+                                    // controller: mController,
+                                    onChanged: (v) {
+                                      mController.text = v;
+                                    },
+                                    decoration: const InputDecoration(
+                                        border: UnderlineInputBorder(
+                                            borderSide: BorderSide.none)),
                                   ),
                                 ),
                               ],
@@ -396,10 +488,25 @@ class _Record_PaymentState extends State<Record_Payment> {
                             Row(
                               children: [
                                 Checkbox(
-                                  value: isCheckBox,
-                                  onChanged: (value) {
+                                  value: isCheckBox2,
+                                  activeColor: Colors
+                                      .blue, // Sets the background color when the checkbox is selected
+                                  checkColor: Colors
+                                      .white, // Sets the color of the checkmark when the checkbox is selected
+                                  fillColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      // Sets the background color of the checkbox
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return Colors.blue.withOpacity(0.8);
+                                      }
+                                      return Colors.grey;
+                                    },
+                                  ),
+                                  onChanged: (v) {
                                     setState(() {
-                                      value = value;
+                                      isCheckBox2 = v!;
                                     });
                                   },
                                 ),
@@ -411,7 +518,7 @@ class _Record_PaymentState extends State<Record_Payment> {
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'Lato'),
                                 ),
-                                SizedBox(width: 57),
+                                SizedBox(width: 30),
                                 Container(
                                   width: 33,
                                   height: 41,
@@ -431,7 +538,7 @@ class _Record_PaymentState extends State<Record_Payment> {
                                   ),
                                 ),
                                 Container(
-                                  width: 118,
+                                  width: 100,
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
@@ -440,6 +547,10 @@ class _Record_PaymentState extends State<Record_Payment> {
                                           topRight: Radius.circular(8),
                                           bottomRight: Radius.circular(8))),
                                   child: TextField(
+                                    //controller: cController,
+                                    onChanged: (v) {
+                                      cController.text = v;
+                                    },
                                     decoration: InputDecoration(
                                         border: UnderlineInputBorder(
                                             borderSide: BorderSide.none)),
@@ -447,6 +558,16 @@ class _Record_PaymentState extends State<Record_Payment> {
                                 ),
                               ],
                             ),
+                            // SizedBox(height: 12),
+                            // Divider(thickness: 2,),
+                            /*SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Text("Net Payable Fee"),
+                                Text(mController.text+cController.text),
+
+                              ],
+                            )*/
                           ],
                         ),
                       )
@@ -466,25 +587,31 @@ class _Record_PaymentState extends State<Record_Payment> {
                 SizedBox(height: 4),
                 //Payment Custom Radio Button
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CustomRadio<String>(
-                        value: 'c',
+                        value: 'cash',
                         label: PMode[0],
                         groupValue: payment,
-                        onChanged: Record_Payment(),
+                        onChanged: RecordPayment(),
                         btnColor: Colors.black),
+                    SizedBox(
+                      width: 10,
+                    ),
                     CustomRadio<String>(
-                        value: 'o',
+                        value: 'online',
                         label: PMode[1],
                         groupValue: payment,
-                        onChanged: Record_Payment(),
+                        onChanged: RecordPayment(),
                         btnColor: Colors.black),
+                    SizedBox(
+                      width: 10,
+                    ),
                     CustomRadio<String>(
                         value: 'd',
                         label: PMode[2],
                         groupValue: payment,
-                        onChanged: Record_Payment(),
+                        onChanged: RecordPayment(),
                         btnColor: Colors.black)
                   ],
                 ),
@@ -495,7 +622,7 @@ class _Record_PaymentState extends State<Record_Payment> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Date Of Transation",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -503,19 +630,44 @@ class _Record_PaymentState extends State<Record_Payment> {
                               color: Color(0xff39404A),
                               fontFamily: 'Lato'),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         SizedBox(
                             width: 163,
                             height: 48,
-                            child: TextField(
+                            child: TextFormField(
                               readOnly: true,
+                              controller: tDateController,
+                              keyboardType: TextInputType.name,
                               decoration: InputDecoration(
-                                  suffixIcon:
-                                      Icon(Icons.calendar_month_outlined),
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xffDFE1E4)),
-                                      borderRadius: BorderRadius.circular(8))),
+                                suffixIcon: const Icon(
+                                  Icons.calendar_month,
+                                  size: 30.0,
+                                ),
+                                hintText: '01-01-2023',
+                                contentPadding: const EdgeInsets.all(5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                              onTap: () async {
+                                DateTime now = DateTime.now();
+                                DateTime firstDate =
+                                    DateTime(now.year, now.month);
+                                var date = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: firstDate,
+                                  lastDate:
+                                      DateTime.now().add(Duration(days: 90)),
+                                );
+                                if (date != null) {
+                                  tDateController.text =
+                                      DateFormat('dd-MM-yyyy').format(date);
+                                }
+                              },
                             ))
                       ],
                     ),
@@ -544,10 +696,10 @@ class _Record_PaymentState extends State<Record_Payment> {
                                     border:
                                         Border.all(color: Color(0xff2A62B8)),
                                     color: Color(0xff2A62B8),
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(8),
                                         bottomLeft: Radius.circular(8))),
-                                child: Center(
+                                child: const Center(
                                   child: Text(
                                     "₹/M",
                                     style: TextStyle(
@@ -562,17 +714,16 @@ class _Record_PaymentState extends State<Record_Payment> {
                                 height: 48,
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Color(0xff2A62B8)),
-                                    borderRadius: BorderRadius.only(
+                                        Border.all(color: const Color(0xff2A62B8)),
+                                    borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(8),
                                         bottomRight: Radius.circular(8))),
-                                child: Container(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.all(5),
-                                        border: UnderlineInputBorder(
-                                            borderSide: BorderSide.none)),
-                                  ),
+                                child: TextField(
+                                  controller: feeController,
+                                  decoration: const InputDecoration(
+                                      contentPadding: EdgeInsets.all(5),
+                                      border: UnderlineInputBorder(
+                                          borderSide: BorderSide.none)),
                                 ),
                               ),
                             ],
@@ -681,9 +832,9 @@ class _Record_PaymentState extends State<Record_Payment> {
                                     Center(
                                       child: SizedBox(
                                         width: 209,
-                                        height: 48,
+                                        height: 60,
                                         child: Text(
-                                          "Please Confirm Payment Record Of Riyaz Mohammed!",
+                                          "Please Confirm Payment Record Of ${widget.traineeList[widget.index].traineeName}!",
                                           style: TextStyle(
                                               color: Color(0xff626D7E),
                                               fontSize: 16,
@@ -729,11 +880,23 @@ class _Record_PaymentState extends State<Record_Payment> {
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                                   Color(0xff2A62B8),
-                                              shape: RoundedRectangleBorder(
+                                              shape: const RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(8)))),
-                                          onPressed: () {},
+                                          onPressed: () {
+
+                                        Map<String, dynamic>
+                                        data =   {
+                                          "trainee_profile_uid":widget.traineeList[widget.index].traineeUserid,
+                                          "fee_collected":feeController.text,
+                                          "misc_fee":mController.text,
+                                          "concession":cController.text,
+                                          "payment_mode":payment,
+                                          "date_of_transaction":tDateController.text
+                                        };
+                                        print("data==$data");
+                                        },
                                           child: Text(
                                             "Confirm",
                                             style: TextStyle(
@@ -759,5 +922,21 @@ class _Record_PaymentState extends State<Record_Payment> {
         ),
       ),
     );
+  }
+
+  String getInitials(String name) {
+    List<String> nameParts = name.split(' ');
+    if (nameParts.length > 1) {
+      return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase();
+    } else if (nameParts.length == 1) {
+      String firstName = nameParts[0];
+      if (firstName.length >= 2) {
+        return firstName.substring(0, 2).toUpperCase();
+      } else {
+        return firstName[0].toUpperCase();
+      }
+    } else {
+      return '';
+    }
   }
 }

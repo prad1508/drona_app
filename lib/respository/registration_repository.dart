@@ -44,6 +44,7 @@ class RegistrationRepository {
     try {
       dynamic response =
           await _apiServices.getPostApiResponse(AppUrl.serviceListEndPoint, data);
+      print("data==$response");
       return response;
     } catch (e) {
       rethrow;

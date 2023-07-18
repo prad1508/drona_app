@@ -534,8 +534,8 @@ class _MainMenuState extends State<MainMenu> {
                                       builder: (context) =>
                                       const Coach_Listing()),
                                 );*/
-                                Get.to(() => const Record_Payment(),
-                                    transition: Transition.leftToRight);
+                                /*Get.to(() =>  RecordPayment(traineeList: [],),
+                                    transition: Transition.leftToRight);*/
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,

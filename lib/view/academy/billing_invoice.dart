@@ -2,10 +2,14 @@
 
 import 'package:drona/res/widget/Academy_Listing/edit_billing_invoice.dart';
 import 'package:drona/view/academy/view_payment_invoice.dart';
+import 'package:drona/view_model/billing_invoice_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/response/status.dart';
 
 class Billing_And_Invoice extends StatefulWidget {
   const Billing_And_Invoice({super.key});
@@ -15,6 +19,7 @@ class Billing_And_Invoice extends StatefulWidget {
 }
 
 class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
+  BillingInvoiceViewModel billingInvoiceViewModel = BillingInvoiceViewModel();
   //Months DropDown List;
   List<DropdownMenuItem<String>> get monthsItems {
     List<DropdownMenuItem<String>> monthsCycle = [
@@ -39,6 +44,16 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
           value: "10 Of Every Months", child: Text("10 Of Every Months")),
     ];
     return billingCycle;
+  }
+
+  int pageSize = 10;
+  int pageNo = 1;
+  var data = {"filter": ""};
+
+  @override
+  void initState() {
+    billingInvoiceViewModel.fetchBatchSearchListApi(data, pageSize, pageNo);
+    super.initState();
   }
 
   String daySelect = "1 of Every Months";
@@ -129,440 +144,324 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
       body: SafeArea(
           child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 25, right: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Billing Detail",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Lato',
-                          color: Color(0xff39404A)),
-                    ),
-                    InkWell(
-                      child: SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: SvgPicture.asset(
-                            'assets/images/edit_square.svg',
-                            color: Color(0xff99A0AB),
-                          )),
-                      onTap: () {
-                       /* Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const Edit_Billing_Invoice()),
-                        );*/
-                        Get.to(()=> const Edit_Billing_Invoice(),transition: Transition.leftToRight);
-
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Billing Cycle",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lato',
-                          color: Color(0xff39404A)),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffDFE1E4)),
-                          borderRadius: BorderRadius.circular(8)),
-                      width: 114,
-                      height: 35,
-                      child: DropdownButtonHideUnderline(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: DropdownButton(
-                            icon: Icon(Icons.expand_more_outlined),
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                            value: monthsSelect,
-                            onChanged: (value) {
-                              setState(() {
-                                monthsSelect = value!;
-                              });
-                            },
-                            items: monthsItems,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Billing Day",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lato',
-                          color: Color(0xff39404A)),
-                    ),
-                    Container(
-                      width: 157,
-                      height: 35,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffDFE1E4)),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: DropdownButtonHideUnderline(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: DropdownButton(
-                            icon: Icon(Icons.expand_more_outlined),
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Lato',
-                                color: Color(0xff39404A)),
-                            value: daySelect,
-                            onChanged: (value) {
-                              setState(() {
-                                daySelect = value!;
-                              });
-                            },
-                            items: dayItems,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: ChangeNotifierProvider<BillingInvoiceViewModel>(
+          create: (BuildContext context) => billingInvoiceViewModel,
+          child: Consumer<BillingInvoiceViewModel>(
+            builder: (context, value, _) {
+              switch (value.dataList.status!) {
+                case Status.loading:
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case Status.completed:
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        "Payment Due By",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Lato',
-                            color: Color(0xff39404A)),
-                      ),
-                      Container(
-                        width: 161,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffDFE1E4)),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: DropdownButtonHideUnderline(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: DropdownButton(
-                              icon: Icon(Icons.expand_more_outlined),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff39404A)),
-                              value: paymentSelect,
-                              onChanged: (value) {
-                                setState(() {
-                                  paymentSelect = value!;
-                                });
-                              },
-                              items: paymentItems,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]),
-                //SizedBox(height: 35),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.97,
-            height: MediaQuery.of(context).size.height * 0.55,
-            child: Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Invoice Generated",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Lato',
-                          color: Color(0xff39404A)),
-                    ),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.95,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "Mar, 23",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "Generated on 1 Mar, 23 ",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff47C088)),
-                              ),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "20 Trainees",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "₹36,000",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              )
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onTap: () {
-                           /* Navigator.push(
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10.0, left: 25, right: 25),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Billing Detail",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Lato',
+                                      color: Color(0xff39404A)),
+                                ),
+                                /*InkWell(
+                                  child: SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: SvgPicture.asset(
+                                        'assets/images/edit_square.svg',
+                                        color: Color(0xff99A0AB),
+                                      )),
+                                  onTap: () {
+                                    *//* Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const Payment_Invoice_Page()),
-                            );*/
-                            Get.to(()=> const Payment_Invoice_Page(),transition: Transition.leftToRight);
-
-                          },
-                        )),
-                    Divider(),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.95,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "Apr, 23",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "Generated on 1 Apr, 23 ",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff47C088)),
-                              ),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "20 Trainees",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "₹20,000",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              )
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onTap: () {},
-                        )),
-                    Divider(),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.95,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "May, 23",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "Generated on 1 May, 23 ",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff47C088)),
-                              ),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "20 Trainees",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              ),
-                              Text(
-                                "₹20,000",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff39404A)),
-                              )
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onTap: () {},
-                        )),
-                    Divider(),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      height: 70,
-                      decoration: BoxDecoration(),
-                      child: ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Jul, 23",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff39404A)),
+                                      const Edit_Billing_Invoice()),
+                            );*//*
+                                    Get.to(() => const Edit_Billing_Invoice(),
+                                        transition: Transition.leftToRight);
+                                  },
+                                ),*/
+                              ],
                             ),
-                            Text(
-                              "Generated on 1 Jul, 23 ",
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff47C088)),
+                            SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Billing Cycle",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Lato',
+                                      color: Color(0xff39404A)),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Color(0xffDFE1E4)),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  width: 114,
+                                  height: 35,
+                                  child: Center(child: Text("Monthly"))
+                                  /*DropdownButtonHideUnderline(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: DropdownButton(
+                                        icon: Icon(Icons.expand_more_outlined),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Lato',
+                                            color: Color(0xff39404A)),
+                                        value: monthsSelect,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            monthsSelect = value!;
+                                          });
+                                        },
+                                        items: monthsItems,
+                                      ),
+                                    ),
+                                  ),*/
+                                ),
+                              ],
                             ),
+                            SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Billing Day",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Lato',
+                                      color: Color(0xff39404A)),
+                                ),
+                                Container(
+                                  width: 157,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Color(0xffDFE1E4)),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Center(child: Text("${value.dataList.data!.billingDate} of Every Month"),)
+                                 /* DropdownButtonHideUnderline(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: DropdownButton(
+                                        icon: Icon(Icons.expand_more_outlined),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Lato',
+                                            color: Color(0xff39404A)),
+                                        value: daySelect,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            daySelect = value!;
+                                          });
+                                        },
+                                        items: dayItems,
+                                      ),
+                                    ),
+                                  ),*/
+                                ),
+                              ],
+                            ),
+                            /*SizedBox(height: 15),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Payment Due By",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Lato',
+                                        color: Color(0xff39404A)),
+                                  ),
+                                  Container(
+                                    width: 161,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Color(0xffDFE1E4)),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: DropdownButtonHideUnderline(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: DropdownButton(
+                                          icon:
+                                              Icon(Icons.expand_more_outlined),
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: 'Lato',
+                                              color: Color(0xff39404A)),
+                                          value: paymentSelect,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              paymentSelect = value!;
+                                            });
+                                          },
+                                          items: paymentItems,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),*/
+                            //SizedBox(height: 35),
                           ],
                         ),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "20 Trainees",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff39404A)),
-                            ),
-                            Text(
-                              "₹36,000",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff39404A)),
-                            )
-                          ],
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 15,
-                        ),
-                        onTap: () {},
                       ),
-                    ),
-                    Divider(),
-                    SizedBox(height: 10),
-                    Center(
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xff2A62B8)),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "View More...",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Lato',
-                                    color: Color(0xff2A62B8)),
-                              ))),
-                    )
-                  ],
-                ),
-              ),
-            ),
+                      SizedBox(height: 10),
+                      Container(
+                        //color: Colors.red,
+                        width: MediaQuery.of(context).size.width * 0.97,
+                        height: MediaQuery.of(context).size.height * 0.65,
+                        child: ListView.builder(
+                          itemCount: value.dataList.data!.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding:
+                              const EdgeInsets.only(left: 8.0, right: 5.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Invoice Generated",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Lato',
+                                        color: Color(0xff39404A)),
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.95,
+                                      height: 70,
+                                      decoration: BoxDecoration(),
+                                      child: ListTile(
+                                        title: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children:  [
+                                            Text(
+                                              "${value.dataList.data!.data[index].mm}-${value.dataList.data!.data[index].yy}",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Lato',
+                                                  color: Color(0xff39404A)),
+                                            ),
+                                            Text(
+                                              "Generated on ${value.dataList.data!.data[index].createDd}-${value.dataList.data!.data[index].createMm}-${value.dataList.data!.data[index].createYy}",
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Lato',
+                                                  color: Color(0xff47C088)),
+                                            ),
+                                          ],
+                                        ),
+                                        subtitle: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children:  [
+                                            Text(
+                                              "${value.dataList.data!.totalDataCount} Trainee",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Lato',
+                                                  color: Color(0xff39404A)),
+                                            ),
+                                            Text(
+                                              "₹${value.dataList.data!.data[index].totalAmount}",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Lato',
+                                                  color: Color(0xff39404A)),
+                                            )
+                                          ],
+                                        ),
+                                        trailing: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 15,
+                                        ),
+                                        onTap: () {
+                                          /* Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Payment_Invoice_Page()),
+                                );*/
+                                          Get.to(
+                                                  () =>  Payment_Invoice_Page(
+                                                    totalFeePaid: value.dataList.data!.data[index].totalTraineeFeePaid.toString(),
+                                                    totalFeeDue: value.dataList.data!.data[index].totalTraineeFeeDue.toString(),
+                                                    totalCollectionDue: value.dataList.data!.data[index].totalDue.toString(),
+                                                    totalCollectionPaid: value.dataList.data!.data[index].totalCollection.toString(),),
+                                              transition: Transition.leftToRight);
+                                        },
+                                      )),
+
+                                ],
+                              ),
+                            );
+                          },
+
+                        ),
+                      ),
+                     /* Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Center(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width *
+                                  0.85,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color(0xff2A62B8)),
+                                  borderRadius:
+                                  BorderRadius.circular(8)),
+                              child: TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "View More...",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Lato',
+                                        color: Color(0xff2A62B8)),
+                                  ))),
+                        ),
+                      )*/
+                    ],
+                  );
+                case Status.error:
+                  return Center(child: Text("No Data Found"));
+              }
+            },
           ),
-        ]),
+        ),
       )),
     );
   }
