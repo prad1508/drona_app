@@ -69,7 +69,8 @@ class AcademyViewViewModel with ChangeNotifier {
 
   Future<bool> fetchouserQrimg(data, context) async {
     _myRepo.uploadQr(data).then((value) async {
-      // Utils.flushBarErrorMessage(value['msg'], context);
+      print("fetchouserQrimg api success");
+       Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
       print("error is $error");

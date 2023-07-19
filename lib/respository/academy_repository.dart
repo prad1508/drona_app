@@ -59,13 +59,13 @@ class AcademyRepository {
   Future<dynamic> uploadQr(data) async {
     print("data is $data");
     try {
-      dynamic response = await _apiServices.uploadImageHTTP(AppUrl.uploadQr, data);
-      print("successfull upload qr ");
+      dynamic response = await _apiServices.uploadImageHTTP(AppUrl.uploadQrImg, data);
+      print("response =$response ");
 
       return response;
     } catch (e) {
       print(e);
-      print("not successfully upload qr ");
+     // print("not successfully upload qr ");
       rethrow;
     }
   }

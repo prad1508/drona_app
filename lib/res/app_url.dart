@@ -57,6 +57,7 @@ class AppUrl {
   static var academylogo = "$baseUrl/static/logo/";
 
   static var uploadQr = "$baseUrl/static/qr";
+  static var uploadQrImg = "$baseUrl/academy/uploadqr";
   static var billingInvoiceMonthly = '$baseUrl/academy/billing_invoice/month';
   static var billingViewInvoiceMonthly = '$baseUrl/academy/invoice_payment/month';
 
