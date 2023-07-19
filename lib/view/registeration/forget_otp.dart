@@ -25,15 +25,16 @@ class _ForgetOtpState extends State<ForgetOtp> {
   final TextEditingController otpvalue2 = TextEditingController();
   final TextEditingController otpvalue3 = TextEditingController();
   final TextEditingController otpvalue4 = TextEditingController();
-  final TextEditingController otpvalue5 = TextEditingController();
-  final TextEditingController otpvalue6 = TextEditingController();
-  late String field1, field2, field3, field4, field5, field6;
+//  final TextEditingController otpvalue5 = TextEditingController();
+ // final TextEditingController otpvalue6 = TextEditingController();
+  late String field1, field2, field3, field4;
+      //field5, field6;
   final focus1 = FocusNode();
   final focus2 = FocusNode();
   final focus3 = FocusNode();
   final focus4 = FocusNode();
-  final focus5 = FocusNode();
-  final focus6 = FocusNode();
+//  final focus5 = FocusNode();
+//  final focus6 = FocusNode();
   String mobNumber= '+91 9658992342';
   String token = '';
   @override
@@ -85,31 +86,32 @@ class _ForgetOtpState extends State<ForgetOtp> {
      });
     if(field.isEmpty){
        FocusScope.of(context).requestFocus(focus3);
-     }else{
-      FocusScope.of(context).requestFocus(focus5);
-     }
+      }
+      // else{
+     //  FocusScope.of(context).requestFocus(focus5);
+     // }
   }
-  Future<void>otpField5(String field, context) async{
-     setState(() {
-       field5 = field;
-     });
-     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus4);
-     }else{
-      FocusScope.of(context).requestFocus(focus6);
-     }
-    
-  }
-  Future<void>otpField6(String field, context) async{
-     setState(() {
-       field6 = field;
-     });
-     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus5);
-     }
-     
-   
-  }
+  // Future<void>otpField5(String field, context) async{
+  //    setState(() {
+  //      field5 = field;
+  //    });
+  //    if(field.isEmpty){
+  //      FocusScope.of(context).requestFocus(focus4);
+  //    }else{
+  //     FocusScope.of(context).requestFocus(focus6);
+  //    }
+  //
+  // }
+  // Future<void>otpField6(String field, context) async{
+  //    setState(() {
+  //      field6 = field;
+  //    });
+  //    if(field.isEmpty){
+  //      FocusScope.of(context).requestFocus(focus5);
+  //    }
+  //
+  //
+  // }
  
  //count down timer
  _requestOtp() {
@@ -185,6 +187,10 @@ class _ForgetOtpState extends State<ForgetOtp> {
                             autofocus: true,
                             onChanged: (otpvalue1){
                               otpField(otpvalue1, context);
+                              if(field1.isNotEmpty && field2.isNotEmpty && field3.isNotEmpty && field4.isNotEmpty)
+                              {
+                                registration.resetotpVerify(field1 + field2 + field3 + field4,registration.mobno, context);
+                              }
                             },
                             textInputAction: TextInputAction.next,
                             controller: otpvalue1,
@@ -211,7 +217,11 @@ class _ForgetOtpState extends State<ForgetOtp> {
                            autofocus: true,
                            onChanged: (otpvalue2){
                               otpField2(otpvalue2, context);
-                              
+                              if(field1.isNotEmpty && field2.isNotEmpty && field3.isNotEmpty && field4.isNotEmpty)
+                              {
+                                registration.resetotpVerify(field1 + field2 + field3 + field4,registration.mobno, context);
+                              }
+
                             },
                             textInputAction: TextInputAction.next,
                             controller: otpvalue2,
@@ -237,6 +247,10 @@ class _ForgetOtpState extends State<ForgetOtp> {
                            autofocus: true,
                              onChanged: (otpvalue3){
                               otpField3(otpvalue3, context);
+                              if(field1.isNotEmpty && field2.isNotEmpty && field3.isNotEmpty && field4.isNotEmpty)
+                              {
+                                registration.resetotpVerify(field1 + field2 + field3 + field4,registration.mobno, context);
+                              }
                             },
                             textInputAction: TextInputAction.next,
                             controller: otpvalue3,
@@ -262,6 +276,11 @@ class _ForgetOtpState extends State<ForgetOtp> {
                            autofocus: true,
                            onChanged: (otpvalue4){
                               otpField4(otpvalue4, context);
+                              if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty)
+                              {}
+                              else{
+                                registration.resetotpVerify(field1 + field2 + field3 + field4,registration.mobno, context);
+                              }
                             },
                             textInputAction: TextInputAction.next,
                             controller: otpvalue4,
@@ -280,59 +299,59 @@ class _ForgetOtpState extends State<ForgetOtp> {
                        const SizedBox(
                         width: 5,
                       ),
-                      SizedBox(
-                        width: width,
-                        child: TextFormField( 
-                           focusNode: focus5,
-                           autofocus: true,
-                           onChanged: (otpvalue5){
-                              otpField5(otpvalue5, context);
-                            },
-                            textInputAction: TextInputAction.next,
-                            controller: otpvalue5,
-                            style:
-                                const TextStyle(fontSize: 25, fontFamily: 'poppin'),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            maxLength: 1,
-                            cursorColor: Theme.of(context).primaryColor,
-                            decoration: const InputDecoration(
-                                hintText: "",
-                                counterText: '',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 20.0))),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(
-                        width: width,
-                        child: TextFormField(
-                           focusNode: focus6,
-                           autofocus: true,
-                           onChanged: (otpvalue6){
-                              otpField6(otpvalue6, context);
-      
-                               if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty && field5.isEmpty && field6.isEmpty)
-                                  {}
-                                  else{
-                                   registration.resetotpVerify(field1 + field2 + field3 + field4 + field5 + field6, context);
-                                  }
-                            },
-                          
-                            controller: otpvalue6,
-                            style:
-                                const TextStyle(fontSize: 25, fontFamily: 'poppin'),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            maxLength: 1,
-                            cursorColor: Theme.of(context).primaryColor,
-                            decoration: const InputDecoration(
-                                hintText: "",
-                                counterText: '',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 20.0))),
-                      ),
+                      // SizedBox(
+                      //   width: width,
+                      //   child: TextFormField(
+                      //      focusNode: focus5,
+                      //      autofocus: true,
+                      //      onChanged: (otpvalue5){
+                      //         otpField5(otpvalue5, context);
+                      //       },
+                      //       textInputAction: TextInputAction.next,
+                      //       controller: otpvalue5,
+                      //       style:
+                      //           const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                      //       textAlign: TextAlign.center,
+                      //       keyboardType: TextInputType.number,
+                      //       maxLength: 1,
+                      //       cursorColor: Theme.of(context).primaryColor,
+                      //       decoration: const InputDecoration(
+                      //           hintText: "",
+                      //           counterText: '',
+                      //           hintStyle: TextStyle(
+                      //               color: Colors.black, fontSize: 20.0))),
+                      // ),
+                      // const SizedBox(
+                      //   width: 5,
+                      // ),
+                      // SizedBox(
+                      //   width: width,
+                      //   child: TextFormField(
+                      //      focusNode: focus6,
+                      //      autofocus: true,
+                      //      onChanged: (otpvalue6){
+                      //         otpField6(otpvalue6, context);
+                      //
+                      //          if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty && field5.isEmpty && field6.isEmpty)
+                      //             {}
+                      //             else{
+                      //              registration.resetotpVerify(field1 + field2 + field3 + field4 + field5 + field6, context);
+                      //             }
+                      //       },
+                      //
+                      //       controller: otpvalue6,
+                      //       style:
+                      //           const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                      //       textAlign: TextAlign.center,
+                      //       keyboardType: TextInputType.number,
+                      //       maxLength: 1,
+                      //       cursorColor: Theme.of(context).primaryColor,
+                      //       decoration: const InputDecoration(
+                      //           hintText: "",
+                      //           counterText: '',
+                      //           hintStyle: TextStyle(
+                      //               color: Colors.black, fontSize: 20.0))),
+                      // ),
                     ],
                   ),
                   

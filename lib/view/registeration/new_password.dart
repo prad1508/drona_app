@@ -199,7 +199,62 @@ class _NewPasswordState extends State<NewPassword> {
                           Utils.flushBarErrorMessage('Please fill field', context);
                         }
                         else if(newPassword.text.length > 5){
-                            registration.verifynewPassword(newPassword.text.toString(), context);
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: AlertDialog(
+                                  //  title: const Center(child: Text('')),
+                                  content:   Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.check,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      const Text("Your password has been changed",style: TextStyle(
+                                          fontSize: 14
+                                      ),),
+                                      const SizedBox(height: 5),
+                                      const SizedBox(height: 5),
+
+                                    ],
+                                  ),
+                                  contentPadding: const EdgeInsets.all(15),
+                                  actions: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                          width: double.infinity,
+                                          child: RoundButton(
+                                            title: 'Login Now',
+                                            onPress: () async {
+                                              Navigator.pop(context);
+                                              registration.verifynewPassword(newPassword.text.toString(), context);
+                                            },
+                                            rounded: true,
+                                            color: Theme.of(context).primaryColor,
+                                            textColor: Colors.white,
+
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+
                         }
                         else if(oldPassword.text.toString() == newPassword.text.toString()){
                            Utils.flushBarErrorMessage('Password shoud be more than 5 latter', context);

@@ -282,10 +282,10 @@ class RegistrationViewModel with ChangeNotifier {
   }
 
   //////////////////////forget password /////////////////////////////////////
-  Future<void> resetotpVerify(dynamic Otpdata, BuildContext context) async {
+  Future<void> resetotpVerify(dynamic Otpdata,String mobile , BuildContext context) async {
     setLoading(true);
     setUid(uid);
-    Map data = {'mobno': '8109355407', 'otp': Otpdata.toString()};
+    Map data = {'mobno': mobile, 'otp': Otpdata.toString()};
     _myRepo.resetotpVerifyListApi(data).then((value) async {
       setLoading(false);
       setPrToken(value['prtoken']);
