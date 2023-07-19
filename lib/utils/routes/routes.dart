@@ -13,7 +13,6 @@ import 'package:drona/view/batch_listing/trainee_add_options.dart';
 import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:drona/view/batch_listing/view_batch_details.dart';
 import 'package:flutter/material.dart';
-import '../../res/widget/Academy_Listing/service_offring_page.dart';
 import '../../view/coach_listing/coach_listselected.dart';
 import '../../view/dashboard/layout.dart';
 import '../../view/language.dart';

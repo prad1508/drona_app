@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:drona/res/widget/Academy_Listing/academy_details_edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +12,7 @@ import '../../model/academy_model.dart';
 import '../../res/app_url.dart';
 import '../../res/widget/customradio.dart';
 import '../../view_model/academy_view_model.dart';
+import '../Academy_Listing/academy_details_edit.dart';
 
 class Academy_Detail_Page extends StatefulWidget {
   const Academy_Detail_Page({super.key});

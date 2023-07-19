@@ -1,6 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:drona/data/response/status.dart';
-import 'package:drona/res/widget/Academy_Listing/edit_bank_details.dart';
 import 'package:drona/view_model/academy_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../res/app_url.dart';
 import '../../utils/no_data.dart';
 import '../../view_model/bankdetails_view_model.dart';
+import '../Academy_Listing/edit_bank_details.dart';
 
 class Bank_Details extends StatefulWidget {
   const Bank_Details(

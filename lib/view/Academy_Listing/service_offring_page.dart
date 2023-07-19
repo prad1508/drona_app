@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 
-import 'package:drona/res/widget/Academy_Listing/choosefacility_page.dart';
 
 import 'package:drona/res/widget/progress_pills.dart';
 
 import 'package:flutter/material.dart';
+
+import 'choosefacility_page.dart';
 
 class Service_Offering_Page extends StatefulWidget {
   const Service_Offering_Page({super.key});

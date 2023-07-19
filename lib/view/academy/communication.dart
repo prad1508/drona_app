@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:drona/res/widget/Academy_Listing/communication_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../Academy_Listing/communication_edit.dart';
 
 class Communication extends StatefulWidget {
   const Communication({super.key});

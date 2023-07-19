@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:drona/res/widget/Academy_Listing/facility_program.dart';
-import 'package:drona/res/widget/Academy_Listing/service_offring_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +8,8 @@ import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
+import '../Academy_Listing/facility_program.dart';
+import '../Academy_Listing/service_offring_page.dart';
 
 class Servicelist_Page extends StatefulWidget {
   const Servicelist_Page({super.key});

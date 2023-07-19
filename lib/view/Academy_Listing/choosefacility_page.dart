@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:drona/res/widget/Academy_Listing/chooseprogram_page.dart';
 import 'package:drona/res/widget/progress_pills.dart';
 import 'package:flutter/material.dart';
+
+import 'chooseprogram_page.dart';
 
 class ChooseFacilityPage extends StatefulWidget {
   const ChooseFacilityPage({super.key});

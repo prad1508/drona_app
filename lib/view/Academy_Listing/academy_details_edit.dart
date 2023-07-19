@@ -14,8 +14,8 @@ import '../../../model/academy_model.dart';
 import '../../../utils/utils.dart';
 import '../../../view_model/academy_view_model.dart';
 import '../../../view_model/postoffice_view_model.dart';
-import '../../app_url.dart';
-import '../../language/language.dart';
+import '../../res/app_url.dart';
+import '../../res/language/language.dart';
 
 class Edit_Academy_Detail extends StatefulWidget {
   const Edit_Academy_Detail({super.key});
