@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import '../data/network/base_apiservices.dart';
 import '../model/Edit_academy_model.dart';
+import '../model/Qr_model.dart';
 import '../model/academy_model.dart';
 import '../data/network/network_apiservice.dart';
 import '/res/app_url.dart';
@@ -56,13 +57,13 @@ class AcademyRepository {
   }
 
 
-  Future<dynamic> uploadQr(data) async {
+  Future<QrModel> uploadQr(data) async {
     print("data is $data");
     try {
+
       dynamic response = await _apiServices.uploadImageHTTP(AppUrl.uploadQrImg, data);
       print("response =$response ");
-
-      return response;
+      return response = QrModel.fromJson(response);
     } catch (e) {
       print(e);
      // print("not successfully upload qr ");

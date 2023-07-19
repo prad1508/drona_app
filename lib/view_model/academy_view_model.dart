@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../model/Edit_academy_model.dart';
+import '../model/Qr_model.dart';
 import '../model/academy_model.dart';
 import '../utils/utils.dart';
 import '../view/academy/academy_details.dart';
@@ -19,12 +20,18 @@ class AcademyViewViewModel with ChangeNotifier {
   }
   ApiResponse<AcademyListModel> dataList = ApiResponse.loading();
   ApiResponse<EditAcademyListModel> dataList1 = ApiResponse.loading();
+  ApiResponse<QrModel> dataList2 = ApiResponse.loading();
+  String filename = '';
   setDataList(ApiResponse<AcademyListModel> response){
     dataList = response ;
     notifyListeners();
   }
   setDataList1(ApiResponse<EditAcademyListModel> response){
     dataList1 = response ;
+    notifyListeners();
+  }
+  setDataList2(ApiResponse<QrModel> response){
+    dataList2 = response ;
     notifyListeners();
   }
   Future<void> fetchAcademyListApi ()async{
@@ -70,7 +77,9 @@ class AcademyViewViewModel with ChangeNotifier {
   Future<bool> fetchouserQrimg(data, context) async {
     _myRepo.uploadQr(data).then((value) async {
       print("fetchouserQrimg api success");
-       Utils.flushBarErrorMessage(value['msg'], context);
+      filename = value.filename;
+      setDataList2(ApiResponse.completed(value));
+    //   Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
       print("error is $error");

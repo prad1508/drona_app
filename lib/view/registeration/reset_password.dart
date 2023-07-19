@@ -48,58 +48,64 @@ class _ResetPasswordState extends State<ResetPassword> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-          child: Material(
-            color: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Please Enter Your Phone Number To Receive a Verification Code',
-                      style:
-                          TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
+          child: GestureDetector(
+            onTap: (){
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Material(
+              color: Colors.white,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Please Enter Your Phone Number To Receive a Verification Code',
+                        style:
+                        TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  AsyncTextFormField(
-                      controller: phone,
-                      validationDebounce: const Duration(milliseconds: 100),
-                      validator: Validation().isPhoneField,
-                      keyboardType: TextInputType.phone,
-                      hintText: 'XXX-XXX-XXXX',
-                      isValidatingMessage:
-                          'Enter a valid 10 digit mobile number',
-                      valueIsInvalidMessage:
-                          'Enter a valid 10 digit mobile number'),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .4,
-                  ),
-                  RoundButton(
-                      loading: false,
-                      title: 'Send',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                        if(phone.text.trim().toString().length == 10)
-                         {
-                           Map<String, String> data = {
-                          "mobno": phone.text.toString(),
-                        };
-                        registration.forgetPassword(data, context);
-                         }
-                         else{
-                           Utils.flushBarErrorMessage('Invalid mobile number. Must be 10 digits.', context);
-                         }
-                      }),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    AsyncTextFormField(
+                        controller: phone,
+                        validationDebounce: const Duration(milliseconds: 100),
+                        validator: Validation().isPhoneField,
+                        keyboardType: TextInputType.phone,
+                        hintText: 'XXX-XXX-XXXX',
+                        isValidatingMessage:
+                        'Enter a valid 10 digit mobile number',
+                        valueIsInvalidMessage:
+                        'Enter a valid 10 digit mobile number'),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .4,
+                    ),
+                    RoundButton(
+                        loading: false,
+                        title: 'Send',
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: Theme.of(context).primaryColor,
+                        onPress: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          if(phone.text.trim().toString().length == 10)
+                          {
+                            Map<String, String> data = {
+                              "mobno": phone.text.toString(),
+                            };
+                            registration.forgetPassword(data, context);
+                          }
+                          else{
+                            Utils.flushBarErrorMessage('Invalid mobile number. Must be 10 digits.', context);
+                          }
+                        }),
 
-                ],
+                  ],
+                ),
               ),
             ),
           ),

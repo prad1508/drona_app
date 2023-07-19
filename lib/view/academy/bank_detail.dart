@@ -519,23 +519,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                                                 fontFamily: 'Lato'),
                                           ),
                                         ),
-                                        Center(
-                                            child:
-                                                value.dataList.data!.bankDetails.isNotEmpty &&
-                                            value.dataList.data!.bankDetails[0].qrStatus ?
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(8.0), // You can adjust the radius as needed
-                                              child: Container(
-                                                  width: 130, // Set your desired width
-                                                  height: 100, // Set your desired height
-                                                  color: Colors.white, // Background color for the container
-                                                  child: Image.network(AppUrl.uploadQr + value.dataList.data!.bankDetails[0].qr, // Add your URL or leave it empty if needed
-                                                    fit: BoxFit.cover, // You can set the desired image fit
-                                                  )
 
-                                              ),
-                                            ) : Text('')
-                                        ),
                                         SizedBox(
                                           height: 50,
                                         ),
@@ -545,6 +529,26 @@ class _Bank_DetailsState extends State<Bank_Details> {
                                 ),
                                 onTap: () {},
                               )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                              child:
+                              value.dataList.data!.bankDetails.isNotEmpty &&
+                                  value.dataList.data!.bankDetails[0].qrStatus ?
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0), // You can adjust the radius as needed
+                                child: Container(
+                                    width: 130, // Set your desired width
+                                    height: 100, // Set your desired height
+                                    color: Colors.white, // Background color for the container
+                                    child: Image.network(AppUrl.uploadQr + value.dataList.data!.bankDetails[0].qr, // Add your URL or leave it empty if needed
+                                      fit: BoxFit.cover, // You can set the desired image fit
+                                    )
+
+                                ),
+                              ) : Text('')
+                          ),
                         ],
                       );
                     case Status.error:

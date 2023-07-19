@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 
 import '../../../data/response/status.dart';
 import '../../../view_model/academy_view_model.dart';
+import '../../model/Qr_model.dart';
+import '../../res/app_url.dart';
 
 class Edit_Bank_Details extends StatefulWidget {
   const Edit_Bank_Details({super.key});
@@ -26,7 +28,6 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
   initState() {
     super.initState();
     academyListViewViewModel.fetchAcademyListApi();
-
   }
 
 //profille image picke
@@ -34,12 +35,18 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
   bool img = false;
   final imgPicker = ImagePicker();
   String? selectedService;
-  void openCamera() async {
+  String? response;
+
+
+
+   openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
-    academyListViewViewModel.fetchouserQrimg(imgCamera!.path, context);
-
-
+    dynamic res =  academyListViewViewModel.fetchouserQrimg(imgCamera!.path, context);
+    // ignore: use_build_context_synchronously
+  //  response = res['filename'];
     setState(() {
+
+      img = true;
       imgFile = File(imgCamera!.path);
       print("imgFile$imgFile");
     });
@@ -47,16 +54,20 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
     Navigator.of(context).pop();
   }
 
-  void openGallery() async {
+   openGallery() async {
     var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
-    academyListViewViewModel.fetchouserQrimg(imgGallery!.path, context);
+    dynamic res =  academyListViewViewModel.fetchouserQrimg(imgGallery!.path, context);
+   // response = await res['filename'];
     // userViewModel.fetchouserProfileimg(imgGallery!.path, context);
-    setState(() {
+    setState(()  {
+
+      img = true;
       imgFile = File(imgGallery!.path);
       print("imgFile$imgFile");
     });
     Navigator.of(context).pop();
   }
+
 
   //bottomsheet popup
   showcameraoption() {
@@ -102,17 +113,17 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Loto-Regular'),
                           ),
-                          IconButton(
-                            onPressed: (() {
-                              setState(() {
-                                imgFile = null;
-                                Navigator.pop(context);
-                              });
-                            }),
-                            icon: const Icon(Icons.delete_outline),
-                            color: Colors.black,
-                            iconSize: 30,
-                          ),
+                          // IconButton(
+                          //   onPressed: (() {
+                          //     setState(() {
+                          //       imgFile = null;
+                          //       Navigator.pop(context);
+                          //     });
+                          //   }),
+                          //   icon: const Icon(Icons.delete_outline),
+                          //   color: Colors.black,
+                          //   iconSize: 30,
+                          // ),
                         ],
                       ),
                       const SizedBox(
@@ -172,11 +183,8 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
+    print("aaa");
+    print(academyListViewViewModel.filename);
       // Provider<BankDetailsViewModel>(
       //   create: (_) => BankDetailsViewModel(),
       //   builder: (context, child) {
@@ -261,7 +269,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                           fontSize: 16,
                                           height: 2),
                                       decoration: InputDecoration(
-                                        //   hintText: 'Abc Academy',
+                                           hintText: 'Abc Academy',
                                         hintStyle: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
@@ -306,7 +314,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                           fontSize: 16,
                                           height: 2),
                                       decoration: InputDecoration(
-                                        //    hintText: 'Bank Of India',
+                                           hintText: 'Bank Of India',
                                         hintStyle: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
@@ -674,8 +682,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                           height: 100, // Set your desired height
                                           color: Colors.white, // Background color for the container
                                           child: imgFile == null
-                                              ? Image.network(
-                                            '', // Add your URL or leave it empty if needed
+                                              ? Image.network(AppUrl.uploadQr + value.dataList.data!.bankDetails[0].qr, // Add your URL or leave it empty if needed
                                             fit: BoxFit.cover, // You can set the desired image fit
                                           )
                                               : Image.file(
@@ -707,7 +714,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                               'googlepay_no': googlePayNo.text,
                                               'paytm_no': paytmNo.text,
                                               'upi': upi.text,
-                                              //'qr': '1234',
+                                              'qr': academyListViewViewModel.filename,
                                             };
                                             List editedData = [
                                               acHolderName.text,
@@ -721,9 +728,9 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                             ];
                                             print(data);
                                             bankDetailsViewModel.fetchBankDetailsApi(data, context);
-                                            Get.off(
+                                            Get.to(
                                                     () => Bank_Details(
-                                                  editData: editedData,
+                                                //  editData: editedData,
                                                 ),
                                                 transition: Transition.rightToLeft);
                                           }

@@ -35,7 +35,37 @@ class NetworkApiService extends BaseApiServices {
       if (response.statusCode == 200) {
         responseJson = await response.stream.bytesToString();
       } else {
-        throw UnauthorisedException(jsonEncode({"msg": "File uploas error"}));
+        throw UnauthorisedException(jsonEncode({"msg": "File upload error"}));
+      }
+    } on SocketException {
+      throw FetchDataException('API Connection Error');
+    }
+    return jsonDecode(responseJson);
+  }
+
+  Future uploadImageHTTP2(
+      url,
+      dynamic file,
+      ) async {
+    dynamic responseJson;
+    try {
+      final prefsToken = await SharedPreferences.getInstance();
+      dynamic token = prefsToken.getString('token');
+      Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+        'token': token,
+      };
+      var request = http.MultipartRequest('POST', Uri.parse(url))
+        ..headers.addAll(headers)
+        ..files.add(await http.MultipartFile.fromPath('file', file,
+           // contentType: MediaType("file", "jpeg")
+            ));
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        responseJson = await response.stream.bytesToString();
+      } else {
+        throw UnauthorisedException(jsonEncode({"msg": "File upload error"}));
       }
     } on SocketException {
       throw FetchDataException('API Connection Error');

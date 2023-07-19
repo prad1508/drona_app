@@ -43,10 +43,10 @@ class _OtpPageState extends State<OtpPage> {
     super.initState();
     mobileNumber();
   }
-   Future<bool> _onWillPop() async {
-    return false; 
+  Future<bool> _onWillPop() async {
+    return false;
   }
-  
+
   Future<bool> showExitPopup(context) async {
     return await showDialog(
         context: context,
@@ -60,31 +60,31 @@ class _OtpPageState extends State<OtpPage> {
                   Align(
                     alignment: Alignment.center,
                     child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.redAccent,
-                          size: 50.0,
-                        ),
-                    
+                      Icons.close_rounded,
+                      color: Colors.redAccent,
+                      size: 50.0,
+                    ),
+
                   ),
                   const Text("Do you want to exit?"),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      
-                     
+
+
                       Expanded(
                           child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                        ),
-                        child:const Text("No",
-                            style: TextStyle(color: Colors.black)
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
                             ),
-                      )),
-                       const SizedBox(width: 15),
+                            child:const Text("No",
+                                style: TextStyle(color: Colors.black)
+                            ),
+                          )),
+                      const SizedBox(width: 15),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -103,7 +103,7 @@ class _OtpPageState extends State<OtpPage> {
                 ],
               ),
             ),
-              );
+          );
         });
   }
 
@@ -116,45 +116,46 @@ class _OtpPageState extends State<OtpPage> {
       mobNumber = "${items?[3]}";
     });
   }
- //otp field merge
- Future<void>otpField(String field, context) async{
-     setState(() {
-       field1 = field;
-     });
-     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus1);
-     }else{
+  //otp field merge
+  Future<void>otpField(String field, context) async{
+    setState(() {
+      field1 = field;
+    });
+    if(field.isEmpty){
+      FocusScope.of(context).requestFocus(focus1);
+    }else{
       FocusScope.of(context).requestFocus(focus2);
-     }
+    }
   }
   Future<void>otpField2(String field, context) async{
-     setState(() {
-       field2 = field;
-     });
+    setState(() {
+      field2 = field;
+    });
     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus1);
-     }else{
+      FocusScope.of(context).requestFocus(focus1);
+    }else{
       FocusScope.of(context).requestFocus(focus3);
-     }
-   
+    }
+
   }
   Future<void>otpField3(String field, context) async{
-     setState(() {
-       field3 = field;
-     });
-     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus2);
-     }else{
+    setState(() {
+      field3 = field;
+    });
+    if(field.isEmpty){
+      FocusScope.of(context).requestFocus(focus2);
+    }else{
       FocusScope.of(context).requestFocus(focus4);
-     }
+    }
   }
   Future<void>otpField4(String field, context) async{
-     setState(() {
-       field4 = field;
-     });
+    setState(() {
+      FocusManager.instance.primaryFocus?.unfocus();
+      field4 = field;
+    });
     if(field.isEmpty){
-       FocusScope.of(context).requestFocus(focus3);
-     }
+      FocusScope.of(context).requestFocus(focus3);
+    }
   }
   // Future<void>otpField5(String field, context) async{
   //    setState(() {
@@ -177,9 +178,9 @@ class _OtpPageState extends State<OtpPage> {
   //
   //
   // }
- 
- //count down timer
- _requestOtp() {
+
+  //count down timer
+  _requestOtp() {
     controller.loading();
     Future.delayed(const Duration(seconds: 2), () {
       controller.startTimer();
@@ -194,29 +195,29 @@ class _OtpPageState extends State<OtpPage> {
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          leading:  IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black), onPressed: () {
-            Navigator.of(context).pop();
-          },
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          appBar: AppBar(
+            leading:  IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black), onPressed: () {
+              Navigator.of(context).pop();
+            },
 
+            ),
+            title: Row(
+              children: [
+                ProgressPills(
+                    number: 7,
+                    active: 1,
+                    color: Theme.of(context).primaryColorLight),
+              ],
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
-          title: Row(
-            children: [
-              ProgressPills(
-                  number: 7,
-                  active: 1,
-                  color: Theme.of(context).primaryColorLight),
-            ],
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Material(
               color: Colors.white,
               child: Container(
@@ -277,7 +278,7 @@ class _OtpPageState extends State<OtpPage> {
                               textInputAction: TextInputAction.next,
                               controller: otpvalue1,
                               style:
-                                  const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                              const TextStyle(fontSize: 25, fontFamily: 'poppin'),
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
@@ -293,18 +294,18 @@ class _OtpPageState extends State<OtpPage> {
                         ),
                         SizedBox(
                           width: width,
-                          
+
                           child: TextFormField(
-                             focusNode: focus2,
-                             autofocus: true,
-                             onChanged: (otpvalue2){
+                              focusNode: focus2,
+                              autofocus: true,
+                              onChanged: (otpvalue2){
                                 otpField2(otpvalue2, context);
-                                
+
                               },
                               textInputAction: TextInputAction.next,
                               controller: otpvalue2,
                               style:
-                                  const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                              const TextStyle(fontSize: 25, fontFamily: 'poppin'),
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
@@ -321,15 +322,15 @@ class _OtpPageState extends State<OtpPage> {
                         SizedBox(
                           width: width,
                           child: TextFormField(
-                             focusNode: focus3,
-                             autofocus: true,
-                               onChanged: (otpvalue3){
+                              focusNode: focus3,
+                              autofocus: true,
+                              onChanged: (otpvalue3){
                                 otpField3(otpvalue3, context);
                               },
                               textInputAction: TextInputAction.next,
                               controller: otpvalue3,
                               style:
-                                  const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                              const TextStyle(fontSize: 25, fontFamily: 'poppin'),
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
@@ -346,9 +347,9 @@ class _OtpPageState extends State<OtpPage> {
                         SizedBox(
                           width: width,
                           child: TextFormField(
-                            focusNode: focus4,
-                             autofocus: true,
-                             onChanged: (otpvalue4){
+                              focusNode: focus4,
+                              autofocus: true,
+                              onChanged: (otpvalue4){
                                 otpField4(otpvalue4, context);
                                 if(field1.isEmpty && field2.isEmpty && field3.isEmpty && field4.isEmpty )
                                 {}
@@ -359,7 +360,7 @@ class _OtpPageState extends State<OtpPage> {
                               textInputAction: TextInputAction.next,
                               controller: otpvalue4,
                               style:
-                                  const TextStyle(fontSize: 25, fontFamily: 'poppin'),
+                              const TextStyle(fontSize: 25, fontFamily: 'poppin'),
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
@@ -370,7 +371,7 @@ class _OtpPageState extends State<OtpPage> {
                                   hintStyle: TextStyle(
                                       color: Colors.black, fontSize: 20.0))),
                         ),
-                         const SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         // SizedBox(
@@ -428,7 +429,7 @@ class _OtpPageState extends State<OtpPage> {
                         // ),
                       ],
                     ),
-                    
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -439,36 +440,36 @@ class _OtpPageState extends State<OtpPage> {
                           AppLocale.title9.getString(context),
                           style: const TextStyle(fontSize: 14),
                         ),
-                       OtpTimerButton(
-                        buttonType: ButtonType.text_button,
-                        controller: controller,
-                        onPressed:  () {
-                           registration.register(widget.registration, context);
-                          // ignore: void_checks
-                          return _requestOtp();
-                         
+                        OtpTimerButton(
+                          buttonType: ButtonType.text_button,
+                          controller: controller,
+                          onPressed:  () {
+                            registration.register(widget.registration, context);
+                            // ignore: void_checks
+                            return _requestOtp();
+
                           },
-                        text: Text(
+                          text: Text(
                             AppLocale.resendOtp.getString(context),
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                           ),
-                        duration: 45,
-                      ),
+                          duration: 45,
+                        ),
                       ],
                     ),
-        
-                   
-                    
-                    
+
+
+
+
                   ],
                 ),
               ),
             ),
           ),
-      ),
+        ),
       ),
     );
   }

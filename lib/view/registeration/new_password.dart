@@ -20,14 +20,14 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPasswordState extends State<NewPassword> {
-   //multi language support
+  //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   final TextEditingController newPassword = TextEditingController();
   final TextEditingController oldPassword= TextEditingController();
 
 
-    //cancel session
+  //cancel session
   Future<bool> successPopup(context) async {
     return await showDialog(
         context: context,
@@ -61,20 +61,20 @@ class _NewPasswordState extends State<NewPassword> {
                   const SizedBox(
                     height: 5,
                   ),
-                  
+
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .9,
                     child: ElevatedButton(
-                      
+
                       onPressed: () {
-                     /* Navigator.push(
+                        /* Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       const Layout(selectedIndex: 0,),
                                 ),
                               );*/
-                      Get.to(()=>  const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+                        Get.to(()=>  const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
 
                       },
                       style: ElevatedButton.styleFrom(
@@ -86,7 +86,7 @@ class _NewPasswordState extends State<NewPassword> {
                       ),
                     ),
                   ),
-             ],
+                ],
               ),
             ),
           );
@@ -95,7 +95,7 @@ class _NewPasswordState extends State<NewPassword> {
 
   @override
   Widget build(BuildContext context) {
-   final registration = Provider.of<RegistrationViewModel>(context);
+    final registration = Provider.of<RegistrationViewModel>(context);
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -115,24 +115,28 @@ class _NewPasswordState extends State<NewPassword> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-          child: Material(
-            color: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text('Your New Password Must be Different from previously use password',
-                      style: TextStyle(fontSize: 16, fontFamily:  'Loto-Regular'),
+          child: GestureDetector(
+            onTap: (){
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Material(
+              color: Colors.white,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text('Your New Password Must be Different from previously use password',
+                        style: TextStyle(fontSize: 16, fontFamily:  'Loto-Regular'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                   Align(
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Align(
                       alignment: Alignment.topLeft,
                       child: Text("New Password",
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -141,11 +145,11 @@ class _NewPasswordState extends State<NewPassword> {
                     const SizedBox(
                       height: 15,
                     ),
-                   TextFormField(
+                    TextFormField(
                       controller: newPassword,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                       hintText: 'XXX-XXX-XXXX',
+                        hintText: 'XXX-XXX-XXXX',
                         hintStyle: const TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
@@ -156,10 +160,10 @@ class _NewPasswordState extends State<NewPassword> {
                         ),
                       ),
                     ),
-                     const SizedBox(
-                    height: 30,
-                  ),
-                   Align(
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Align(
                       alignment: Alignment.topLeft,
                       child: Text("Confirm Password",
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -168,11 +172,11 @@ class _NewPasswordState extends State<NewPassword> {
                     const SizedBox(
                       height: 15,
                     ),
-                   TextFormField(
+                    TextFormField(
                       controller: oldPassword,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                       hintText: 'XXX-XXX-XXXX',
+                        hintText: 'XXX-XXX-XXXX',
                         hintStyle: const TextStyle(fontSize: 12),
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(
@@ -183,89 +187,90 @@ class _NewPasswordState extends State<NewPassword> {
                         ),
                       ),
                     ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .4,
-                  ),
-                  
-                  RoundButton(
-                      loading: false,
-                      title: 'Submit',
-                      textColor: Colors.white,
-                      rounded: true,
-                      color: Theme.of(context).primaryColor,
-                      onPress: () {
-                       
-                        if( oldPassword.text.toString().isEmpty){
-                          Utils.flushBarErrorMessage('Please fill field', context);
-                        }
-                        else if(newPassword.text.length > 5){
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Center(
-                                child: AlertDialog(
-                                  //  title: const Center(child: Text('')),
-                                  content:   Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .4,
+                    ),
+
+                    RoundButton(
+                        loading: false,
+                        title: 'Submit',
+                        textColor: Colors.white,
+                        rounded: true,
+                        color: Theme.of(context).primaryColor,
+                        onPress: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          if( oldPassword.text.toString().isEmpty){
+                            Utils.flushBarErrorMessage('Please fill field', context);
+                          }
+                          else if(newPassword.text.length > 5){
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: AlertDialog(
+                                    //  title: const Center(child: Text('')),
+                                    content:   Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.green,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            Icons.check,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                        child: const Icon(
-                                          Icons.check,
-                                          color: Colors.white,
+                                        const SizedBox(height: 5),
+                                        const Text("Your password has been changed",style: TextStyle(
+                                            fontSize: 14
+                                        ),),
+                                        const SizedBox(height: 5),
+                                        const SizedBox(height: 5),
+
+                                      ],
+                                    ),
+                                    contentPadding: const EdgeInsets.all(15),
+                                    actions: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                            width: double.infinity,
+                                            child: RoundButton(
+                                              title: 'Login Now',
+                                              onPress: () async {
+                                                Navigator.pop(context);
+                                                registration.verifynewPassword(newPassword.text.toString(), context);
+                                              },
+                                              rounded: true,
+                                              color: Theme.of(context).primaryColor,
+                                              textColor: Colors.white,
+
+                                            )
                                         ),
                                       ),
-                                      const SizedBox(height: 5),
-                                      const Text("Your password has been changed",style: TextStyle(
-                                          fontSize: 14
-                                      ),),
-                                      const SizedBox(height: 5),
-                                      const SizedBox(height: 5),
-
                                     ],
                                   ),
-                                  contentPadding: const EdgeInsets.all(15),
-                                  actions: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Container(
-                                          width: double.infinity,
-                                          child: RoundButton(
-                                            title: 'Login Now',
-                                            onPress: () async {
-                                              Navigator.pop(context);
-                                              registration.verifynewPassword(newPassword.text.toString(), context);
-                                            },
-                                            rounded: true,
-                                            color: Theme.of(context).primaryColor,
-                                            textColor: Colors.white,
+                                );
+                              },
+                            );
 
-                                          )
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
+                          }
+                          else if(oldPassword.text.toString() == newPassword.text.toString()){
+                            Utils.flushBarErrorMessage('Password shoud be more than 5 latter', context);
+                          }
+                          else{
+                            Utils.flushBarErrorMessage('Confirm password does not match', context);
+                          }
 
-                        }
-                        else if(oldPassword.text.toString() == newPassword.text.toString()){
-                           Utils.flushBarErrorMessage('Password shoud be more than 5 latter', context);
-                        }
-                        else{
-                           Utils.flushBarErrorMessage('Confirm password does not match', context);
-                        }
-                        
-                      }),
+                        }),
 
-                ],
+                  ],
+                ),
               ),
             ),
           ),
