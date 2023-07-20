@@ -1,3 +1,4 @@
+import 'package:drona/model/ledger_model.dart';
 import 'package:drona/model/trainee_list_model.dart';
 
 import '../data/network/base_apiservices.dart';
@@ -50,4 +51,16 @@ class TraineeRepository {
       rethrow;
     }
   }
+
+  Future<LedgerModel> fetchLedgerListSearchApi(dynamic data, var pageCount, var pageNo) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          "${AppUrl.ledgerEndpoint}/$pageCount/$pageNo", data);
+      return response = LedgerModel.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
+

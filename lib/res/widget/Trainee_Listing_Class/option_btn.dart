@@ -71,7 +71,7 @@ class Option_Button extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Ledger_Page()),
+                MaterialPageRoute(builder: (context) =>  Ledger_Page(traineeProfileUid: '', index: 0, traineeList: [],)),
               );
             },
           ),

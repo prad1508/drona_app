@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/res/widget/customradio.dart';
+import 'package:drona/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/trainee_list_model.dart';
@@ -10,18 +13,20 @@ import '../../res/widget/progress_pills.dart';
 import '../../view_model/trainee_view_model.dart';
 
 class RecordPayment extends StatefulWidget {
-
-
   int index;
+  double fess;
   List<Datum> traineeList;
-  RecordPayment({super.key, required this.traineeList, required this.index});
+  RecordPayment(
+      {super.key,
+        required this.traineeList,
+        required this.index,
+        required this.fess});
 
   @override
   State<RecordPayment> createState() => _RecordPaymentState();
 }
 
 class _RecordPaymentState extends State<RecordPayment> {
-
   TraineeViewModel traineeViewModel = TraineeViewModel();
   // ignore: non_constant_identifier_names
   List<String> PMode = ["Cash", "Online", "Cheque/\nDraft"];
@@ -36,6 +41,46 @@ class _RecordPaymentState extends State<RecordPayment> {
   TextEditingController tDateController = TextEditingController();
   TextEditingController feeController = TextEditingController();
   TextEditingController dateOfBilling = TextEditingController();
+  double fixedFeeAmount = 0;
+
+  @override
+  void initState() {
+    fixedFeeAmount = widget.fess;
+    super.initState();
+    // Add listeners to the mController and cController
+    mController.addListener(updateFeeController);
+    cController.addListener(updateFeeController);
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controllers
+    feeController.dispose();
+    mController.dispose();
+    cController.dispose();
+    super.dispose();
+  }
+
+  void updateFeeController() {
+    // Parse the text values to doubles
+    double mValue = double.tryParse(mController.text) ?? 0.0;
+    double cValue = double.tryParse(cController.text) ?? 0.0;
+
+    // Calculate the new fee value based on the fixedFeeAmount, mValue, and cValue
+    double newFeeValue = fixedFeeAmount + mValue - cValue;
+
+    // Check if the new fee value is less than fixedFeeAmount
+    if (newFeeValue < fixedFeeAmount) {
+      Utils.flushBarErrorMessage("Amount not less than fees", context);
+      feeController.text = fixedFeeAmount.toStringAsFixed(2);
+
+      // Show an error or handle it as per your requirement
+      print("Amount not less than $fixedFeeAmount");
+    } else {
+      // Update the feeController's value
+      feeController.text = newFeeValue.toStringAsFixed(2);
+    }
+  }
 
   ValueChanged<String?> RecordPayment() {
     return (value) => setState(() => payment = value!);
@@ -79,19 +124,28 @@ class _RecordPaymentState extends State<RecordPayment> {
                         children: [
                           const SizedBox(height: 5),
                           Padding(
-                            padding: EdgeInsets.only(top: 8.0),
+                            padding: const EdgeInsets.only(top: 8.0,bottom: 4),
                             child: SizedBox(
                               width: 30,
                               height: 30,
                               child: CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                child: Text(
+                                  backgroundColor: Colors.black,
+                                  child: CachedNetworkImage(
+                                      fit: BoxFit.contain,
+                                      imageUrl: AppUrl.ouserProfileimgListEndPoint +widget.traineeList[widget.index].image,
+                                      errorWidget: (context, url, error) =>
+                                      // Image.asset("assets/images/user.png")
+                                      const Icon(Icons.person,size: 30,color: Colors.white,)
+
+
+                                  )
+                                /* Text(
                                   getInitials(widget
                                       .traineeList[widget.index].traineeName),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white),
-                                ),
+                                ),*/
                                 // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
                               ),
                               // AssetImage('assets/images/user_profile.png'),
@@ -104,34 +158,34 @@ class _RecordPaymentState extends State<RecordPayment> {
                               height: 20,
                               decoration: BoxDecoration(
                                 color:
-                                    widget.traineeList[widget.index].status ==
-                                            "active"
-                                        ? const Color(0xff47C088)
-                                        : Colors.redAccent,
+                                widget.traineeList[widget.index].status ==
+                                    "active"
+                                    ? const Color(0xff47C088)
+                                    : Colors.redAccent,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Center(
                                   child:
-                                      widget.traineeList[widget.index].status ==
-                                              "active"
-                                          ? const Text(
-                                              "Active",
-                                              style: TextStyle(
-                                                color: Color(0xffFBFBFC),
-                                                fontSize: 10,
-                                                fontFamily: 'Lato',
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            )
-                                          : const Text(
-                                              "Inactive",
-                                              style: TextStyle(
-                                                color: Color(0xffFBFBFC),
-                                                fontSize: 10,
-                                                fontFamily: 'Lato',
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            )),
+                                  widget.traineeList[widget.index].status ==
+                                      "active"
+                                      ? const Text(
+                                    "Active",
+                                    style: TextStyle(
+                                      color: Color(0xffFBFBFC),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                      : const Text(
+                                    "Inactive",
+                                    style: TextStyle(
+                                      color: Color(0xffFBFBFC),
+                                      fontSize: 10,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )),
                             ),
                           ),
                         ],
@@ -161,21 +215,21 @@ class _RecordPaymentState extends State<RecordPayment> {
                                     left: 5, right: 0, top: 2),
                                 decoration: BoxDecoration(
                                     color: widget.traineeList[widget.index]
-                                                .join_status ==
-                                            'not_onboarded'
+                                        .join_status ==
+                                        'not_onboarded'
                                         ? const Color.fromRGBO(255, 232, 231, 1)
                                         : const Color(0xffEDF9F3),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Text(
                                   widget.traineeList[widget.index]
-                                              .join_status ==
-                                          'not_onboarded'
+                                      .join_status ==
+                                      'not_onboarded'
                                       ? 'Not Onboarded'
                                       : 'Onboarded',
                                   style: TextStyle(
                                       color: widget.traineeList[widget.index]
-                                                  .join_status ==
-                                              'not_onboarded'
+                                          .join_status ==
+                                          'not_onboarded'
                                           ? const Color.fromRGBO(253, 29, 13, 1)
                                           : Colors.green,
                                       fontSize: 12),
@@ -202,38 +256,38 @@ class _RecordPaymentState extends State<RecordPayment> {
                               Padding(
                                   padding: const EdgeInsets.only(left: 15.0),
                                   child:
-                                      widget.traineeList[widget.index].gender ==
-                                              'male'
-                                          ? const Text(
-                                              "Male",
-                                              style: TextStyle(
-                                                color: Color(0xff39404A),
-                                                fontSize: 12,
-                                                fontFamily: 'Lato',
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            )
-                                          : widget.traineeList[widget.index]
-                                                      .gender ==
-                                                  'female'
-                                              ? const Text(
-                                                  "Female",
-                                                  style: TextStyle(
-                                                    color: Color(0xff39404A),
-                                                    fontSize: 12,
-                                                    fontFamily: 'Lato',
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                )
-                                              : const Text(
-                                                  "Others",
-                                                  style: TextStyle(
-                                                    color: Color(0xff39404A),
-                                                    fontSize: 12,
-                                                    fontFamily: 'Lato',
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                )),
+                                  widget.traineeList[widget.index].gender ==
+                                      'male'
+                                      ? const Text(
+                                    "Male",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                      : widget.traineeList[widget.index]
+                                      .gender ==
+                                      'female'
+                                      ? const Text(
+                                    "Female",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                      : const Text(
+                                    "Others",
+                                    style: TextStyle(
+                                      color: Color(0xff39404A),
+                                      fontSize: 12,
+                                      fontFamily: 'Lato',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )),
                               const Text(
                                 " | ",
                                 style: TextStyle(
@@ -292,11 +346,11 @@ class _RecordPaymentState extends State<RecordPayment> {
                               padding: const EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
                                         "Fee : ",
@@ -440,8 +494,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   checkColor: Colors
                                       .white, // Sets the color of the checkmark when the checkbox is selected
                                   fillColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
+                                  MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
                                       // Sets the background color of the checkbox
                                       if (states
                                           .contains(MaterialState.selected)) {
@@ -470,7 +524,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
-                                          Border.all(color: Color(0xff2A62B8)),
+                                      Border.all(color: Color(0xff2A62B8)),
                                       color: Color(0xff2A62B8),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(8),
@@ -488,7 +542,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
-                                          Border.all(color: Color(0xff2A62B8)),
+                                      Border.all(color: Color(0xff2A62B8)),
                                       borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(8),
                                           bottomRight: Radius.circular(8))),
@@ -514,8 +568,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   checkColor: Colors
                                       .white, // Sets the color of the checkmark when the checkbox is selected
                                   fillColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
+                                  MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
                                       // Sets the background color of the checkbox
                                       if (states
                                           .contains(MaterialState.selected)) {
@@ -544,7 +598,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
-                                          Border.all(color: Color(0xff2A62B8)),
+                                      Border.all(color: Color(0xff2A62B8)),
                                       color: Color(0xff2A62B8),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(8),
@@ -562,7 +616,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   height: 41,
                                   decoration: BoxDecoration(
                                       border:
-                                          Border.all(color: Color(0xff2A62B8)),
+                                      Border.all(color: Color(0xff2A62B8)),
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(8),
                                           bottomRight: Radius.circular(8))),
@@ -675,13 +729,13 @@ class _RecordPaymentState extends State<RecordPayment> {
                               onTap: () async {
                                 DateTime now = DateTime.now();
                                 DateTime firstDate =
-                                    DateTime(now.year, now.month);
+                                DateTime(now.year, now.month);
                                 var date = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: firstDate,
                                   lastDate:
-                                      DateTime.now().add(Duration(days: 90)),
+                                  DateTime.now().add(Duration(days: 90)),
                                 );
                                 if (date != null) {
                                   tDateController.text =
@@ -714,7 +768,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                 height: 48,
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Color(0xff2A62B8)),
+                                    Border.all(color: Color(0xff2A62B8)),
                                     color: Color(0xff2A62B8),
                                     borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(8),
@@ -739,6 +793,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                         topRight: Radius.circular(8),
                                         bottomRight: Radius.circular(8))),
                                 child: TextField(
+                                  readOnly: true,
                                   controller: feeController,
                                   decoration: const InputDecoration(
                                       contentPadding: EdgeInsets.all(5),
@@ -873,15 +928,15 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0xffDFE1E4),
+                                              Color(0xffDFE1E4),
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(8)))),
+                                                  BorderRadius.all(
+                                                      Radius.circular(8)))),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             "Cancel",
                                             style: TextStyle(
                                                 color: Color(0xff23282E),
@@ -895,40 +950,41 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       height: 48,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(8)),
+                                          BorderRadius.circular(8)),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0xff2A62B8),
+                                              Color(0xff2A62B8),
                                               shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8)))),
+                                              const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.circular(
+                                                          8)))),
                                           onPressed: () {
                                             Map<String, dynamic> data = {
                                               "trainee_profile_uid": widget
                                                   .traineeList[widget.index]
-                                                  .traineeUserid,
+                                                  .traineeProfileUid,
                                               "fee_collected":
-                                                  feeController.text,
+                                              feeController.text,
                                               "misc_fee": mController.text,
                                               "concession": cController.text,
                                               "payment_mode": payment,
                                               "date_of_transaction":
-                                                  tDateController.text,
+                                              tDateController.text,
                                               "billing_month":
-                                                  dateOfBilling.text
+                                              dateOfBilling.text
                                             };
                                             print("data==$data");
-                                            traineeViewModel.recordPaymentApiPost(data, context).then((value) {
+                                            traineeViewModel
+                                                .recordPaymentApiPost(
+                                                data, context)
+                                                .then((value) {
                                               Navigator.of(context).pop();
                                             });
-
-
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             "Confirm",
                                             style: TextStyle(
                                                 color: Color(0xffFBFBFC),
@@ -971,3 +1027,4 @@ class _RecordPaymentState extends State<RecordPayment> {
     }
   }
 }
+

@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cached_network_image: ^3.2.3
   flutter:
     sdk: flutter
 
@@ -53,8 +54,6 @@ dependencies:
   get: ^4.6.5
   fl_chart: ^0.63.0
 
-
- 
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -78,7 +77,7 @@ flutter:
   uses-material-design: true
 
   assets:
-     - assets/images/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -110,3 +109,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

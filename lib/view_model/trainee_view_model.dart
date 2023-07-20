@@ -1,3 +1,4 @@
+import 'package:drona/model/ledger_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ import '../view/trainee_listing/trainee_list.dart';
 
 class TraineeViewModel with ChangeNotifier {
   final _myRepo = TraineeRepository();
- // MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
+  // MyservicesViewViewModel myservicesViewViewModel = MyservicesViewViewModel();
   bool _loading = false;
   bool get loading => _loading;
 
@@ -24,8 +25,17 @@ class TraineeViewModel with ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
-
-  // create Trainee
+  ApiResponse<TraineeListModel> dataList = ApiResponse.loading();
+  setDataList(ApiResponse<TraineeListModel> response) {
+    dataList = response;
+    notifyListeners();
+  }
+  ApiResponse<LedgerModel> dataList1 = ApiResponse.loading();
+  setDataList1(ApiResponse<LedgerModel> response) {
+    dataList1 = response;
+    notifyListeners();
+  }
+  /// create Trainee api
   Future<void> fetchTraineeAddListApi(
       dynamic data, BuildContext context ,String type) async {
     setLoading(true);
@@ -56,12 +66,7 @@ class TraineeViewModel with ChangeNotifier {
     });
   }
 
-  ApiResponse<TraineeListModel> dataList = ApiResponse.loading();
-  setDataList(ApiResponse<TraineeListModel> response) {
-    dataList = response;
-    notifyListeners();
-  }
-
+/*
   Future<void> fetchTraineelistListApi() async {
     setDataList(ApiResponse.loading());
 
@@ -76,7 +81,9 @@ class TraineeViewModel with ChangeNotifier {
       print("api  trainne list not success");
     });
   }
+*/
 
+  ///  Trainee list api
   Future<void> fetchTraineeListSearchApi(dynamic data) async {
     setDataList(ApiResponse.loading());
 
@@ -90,6 +97,22 @@ class TraineeViewModel with ChangeNotifier {
       print("error${ApiResponse.error(error.toString())}");
     });
   }
+  ///  ledger list api
+  Future<void> fetchLedgerListSearchApi(dynamic data, var pageCount, var pageNo) async {
+    setDataList1(ApiResponse.loading());
+
+    _myRepo.fetchLedgerListSearchApi(data, pageCount, pageNo).then((value) {
+      setDataList1(ApiResponse.completed(value));
+
+      print("api fetchLedgerListSearchApi success");
+    }).onError((error, stackTrace) {
+      setDataList1(ApiResponse.error(error.toString()));
+      print("api  fetchLedgerListSearchApi not success");
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+
+
 
   /// record a payment api
   Future<void> recordPaymentApiPost(dynamic data, BuildContext context) async {
@@ -97,7 +120,7 @@ class TraineeViewModel with ChangeNotifier {
     _myRepo.recordPaymentApi(data).then((value) async {
       setLoading(false);
       print("recordPaymentApiPost success");
-     // Utils.flushBarErrorMessage('recordPaymentApiPost Successfully', context);
+       Utils.flushBarErrorMessage('Payment record Successfully', context);
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
     }).onError((error, stackTrace) {
 
@@ -111,4 +134,7 @@ class TraineeViewModel with ChangeNotifier {
 
 
 
+
+
 }
+

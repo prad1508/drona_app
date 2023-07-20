@@ -21,7 +21,7 @@ class AppUrl {
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
-  static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimgtest';
+  static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimgtest/';
   static var UserprofileAdd = '$baseUrl/academy/coach';
   static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
@@ -41,6 +41,8 @@ class AppUrl {
   static var traineeAddinBatchEndpoint = "$baseUrl/academy/addtraineeinbatch";
   static var recordPayment = "$baseUrl/academy/recordpayment";
   static var traineeListinBatchEndpoint = "$baseUrl/academy/trainee/10/1";
+  static var ledgerEndpoint = "$baseUrl/academy/trainee/ledger";
+
 
   //session
   static var createsessionListEndPoint = "$baseUrl/session/create";
@@ -65,3 +67,4 @@ class AppUrl {
   static var billingViewInvoiceMonthly =
       '$baseUrl/academy/invoice_payment/month';
 }
+
