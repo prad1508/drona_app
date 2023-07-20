@@ -70,6 +70,12 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString(value['data']['role'],'role');
+      print( value['data']['name']);
+      print( value['data']['email']);
+      print( value['data']['ccode']);
+      print(  value['data']['mobno']);
+      print( value['data']['role']);
+      print(  value['data']['gender']);
       prefs.setStringList('registerResponse', <String>[
         value['data']['name'],
         value['data']['email'],
@@ -79,6 +85,8 @@ class RegistrationViewModel with ChangeNotifier {
         value['data']['gender'],
         // value['data']['academy_name']
       ]);
+
+      prefs.setString('role',value['data']['role']);
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage('Register Successfully', context);
       // ignore: use_build_context_synchronously
@@ -136,8 +144,22 @@ class RegistrationViewModel with ChangeNotifier {
     _myRepo.basicDetailsListApi(data).then((value) async {
       setLoading(false);
       final prefsData = await SharedPreferences.getInstance();
-
+      print(value);
       prefsData.setString('acadmicName', acadmicName);
+      // prefsData.setStringList("registerResponse", <String>[
+      //   value['name'].toString(),
+      //   value['email'].toString(),
+      //   value['ccdoe'].toString(),
+      //   value['mobno'].toString(),
+      //   value['role'].toString(),
+      //   value['gender'].toString(),
+      //   //!check ? value['Profiles'][0]['academy_name'].toString() :''
+      // ]);
+
+      if(value['academy_name']!=null)
+      {
+        prefsData.setString('acadmicName', value['academy_name']);
+      }
       Utils.flushBarErrorMessage('Basic Details update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.chooseService);
       Get.to(() => const ChooseService(),transition: Transition.rightToLeft);

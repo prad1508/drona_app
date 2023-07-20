@@ -239,369 +239,371 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
             elevation: 0,
           ),
           body: SingleChildScrollView(
-            child: Material(
-              color: Colors.white,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocale.title10.getString(context),
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.academyName.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-
-
-                    TextFormField(
-                      controller: acadmicName,
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        hintText: 'eg. Sun Academy',
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
+            child: GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: Material(
+                color: Colors.white,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          AppLocale.title10.getString(context),
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocale.location.getString(context),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocale.academyName.getString(context),
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () {
-                            dialog(context);
-                          },
-                          child: Text(
-                            AppLocale.pickupLoctaion.getString(context),
-                            style: const TextStyle(
-                                color: Color.fromRGBO(253, 104, 93, 1),
-                                fontSize: 13),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: pincodedata
-                        ..text = pinAsign.toString()
-                        ..selection = TextSelection(
-                            baseOffset: pinAsign.length,
-                            extentOffset: pinAsign.length),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(
-                          6,
-                        ),
-                      ],
-                      decoration: InputDecoration(
-                        hintText: AppLocale.pincode.getString(context),
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+
+                      TextFormField(
+                        controller: acadmicName,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: 'eg. Sun Academy',
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                       ),
-                      onTap: () {
-                        setState(() {
-                          pinAsign = '';
-                        });
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          pinAsign = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: address
-                        ..text = addressAsign.toString()
-                        ..selection = TextSelection(
-                            baseOffset: addressAsign.length,
-                            extentOffset: addressAsign.length),
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        hintText: AppLocale.address.getString(context),
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      onTap: () {
-                        setState(() {
-                          addressAsign = '';
-                        });
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          addressAsign = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: city
-                        ..text = cityAssign.toString()
-                        ..selection = TextSelection(
-                            baseOffset: cityAssign.length,
-                            extentOffset: cityAssign.length),
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        hintText: AppLocale.city.getString(context),
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          cityAssign = '';
-                        });
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          cityAssign = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: state
-                        ..text = stateAssign.toString()
-                        ..selection = TextSelection(
-                            baseOffset: stateAssign.length,
-                            extentOffset: stateAssign.length),
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        hintText: AppLocale.state.getString(context),
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          stateAssign = '';
-                        });
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          stateAssign = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            AppLocale.title32.getString(context),
+                            AppLocale.location.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          const Icon(
-                            Icons.info_outline_rounded,
-                            color: Colors.grey,
-                            size: 15.0,
-                          )
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              dialog(context);
+                            },
+                            child: Text(
+                              AppLocale.pickupLoctaion.getString(context),
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(253, 104, 93, 1),
+                                  fontSize: 13),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ChangeNotifierProvider<CategoryViewViewModel>(
-                      create: (BuildContext context) => categoryViewViewModel,
-                      child: Consumer<CategoryViewViewModel>(
-                          builder: (context, value, _) {
-                        try {
-                          List<DropdownMenuItem<String>> categoryList =
-                              List.generate(
-                                  value.dataList.data?.data?.length ?? 0,
-                                  (index) {
-                            return DropdownMenuItem(
-                                value: value.dataList.data?.data?[index].uid
-                                    .toString(),
-                                child:
-                                Text(value
-                                        .dataList.data?.data?[index].name
-                                        .toString() ??
-                                    ''));
-                          });
-                          return Container(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 218, 216, 216)),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: DropdownButton(
-                                isExpanded: true,
-                                underline: DropdownButtonHideUnderline(
-                                    child: Container()),
-                                value: selectedValue2,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedValue2 = newValue!;
-                                  });
-                                },
-                                items: categoryList),
-                          );
-                        } on SocketException catch (_) {
-                          rethrow;
-                        }
-                      }),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocale.billingDate.getString(context),
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              payDate = !payDate;
-                            });
-                          },
-                          child: Text(
-                            AppLocale.editDate.getString(context),
-                            style: const TextStyle(
-                                color: Color.fromRGBO(253, 104, 93, 1),
-                                fontSize: 13),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 1,
-                            color: const Color.fromARGB(255, 218, 216, 216)),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      child:
-
-
-                      DropdownButton(
-                          isExpanded: true,
-                          underline:
-                              DropdownButtonHideUnderline(child: Container()),
-                          value: selectedValue,
-                          onChanged: payDate == true
-                              ? (String? newValue) {
-                                  setState(() {
-                                    selectedValue = newValue!;
-                                    payDate = false;
-                                  });
-                                }
-                              : null,
-                          items: dropdownItems),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    RoundButton(
-                        loading: false,
-                        title: AppLocale.conts.getString(context),
-                        textColor: Colors.white,
-                        rounded: true,
-                        color: Theme.of(context).primaryColor,
-                        onPress: () {
-                          if (acadmicName.text.isEmpty) {
-                            Utils.flushBarErrorMessage(
-                                'Fill Academy Name', context);
-                          }
-                          if (pincodedata.text.isEmpty) {
-                            Utils.flushBarErrorMessage(
-                                'Fill Pin Code', context);
-                          }
-                          if (address.text.isEmpty) {
-                            Utils.flushBarErrorMessage('Fill Address', context);
-                          }
-                          if (city.text.isEmpty) {
-                            Utils.flushBarErrorMessage('Fill City', context);
-                          }
-                          if (state.text.isEmpty) {
-                            Utils.flushBarErrorMessage('Fill State', context);
-                          } else {
-                            Map<String, String> data = {
-                              "academyname": acadmicName.text.toString(),
-                              "busscategoryid": selectedValue2.toString(),
-                              "address": address.text.toString(),
-                              "city": city.text.toString(),
-                              "state": state.text.toString(),
-                              "pincode": pincodedata.text.toString(),
-                              "billing_date": selectedValue.toString(),
-                            };
-                            print(data);
-                            registration.basicDetails(
-                                data, context, selectedValue2, acadmicName.text.toString());
+                      TextFormField(
+                        controller: pincodedata
+                          ..text = pinAsign.toString()
+                          ..selection = TextSelection(
+                              baseOffset: pinAsign.length,
+                              extentOffset: pinAsign.length),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(
+                            6,
+                          ),
+                        ],
+                        decoration: InputDecoration(
+                          hintText: AppLocale.pincode.getString(context),
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            pinAsign = '';
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            pinAsign = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: address
+                          ..text = addressAsign.toString()
+                          ..selection = TextSelection(
+                              baseOffset: addressAsign.length,
+                              extentOffset: addressAsign.length),
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: AppLocale.address.getString(context),
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            addressAsign = '';
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            addressAsign = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: city
+                          ..text = cityAssign.toString()
+                          ..selection = TextSelection(
+                              baseOffset: cityAssign.length,
+                              extentOffset: cityAssign.length),
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: AppLocale.city.getString(context),
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            cityAssign = '';
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            cityAssign = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: state
+                          ..text = stateAssign.toString()
+                          ..selection = TextSelection(
+                              baseOffset: stateAssign.length,
+                              extentOffset: stateAssign.length),
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: AppLocale.state.getString(context),
+                          contentPadding: const EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            stateAssign = '';
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            stateAssign = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Row(
+                          children: [
+                            Text(
+                              AppLocale.title32.getString(context),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const Icon(
+                              Icons.info_outline_rounded,
+                              color: Colors.grey,
+                              size: 15.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ChangeNotifierProvider<CategoryViewViewModel>(
+                        create: (BuildContext context) => categoryViewViewModel,
+                        child: Consumer<CategoryViewViewModel>(
+                            builder: (context, value, _) {
+                          try {
+                            List<DropdownMenuItem<String>> categoryList =
+                                List.generate(
+                                    value.dataList.data?.data?.length ?? 0,
+                                    (index) {
+                              return DropdownMenuItem(
+                                  value: value.dataList.data?.data?[index].uid
+                                      .toString(),
+                                  child:
+                                  Text(value
+                                          .dataList.data?.data?[index].name
+                                          .toString() ??
+                                      ''));
+                            });
+                            return Container(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1,
+                                    color:
+                                        const Color.fromARGB(255, 218, 216, 216)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(5)),
+                              ),
+                              child: DropdownButton(
+                                  isExpanded: true,
+                                  underline: DropdownButtonHideUnderline(
+                                      child: Container()),
+                                  value: selectedValue2,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedValue2 = newValue!;
+                                    });
+                                  },
+                                  items: categoryList),
+                            );
+                          } on SocketException catch (_) {
+                            rethrow;
                           }
                         }),
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocale.billingDate.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                payDate = !payDate;
+                              });
+                            },
+                            child: Text(
+                              AppLocale.editDate.getString(context),
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(253, 104, 93, 1),
+                                  fontSize: 13),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1,
+                              color: const Color.fromARGB(255, 218, 216, 216)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child:
+
+
+                        DropdownButton(
+                            isExpanded: true,
+                            underline:
+                                DropdownButtonHideUnderline(child: Container()),
+                            value: selectedValue,
+                            onChanged: payDate == true
+                                ? (String? newValue) {
+                                    setState(() {
+                                      selectedValue = newValue!;
+                                      payDate = false;
+                                    });
+                                  }
+                                : null,
+                            items: dropdownItems),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      RoundButton(
+                          loading: false,
+                          title: AppLocale.conts.getString(context),
+                          textColor: Colors.white,
+                          rounded: true,
+                          color: Theme.of(context).primaryColor,
+                          onPress: () {
+                            if (acadmicName.text.isEmpty) {
+                              Utils.flushBarErrorMessage(
+                                  'Fill Academy Name', context);
+                            }
+                            if (pincodedata.text.isEmpty) {
+                              Utils.flushBarErrorMessage(
+                                  'Fill Pin Code', context);
+                            }
+                            if (address.text.isEmpty) {
+                              Utils.flushBarErrorMessage('Fill Address', context);
+                            }
+                            if (city.text.isEmpty) {
+                              Utils.flushBarErrorMessage('Fill City', context);
+                            }
+                            if (state.text.isEmpty) {
+                              Utils.flushBarErrorMessage('Fill State', context);
+                            } else {
+                              Map<String, String> data = {
+                                "academyname": acadmicName.text.toString(),
+                                "busscategoryid": selectedValue2.toString(),
+                                "address": address.text.toString(),
+                                "city": city.text.toString(),
+                                "state": state.text.toString(),
+                                "pincode": pincodedata.text.toString(),
+                                "billing_date": selectedValue.toString(),
+                              };
+                              print(data);
+                              registration.basicDetails(data, context, selectedValue2, acadmicName.text.toString());
+                            }
+                          }),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -728,6 +730,7 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                                               ],
                                             ),
                                             onTap: () {
+                                              FocusManager.instance.primaryFocus?.unfocus();
                                               setState(() {
                                                 pinAsign = value
                                                         .dataList

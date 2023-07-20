@@ -20,12 +20,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool nav = true ;
   DashBoardViewViewModel dashBoardViewViewModel = DashBoardViewViewModel();
   String academicname = '';
   String fullname = '';
   late ScrollController _scrollController;
   late Future<List> futureList;
-
+  List details = [];
   static const kExpandedHeight = 100.0;
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -46,9 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     String? items = prefs.getString('acadmicName')!;
     details = prefs.getStringList('registerResponse')!;
-    fullname = details[0];
+
+   print(details);
     academicname = prefs.getString('acadmicName')!;
     setState(() {
+      fullname = details[0];
       academicname = items;
     });
     print("academicname is $academicname");
@@ -166,22 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 20,
                                               child: RawMaterialButton(
                                                 onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (BuildContext context) =>
-                                                          MainMenu(
-                                                            name: fullname,
-                                                            academyName: academicname,
-                                                          ),
-                                                    ),
-                                                  );
-                                                  Get.to(
-                                                          () => MainMenu(
-                                                        name: fullname,
-                                                        academyName: academicname,
-                                                      ),
-                                                      transition: Transition.rightToLeft);
+                                                  Get.to(() => MainMenu(name: fullname, academyName: academicname,), transition: Transition.rightToLeft);
                                                 },
                                                 elevation: 2.0,
                                                 fillColor: Colors.white,

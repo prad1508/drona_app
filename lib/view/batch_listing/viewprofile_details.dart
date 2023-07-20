@@ -67,7 +67,7 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                           () => EditProfileDetails(
                         index: widget.index,
                       ),
-                      transition: Transition.rightToLeft);
+                      transition: Transition.leftToRight);
                 },
               ))
         ],
@@ -165,17 +165,17 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       Text(
                                         value.dataList.data!.data[widget.index]
                                             .gender ==
-                                            'm'
+                                            'male'
                                             ? 'Male'
                                             : 'Female',
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      const Text("|"),
+                                      const Text(" | "),
                                       Text(
-                                        value.dataList.data!.data[widget.index]
-                                            .dob,
+                                        '${DateTime.now().year - int.parse(value.dataList.data!.data[widget.index]
+                                            .dob.split('/')[2])} Years',
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
@@ -327,17 +327,23 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     style: const TextStyle(fontSize: 14),
                                     readOnly: true,
                                     decoration: InputDecoration(
-                                        filled: true,
-                                        hintText: value.dataList.data!
-                                            .data[widget.index].traineeName,
-                                        contentPadding:
-                                        const EdgeInsets.all(15),
-                                        hintStyle:
-                                        const TextStyle(fontSize: 14),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(8)),
-                                        fillColor: Colors.grey[200]),
+                                      filled: true,
+                                      hintText: value.dataList.data!
+                                          .data[widget.index].traineeName,
+                                      hintStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff626D7E),
+                                      ),
+                                      contentPadding: const EdgeInsets.all(10),
+                                      border: const OutlineInputBorder(),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D3D8)),
+                                      ),
+                                      // Add this line
+                                      fillColor: Colors.grey[200],),
                                   )),
                               const SizedBox(height: 15),
                               const Text(

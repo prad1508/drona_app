@@ -11,10 +11,14 @@ import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
+import '../../utils/color.dart';
 import '../../utils/no_data.dart';
 import '../../view_model/batchList_view_model.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../batch_listing/create_batch_listing.dart';
+import 'coach_activateprofile.dart';
+import 'coach_deactivateprofile.dart';
+import 'coach_viewprofile.dart';
 
 class CoachListSelected extends StatefulWidget {
   int Listindex ;
@@ -28,7 +32,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
 
 
   //bottomsheet popup
-  showBottomSheet({bool? status}) {
+  showBottomSheet({bool? status, int? index}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
@@ -85,7 +89,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(() => CoachDeactivateProfile(index: index!),
+                                  transition: Transition.leftToRight);
+                            },
                             child: Text(
                               'Deactivate',
                               style:
@@ -96,7 +103,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             : Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(() => CoachActivateProfile(index: index!),
+                                  transition: Transition.leftToRight);
+                            },
                             child: Text(
                               'Activate',
                               style:
@@ -108,8 +118,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                           alignment: Alignment.topLeft,
                           child: TextButton(
                             onPressed: () {
-                              // Get.to(() => ViewProfileDetails(index: index!),
-                              //     transition: Transition.rightToLeft);
+                              Get.to(() => CoachViewProfile(index: index!),
+                                  transition: Transition.leftToRight);
                             },
                             child: Text(
                               'View Profile',
@@ -154,6 +164,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
       },
     );
   }
+
 
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -366,6 +377,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                       "active"
                                                       ? true
                                                       : false,
+                                                  index: index
                                                 );
                                               },
                                               child: Container(
@@ -443,237 +455,219 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                           crossAxisAlignment: CrossAxisAlignment
                                                               .start,
                                                           children: [
-                                                            Row(
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: MediaQuery.sizeOf(context).width * .6,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            SizedBox(
+                                                              width: MediaQuery.sizeOf(context).width * .6,
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        left: 15.0, right: 10),
+                                                                    child: Text(
+                                                                      value.dataList1
+                                                                          .data!
+                                                                          .data[index]
+                                                                          .name,
+                                                                      style: const TextStyle(
+                                                                        color: Color(
+                                                                            0xff39404A),
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Lato',
+                                                                        fontWeight: FontWeight
+                                                                            .w700,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: 20,
+                                                                    padding: const EdgeInsets.only(
+                                                                        left: 5, right: 5, top: 2),
+                                                                    decoration: BoxDecoration(
+                                                                        color: value.dataList1.data?.data[index].joinStatus == "not_onboarded"? const Color.fromRGBO(255, 232, 231, 1):const Color(0xffEDF9F3),
+                                                                        borderRadius:
+                                                                        BorderRadius.circular(5)),
+                                                                    child: Text(
+                                                                      value.dataList1.data?.data[index].joinStatus == "not_onboarded"
+                                                                          ? 'Not Onboarded'
+                                                                          : 'Onboarded',
+                                                                      style: TextStyle(
+                                                                          color: value.dataList1.data?.data[index].joinStatus == "not_onboarded"
+                                                                              ? secondryColor
+                                                                              : successColor,
+                                                                          fontSize: 10,
+                                                                          height: 1.5),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 2),
+                                                            SizedBox(
+                                                              width: MediaQuery.sizeOf(context).width * .70,
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Row(
                                                                     children: [
                                                                       Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .only(
-                                                                            left: 15.0),
-                                                                        child: Text(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              left: 15.0),
+                                                                          child:
                                                                           value.dataList1
-                                                                              .data!
-                                                                              .data[index]
-                                                                              .name,
-                                                                          style: const TextStyle(
-                                                                            color: Color(
-                                                                                0xff39404A),
-                                                                            fontSize: 14,
-                                                                            fontFamily: 'Lato',
-                                                                            fontWeight: FontWeight
-                                                                                .w700,
-                                                                          ),
+                                                                              .data
+                                                                              ?.data[index]
+                                                                              .gender ==
+                                                                              'male'
+                                                                              ? const Text(
+                                                                            "Male",
+                                                                            style: TextStyle(
+                                                                              color:
+                                                                              Color(
+                                                                                  0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight:
+                                                                              FontWeight
+                                                                                  .w400,
+                                                                            ),
+                                                                          )
+                                                                              :
+                                                                          value.dataList1
+                                                                              .data
+                                                                              ?.data[index]
+                                                                              .gender ==
+                                                                              'female'
+                                                                              ? const Text(
+                                                                            "Female",
+                                                                            style: TextStyle(
+                                                                              color: Color(
+                                                                                  0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight:
+                                                                              FontWeight
+                                                                                  .w400,
+                                                                            ),
+                                                                          )
+                                                                              : const Text(
+                                                                            "Others",
+                                                                            style: TextStyle(
+                                                                              color: Color(
+                                                                                  0xff39404A),
+                                                                              fontSize: 12,
+                                                                              fontFamily: 'Lato',
+                                                                              fontWeight:
+                                                                              FontWeight
+                                                                                  .w400,
+                                                                            ),
+                                                                          )),
+                                                                      const Text(
+                                                                        " | ",
+                                                                        style: TextStyle(
+                                                                          color: Color(
+                                                                              0xff39404A),
+                                                                          fontSize: 12,
+                                                                          fontFamily: 'Lato',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
                                                                         ),
                                                                       ),
-                                                                      Container(
-                                                                        width: 75,
-                                                                        height: 20,
-                                                                        decoration: BoxDecoration(
-                                                                          color: const Color(
-                                                                              0xffEDF9F3),
-                                                                          borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                              4),
-                                                                        ),
-                                                                        child: Center(
-                                                                          child: Container(
-                                                                              decoration:  BoxDecoration(
-                                                                                color: value.dataList1.data?.data[index].joinStatus == "onboarded" ?const Color.fromRGBO(237, 249, 243, 1) : Colors.redAccent.withOpacity(0.3),
-                                                                              ),
-                                                                              child: value.dataList1.data?.data[index].joinStatus == "onboarded" ?
-                                                                              const Text(
-                                                                                "Onboarded",
-                                                                                style: TextStyle(
-                                                                                  color: Color(
-                                                                                      0xff47C088),
-                                                                                  fontSize: 10,
-                                                                                  fontFamily: 'Lato',
-                                                                                  fontWeight: FontWeight
-                                                                                      .w400,
-                                                                                ),
-                                                                              ) :
-                                                                              const Text(
-                                                                                "Not Onboarded",
-                                                                                style: TextStyle(
-                                                                                  color: Colors.redAccent,
-                                                                                  fontSize: 10,
-                                                                                  fontFamily: 'Lato',
-                                                                                  fontWeight: FontWeight
-                                                                                      .w400,
-                                                                                ),
-                                                                              )
-                                                                          ),
+                                                                      Text(
+                                                                        '${DateTime.now().year - int.parse(value.dataList1.data!.data[index]
+                                                                            .dob.split('/')[2])} Years | ${value
+                                                                            .dataList1
+                                                                            .data
+                                                                            ?.data[index]
+                                                                            .userid}',
+                                                                        //value.dataList.data!.data[index].dob,
+                                                                        style: const TextStyle(
+                                                                          color: Color(
+                                                                              0xff39404A),
+                                                                          fontSize: 12,
+                                                                          fontFamily: 'Lato',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ),
-                                                                Align(
-                                                                  alignment: Alignment
-                                                                      .center,
-                                                                  widthFactor: 1.5,
-                                                                  child: Container(
-                                                                    width: 24,
-                                                                    height: 24,
-                                                                    decoration: const BoxDecoration(
-                                                                        image: DecorationImage(
-                                                                            image: AssetImage(
-                                                                                'assets/images/tennis.png'),
-                                                                            alignment: Alignment
-                                                                                .centerLeft)
-                                                                    ),
-                                                                    child: OverflowBox(
-                                                                      maxWidth: 42,
-                                                                      maxHeight: 30,
-                                                                      child: Container(
-                                                                        width: 48,
-                                                                        height: 24,
-                                                                        decoration: const BoxDecoration(
-                                                                            image: DecorationImage(
-                                                                                image: AssetImage(
-                                                                                    'assets/images/Golf.png'),
-                                                                                alignment: Alignment
-                                                                                    .centerRight)
-                                                                        ),
-                                                                        child: OverflowBox(
-                                                                          maxWidth: 66,
-                                                                          maxHeight: 30,
-                                                                          child: Container(
-                                                                            width: 58,
-                                                                            height: 24,
-                                                                            decoration: const BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                                    image: AssetImage(
-                                                                                        'assets/images/tennis.png'),
-                                                                                    alignment: Alignment
-                                                                                        .centerRight)
-                                                                            ),
-                                                                            child: OverflowBox(
-                                                                              maxWidth: 120,
-                                                                              maxHeight: 30,
-                                                                              child: Container(
-                                                                                width: 74,
-                                                                                height: 24,
-                                                                                decoration: const BoxDecoration(
-                                                                                    image: DecorationImage(
-                                                                                        image: AssetImage(
-                                                                                            'assets/images/Golf.png'),
-                                                                                        alignment: Alignment
-                                                                                            .centerRight)
+                                                                  Align(
+                                                                    alignment: Alignment
+                                                                        .center,
+                                                                    widthFactor: 2.5,
+                                                                    child: Container(
+                                                                      width: 24,
+                                                                      height: 24,
+                                                                      decoration: const BoxDecoration(
+                                                                          image: DecorationImage(
+                                                                              image: AssetImage(
+                                                                                  'assets/images/tennis.png'),
+                                                                              alignment: Alignment
+                                                                                  .centerLeft)
+                                                                      ),
+                                                                      child: OverflowBox(
+                                                                        maxWidth: 42,
+                                                                        maxHeight: 30,
+                                                                        child: Container(
+                                                                          width: 48,
+                                                                          height: 24,
+                                                                          decoration: const BoxDecoration(
+                                                                              image: DecorationImage(
+                                                                                  image: AssetImage(
+                                                                                      'assets/images/Golf.png'),
+                                                                                  alignment: Alignment
+                                                                                      .centerRight)
+                                                                          ),
+                                                                          child: OverflowBox(
+                                                                            maxWidth: 66,
+                                                                            maxHeight: 30,
+                                                                            child: Container(
+                                                                              width: 58,
+                                                                              height: 24,
+                                                                              decoration: const BoxDecoration(
+                                                                                  image: DecorationImage(
+                                                                                      image: AssetImage(
+                                                                                          'assets/images/tennis.png'),
+                                                                                      alignment: Alignment
+                                                                                          .centerRight)
+                                                                              ),
+                                                                              child: OverflowBox(
+                                                                                maxWidth: 120,
+                                                                                maxHeight: 30,
+                                                                                child: Container(
+                                                                                  width: 74,
+                                                                                  height: 24,
+                                                                                  decoration: const BoxDecoration(
+                                                                                      image: DecorationImage(
+                                                                                          image: AssetImage(
+                                                                                              'assets/images/Golf.png'),
+                                                                                          alignment: Alignment
+                                                                                              .centerRight)
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
 
-                                                                    // child: CircleAvatar(
-                                                                    //   backgroundImage:
-                                                                    //       // NetworkImage(AppUrl.serviceIconEndPoint +
-                                                                    //       //     value.dataList.data!.data[index].serviceicon,
-                                                                    //       // ),
-                                                                    //       AssetImage(
-                                                                    //           'assets/images/tennis.png'),
-                                                                    //   //  backgroundColor: Colors.white,
-                                                                    // ),
+                                                                      // child: CircleAvatar(
+                                                                      //   backgroundImage:
+                                                                      //       // NetworkImage(AppUrl.serviceIconEndPoint +
+                                                                      //       //     value.dataList.data!.data[index].serviceicon,
+                                                                      //       // ),
+                                                                      //       AssetImage(
+                                                                      //           'assets/images/tennis.png'),
+                                                                      //   //  backgroundColor: Colors.white,
+                                                                      // ),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 1),
-                                                            Row(
-                                                              children: [
-                                                                Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        left: 15.0),
-                                                                    child:
-                                                                    value.dataList1
-                                                                        .data
-                                                                        ?.data[index]
-                                                                        .gender ==
-                                                                        'male'
-                                                                        ? const Text(
-                                                                      "Male",
-                                                                      style: TextStyle(
-                                                                        color:
-                                                                        Color(
-                                                                            0xff39404A),
-                                                                        fontSize: 12,
-                                                                        fontFamily: 'Lato',
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                      ),
-                                                                    )
-                                                                        :
-                                                                    value.dataList1
-                                                                        .data
-                                                                        ?.data[index]
-                                                                        .gender ==
-                                                                        'female'
-                                                                        ? const Text(
-                                                                      "Female",
-                                                                      style: TextStyle(
-                                                                        color: Color(
-                                                                            0xff39404A),
-                                                                        fontSize: 12,
-                                                                        fontFamily: 'Lato',
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                      ),
-                                                                    )
-                                                                        : const Text(
-                                                                      "Others",
-                                                                      style: TextStyle(
-                                                                        color: Color(
-                                                                            0xff39404A),
-                                                                        fontSize: 12,
-                                                                        fontFamily: 'Lato',
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                      ),
-                                                                    )),
-                                                                const Text(
-                                                                  " | ",
-                                                                  style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff39404A),
-                                                                    fontSize: 12,
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight
-                                                                        .w400,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  '${value.dataList1
-                                                                      .data!
-                                                                      .data[index]
-                                                                      .dob} | ${value
-                                                                      .dataList1
-                                                                      .data
-                                                                      ?.data[index]
-                                                                      .userid}',
-                                                                  //value.dataList.data!.data[index].dob,
-                                                                  style: const TextStyle(
-                                                                    color: Color(
-                                                                        0xff39404A),
-                                                                    fontSize: 12,
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight
-                                                                        .w400,
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
                                                             const SizedBox(
                                                                 height: 12),

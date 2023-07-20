@@ -166,17 +166,17 @@ class _EditProfileDetailsState extends State<EditProfileDetails> {
                                         Text(
                                           value.dataList.data!.data[widget.index]
                                               .gender ==
-                                              'm'
+                                              'male'
                                               ? 'Male'
                                               : 'Female',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        const Text("|"),
+                                        const Text(" | "),
                                         Text(
-                                          value.dataList.data!.data[widget.index]
-                                              .dob,
+                                          '${DateTime.now().year - int.parse(value.dataList.data!.data[widget.index]
+                                              .dob.split('/')[2])} Years',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400),

@@ -25,7 +25,7 @@ import '../coach_listing/coach_listselected.dart';
 import '../session_listing/session_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List details = [];
+
 
 class MainMenu extends StatefulWidget {
   final String? name;
@@ -39,6 +39,7 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   //multi language support
+  List details = [];
   String academicname = '';
   String fullname = '';
   final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -47,7 +48,7 @@ class _MainMenuState extends State<MainMenu> {
   final TextEditingController dobilling = TextEditingController();
   final TextEditingController phone = TextEditingController();
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
-
+  String name = '';
   @override
   initState() {
     getData();
@@ -123,6 +124,7 @@ class _MainMenuState extends State<MainMenu> {
                                     ),
                                   );
                                 case Status.completed:
+
                                   return
                                     Padding(
                                       padding: const EdgeInsets.all(10),
@@ -243,8 +245,6 @@ class _MainMenuState extends State<MainMenu> {
                                                         ),
                                                       ),
                                                     )
-
-
 
                                                         :
                                                     const Image (

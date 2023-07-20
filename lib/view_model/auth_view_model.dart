@@ -157,7 +157,7 @@ class AuthViewModel with ChangeNotifier {
         }
       } else if(value['Profiles'][0]['role'] == 0 && setupFinish == false)
         {
-          print("2nd part");
+          print("2ndddd part");
            switch(setupProgress)
            {
              case 0: {
