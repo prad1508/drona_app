@@ -189,7 +189,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                       const Edit_Billing_Invoice()),
                             );*//*
                                     Get.to(() => const Edit_Billing_Invoice(),
-                                        transition: Transition.leftToRight);
+                                        transition: Transition.rightToLeft);
                                   },
                                 ),*/
                               ],
@@ -419,7 +419,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                                     totalCollectionDue: value.dataList.data!.data[index].totalDue.toString(),
                                                     totalCollectionPaid: value.dataList.data!.data[index].totalCollection.toString(),
                                                     billingMonth: "${value.dataList.data!.data[index].mm}-${value.dataList.data!.data[index].yy}",),
-                                              transition: Transition.leftToRight);
+                                              transition: Transition.rightToLeft);
                                         },
                                       )),
 

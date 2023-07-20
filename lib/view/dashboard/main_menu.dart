@@ -19,7 +19,7 @@ import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../Support and Feedback/support_Feedback_Page.dart';
-import '../batch_listing/add_trainee_list.dart';
+import '../trainee_listing/add_trainee_list.dart';
 import '../batch_listing/batchlist_search.dart';
 import '../coach_listing/coach_listselected.dart';
 import '../session_listing/session_list.dart';
@@ -306,7 +306,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                         );*/
                         Get.to(() => const ViewProfileDetails(),
-                            transition: Transition.leftToRight);
+                            transition: Transition.rightToLeft);
                       }),
                       icon: const Icon(Icons.arrow_forward_ios),
                       iconSize: 20,
@@ -343,7 +343,7 @@ class _MainMenuState extends State<MainMenu> {
                                       () => SearchBatchList(
                                     pathPage: 'dashBoard',
                                   ),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -374,7 +374,7 @@ class _MainMenuState extends State<MainMenu> {
                                 ),
                               );*/
                               Get.to(() => const SessionList(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -434,7 +434,7 @@ class _MainMenuState extends State<MainMenu> {
                                 ),
                               );*/
                               Get.to(() => CoachListSelected(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -462,9 +462,9 @@ class _MainMenuState extends State<MainMenu> {
                                   const Trainee_Listing(),
                                 ),
                               );*/
-                              //   Get.to(()=> const Trainee_Listing(),transition: Transition.leftToRight);
+                              //   Get.to(()=> const Trainee_Listing(),transition: Transition.rightToLeft);
                               Get.to(() => AddTraineeList(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -535,7 +535,7 @@ class _MainMenuState extends State<MainMenu> {
                                       const Coach_Listing()),
                                 );*/
                                 /*Get.to(() =>  RecordPayment(traineeList: [],),
-                                    transition: Transition.leftToRight);*/
+                                    transition: Transition.rightToLeft);*/
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -566,7 +566,7 @@ class _MainMenuState extends State<MainMenu> {
                                   ),
                                 );*/
                                 Get.to(() => CoachListSelected(),
-                                    transition: Transition.leftToRight);
+                                    transition: Transition.rightToLeft);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -604,7 +604,7 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(() => const Attendance(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -623,7 +623,7 @@ class _MainMenuState extends State<MainMenu> {
                             trailing: IconButton(
                               onPressed: (() {
                                 Get.to(() => const Attendance(),
-                                    transition: Transition.leftToRight);
+                                    transition: Transition.rightToLeft);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -632,7 +632,7 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(() => const FinanceLedger(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -651,7 +651,7 @@ class _MainMenuState extends State<MainMenu> {
                             trailing: IconButton(
                               onPressed: (() {
                                 Get.to(() => const FinanceLedger(),
-                                    transition: Transition.leftToRight);
+                                    transition: Transition.rightToLeft);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -660,7 +660,7 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(() => const Finance(),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
                                 radius: 20,
@@ -677,7 +677,7 @@ class _MainMenuState extends State<MainMenu> {
                             trailing: IconButton(
                               onPressed: (() {
                                 Get.to(() => const OwnerEditProfile(),
-                                    transition: Transition.leftToRight);
+                                    transition: Transition.rightToLeft);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -780,7 +780,7 @@ class _MainMenuState extends State<MainMenu> {
                                 Navigator.pushNamed(context, RoutesName.login);
 */
                                 Get.to(() => const LoginView(),
-                                    transition: Transition.leftToRight);
+                                    transition: Transition.rightToLeft);
                               });
                             },
                             child: ListTile(

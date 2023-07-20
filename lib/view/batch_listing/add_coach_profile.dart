@@ -645,7 +645,7 @@ class _AddCoachProfileState extends State<AddCoachProfile> {
                                           const AddBatch(),
                                     ),
                                   );*/
-                        Get.to(()=> const AddBatch(),transition: Transition.leftToRight);
+                        Get.to(()=> const AddBatch(),transition: Transition.rightToLeft);
 
 
                       }),

@@ -68,8 +68,8 @@ class Datum {
   int fees;
   int paid;
   int due;
-/*  int concession;
-  int miscFee;*/
+  int concession;
+  int miscFee;
 
   Datum({
     required this.id,
@@ -82,8 +82,8 @@ class Datum {
     required this.fees,
     required this.paid,
     required this.due,
-    /*required this.concession,
-    required this.miscFee,*/
+    required this.concession,
+    required this.miscFee,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -97,8 +97,8 @@ class Datum {
     fees: json["fees"],
     paid: json["paid"],
     due: json["due"],
-   /* concession: json["concession"],
-    miscFee: json["misc_fee"],*/
+    concession: json["concession"],
+    miscFee: json["misc_fee"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -112,7 +112,7 @@ class Datum {
     "fees": fees,
     "paid": paid,
     "due": due,
-   /* "concession": concession,
-    "misc_fee": miscFee,*/
+    "concession": concession,
+    "misc_fee": miscFee,
   };
 }

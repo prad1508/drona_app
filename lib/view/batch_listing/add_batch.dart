@@ -195,7 +195,7 @@ class _AddBatchState extends State<AddBatch> {
                                   const BatchList(),
                             ),
                           );*/
-                          Get.to(()=> const BatchList(),transition: Transition.leftToRight);
+                          Get.to(()=> const BatchList(),transition: Transition.rightToLeft);
 
                         },
                       ),
@@ -553,7 +553,7 @@ class _AddBatchState extends State<AddBatch> {
                                     const TraineeAddOptions(),
                               ),
                             );*/
-                            Get.to(()=> const TraineeAddOptions(),transition: Transition.leftToRight);
+                            Get.to(()=> const TraineeAddOptions(),transition: Transition.rightToLeft);
 
                     }
                         : () {
@@ -580,7 +580,7 @@ class _AddBatchState extends State<AddBatch> {
                                     const TraineeAddOptions(),
                               ),
                             );*/
-                            Get.to(()=> const TraineeAddOptions(),transition: Transition.leftToRight);
+                            Get.to(()=> const TraineeAddOptions(),transition: Transition.rightToLeft);
 
                     }
                         : () {

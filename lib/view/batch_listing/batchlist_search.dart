@@ -280,7 +280,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                           () => CreateBatchListing(
                                 pathPage: "dashBoard",
                               ),
-                          transition: Transition.leftToRight);
+                          transition: Transition.rightToLeft);
                     }),
                     icon: const Icon(Icons.add),
                     iconSize: 25,
@@ -818,7 +818,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                       //         builder: (context) =>
                       //             Layout(selectedIndex: 0)));
                       Get.to(() => const Layout(selectedIndex: 0),
-                          transition: Transition.leftToRight);
+                          transition: Transition.rightToLeft);
                     })
                 : SizedBox()
           ],

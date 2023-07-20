@@ -10,7 +10,7 @@ import '../model/trainee_list_model.dart';
 import '../respository/batch_repository.dart';
 import '../respository/trainee_repositry.dart';
 import '../utils/utils.dart';
-import '../view/batch_listing/add_trainee_list.dart';
+import '../view/trainee_listing/add_trainee_list.dart';
 import '../view/dashboard/layout.dart';
 import '../view/trainee_listing/trainee_list.dart';
 
@@ -32,11 +32,10 @@ class TraineeViewModel with ChangeNotifier {
     _myRepo.fetchCreateTraineeListApi(data).then((value) {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
-
-      print("api success");
+      // print("api success");
       type =="onboarding" ?
-      Get.to(()=> const  Layout(selectedIndex: 0),transition: Transition.leftToRight) :
-      Get.to(()=> const  TraineeNewList(),transition: Transition.leftToRight);
+      Get.to(()=> const  Layout(selectedIndex: 0),transition: Transition.rightToLeft) :
+      Get.to(()=> const  TraineeNewList(),transition: Transition.rightToLeft);
       // Navigator.push(
       //   context,
       //   MaterialPageRoute(
@@ -91,4 +90,25 @@ class TraineeViewModel with ChangeNotifier {
       print("error${ApiResponse.error(error.toString())}");
     });
   }
+
+  /// record a payment api
+  Future<void> recordPaymentApiPost(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _myRepo.recordPaymentApi(data).then((value) async {
+      setLoading(false);
+      print("recordPaymentApiPost success");
+     // Utils.flushBarErrorMessage('recordPaymentApiPost Successfully', context);
+      //Navigator.pushNamed(context, RoutesName.chooseprogram);
+    }).onError((error, stackTrace) {
+
+      setLoading(false);
+      print("recordPaymentApiPost not success");
+
+
+      //Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+
+
 }

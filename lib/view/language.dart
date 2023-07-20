@@ -46,7 +46,7 @@ class _LanguageState extends State<Language> {
                     //English language
                     _localization.translate('en');
                    // Navigator.pushNamed(context, RoutesName.acadmicSetup);
-                    Get.to(() => const AcadmicSetup(),transition: Transition.leftToRight);
+                    Get.to(() => const AcadmicSetup(),transition: Transition.rightToLeft);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
@@ -72,7 +72,7 @@ class _LanguageState extends State<Language> {
                     //hindi language
                     _localization.translate('hi');
                     //Navigator.pushNamed(context, RoutesName.acadmicSetup);
-                    Get.to(() => const AcadmicSetup(),transition: Transition.leftToRight);
+                    Get.to(() => const AcadmicSetup(),transition: Transition.rightToLeft);
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(

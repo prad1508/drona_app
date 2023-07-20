@@ -54,7 +54,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                 MaterialPageRoute(
                     builder: (context) => Service_Offering_Page()),
               );*/
-              Get.to(()=> const Service_Offering_Page(),transition: Transition.leftToRight);
+              Get.to(()=> const Service_Offering_Page(),transition: Transition.rightToLeft);
 
             },
           )
@@ -98,7 +98,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                             builder: (context) => const Facility_Program()),
                   );*/
                                               Get.to(() => const FacilityProgram(),
-                                                  transition: Transition.leftToRight);
+                                                  transition: Transition.rightToLeft);
                                             },
                                             contentPadding: EdgeInsets.all(5),
                                             leading: SizedBox(

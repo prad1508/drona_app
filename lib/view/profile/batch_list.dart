@@ -228,7 +228,7 @@ class _BatchListState extends State<BatchList> {
                               const Layout(selectedIndex: 0),
                         ),
                       );*/
-                      Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.leftToRight);
+                      Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.rightToLeft);
 
                     }),
               ],

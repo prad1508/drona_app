@@ -71,7 +71,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                   onPressed: () {
                     Get.to(()=> const Edit_Academy_Detail(
 
-                    ),transition: Transition.leftToRight);
+                    ),transition: Transition.rightToLeft);
                   },
                   icon: Icon(Icons.edit)),
             )

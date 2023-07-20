@@ -18,6 +18,17 @@ class TraineeRepository {
     }
   }
 
+  // record a payment
+  Future<dynamic> recordPaymentApi(data) async {
+    try {
+      dynamic response = await _apiServices.getPostApiResponse(
+          AppUrl.recordPayment, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 // trainee fetch list
   Future<TraineeListModel> fetchTraineelistListApi() async {
     try {

@@ -61,7 +61,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                   rounded: true,
                   color: Theme.of(context).primaryColor,
                   textColor: Theme.of(context).scaffoldBackgroundColor,
-                  onPress: () => Get.to(() => const Registration(),transition: Transition.leftToRight),
+                  onPress: () => Get.to(() => const Registration(),transition: Transition.rightToLeft),
 
                    /*   Navigator.pushNamed(
                       context, RoutesName.registration),*/
@@ -119,7 +119,7 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                           TextButton(
                             onPressed: () {
                               //Navigator.pushNamed(context, RoutesName.login);
-                              Get.to(() => const LoginView(),transition: Transition.leftToRight);
+                              Get.to(() => const LoginView(),transition: Transition.rightToLeft);
                               //Navigator.pushNamed(context, RoutesName.layout);
                             },
                             child: Text(

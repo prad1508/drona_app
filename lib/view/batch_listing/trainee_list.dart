@@ -237,7 +237,7 @@ class _TraineeListState extends State<TraineeList> {
                                       onPress: () {
                                         /*Navigator.pushNamed(context,
                                             RoutesName.CreateBatchListing);*/
-                                        Get.to(() =>  CreateBatchListing(), transition: Transition.leftToRight);
+                                        Get.to(() =>  CreateBatchListing(), transition: Transition.rightToLeft);
                                       }),
                                 ),
                                 const SizedBox(

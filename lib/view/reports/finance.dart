@@ -357,7 +357,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -385,7 +385,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -503,7 +503,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -531,7 +531,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -648,7 +648,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -676,7 +676,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -793,7 +793,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -821,7 +821,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -938,7 +938,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -966,7 +966,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1083,7 +1083,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1111,7 +1111,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1228,7 +1228,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1256,7 +1256,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1373,7 +1373,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1401,7 +1401,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1518,7 +1518,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1546,7 +1546,7 @@ class _FinanceState extends State<Finance> {
                                   DataCell(InkWell(
                                     onTap: (){
                                       Get.to(() => const OwnerEditProfile(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,

@@ -61,7 +61,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                   );*/
                   Get.off(() => const Edit_Bank_Details(
                   ),
-                      transition: Transition.leftToRight);
+                      transition: Transition.rightToLeft);
                 },
                 icon: Icon(Icons.edit)),
           )

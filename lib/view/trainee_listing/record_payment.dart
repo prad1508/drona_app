@@ -1,25 +1,28 @@
-
 import 'package:drona/res/widget/customradio.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:intl/intl.dart';
 
-
 import '../../model/trainee_list_model.dart';
 import '../../res/app_url.dart';
 import '../../res/widget/datefield.dart';
 import '../../res/widget/progress_pills.dart';
+import '../../view_model/trainee_view_model.dart';
 
 class RecordPayment extends StatefulWidget {
+
+
   int index;
   List<Datum> traineeList;
-   RecordPayment({super.key, required this.traineeList, required this.index});
+  RecordPayment({super.key, required this.traineeList, required this.index});
 
   @override
   State<RecordPayment> createState() => _RecordPaymentState();
 }
 
 class _RecordPaymentState extends State<RecordPayment> {
+
+  TraineeViewModel traineeViewModel = TraineeViewModel();
   // ignore: non_constant_identifier_names
   List<String> PMode = ["Cash", "Online", "Cheque/\nDraft"];
   String selectedItem = 'Tennis';
@@ -33,7 +36,6 @@ class _RecordPaymentState extends State<RecordPayment> {
   TextEditingController tDateController = TextEditingController();
   TextEditingController feeController = TextEditingController();
   TextEditingController dateOfBilling = TextEditingController();
-
 
   ValueChanged<String?> RecordPayment() {
     return (value) => setState(() => payment = value!);
@@ -64,9 +66,8 @@ class _RecordPaymentState extends State<RecordPayment> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Container(
-                  color:   const Color(0XFFDFE1E4).withOpacity(0.3),
+                  color: const Color(0XFFDFE1E4).withOpacity(0.3),
                   //padding: const EdgeInsets.all(5),
                   height: 110,
                   child: Row(
@@ -78,52 +79,59 @@ class _RecordPaymentState extends State<RecordPayment> {
                         children: [
                           const SizedBox(height: 5),
                           Padding(
-                            padding:  EdgeInsets.only(top: 8.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: SizedBox(
                               width: 30,
                               height: 30,
-                              child:  CircleAvatar(
+                              child: CircleAvatar(
                                 backgroundColor: Colors.blue,
-                                child: Text(getInitials(widget.traineeList[widget.index].traineeName),style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white
-                                ),
+                                child: Text(
+                                  getInitials(widget
+                                      .traineeList[widget.index].traineeName),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
                                 ),
                                 // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
                               ),
                               // AssetImage('assets/images/user_profile.png'),
                             ),
                           ),
-
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: Container(
                               width: 40,
                               height: 20,
                               decoration: BoxDecoration(
-                                color:widget.traineeList[widget.index].status=="active" ? const Color(0xff47C088) : Colors.redAccent,
+                                color:
+                                    widget.traineeList[widget.index].status ==
+                                            "active"
+                                        ? const Color(0xff47C088)
+                                        : Colors.redAccent,
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child:  Center(
-                                  child: widget.traineeList[widget.index].status == "active" ?
-                                  const Text(
-                                    "Active",
-                                    style: TextStyle(
-                                      color: Color(0xffFBFBFC),
-                                      fontSize: 10,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ) :  const Text(
-                                    "Inactive",
-                                    style: TextStyle(
-                                      color: Color(0xffFBFBFC),
-                                      fontSize: 10,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                              ),
+                              child: Center(
+                                  child:
+                                      widget.traineeList[widget.index].status ==
+                                              "active"
+                                          ? const Text(
+                                              "Active",
+                                              style: TextStyle(
+                                                color: Color(0xffFBFBFC),
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "Inactive",
+                                              style: TextStyle(
+                                                color: Color(0xffFBFBFC),
+                                                fontSize: 10,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            )),
                             ),
                           ),
                         ],
@@ -135,8 +143,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                           Row(
                             children: [
                               Padding(
-                                padding:  const EdgeInsets.only(left: 10.0),
-                                child: Text(widget.traineeList[widget.index].traineeName,
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  widget.traineeList[widget.index].traineeName,
                                   style: const TextStyle(
                                     color: Color(0xff39404A),
                                     fontSize: 14,
@@ -152,20 +161,21 @@ class _RecordPaymentState extends State<RecordPayment> {
                                     left: 5, right: 0, top: 2),
                                 decoration: BoxDecoration(
                                     color: widget.traineeList[widget.index]
-                                        .join_status ==
-                                        'not_onboarded'? const Color.fromRGBO(255, 232, 231, 1):const Color(0xffEDF9F3),
-                                    borderRadius:
-                                    BorderRadius.circular(5)),
+                                                .join_status ==
+                                            'not_onboarded'
+                                        ? const Color.fromRGBO(255, 232, 231, 1)
+                                        : const Color(0xffEDF9F3),
+                                    borderRadius: BorderRadius.circular(5)),
                                 child: Text(
                                   widget.traineeList[widget.index]
-                                      .join_status ==
-                                      'not_onboarded'
+                                              .join_status ==
+                                          'not_onboarded'
                                       ? 'Not Onboarded'
                                       : 'Onboarded',
                                   style: TextStyle(
                                       color: widget.traineeList[widget.index]
-                                          .join_status ==
-                                          'not_onboarded'
+                                                  .join_status ==
+                                              'not_onboarded'
                                           ? const Color.fromRGBO(253, 29, 13, 1)
                                           : Colors.green,
                                       fontSize: 12),
@@ -188,37 +198,42 @@ class _RecordPaymentState extends State<RecordPayment> {
                           ),
                           const SizedBox(height: 1),
                           Row(
-                            children:  [
+                            children: [
                               Padding(
-                                  padding:  const EdgeInsets.only(left: 15.0),
-                                  child:widget.traineeList[widget.index].gender =='male' ?
-                                  const Text(
-                                    "Male",
-                                    style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ) : widget.traineeList[widget.index].gender =='female'?
-                                  const Text(
-                                    "Female",
-                                    style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ) :  const Text(
-                                    "Others",
-                                    style: TextStyle(
-                                      color: Color(0xff39404A),
-                                      fontSize: 12,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  )
-                              ),
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child:
+                                      widget.traineeList[widget.index].gender ==
+                                              'male'
+                                          ? const Text(
+                                              "Male",
+                                              style: TextStyle(
+                                                color: Color(0xff39404A),
+                                                fontSize: 12,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            )
+                                          : widget.traineeList[widget.index]
+                                                      .gender ==
+                                                  'female'
+                                              ? const Text(
+                                                  "Female",
+                                                  style: TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                )
+                                              : const Text(
+                                                  "Others",
+                                                  style: TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                )),
                               const Text(
                                 " | ",
                                 style: TextStyle(
@@ -228,7 +243,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Text(widget.traineeList[widget.index].dob,
+                              Text(
+                                widget.traineeList[widget.index].dob,
                                 style: const TextStyle(
                                   color: Color(0xff39404A),
                                   fontSize: 12,
@@ -240,12 +256,12 @@ class _RecordPaymentState extends State<RecordPayment> {
                           ),
                           const SizedBox(height: 12),
                           SizedBox(
-                            width: MediaQuery.sizeOf(context).width*.75,
+                            width: MediaQuery.sizeOf(context).width * .75,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:  [
+                              children: [
                                 Padding(
-                                  padding:  const EdgeInsets.only(left: 15.0),
+                                  padding: const EdgeInsets.only(left: 15.0),
                                   child: Text(
                                     widget.traineeList[widget.index].batchname,
                                     style: const TextStyle(
@@ -274,12 +290,14 @@ class _RecordPaymentState extends State<RecordPayment> {
                             width: 300,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 15),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children:  [
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
                                       const Text(
                                         "Fee : ",
                                         style: TextStyle(
@@ -326,13 +344,14 @@ class _RecordPaymentState extends State<RecordPayment> {
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 12,),
+                SizedBox(
+                  height: 12,
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -344,9 +363,10 @@ class _RecordPaymentState extends State<RecordPayment> {
                   height: 10,
                 ),
                 YearMonthPicker(
-                    controller: dateOfBilling,
-                    hintText: 'Month of Billing'),
-                SizedBox(height: 12,),
+                    controller: dateOfBilling, hintText: 'Month of Billing'),
+                SizedBox(
+                  height: 12,
+                ),
 
                 const Text(
                   "Last 6 Months Payment Status",
@@ -713,8 +733,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                 width: 112,
                                 height: 48,
                                 decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xff2A62B8)),
+                                    border: Border.all(
+                                        color: const Color(0xff2A62B8)),
                                     borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(8),
                                         bottomRight: Radius.circular(8))),
@@ -880,23 +900,34 @@ class _RecordPaymentState extends State<RecordPayment> {
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                                   Color(0xff2A62B8),
-                                              shape: const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(8)))),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8)))),
                                           onPressed: () {
+                                            Map<String, dynamic> data = {
+                                              "trainee_profile_uid": widget
+                                                  .traineeList[widget.index]
+                                                  .traineeUserid,
+                                              "fee_collected":
+                                                  feeController.text,
+                                              "misc_fee": mController.text,
+                                              "concession": cController.text,
+                                              "payment_mode": payment,
+                                              "date_of_transaction":
+                                                  tDateController.text,
+                                              "billing_month":
+                                                  dateOfBilling.text
+                                            };
+                                            print("data==$data");
+                                            traineeViewModel.recordPaymentApiPost(data, context).then((value) {
+                                              Navigator.of(context).pop();
+                                            });
 
-                                        Map<String, dynamic>
-                                        data =   {
-                                          "trainee_profile_uid":widget.traineeList[widget.index].traineeUserid,
-                                          "fee_collected":feeController.text,
-                                          "misc_fee":mController.text,
-                                          "concession":cController.text,
-                                          "payment_mode":payment,
-                                          "date_of_transaction":tDateController.text
-                                        };
-                                        print("data==$data");
-                                        },
+
+                                          },
                                           child: Text(
                                             "Confirm",
                                             style: TextStyle(

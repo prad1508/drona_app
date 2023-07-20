@@ -703,7 +703,7 @@ class _CoachProfileAddState extends State<CoachProfileAdd> {
                        //                 const CoachAddProfile(),
                        //           ),
                        //         );
-                        Get.to(()=> const CoachAddProfile(),transition: Transition.leftToRight);
+                        Get.to(()=> const CoachAddProfile(),transition: Transition.rightToLeft);
 
                       }),
                 ],

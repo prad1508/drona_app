@@ -93,7 +93,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                   //         EditBatchListing(Listindex: widget.ListIndex),
                   //   ),
                   // );
-                  Get.to(()=>  EditBatchListing(Listindex: widget.ListIndex),transition: Transition.leftToRight);
+                  Get.to(()=>  EditBatchListing(Listindex: widget.ListIndex),transition: Transition.rightToLeft);
 
                 },
                 icon: const Icon(
@@ -856,7 +856,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                               pathPage : widget.pathPage,
                                                              fees: value.dataList.data!.data![widget.ListIndex].fees.toString(),
                                                             ),
-                                                                transition: Transition.leftToRight);
+                                                                transition: Transition.rightToLeft);
 
                                                           },
                                                           child: Text(

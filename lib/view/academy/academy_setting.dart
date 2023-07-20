@@ -263,7 +263,7 @@ class _academy_settingState extends State<academy_setting> {
                                           const Academy_Detail_Page()),
                                     );*/
                                       Get.to(() => const Academy_Detail_Page(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                   ),
                                   ListTile(
@@ -341,7 +341,7 @@ class _academy_settingState extends State<academy_setting> {
                                       //       builder: (context) => const Servicelist_Page()),
                                       // );
                                       Get.to(() => const Servicelist_Page(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
                                     },
                                   ),
                                   ListTile(
@@ -419,7 +419,7 @@ class _academy_settingState extends State<academy_setting> {
                                       //       builder: (context) => const Bank_Details()),
                                       // );
                                       Get.to(() =>  Bank_Details(),
-                                          transition: Transition.leftToRight);
+                                          transition: Transition.rightToLeft);
 
                                     },
                                   ),

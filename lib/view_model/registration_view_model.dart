@@ -88,7 +88,7 @@ class RegistrationViewModel with ChangeNotifier {
           builder: (BuildContext context) => OtpPage(registration: data),
         ),
       );*/
-      Get.to(() => OtpPage(registration: data),transition: Transition.leftToRight);
+      Get.to(() => OtpPage(registration: data),transition: Transition.rightToLeft);
     }).onError((error, stackTrace) {
       setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
@@ -112,7 +112,7 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage('Otp Verify Successfully', context);
       //Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-      Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+      Get.to(() => const TellusAcadmic(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -140,7 +140,7 @@ class RegistrationViewModel with ChangeNotifier {
       prefsData.setString('acadmicName', acadmicName);
       Utils.flushBarErrorMessage('Basic Details update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.chooseService);
-      Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+      Get.to(() => const ChooseService(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -160,7 +160,7 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage('Services update Successfully', context);
       //Navigator.pushNamed(context, RoutesName.chooseFacility);
-      Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+      Get.to(() => const ChooseFacility(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -176,7 +176,7 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage('Facility Saved Successfully', context);
 
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
-      Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+      Get.to(() => const ChooseProgram(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -209,7 +209,7 @@ class RegistrationViewModel with ChangeNotifier {
       //       ),
       //     );*/
       //    // Navigator.pushNamed(context, RoutesName.WelcomeScreen);
-      //     Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+      //     Get.to(() => const WelcomeScreen(),transition: Transition.rightToLeft);
       //
       //   }
       // else
@@ -221,7 +221,7 @@ class RegistrationViewModel with ChangeNotifier {
       //       ),
       //     );*/
       //     //Navigator.pushNamed(context, RoutesName.DetailFilled);
-      //     Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+      //     Get.to(() => const DetailFilled(),transition: Transition.rightToLeft);
       //
       //
       //   }
@@ -248,7 +248,7 @@ class RegistrationViewModel with ChangeNotifier {
           builder: (BuildContext context) =>  WelcomeScreen(),
         ),
       );*/
-      Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+      Get.to(() => const WelcomeScreen(),transition: Transition.rightToLeft);
 
       Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
@@ -272,7 +272,7 @@ class RegistrationViewModel with ChangeNotifier {
           builder: (BuildContext context) => const ForgetOtp(),
         ),
       );*/
-      Get.to(()=> const ForgetOtp(),transition: Transition.leftToRight);
+      Get.to(()=> const ForgetOtp(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       print("forget password api not success");
@@ -299,7 +299,7 @@ class RegistrationViewModel with ChangeNotifier {
           builder: (BuildContext context) => const NewPassword(),
         ),
       );*/
-      Get.to(()=> const NewPassword(),transition: Transition.leftToRight);
+      Get.to(()=> const NewPassword(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -319,7 +319,7 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
       //Navigator.pushNamed(context, RoutesName.login);
-      Get.to(() => const LoginView(),transition: Transition.leftToRight);
+      Get.to(() => const LoginView(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -339,7 +339,7 @@ class RegistrationViewModel with ChangeNotifier {
       setLoading(false);
       Utils.flushBarErrorMessage(value['msg'], context);
       //Navigator.pushNamed(context, RoutesName.login);
-      Get.to(() => const LoginView(),transition: Transition.leftToRight);
+      Get.to(() => const LoginView(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);

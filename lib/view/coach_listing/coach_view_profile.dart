@@ -55,7 +55,7 @@ class _View_ProfileState extends State<View_Profile> {
                             MaterialPageRoute(
                                 builder: (context) => const Personal_Details()),
                           );*/
-                          Get.to(()=> const Personal_Details(),transition: Transition.leftToRight);
+                          Get.to(()=> const Personal_Details(),transition: Transition.rightToLeft);
 
                         },
                       ),

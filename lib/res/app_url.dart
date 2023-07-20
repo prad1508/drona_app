@@ -36,7 +36,10 @@ class AppUrl {
   static var academyRegistrationTrackEndPint = '$baseUrl/academy';
   static var userLogout = '$baseUrl/ouser/logout';
 
+  //trainee
+
   static var traineeAddinBatchEndpoint = "$baseUrl/academy/addtraineeinbatch";
+  static var recordPayment = "$baseUrl/academy/recordpayment";
   static var traineeListinBatchEndpoint = "$baseUrl/academy/trainee/10/1";
 
   //session
@@ -59,7 +62,6 @@ class AppUrl {
   static var uploadQr = "$baseUrl/static/qr/";
   static var uploadQrImg = "$baseUrl/academy/uploadqr";
   static var billingInvoiceMonthly = '$baseUrl/academy/billing_invoice/month';
-  static var billingViewInvoiceMonthly = '$baseUrl/academy/invoice_payment/month';
-
-
+  static var billingViewInvoiceMonthly =
+      '$baseUrl/academy/invoice_payment/month';
 }

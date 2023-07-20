@@ -175,7 +175,7 @@ class _SessionListState extends State<SessionList>
                   ),
                 );*/
                 Get.to(() => const SessionalDetails(),
-                    transition: Transition.leftToRight);
+                    transition: Transition.rightToLeft);
               }),
               icon: const Icon(Icons.add),
               iconSize: 25,

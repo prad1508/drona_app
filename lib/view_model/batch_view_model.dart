@@ -34,8 +34,8 @@ class BatchViewViewModel with ChangeNotifier {
       /// go to add trainee page
       pathPage=="onboarding" ?
        Get.to(()=>  TrainAddManualy(batchId: value['batch_uid'],
-         batchName: batchName,fees: Fees,),transition: Transition.leftToRight) :
-      Get.to(()=>  SearchBatchList(pathPage: 'dashBoard',),transition: Transition.leftToRight);
+         batchName: batchName,fees: Fees,),transition: Transition.rightToLeft) :
+      Get.to(()=>  SearchBatchList(pathPage: 'dashBoard',),transition: Transition.rightToLeft);
     }).onError((error, stackTrace) {
       print("api of batch create not successfull");
       print(error);

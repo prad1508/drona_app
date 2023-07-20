@@ -15,12 +15,16 @@ class _Ledger_PageState extends State<Ledger_Page> {
   String name = "Riyaz mohammed";
   @override
   Widget build(BuildContext context) {
+
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Deactivate',
+        title: const Text('View Ledger',
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,

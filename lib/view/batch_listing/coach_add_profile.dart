@@ -581,7 +581,7 @@ class _CoachAddProfileState extends State<CoachAddProfile> {
                         print(_genderValue);
                         /*Navigator.pushNamed(
                             context, RoutesName.BatchLists);*/
-                        Get.to(() => const BatchLists(),transition: Transition.leftToRight);
+                        Get.to(() => const BatchLists(),transition: Transition.rightToLeft);
 
                       }),
                 ],

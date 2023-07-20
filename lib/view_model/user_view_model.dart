@@ -108,13 +108,13 @@ class UserViewModel with ChangeNotifier {
      //{
        /// create batch
     //  pathPage == "dashBoard"?
-      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.leftToRight);
-    //  Get.to(()=>  CreateBatchListing(pathPage: pathPage),transition: Transition.leftToRight);
-     //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.leftToRight);
+      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.rightToLeft);
+    //  Get.to(()=>  CreateBatchListing(pathPage: pathPage),transition: Transition.rightToLeft);
+     //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.rightToLeft);
    //  }
    // else
    //   {
-   //     Get.to(()=>  CoachListSelected(),transition: Transition.leftToRight);
+   //     Get.to(()=>  CoachListSelected(),transition: Transition.rightToLeft);
    //   }
 
     }).onError((error, stackTrace) {

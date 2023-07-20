@@ -105,7 +105,7 @@ class _CommunicationState extends State<Communication> {
                         MaterialPageRoute(
                             builder: (context) => const Edit_Communication()),
                       );*/
-                      Get.to(()=> const Edit_Communication(),transition: Transition.leftToRight);
+                      Get.to(()=> const Edit_Communication(),transition: Transition.rightToLeft);
 
                     },
                   ),

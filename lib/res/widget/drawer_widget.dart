@@ -80,7 +80,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       IconButton(
                         onPressed: (() {
                           //Navigator.pushNamed(context, RoutesName.login);
-                          Get.to(() => const LoginView(),transition: Transition.leftToRight);
+                          Get.to(() => const LoginView(),transition: Transition.rightToLeft);
 
                         }),
                         icon: const Icon(

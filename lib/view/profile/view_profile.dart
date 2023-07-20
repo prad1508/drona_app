@@ -58,7 +58,7 @@ class _ViewProfilenewState extends State<ViewProfilenew> {
                                   CreateProfile(),
                            ),
                          );*/
-                 Get.to(()=>  CreateProfile(),transition: Transition.leftToRight);
+                 Get.to(()=>  CreateProfile(),transition: Transition.rightToLeft);
 
               },
               icon: const Icon(Icons.edit),

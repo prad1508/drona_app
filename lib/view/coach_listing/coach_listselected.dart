@@ -109,7 +109,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                           child: TextButton(
                             onPressed: () {
                               // Get.to(() => ViewProfileDetails(index: index!),
-                              //     transition: Transition.leftToRight);
+                              //     transition: Transition.rightToLeft);
                             },
                             child: Text(
                               'View Profile',
@@ -910,7 +910,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       color: Theme.of(context).primaryColor,
                       onPress: () {
                         print("normal case");
-                        Get.to(()=>   CreateBatchListing(),transition: Transition.leftToRight);
+                        Get.to(()=>   CreateBatchListing(),transition: Transition.rightToLeft);
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(

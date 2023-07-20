@@ -193,7 +193,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 color: const Color.fromRGBO(241, 94, 83, 1),
                                 onPress: () {
                                   // Navigator.pushNamed(context, RoutesName.createProfile);
-                                  Get.to(()=>  CreateBatchListing(pathPage: "onboarding",),transition: Transition.leftToRight);
+                                  Get.to(()=>  CreateBatchListing(pathPage: "onboarding",),transition: Transition.rightToLeft);
 
                                 })
                                 : RoundButton(
@@ -205,7 +205,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 color: const Color.fromRGBO(241, 94, 83, 1),
                                 onPress: () {
                                   // Navigator.pushNamed(context, RoutesName.createProfile);
-                                  Get.to(()=>   CreateProfile(pathPage: "onboarding",),transition: Transition.leftToRight);
+                                  Get.to(()=>   CreateProfile(pathPage: "onboarding",),transition: Transition.rightToLeft);
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(

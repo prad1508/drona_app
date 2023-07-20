@@ -67,7 +67,7 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                           () => EditProfileDetails(
                         index: widget.index,
                       ),
-                      transition: Transition.leftToRight);
+                      transition: Transition.rightToLeft);
                 },
               ))
         ],

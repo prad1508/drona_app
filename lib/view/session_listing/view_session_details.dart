@@ -183,7 +183,7 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                   serviceIcon: serviceIcon,
                   provideSessionUrl: provideSessionUrl,
                 ),
-                    transition: Transition.leftToRight);
+                    transition: Transition.rightToLeft);
               }),
               icon: const Icon(Icons.edit),
               iconSize: 25,

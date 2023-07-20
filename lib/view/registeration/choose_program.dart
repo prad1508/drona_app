@@ -1947,11 +1947,11 @@ void openModal(BuildContext context , String service_name) {
                         if(role == '0')
                         {
 
-                          Get.to(() => const WelcomeScreen(),transition: Transition.leftToRight);
+                          Get.to(() => const WelcomeScreen(),transition: Transition.rightToLeft);
                         }
                         else
                         {
-                          Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+                          Get.to(() => const DetailFilled(),transition: Transition.rightToLeft);
                         }
                       } catch (error){
 

@@ -335,7 +335,7 @@ class _BatchListsState extends State<BatchLists> {
                     color: Theme.of(context).primaryColor,
                     onPress: () { 
                      /* Navigator.pushNamed(context, RoutesName.AddTraineeList1);
-                      Get.to(() => const LoginView(),transition: Transition.leftToRight);*/
+                      Get.to(() => const LoginView(),transition: Transition.rightToLeft);*/
 
                       //showExitPopup(context);
                     }),

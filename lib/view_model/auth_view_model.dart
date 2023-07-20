@@ -118,14 +118,14 @@ class AuthViewModel with ChangeNotifier {
 
           case 0: {
             /*Navigator.pushNamed(context, RoutesName.tellusAcadmic);*/
-            Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+            Get.to(() => const TellusAcadmic(),transition: Transition.rightToLeft);
                break;
            }
 
           case 3:
             {
               //Navigator.pushNamed(context, RoutesName.chooseService);
-              Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+              Get.to(() => const ChooseService(),transition: Transition.rightToLeft);
 
               break;
             }
@@ -133,7 +133,7 @@ class AuthViewModel with ChangeNotifier {
           case 4:
             {
               /*Navigator.pushNamed(context, RoutesName.chooseFacility);*/
-              Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+              Get.to(() => const ChooseFacility(),transition: Transition.rightToLeft);
 
 
               break;
@@ -142,7 +142,7 @@ class AuthViewModel with ChangeNotifier {
           case 5:
             {
               /*Navigator.pushNamed(context, RoutesName.ChooseProgram);*/
-              Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+              Get.to(() => const ChooseProgram(),transition: Transition.rightToLeft);
 
               break;
             }
@@ -150,7 +150,7 @@ class AuthViewModel with ChangeNotifier {
           case 6:
             {
              /* Navigator.pushNamed(context, RoutesName.detailFilled);*/
-              Get.to(() => const DetailFilled(),transition: Transition.leftToRight);
+              Get.to(() => const DetailFilled(),transition: Transition.rightToLeft);
 
               break;
             }
@@ -162,13 +162,13 @@ class AuthViewModel with ChangeNotifier {
            {
              case 0: {
               /* Navigator.pushNamed(context, RoutesName.tellusAcadmic);*/
-               Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+               Get.to(() => const TellusAcadmic(),transition: Transition.rightToLeft);
                break;
              }
              case 3:
                {
                  //Navigator.pushNamed(context, RoutesName.chooseService);
-                 Get.to(() => const ChooseService(),transition: Transition.leftToRight);
+                 Get.to(() => const ChooseService(),transition: Transition.rightToLeft);
 
                  break;
                }
@@ -176,14 +176,14 @@ class AuthViewModel with ChangeNotifier {
              case 4:
                {
                  //Navigator.pushNamed(context, RoutesName.chooseFacility);
-                 Get.to(() => const ChooseFacility(),transition: Transition.leftToRight);
+                 Get.to(() => const ChooseFacility(),transition: Transition.rightToLeft);
                  break;
                }
 
              case 5:
                {
                  //Navigator.pushNamed(context, RoutesName.ChooseProgram);
-                 Get.to(() => const ChooseProgram(),transition: Transition.leftToRight);
+                 Get.to(() => const ChooseProgram(),transition: Transition.rightToLeft);
 
                  break;
                }
@@ -201,14 +201,14 @@ class AuthViewModel with ChangeNotifier {
         if (setupProgress == 0 && setupFinish==false) {
           userPreference.saveToken(UserModel(data: value['token'].toString()));
          // Navigator.pushNamed(context, RoutesName.tellusAcadmic);
-          Get.to(() => const TellusAcadmic(),transition: Transition.leftToRight);
+          Get.to(() => const TellusAcadmic(),transition: Transition.rightToLeft);
 
         }
         else
           {
             userPreference.saveToken(UserModel(data: value['token'].toString()));
            // Navigator.pushNamed(context, RoutesName.layout);
-            Get.to(() => const Layout(selectedIndex: 0),transition: Transition.leftToRight);
+            Get.to(() => const Layout(selectedIndex: 0),transition: Transition.rightToLeft);
 
           }
 

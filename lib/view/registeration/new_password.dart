@@ -74,7 +74,7 @@ class _NewPasswordState extends State<NewPassword> {
                                       const Layout(selectedIndex: 0,),
                                 ),
                               );*/
-                        Get.to(()=>  const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+                        Get.to(()=>  const Layout(selectedIndex: 0,),transition: Transition.rightToLeft);
 
                       },
                       style: ElevatedButton.styleFrom(

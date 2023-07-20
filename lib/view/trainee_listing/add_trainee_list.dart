@@ -1,6 +1,7 @@
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/batch_listing/viewprofile_details.dart';
 import 'package:drona/view/profile/batch_list.dart';
+import 'package:drona/view/trainee_listing/ledger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -25,8 +26,8 @@ import '../../utils/color.dart' as AppColor;
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
 import '../dashboard/layout.dart';
-import '../trainee_listing/add_trainee_in_existingBatch.dart';
-import '../trainee_listing/record_payment.dart';
+import 'add_trainee_in_existingBatch.dart';
+import 'record_payment.dart';
 
 class AddTraineeList extends StatefulWidget {
   AddTraineeList({
@@ -100,7 +101,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                           child: TextButton(
                             onPressed: () {
                               Get.to(() => ViewProfileDetails(index: index),
-                                  transition: Transition.leftToRight);
+                                  transition: Transition.rightToLeft);
                             },
                             child: Text(
                               'View Profile',
@@ -136,7 +137,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(()=>  const Ledger_Page());
+
+                            },
                             child: Text(
                               'View Ledger',
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -257,7 +261,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Get.to(()=> const Layout(selectedIndex: 0),),
+              onPressed: () => Get.to(()=> const Layout(selectedIndex: 0),transition: Transition.rightToLeft),
             ),
             title: Text(
               'Trainee Listing',
@@ -266,7 +270,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
             actions: [
               IconButton(
                 onPressed: (() {
-                  Get.to(()=> AddTrainneInExisitingBatch(),transition: Transition.leftToRight);
+                  Get.to(()=> AddTrainneInExisitingBatch(),transition: Transition.rightToLeft);
                 }),
                 icon: const Icon(Icons.add),
                 iconSize: 25,

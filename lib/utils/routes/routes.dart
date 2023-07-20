@@ -4,7 +4,7 @@ import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:drona/view/batch_listing/ViewBatchDetails2.dart';
 import 'package:drona/view/batch_listing/add_batch.dart';
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
-import 'package:drona/view/batch_listing/add_trainee_list.dart';
+import 'package:drona/view/trainee_listing/add_trainee_list.dart';
 import 'package:drona/view/batch_listing/batch_list.dart';
 import 'package:drona/view/batch_listing/coach_add_profile.dart';
 import 'package:drona/view/batch_listing/coach_profile_add.dart';

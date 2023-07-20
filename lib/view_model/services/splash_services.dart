@@ -34,7 +34,7 @@ class SplashServices with ChangeNotifier {
         await Future.delayed(const Duration(seconds: 1));
         // ignore: use_build_context_synchronously
         //Navigator.pushNamed(context, RoutesName.language);
-        Get.to(()=> const Language(),transition: Transition.leftToRight);
+        Get.to(()=> const Language(),transition: Transition.rightToLeft);
         
       }else {
         await  Future.delayed(const Duration(seconds: 1));
@@ -43,12 +43,12 @@ class SplashServices with ChangeNotifier {
         String? role = prefsData.getString('role');
         if(role == '1' || setupFinish == true){
            // Navigator.pushNamed(context, RoutesName.layout);
-            Get.to(()=> const Layout(selectedIndex: 0,),transition: Transition.leftToRight);
+            Get.to(()=> const Layout(selectedIndex: 0,),transition: Transition.rightToLeft);
 
         }
         else{
           // Navigator.pushNamed(context, RoutesName.login);
-           Get.to(()=> const  LoginView(),transition: Transition.leftToRight);
+           Get.to(()=> const  LoginView(),transition: Transition.rightToLeft);
 
         }
        

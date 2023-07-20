@@ -177,7 +177,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                                   const BatchList(),
                             ),
                           );*/
-                          Get.to(()=> const BatchList(),transition: Transition.leftToRight);
+                          Get.to(()=> const BatchList(),transition: Transition.rightToLeft);
 
                         },
                       ),
@@ -702,7 +702,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                                     const ViewBatchDetails1(),
                               ),
                             );*/
-                            Get.to(()=> const ViewBatchDetails1(),transition: Transition.leftToRight);
+                            Get.to(()=> const ViewBatchDetails1(),transition: Transition.rightToLeft);
 
                     }
                         : () {
@@ -729,7 +729,7 @@ class _ViewBatchDetails2State extends State<ViewBatchDetails2> {
                                     const ViewBatchDetails1(),
                               ),
                             );*/
-                            Get.to(()=> const ViewBatchDetails1(),transition: Transition.leftToRight);
+                            Get.to(()=> const ViewBatchDetails1(),transition: Transition.rightToLeft);
 
                     }
                         : () {

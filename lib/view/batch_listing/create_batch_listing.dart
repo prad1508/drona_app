@@ -290,7 +290,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                             style: TextStyle(color: Colors.redAccent),
                           ),
                           onPressed: () {
-                            Get.to(()=>  CreateProfile(pathPage : 'dashBoard'),transition: Transition.leftToRight);
+                            Get.to(()=>  CreateProfile(pathPage : 'dashBoard'),transition: Transition.rightToLeft);
                           },
                         ),
                       ],
@@ -1180,7 +1180,7 @@ Future<bool> showExitPopup(context) async {
 //                             style: TextStyle(color: Colors.redAccent),
 //                           ),
 //                           onPressed: () {
-//                             Get.to(()=>  CreateProfile(pathPage : 'dashBoard'),transition: Transition.leftToRight);
+//                             Get.to(()=>  CreateProfile(pathPage : 'dashBoard'),transition: Transition.rightToLeft);
 //                           },
 //                         ),
 //                       ],

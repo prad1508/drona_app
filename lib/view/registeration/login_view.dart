@@ -199,7 +199,7 @@ class _LoginViewState extends State<LoginView> {
                         TextButton.styleFrom(padding: const EdgeInsets.all(0)),
                     onPressed: () {
                       /*Navigator.pushNamed(context, RoutesName.resetPassword);*/
-                      Get.to(() => const ResetPassword(), transition: Transition.leftToRight);
+                      Get.to(() => const ResetPassword(), transition: Transition.rightToLeft);
 
                     },
                     child: Text(
@@ -243,7 +243,7 @@ class _LoginViewState extends State<LoginView> {
               InkWell(
                   onTap: () {
                    // Navigator.pushNamed(context, RoutesName.signUp);
-                    Get.to(() => const Registration(),transition: Transition.leftToRight);
+                    Get.to(() => const Registration(),transition: Transition.rightToLeft);
 
                   },
                   child: Row(
@@ -255,7 +255,7 @@ class _LoginViewState extends State<LoginView> {
                             padding: const EdgeInsets.all(0)),
                         onPressed: () {
                           //Navigator.pushNamed(context, RoutesName.registration);
-                          Get.to(() => const Registration(),transition: Transition.leftToRight);
+                          Get.to(() => const Registration(),transition: Transition.rightToLeft);
                         },
                         child: Text(
                           "Signup",
