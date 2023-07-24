@@ -32,10 +32,10 @@ class ViewSessionalDetails extends StatefulWidget {
   });
 
   @override
-  State<ViewSessionalDetails> createState() => _ViewSessionalDetailsState();
+  State<ViewSessionalDetails> createState() => ViewSessionalDetailsState();
 }
 
-class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
+class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   SessionViewViewModel sessionViewModel = SessionViewViewModel();
@@ -362,8 +362,6 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       child: ListView.builder(
                                           itemCount: attendanceList.length,
                                           itemBuilder: (context, index) {
-
-
                                             // value1 == true ? attendanceList.add(value.dataList2.data!.data[index]) : null;
 
                                             //var nameText = _foundUsers[index]['name'].split(' ');
@@ -1171,9 +1169,6 @@ class _ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                   child:
                                                                   ElevatedButton(
                                                                     onPressed: () {
-                                                                      /*  attendanceList
-                                                                .clear();*/
-
                                                                       Navigator.of(
                                                                           context)
                                                                           .pop();

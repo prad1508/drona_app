@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../data/response/api_response.dart';
+import '../model/active_deactive_model.dart';
 import '../model/coachlist_model.dart';
 import '../model/trainee_list_model.dart';
 import '../respository/batch_repository.dart';
@@ -35,6 +36,14 @@ class TraineeViewModel with ChangeNotifier {
     dataList1 = response;
     notifyListeners();
   }
+
+  ApiResponse<ActiveDeactiveModel> dataList2 = ApiResponse.loading();
+  setDataList2(ApiResponse<ActiveDeactiveModel> response) {
+    dataList2 = response;
+    notifyListeners();
+  }
+
+
   /// create Trainee api
   Future<void> fetchTraineeAddListApi(
       dynamic data, BuildContext context ,String type) async {
@@ -97,6 +106,66 @@ class TraineeViewModel with ChangeNotifier {
       print("error${ApiResponse.error(error.toString())}");
     });
   }
+
+  ///  Trainee Activate api
+  Future<void> TraineeActivateApi(dynamic data) async {
+    setDataList2(ApiResponse.loading());
+
+    _myRepo.TraineeActivateApi(data).then((value) {
+
+      setDataList2(ApiResponse.completed(value));
+      Utils.toastMessage(value.msg);
+
+      //Utils.flushBarErrorMessage(value.msg, context);
+
+      print("TraineeActivateApi success");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+
+      print("TraineeActivateApi not success");
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+  ///  Trainee DeActivate api
+  Future<void> TraineeDeActivateApi(dynamic data) async {
+    setDataList2(ApiResponse.loading());
+
+    _myRepo.TraineeDeActivateApi(data).then((value) {
+      setDataList2(ApiResponse.completed(value));
+      Utils.toastMessage(value.msg);
+
+      //Utils.flushBarErrorMessage(value.msg, context);
+      print("TraineeDeActivateApi success");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+
+      print("TraineeDeActivateApi not success");
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+  /// traineeBatchEditApi api
+  Future<void> traineeBatchEditApi(dynamic data) async {
+    setDataList2(ApiResponse.loading());
+
+    _myRepo.traineeBatchEditApi(data).then((value) {
+      setDataList2(ApiResponse.completed(value));
+      Utils.toastMessage(value.msg);
+
+      //Utils.flushBarErrorMessage(value.msg, context);
+      print("traineeBatchEditApi success");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+      print("traineeBatchEditApi not success");
+      print("error${ApiResponse.error(error.toString())}");
+    });
+  }
+
+
+
+
   ///  ledger list api
   Future<void> fetchLedgerListSearchApi(dynamic data, var pageCount, var pageNo) async {
     setDataList1(ApiResponse.loading());

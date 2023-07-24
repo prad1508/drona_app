@@ -27,7 +27,10 @@ import '../../utils/color.dart' as AppColor;
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
 import '../dashboard/layout.dart';
+import 'activate.dart';
 import 'add_trainee_in_existingBatch.dart';
+import 'deactivate.dart';
+import 'edit_batch.dart';
 import 'record_payment.dart';
 
 class AddTraineeList extends StatefulWidget {
@@ -114,7 +117,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+
+                            },
                             child: Text(
                               'Remind For Payment',
                               style:
@@ -152,7 +157,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(() =>  Edit_Page(traineeList: traineeList,traineeProfileUid: traineeList[index].traineeProfileUid, index: index), transition:  Transition.rightToLeft);
+                            },
                             child: Text(
                               'Edit Batch',
                               style:
@@ -165,7 +172,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(()=> Deactivate_Page(traineeList: traineeList,traineeProfileUid: traineeList[index].traineeProfileUid, index: index,), transition: Transition.rightToLeft);
+                            },
                             child: Text(
                               'Deactivate',
                               style:
@@ -176,7 +185,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             : Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(()=> Activate_Page(traineeList: traineeList,traineeProfileUid: traineeList[index].traineeProfileUid, index: index,), transition: Transition.rightToLeft);
+
+                            },
                             child: Text(
                               'Activate',
                               style:

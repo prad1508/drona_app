@@ -42,6 +42,11 @@ class AppUrl {
   static var recordPayment = "$baseUrl/academy/recordpayment";
   static var traineeListinBatchEndpoint = "$baseUrl/academy/trainee/10/1";
   static var ledgerEndpoint = "$baseUrl/academy/trainee/ledger";
+  static var activateTrainee = "$baseUrl/academy/trainee/activate";
+  static var deactivateTrainee = "$baseUrl/academy/trainee/deactivate";
+  static var traineeBatchEdit = "$baseUrl/academy/trainee/editbatch";
+
+
 
 
   //session

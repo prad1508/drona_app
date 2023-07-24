@@ -1,21 +1,42 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/res/widget/datefield.dart';
+import 'package:drona/utils/utils.dart';
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/trainee_listing/deactivate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
+import '../../model/trainee_list_model.dart';
+import '../../res/app_url.dart';
+import 'package:intl/intl.dart';
+
+import '../../view_model/trainee_view_model.dart';
+import '../batch_listing/trainee_list.dart';
+import 'add_trainee_list.dart';
+
+
 
 class Activate_Page extends StatefulWidget {
-  const Activate_Page({super.key});
+  String traineeProfileUid;
+  int index;
+  List<Datum> traineeList;
+   Activate_Page({super.key, required this.traineeProfileUid, required this.index, required this.traineeList});
 
   @override
   State<Activate_Page> createState() => _Activate_PageState();
 }
 
 class _Activate_PageState extends State<Activate_Page> {
+
+
+  TraineeViewModel traineeViewModel = TraineeViewModel();
+
   final TextEditingController contact = TextEditingController();
 
   final TextEditingController fees = TextEditingController();
+   TextEditingController tDateController = TextEditingController();
 
   List<DropdownMenuItem<String>> get sportsItem {
     List<DropdownMenuItem<String>> serviceDetails = [
@@ -44,13 +65,16 @@ class _Activate_PageState extends State<Activate_Page> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
-          'Acivate',
+          'Activate',
           style: TextStyle(
               fontSize: 18,
               fontFamily: 'Lato',
@@ -64,98 +88,115 @@ class _Activate_PageState extends State<Activate_Page> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30.0, right: 20.0),
-                child: SizedBox(
-                  width: 390,
-                  height: 64,
+              SizedBox(
+//color: Colors.grey,
+                width: w,
+                height: h * 0.08,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Profile Image;
+//Profile Image;
                       SizedBox(
-                        height: 46,
-                        width: 41,
-                        child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/user_profile.png')),
+                        height: h * 0.05,
+                        width: w * 0.05,
+                        child:  CircleAvatar(
+                            backgroundColor: Colors.black,
+                            child: CachedNetworkImage(
+                                fit: BoxFit.contain,
+                                imageUrl: AppUrl.ouserProfileimgListEndPoint +widget.traineeList[widget.index].image,
+                                errorWidget: (context, url, error) =>
+                                // Image.asset("assets/images/user.png")
+                                const Icon(Icons.person,size: 30,color: Colors.white,)
+
+
+                            )
+                          /* Text(
+                                  getInitials(widget
+                                      .traineeList[widget.index].traineeName),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),*/
+                          // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                        ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.5, top: 12, right: 8, bottom: 3),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+//SizedBox(width: w*0.05,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.traineeList[widget.index]
+                                    .traineeName,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.traineeList[widget.index]
+                                    .join_status ==
+                                    "not_onboarded"
+                                    ? "Not Onboarded"
+                                    : "Onboarded",
+                                style: TextStyle(
+                                    color: widget
+                                        .traineeList[
+                                    widget.index]
+                                        .join_status ==
+                                        "not_onboarded"
+                                        ? Colors.red
+                                        : Colors.green,
+                                    fontSize: 10),
+                              ),
+                            ],
+                          ),
+//Gender and Age;
+                          SizedBox(
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Riyaz mohammed",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff39404A)),
+                                  widget.traineeList[widget.index]
+                                      .gender,
+                                  style: TextStyle(fontSize: 12),
                                 ),
-                                SizedBox(width: 8),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "|",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                //Text("Dob :"),
                                 Text(
-                                  "Onboarded",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff47C088)),
+                                  widget
+                                      .traineeList[widget.index].dob,
+                                  style: TextStyle(fontSize: 12),
                                 ),
                               ],
                             ),
-                            //Gender and Age;
-                            SizedBox(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    "Male",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff39404A)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "|",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Lato',
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff39404A)),
-                                    ),
-                                  ),
-                                  Text(
-                                    "34 Year",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff39404A)),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        widthFactor: 5.5,
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/tennis.png'),
-                            backgroundColor: Colors.white,
                           ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              AppUrl.serviceIconEndPoint +
+                                  widget.traineeList[widget.index]
+                                      .serviceicon),
+                          backgroundColor: Colors.white,
                         ),
                       ),
                     ],
@@ -165,11 +206,11 @@ class _Activate_PageState extends State<Activate_Page> {
               // SizedBox(height: 20),
               Padding(
                 padding:
-                    const EdgeInsets.only(top: 12.0, left: 22.0, right: 26.0),
+                     EdgeInsets.only(top: 12.0, left: 22.0, right: 26.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                   /* Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -214,7 +255,7 @@ class _Activate_PageState extends State<Activate_Page> {
                               fillColor: Colors.grey.shade300),
                         )),
                     //Service selected;
-                    SizedBox(height: 16),
+                    SizedBox(height: 16),*/
                     Text(
                       "Service",
                       style: TextStyle(
@@ -224,10 +265,15 @@ class _Activate_PageState extends State<Activate_Page> {
                           color: Color(0xff39404A)),
                     ),
                     SizedBox(height: 4),
-                    SizedBox(
+                    Container(
                         width: 342,
                         height: 48,
-                        child: InputDecorator(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Text(widget.traineeList[widget.index].serviceName)
+                       /* InputDecorator(
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(5),
                                 border: OutlineInputBorder(
@@ -249,7 +295,8 @@ class _Activate_PageState extends State<Activate_Page> {
                                     });
                                   },
                                   items: sportsItem),
-                            ))),
+                            ))*/
+                    ),
                     SizedBox(height: 16),
                     //Batch Timing Selected;
                     Text(
@@ -261,10 +308,15 @@ class _Activate_PageState extends State<Activate_Page> {
                           color: Color(0xff39404A)),
                     ),
                     SizedBox(height: 4),
-                    SizedBox(
+                    Container(
                         width: 342,
                         height: 48,
-                        child: InputDecorator(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(8)),
+                        child:Text(widget.traineeList[widget.index].batchname)
+                      /*InputDecorator(
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(5),
                                 border: OutlineInputBorder(
@@ -286,7 +338,8 @@ class _Activate_PageState extends State<Activate_Page> {
                                     });
                                   },
                                   items: batchTime),
-                            ))),
+                            ))*/
+                    ),
                     SizedBox(height: 16),
                     Text(
                       "Fees/Month",
@@ -335,6 +388,7 @@ class _Activate_PageState extends State<Activate_Page> {
                                 controller: fees,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
+                                  hintText: widget.traineeList[widget.index].fees.toString(),
                                   contentPadding: EdgeInsets.only(
                                       left: 15, top: 15, bottom: 15),
                                   enabledBorder: OutlineInputBorder(
@@ -370,25 +424,53 @@ class _Activate_PageState extends State<Activate_Page> {
                     SizedBox(
                       width: 342,
                       height: 48,
-                      child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.start,
-                        cursorHeight: double.infinity,
+                      child:TextFormField(
+                       /* autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Please select Activation Date";
+                          } else {
+                            return null;
+                          }
+                        },
+                        readOnly: true,*/
+                        controller: tDateController,
+                        keyboardType: TextInputType.name,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
+                          suffixIcon: const Icon(
+                            Icons.calendar_month,
+                            size: 30.0,
+                          ),
+                          hintText: '01-01-2023',
+                          contentPadding: const EdgeInsets.all(5),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          suffixIcon: InkWell(
-                            child: Icon(Icons.calendar_month_outlined),
-                            onTap: () {},
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () async {
+                          DateTime now = DateTime.now();
+                          DateTime firstDate =
+                          DateTime(now.year, now.month);
+                          var date = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: firstDate,
+                            lastDate:
+                            DateTime.now().add(Duration(days: 90)),
+                          );
+                          if (date != null) {
+                            tDateController.text =
+                                DateFormat('dd-MM-yyyy').format(date);
+                          }
+                        },
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.26),
                     SizedBox(
-                      width: 342,
+                      width: 400,
                       height: 45,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -401,7 +483,7 @@ class _Activate_PageState extends State<Activate_Page> {
                                 context: context,
                                 builder: (context) {
                                   return SizedBox(
-                                    width: 342,
+                                    width: 400,
                                     height: 266,
                                     child: AlertDialog(
                                       icon: SizedBox(
@@ -427,10 +509,10 @@ class _Activate_PageState extends State<Activate_Page> {
                                       content: Wrap(children: [
                                         Center(
                                           child: SizedBox(
-                                            width: 209,
+                                            width: 300,
                                             height: 48,
                                             child: Text(
-                                              "Please Confirm Activation Of Riyaz Mohammed!",
+                                              "Please Confirm Activation Of \n${widget.traineeList[widget.index].traineeName}",
                                               style: TextStyle(
                                                   color: Color(0xff626D7E),
                                                   fontSize: 16,
@@ -484,136 +566,27 @@ class _Activate_PageState extends State<Activate_Page> {
                                                               Radius.circular(
                                                                   8)))),
                                               onPressed: () {
-                                                //Invitation to Coach;
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return SizedBox(
-                                                        width: 342,
-                                                        height: 266,
-                                                        child: AlertDialog(
-                                                          icon: SizedBox(
-                                                            width: 44,
-                                                            height: 44,
-                                                            child: CircleAvatar(
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0xff47C088),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .check_sharp,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          title: Text(
-                                                            "Send Invite",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 17,
-                                                                fontFamily:
-                                                                    'Lato',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          content:
-                                                              Wrap(children: [
-                                                            Center(
-                                                              child: SizedBox(
-                                                                width: 209,
-                                                                height: 48,
-                                                                child: Text(
-                                                                  "Send Invitation To Riyaz Mohammed!",
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff626D7E),
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontFamily:
-                                                                          'Lato',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ]),
-                                                          // contentPadding: EdgeInsets.all(24),
-                                                          actions: [
-                                                            SizedBox(
-                                                              width: 139,
-                                                              height: 48,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Color(
-                                                                              0xffDFE1E4),
-                                                                          shape: RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.all(Radius.circular(
-                                                                                  8)))),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                      child:
-                                                                          Text(
-                                                                        "Cancel",
-                                                                        style: TextStyle(
-                                                                            color: Color(
-                                                                                0xff23282E),
-                                                                            fontSize:
-                                                                                15,
-                                                                            fontFamily:
-                                                                                'Lato',
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
-                                                                      )),
-                                                            ),
-                                                            Container(
-                                                              width: 139,
-                                                              height: 48,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8)),
-                                                              child:
-                                                                  ElevatedButton(
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Color(
-                                                                              0xff2A62B8),
-                                                                          shape: RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.all(Radius.circular(
-                                                                                  8)))),
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child:
-                                                                          Text(
-                                                                        "Confirm",
-                                                                        style: TextStyle(
-                                                                            color: Color(
-                                                                                0xffFBFBFC),
-                                                                            fontSize:
-                                                                                15,
-                                                                            fontFamily:
-                                                                                'Lato',
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
-                                                                      )),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      );
-                                                    });
+                                               // bool checkValidation = formKey.currentState!.validate();
+                                                if (tDateController.text == "") {
+                                                  Utils.flushBarErrorMessage("Please select Activation Date", context);
+                                                  // setState(() {});
+                                                } else {
+                                                  //autoValidateMode = AutovalidateMode.disabled;
+                                                  Map<String, dynamic> data = {
+                                                    "batch_uid":widget.traineeList[widget.index].batchUid,
+                                                    "trainee_profile_uid":widget.traineeList[widget.index].traineeProfileUid,
+                                                    "fees":widget.traineeList[widget.index].fees.toInt(),
+                                                    "activate_date": tDateController.text
+                                                  };
+                                                  print("data$data");
+                                                  traineeViewModel.TraineeActivateApi(data).then((value) {
+                                                    Get.to(() => Layout(selectedIndex: 3),transition: Transition.rightToLeft);
+                                                    Navigator.of(context).pop();
+                                                  });
+                                                }
+
+
+
                                               },
                                               child: Text(
                                                 "Confirm",

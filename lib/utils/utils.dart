@@ -21,6 +21,7 @@ class Utils {
   static toastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
+      gravity: ToastGravity.CENTER,
       backgroundColor: Colors.black,
       textColor: Colors.white,
     );

@@ -3,6 +3,7 @@ import 'package:drona/model/trainee_list_model.dart';
 
 import '../data/network/base_apiservices.dart';
 import '../data/network/network_apiservice.dart';
+import '../model/active_deactive_model.dart';
 import '/res/app_url.dart';
 
 class TraineeRepository {
@@ -47,6 +48,34 @@ class TraineeRepository {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           AppUrl.traineeListinBatchEndpoint, data);
       return response = TraineeListModel.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<ActiveDeactiveModel> TraineeActivateApi(dynamic data) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          AppUrl.activateTrainee, data);
+      return response = ActiveDeactiveModel.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ActiveDeactiveModel> TraineeDeActivateApi(dynamic data) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          AppUrl.deactivateTrainee, data);
+      return response = ActiveDeactiveModel.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<ActiveDeactiveModel> traineeBatchEditApi(dynamic data) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(
+          AppUrl.traineeBatchEdit, data);
+      return response = ActiveDeactiveModel.fromJson(response);
     } catch (e) {
       rethrow;
     }

@@ -77,6 +77,7 @@ class Datum {
   String dob;
   String batchname;
   String serviceicon;
+  String serviceName;
   String image;
   String cTime;
   String cdd;
@@ -107,6 +108,7 @@ class Datum {
     this.batch_timing_to ='',
     this.gender ='',
     this.serviceicon ='',
+    this.serviceName ='',
     this.image ='',
     this.dob ='',
     this.batchname ='',
@@ -133,6 +135,7 @@ class Datum {
         batch_timing_from: json["batch_timing_from"],
         batch_timing_to: json["batch_timing_to"],
         serviceicon: json["service_iconname"],
+        serviceName: json['service_name'],
         image: json["img"],
         dob: json["dob"],
         batchname: json["batch_name"],
@@ -163,6 +166,7 @@ class Datum {
         "dob": dob,
         "service_iconname": batchname,
         "batch_name": serviceicon,
+         "service_name": serviceName,
         "img": image,
         "cDate": cDate,
         "cTime": cTime,

@@ -421,7 +421,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                 SizedBox(
                   height: 12,
                 ),
-
+/*
                 const Text(
                   "Last 6 Months Payment Status",
                   style: TextStyle(
@@ -437,12 +437,12 @@ class _RecordPaymentState extends State<RecordPayment> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ProgressPills(
-                          number: 7,
-                          active: 0,
+                          number: 1,
+                          active: 1,
                           color: Theme.of(context).primaryColorLight),
                     ],
                   ),
-                ),
+                ),*/
 
                 const SizedBox(height: 20),
                 Container(
@@ -793,7 +793,10 @@ class _RecordPaymentState extends State<RecordPayment> {
                                         topRight: Radius.circular(8),
                                         bottomRight: Radius.circular(8))),
                                 child: TextField(
+                                  style: TextStyle(color: Colors.black),
                                   readOnly: true,
+                                  enabled: false,
+                                  showCursor: false,
                                   controller: feeController,
                                   decoration: const InputDecoration(
                                       contentPadding: EdgeInsets.all(5),
@@ -808,7 +811,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                     )
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //Payment Proof Uploder
                 Center(
                   child: DottedBorder(

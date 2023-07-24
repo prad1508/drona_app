@@ -22,7 +22,9 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
 
   @override
   void initState() {
+    print("widget.index${widget.index}");
     data = {"filter_batch_uid": "", "search": ""};
+
     traineeViewModel.fetchTraineeListSearchApi(data);
     // TODO: implement initState
     super.initState();
@@ -173,13 +175,19 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                             fontWeight: FontWeight.w400),
                                       ),
                                       const Text(" | "),
-                                      Text(
+                                     Text(value.dataList.data!.data[widget.index]
+                                         .dob,
+                                       style: const TextStyle(
+                                           fontSize: 12,
+                                           fontWeight: FontWeight.w400),
+                                     )
+                                     /* Text(
                                         '${DateTime.now().year - int.parse(value.dataList.data!.data[widget.index]
                                             .dob.split('/')[2])} Years',
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                   const SizedBox(height: 10),

@@ -1,4 +1,5 @@
 import 'package:drona/view/batch_listing/edit_batch_listing.dart';
+import 'package:drona/view/coach_listing/coach_access_management.dart';
 import 'package:drona/view/profile/view_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
 
 
   //bottomsheet popup
-  showBottomSheet({bool? status, int? index}) {
+  showBottomSheet({bool? status, int? index, String? fullname}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
@@ -131,7 +132,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(() => Access_Management_Page(),
+                                  transition: Transition.leftToRight);
+                            },
                             child: Text(
                               'Access Management',
                               style:
@@ -144,7 +148,89 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: AlertDialog(
+                                      //  title: const Center(child: Text('')),
+                                      content:   Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.check,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Text("Are You Sure?",style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold
+                                          ),),
+                                          const SizedBox(height: 10),
+                                          Text("You Want To Invite To",style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey[500],
+                                              fontWeight: FontWeight.w200
+                                          ),),
+                                          Text('$fullname!',style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey[500],
+                                              fontWeight: FontWeight.w200
+                                          ),),
+                                        ],
+                                      ),
+                                      contentPadding: const EdgeInsets.all(15),
+                                      actions: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width *.3,
+                                                child: RoundButton(
+                                                  title: 'Cancel',
+                                                  onPress: () async {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  rounded: true,
+                                                  color: Theme.of(context).dividerColor,
+                                                  textColor: Colors.black,
+
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width *.3,
+                                                child: RoundButton(
+                                                  title: 'Yes',
+                                                  onPress: () async {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  rounded: true,
+                                                  color: Theme.of(context).primaryColor,
+                                                  textColor: Colors.white,
+
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                             child: Text(
                               'Resend Invite Code',
                               style:
@@ -323,31 +409,6 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       create: (BuildContext context) => coachlistViewViewModel,
                       child: Consumer<CoachlistViewViewModel>(
                           builder: (context, value, _) {
-                            // if (_foundUsers.isEmpty) {
-                            //   _foundUsers = List.generate(
-                            //       value.dataList.data!.coachlist.length, (index) {
-                            //     return {
-                            //       "name":
-                            //           value.dataList.data?.coachlist[index].name,
-                            //       // "img": value.dataList.data?.coachlist[index].img,
-                            //       "iconImg": value.dataList.data?.coachlist[index]
-                            //           .services[index].serviceIconname,
-                            //       "gender":
-                            //           value.dataList.data?.coachlist[index].gender,
-                            //       "userid":
-                            //           value.dataList.data?.coachlist[index].userid,
-                            //     };
-                            //   });
-                            // }
-
-                            // return Expanded(
-                            //   child: notFound
-                            //       ? const Text(
-                            //           'No results found',
-                            //           style: TextStyle(fontSize: 24),
-                            //         )
-                            //       :
-
                             switch (value.dataList1.status!) {
                               case Status.loading:
                                 return const Center(
@@ -372,12 +433,13 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                             InkWell(
                                               onTap: () {
                                                 showBottomSheet(
-                                                  status: value.dataList1.data
-                                                      ?.data[index].status ==
-                                                      "active"
-                                                      ? true
-                                                      : false,
-                                                  index: index
+                                                    status: value.dataList1.data
+                                                        ?.data[index].status ==
+                                                        "active"
+                                                        ? true
+                                                        : false,
+                                                    index: index,
+                                                    fullname: value.dataList1.data!.data[index].name
                                                 );
                                               },
                                               child: Container(
@@ -881,7 +943,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   const SizedBox(
                     height: 15,
                   ),
-                  widget.Listindex!=-1?
+                  widget.Listindex!=-1 ?
                   RoundButton(
                       loading: false,
                       title: AppLocale.conts.getString(context),

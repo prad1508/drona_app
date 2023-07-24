@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/res/app_url.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
@@ -86,9 +87,26 @@ class _Ledger_PageState extends State<Ledger_Page> {
                               SizedBox(
                                 height: h * 0.05,
                                 width: w * 0.1,
-                                child: CircleAvatar(
-                                    backgroundImage:
-                                    AssetImage('assets/images/user_profile.png')),
+                                child:   CircleAvatar(
+                                    backgroundColor: Colors.black,
+                                    child: CachedNetworkImage(
+                                        fit: BoxFit.contain,
+                                        imageUrl: AppUrl.ouserProfileimgListEndPoint +widget.traineeList[widget.index].image,
+                                        errorWidget: (context, url, error) =>
+                                        // Image.asset("assets/images/user.png")
+                                        const Icon(Icons.person,size: 30,color: Colors.white,)
+
+
+                                    )
+                                  /* Text(
+                                  getInitials(widget
+                                      .traineeList[widget.index].traineeName),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),*/
+                                  // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                                ),
                               ),
                               //SizedBox(width: w*0.05,),
                               Column(
@@ -125,6 +143,8 @@ class _Ledger_PageState extends State<Ledger_Page> {
                                             style: TextStyle(fontWeight: FontWeight.bold),
                                           ),
                                         ),
+                                      //  Text("Dob :"),
+
                                         Text(
                                           widget.traineeList[widget.index].dob,
                                           style: TextStyle(fontSize: 12),
@@ -173,7 +193,7 @@ class _Ledger_PageState extends State<Ledger_Page> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children:  [
                                           Text(
-                                            widget.traineeList[widget.index].fees.toString(),
+                                           "₹${widget.traineeList[widget.index].fees}",
                                             style: TextStyle(
                                                 fontSize: 22,
                                                 color: Colors.black,
@@ -194,8 +214,8 @@ class _Ledger_PageState extends State<Ledger_Page> {
                                         ],
                                       ),
                                       SizedBox(height: 4),
-                                      Text(
-                                        "Due on ${value.dataList1.data!.data[widget.index].mm}, ${value.dataList1.data!.data[widget.index].yy}",
+                                     Text(
+                                        "Due on ${widget.traineeList[widget.index].monthOfBilling}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontFamily: 'Lato',
@@ -387,6 +407,7 @@ class _Ledger_PageState extends State<Ledger_Page> {
                       ),*/
                     ],
                   );
+
                 case Status.error:
                   return Center(child: Text("No Data Found"));
               }

@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:drona/model/attendance_model.dart';
 import 'package:drona/model/closeSession_model.dart';
 import 'package:drona/model/session_details_model.dart';
@@ -28,7 +30,7 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           "${AppUrl.sessionListEndPoint}/$pageSize/$pageNo", data);
-      print("response==$response");
+      log("response==$response");
       return response = SessionListListModel.fromJson(response);
     } catch (e) {
       rethrow;
@@ -55,7 +57,7 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
           '${AppUrl.sessionDetailsListEndPoint}/$id');
-      print("object==$response");
+      log("object==$response");
       return response = SessionDetailsModel.fromJson(response);
       print("object==$response");
 
@@ -70,13 +72,13 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPostApiResponse(
           AppUrl.markAttendance, data);
-      print("object==$response");
+      log("object==$response");
       return response = MarkAttendanceModel.fromJson(response);
       print("object==$response");
 
     } catch (e) {
-      print("error is$e");
-      print(e);
+      log("error is$e");
+      log(e.toString());
       rethrow;
     }
   }
@@ -84,13 +86,12 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           AppUrl.sessionCancel, data);
-      print("object==$response");
+      log("object==$response");
       return response = CancelSessionModel.fromJson(response);
       print("object==$response");
 
     } catch (e) {
-      print("error is$e");
-      print(e);
+      log("error is$e");
       rethrow;
     }
   }
@@ -98,13 +99,12 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(
           AppUrl.sessionUpdate, data);
-      print("object==$response");
+      log("object==$response");
       return response = UpdateSessionModel.fromJson(response);
       print("object==$response");
 
     } catch (e) {
-      print("error is$e");
-      print(e);
+      log("error is$e");
       rethrow;
     }
   }
@@ -112,13 +112,11 @@ class SessionRepository {
     try {
       dynamic response = await _apiServices.getPostApiResponse(
           AppUrl.sessionClose, data);
-      print("object==$response");
+      log("object==$response");
       return response = CloseSessionModel.fromJson(response);
-      print("object==$response");
 
     } catch (e) {
-      print("error is$e");
-      print(e);
+      log("error is$e");
       rethrow;
     }
   }

@@ -1,15 +1,27 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import '../../model/trainee_list_model.dart';
 
 class Edit_Page extends StatefulWidget {
-  const Edit_Page({super.key});
+  String traineeProfileUid;
+  int index;
+  List<Datum> traineeList;
+  Edit_Page(
+      {super.key,
+      required this.traineeProfileUid,
+      required this.index,
+      required this.traineeList});
 
   @override
   State<Edit_Page> createState() => _Edit_PageState();
 }
 
 class _Edit_PageState extends State<Edit_Page> {
+
+
+  TextEditingController feeController = TextEditingController();
+
   List<DropdownMenuItem<String>> get sportsItem {
     List<DropdownMenuItem<String>> serviceDetails = [
       const DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
@@ -72,21 +84,28 @@ class _Edit_PageState extends State<Edit_Page> {
                     ),
                     SizedBox(height: 4),
                     Container(
-                      decoration: BoxDecoration(),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(8)),
                       width: 342,
                       height: 48,
                       child: TextField(
+                        enabled: false,
+                        readOnly: true,
+                        showCursor: false,
                         style: TextStyle(
                             color: Color(0xff39404A),
                             fontSize: 14,
                             fontFamily: 'Lato',
                             fontWeight: FontWeight.w600),
                         decoration: InputDecoration(
+                            hintText:
+                                widget.traineeList[widget.index].traineeName,
                             contentPadding: EdgeInsets.all(15),
                             border: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(8),
                             )),
                       ),
                     ),
@@ -100,10 +119,15 @@ class _Edit_PageState extends State<Edit_Page> {
                           fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 4),
-                    SizedBox(
-                        width: 342,
-                        height: 48,
-                        child: InputDecorator(
+                    Container(
+                      width: 342,
+                      height: 48,
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(widget.traineeList[widget.index].serviceName),
+                      /*InputDecorator(
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(5),
                                 border: OutlineInputBorder(
@@ -123,7 +147,8 @@ class _Edit_PageState extends State<Edit_Page> {
                                     });
                                   },
                                   items: sportsItem),
-                            ))),
+                            ))*/
+                    ),
                     SizedBox(height: 16),
                     //Batch Timing Selected;
                     Text(
@@ -199,10 +224,14 @@ class _Edit_PageState extends State<Edit_Page> {
                           height: 41,
                           child: Center(
                             child: TextField(
+                              controller: feeController,
                               cursorHeight: 20,
                               cursorRadius: Radius.circular(10),
                               textAlign: TextAlign.start,
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                hintText: widget.traineeList[widget.index].fees
+                                    .toString(),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Color(0xff2A62B8)),
@@ -266,13 +295,13 @@ class _Edit_PageState extends State<Edit_Page> {
                                               fontWeight: FontWeight.w600),
                                         ),
                                         alignment: Alignment.center,
-                                        content: Wrap(children: const [
+                                        content: Wrap(children: [
                                           Center(
                                             child: SizedBox(
-                                              width: 209,
+                                              width: 300,
                                               height: 48,
                                               child: Text(
-                                                "Please Confirm Edit Of Batch For Riyaz Mohammed!",
+                                                "Please Confirm Edit Of Batch For ${widget.traineeList[widget.index].traineeName}!",
                                                 style: TextStyle(
                                                     color: Color(0xff626D7E),
                                                     fontSize: 16,
@@ -326,7 +355,27 @@ class _Edit_PageState extends State<Edit_Page> {
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     8)))),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Map<String, dynamic> data = {
+                                                    "batch_uid":
+                                                        "v317jp1ntel2ueujxymt",
+                                                    "trainee_profile_uid":
+                                                        widget
+                                                            .traineeList[
+                                                                widget.index]
+                                                            .traineeProfileUid,
+                                                    "fees": feeController
+                                                            .text.isEmpty
+                                                        ? widget
+                                                            .traineeList[
+                                                                widget.index]
+                                                            .fees
+                                                        : feeController.text
+                                                  };
+
+
+                                                  print("data=$data");
+                                                },
                                                 child: Text(
                                                   "Confirm",
                                                   style: TextStyle(

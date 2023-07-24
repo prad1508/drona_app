@@ -9,7 +9,6 @@ import '../../res/widget/dashboard_card.dart';
 import '../../res/widget/drawer_widget.dart';
 import '../../utils/no_data.dart';
 import 'main_menu.dart';
-import '../trainee_listing/trainee_listing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -200,13 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext context) =>
-                                                  const Trainee_Listing(),
-                                                ),
-                                              );
+
                                             },
                                             child: DashboardCard(
                                               color: Colors.blueAccent,
