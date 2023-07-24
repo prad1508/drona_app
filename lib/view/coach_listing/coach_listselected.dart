@@ -22,8 +22,9 @@ import 'coach_deactivateprofile.dart';
 import 'coach_viewprofile.dart';
 
 class CoachListSelected extends StatefulWidget {
+  int enabled ;
   int Listindex ;
-  CoachListSelected({super.key , this.Listindex=-1});
+  CoachListSelected({super.key , this.Listindex=-1 , this.enabled = 0 });
 
   @override
   State<CoachListSelected> createState() => _CoachListSelectedState();
@@ -251,7 +252,6 @@ class _CoachListSelectedState extends State<CoachListSelected> {
     );
   }
 
-
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
@@ -321,7 +321,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   print('add coach list');
                 }
               }),
-              icon: const Icon(Icons.group_add),
+              icon: const Icon(Icons.add),
               iconSize: 25,
               color: Colors.black,
             )
@@ -480,7 +480,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                               width: 44,
                                                               height: 20,
                                                               decoration: BoxDecoration(
-                                                                color: value.dataList1.data?.data[index].status=="active" ? const Color(0xff47C088) :Colors.redAccent,
+                                                                color: value.dataList1.data?.data[index].status=="active" ?  const Color(0xff47C088) : value.dataList1.data?.data[index].status=="unassigned" ? Colors.blue :Colors.redAccent,
                                                                 borderRadius: BorderRadius
                                                                     .circular(4),
                                                               ),
@@ -496,7 +496,18 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                     fontWeight: FontWeight
                                                                         .w600,
                                                                   ),
-                                                                ) : const Text(
+                                                                ) : value.dataList1.data?.data[index].status=="unassigned" ?
+                                                                const Text(
+                                                                  'UnAssigned',
+                                                                  style: TextStyle(
+                                                                    color: Color(
+                                                                        0xffFBFBFC),
+                                                                    fontSize: 7,
+                                                                    fontFamily: 'Lato',
+                                                                    fontWeight: FontWeight
+                                                                        .w600,
+                                                                  ),
+                                                                ) :   const Text(
                                                                   'InActive',
                                                                   style: TextStyle(
                                                                     color: Color(
@@ -506,7 +517,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                     fontWeight: FontWeight
                                                                         .w600,
                                                                   ),
-                                                                ),
+                                                                )
                                                               ),
                                                             ),
                                                           ),
@@ -943,6 +954,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   const SizedBox(
                     height: 15,
                   ),
+                  widget.enabled == 0 ?
                   widget.Listindex!=-1 ?
                   RoundButton(
                       loading: false,
@@ -951,12 +963,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       rounded: true,
                       color: Theme.of(context).primaryColor,
                       onPress: () {
+                        Get.to(()=>   EditBatchListing(),transition: Transition.rightToLeft);
                         print("pressssss edit");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditBatchListing(Listindex : widget.Listindex )));
                       }):
                   RoundButton(
                       loading: false,
@@ -967,12 +975,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                       onPress: () {
                         print("normal case");
                         Get.to(()=>   CreateBatchListing(),transition: Transition.rightToLeft);
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const CreateBatchListing()));
-                      }),
+
+                      }) : Text('')
                 ],
               )),
         ),

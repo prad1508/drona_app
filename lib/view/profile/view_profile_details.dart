@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
+import '../../data/response/status.dart';
 import '../../res/language/language.dart';
 import '../../view_model/myprofi_view_model.dart';
 import 'create_profile.dart';
@@ -78,12 +79,15 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                       create: (BuildContext context) => myProfileViewViewModel,
                       child: Consumer<MyprofiViewViewModel>(
                       builder: (context, value, _) {
-                        print(value.dataList.data?.data![1].email);
-                        print(value.dataList.data?.data![1].gender);
-                        print(value.dataList.data?.data![1].name);
-                        print(value.dataList.data?.data![1].userid);
-                        print(value.dataList.data?.data![1].dob);
+                         switch (value.dataList.status!) {
+                        case Status.loading:
+                        return const Center(
+                        child: CircularProgressIndicator(
+                        color: Colors.teal,
+                        ),
+                        );
 
+                        case Status.completed:
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -357,22 +361,16 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                           ],
                         );
 
-    }))
+    case Status.error:
+    return Center(
+    child: Text(''));
+    }
+    }
+    )),
 
-
-
-
-
-
-
-
-
-
-
+    ))
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }

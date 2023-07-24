@@ -536,10 +536,11 @@ class _CreateProfileState extends State<CreateProfile> {
                           else if (doj.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Please Enter Date of Joining', context);
-                          } else if (email.text.isEmpty) {
-                            Utils.flushBarErrorMessage(
-                                'Please Enter Email', context);
-                          }
+                           }
+                          // else if (email.text.isEmpty) {
+                          //   Utils.flushBarErrorMessage(
+                          //       'Please Enter Email', context);
+                          // }
                           else if (selectedService==null && selectedService!=''  ) {
                             Utils.flushBarErrorMessage(
                                 'Please Select Service', context);

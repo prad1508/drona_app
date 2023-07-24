@@ -296,15 +296,10 @@ class _MainMenuState extends State<MainMenu> {
                     title: Text(
                       widget.name.toString(),
                     ),
+                    onTap: (){ Get.to(() => const ViewProfileDetails(),
+                        transition: Transition.rightToLeft);},
                     trailing: IconButton(
                       onPressed: (() {
-                        /*  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ViewProfileDetails(),
-                          ),
-                        );*/
                         Get.to(() => const ViewProfileDetails(),
                             transition: Transition.rightToLeft);
                       }),
@@ -426,14 +421,7 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              /* Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      CoachListSelected(),
-                                ),
-                              );*/
-                              Get.to(() => CoachListSelected(),
+                              Get.to(() => CoachListSelected(enabled: 1,),
                                   transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
@@ -558,15 +546,8 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                /* Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        CoachListSelected(),
-                                  ),
-                                );*/
-                                Get.to(() => CoachListSelected(),
-                                    transition: Transition.rightToLeft);
+                                // Get.to(() => CoachListSelected(),
+                                //     transition: Transition.rightToLeft);
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
