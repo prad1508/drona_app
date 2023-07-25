@@ -58,6 +58,7 @@ class _RecordPaymentState extends State<RecordPayment> {
     feeController.dispose();
     mController.dispose();
     cController.dispose();
+    tDateController.dispose();
     super.dispose();
   }
 
@@ -65,6 +66,12 @@ class _RecordPaymentState extends State<RecordPayment> {
     // Parse the text values to doubles
     double mValue = double.tryParse(mController.text) ?? 0.0;
     double cValue = double.tryParse(cController.text) ?? 0.0;
+
+    // If both mController and cController are empty, set feeController to fixedFeeAmount
+    if (mController.text.isEmpty && cController.text.isEmpty) {
+      feeController.text = fixedFeeAmount.toStringAsFixed(2);
+      return;
+    }
 
     // Calculate the new fee value based on the fixedFeeAmount, mValue, and cValue
     double newFeeValue = fixedFeeAmount + mValue - cValue;
@@ -1030,4 +1037,5 @@ class _RecordPaymentState extends State<RecordPayment> {
     }
   }
 }
+
 
