@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/res/widget/customradio.dart';
 import 'package:drona/utils/utils.dart';
+import 'package:drona/view/trainee_listing/add_trainee_list.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,7 @@ class _RecordPaymentState extends State<RecordPayment> {
   @override
   void initState() {
     fixedFeeAmount = widget.fess;
+    feeController.text = fixedFeeAmount.toStringAsFixed(2);
     super.initState();
     // Add listeners to the mController and cController
     mController.addListener(updateFeeController);
@@ -526,7 +528,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       fontFamily: 'Lato'),
                                 ),
                                 SizedBox(width: 40),
-                                Container(
+                                isCheckBox?  Container(
                                   width: 33,
                                   height: 41,
                                   decoration: BoxDecoration(
@@ -543,8 +545,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                           color: Colors.white, fontSize: 14),
                                     ),
                                   ),
-                                ),
-                                Container(
+                                ) : SizedBox(),
+                                isCheckBox?  Container(
                                   width: 100,
                                   height: 41,
                                   decoration: BoxDecoration(
@@ -562,7 +564,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                         border: UnderlineInputBorder(
                                             borderSide: BorderSide.none)),
                                   ),
-                                ),
+                                ): SizedBox(),
                               ],
                             ),
                             SizedBox(height: 12),
@@ -600,7 +602,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       fontFamily: 'Lato'),
                                 ),
                                 SizedBox(width: 30),
-                                Container(
+                                isCheckBox2 ?  Container(
                                   width: 33,
                                   height: 41,
                                   decoration: BoxDecoration(
@@ -617,8 +619,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                           color: Colors.white, fontSize: 14),
                                     ),
                                   ),
-                                ),
-                                Container(
+                                ) : SizedBox(),
+                                isCheckBox2 ? Container(
                                   width: 100,
                                   height: 41,
                                   decoration: BoxDecoration(
@@ -636,7 +638,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                         border: UnderlineInputBorder(
                                             borderSide: BorderSide.none)),
                                   ),
-                                ),
+                                ): SizedBox(),
                               ],
                             ),
                             // SizedBox(height: 12),
@@ -978,8 +980,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                                   .traineeProfileUid,
                                               "fee_collected":
                                               feeController.text,
-                                              "misc_fee": mController.text,
-                                              "concession": cController.text,
+                                              "misc_fee": mController.text.isEmpty ? "0": mController.text,
+                                              "concession": cController.text.isEmpty ? "0" : cController.text,
                                               "payment_mode": payment,
                                               "date_of_transaction":
                                               tDateController.text,
@@ -989,9 +991,11 @@ class _RecordPaymentState extends State<RecordPayment> {
                                             print("data==$data");
                                             traineeViewModel
                                                 .recordPaymentApiPost(
-                                                data, context)
+                                                data)
                                                 .then((value) {
                                               Navigator.of(context).pop();
+
+                                              Get.to(AddTraineeList());
                                             });
                                           },
                                           child: const Text(

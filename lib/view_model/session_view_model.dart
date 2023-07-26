@@ -133,7 +133,8 @@ class SessionViewViewModel with ChangeNotifier {
 
     _myRepo.postMarkedAttendanceApi(data).then((value) {
       setDataList3(ApiResponse.completed(value));
-      Utils.flushBarErrorMessage(value.msg, context);
+      Utils.toastMessage(value.msg);
+
       print("api postMarkAttendanceApi success");
     }).onError((error, stackTrace) {
       setDataList3(ApiResponse.error(error.toString()));
@@ -150,11 +151,11 @@ class SessionViewViewModel with ChangeNotifier {
 
     _myRepo.putSessionCancelApi(data).then((value) {
       setDataList4(ApiResponse.completed(value));
-      Utils.flushBarErrorMessage(value.msg, context);
+      Utils.toastMessage(value.msg);
       print("api sessionCancelApi success");
     }).onError((error, stackTrace) {
       setDataList4(ApiResponse.error(error.toString()));
-      Utils.toastMessage(error.toString());
+     Utils.toastMessage(error.toString());
       //Navigator.pop(context);
 
 
@@ -168,11 +169,14 @@ class SessionViewViewModel with ChangeNotifier {
 
     _myRepo.putSessionUpdateApi(data).then((value) {
       setDataList6(ApiResponse.completed(value));
-      Utils.flushBarErrorMessage(value.msg, context);
+     // Utils.flushBarErrorMessage(value.msg, context);
+      Utils.toastMessage(value.msg);
+
       //Get.back();i
       print("api sessionEditApi success");
     }).onError((error, stackTrace) {
       setDataList6(ApiResponse.error(error.toString()));
+      //Utils.toastMessage(error.toString());
       Utils.toastMessage(error.toString());
 
       print("api  sessionEditApi not success");
@@ -186,7 +190,7 @@ class SessionViewViewModel with ChangeNotifier {
 
     _myRepo.postSessionCloseApi(data).then((value) {
       setDataList5(ApiResponse.completed(value));
-      Utils.flushBarErrorMessage(value.msg, context);
+      Utils.toastMessage(value.msg);
       print("api sessionCloseApi success");
       Get.to(()=> SessionList(),transition: Transition.rightToLeft);
     }).onError((error, stackTrace) {

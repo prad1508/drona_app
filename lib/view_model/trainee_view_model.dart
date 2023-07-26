@@ -184,16 +184,18 @@ class TraineeViewModel with ChangeNotifier {
 
 
   /// record a payment api
-  Future<void> recordPaymentApiPost(dynamic data, BuildContext context) async {
+  Future<void> recordPaymentApiPost(dynamic data) async {
     setLoading(true);
     _myRepo.recordPaymentApi(data).then((value) async {
       setLoading(false);
       print("recordPaymentApiPost success");
-       Utils.flushBarErrorMessage('Payment record Successfully', context);
+       Utils.toastMessage('Payment record Successfully');
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
     }).onError((error, stackTrace) {
 
       setLoading(false);
+      Utils.toastMessage('$error');
+
       print("recordPaymentApiPost not success");
 
 
