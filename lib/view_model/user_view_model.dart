@@ -19,6 +19,7 @@ class UserViewModel with ChangeNotifier {
   final _myRepo = UserRepository();
   bool _loading = false;
   bool get loading => _loading;
+  String filename = '';
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
@@ -87,10 +88,13 @@ class UserViewModel with ChangeNotifier {
     _myRepo.fetchouserProfileimg(data).then((value) async {
       final SharedPreferences sp = await SharedPreferences.getInstance();
       sp.setString('uprofile', value['imgname']);
+      filename = value['imgname'];
+      //print(value);
+     // print(value['imgname']);
       // Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
-
+      print(error);
       print("api  not success for image ");
     });
     return true;

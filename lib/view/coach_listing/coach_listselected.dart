@@ -34,7 +34,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
 
 
   //bottomsheet popup
-  showBottomSheet({bool? status, int? index, String? fullname}) {
+  showBottomSheet({required String status, int? index, String? fullname}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
@@ -48,7 +48,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
-                    height: status == false ? 300 : 200,
+                    height: status == 'active' ? 200 : status =="unassigned" ? 300 : 350 ,
                   ),
                   Container(
                     decoration: const BoxDecoration(
@@ -87,7 +87,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                         const SizedBox(
                           height: 5,
                         ),
-                        status == true
+                        status == "active"
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
@@ -102,7 +102,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ),
                           ),
                         )
-                            : Align(
+                            : status == "inactive" ?
+                        Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
                             onPressed: () {
@@ -115,7 +116,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                               Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
-                        ),
+                        ) : Container(),
                         Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
@@ -129,7 +130,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ),
                           ),
                         ),
-                        status == true
+                        status == "active" || status =="unassigned"
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
@@ -145,7 +146,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                           ),
                         )
                             : Container(),
-                        status == true
+                        status == "active" || status == " unassigned"
                             ? Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
@@ -433,11 +434,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                             InkWell(
                                               onTap: () {
                                                 showBottomSheet(
-                                                    status: value.dataList1.data
-                                                        ?.data[index].status ==
-                                                        "active"
-                                                        ? true
-                                                        : false,
+                                                    status: value.dataList1.data!.data[index].status,
                                                     index: index,
                                                     fullname: value.dataList1.data!.data[index].name
                                                 );
@@ -458,20 +455,17 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                             .start,
                                                         children: [
                                                           SizedBox(
-                                                            width: 41,
-                                                            height: 46,
-                                                            child: CircleAvatar(
-                                                              backgroundImage:
-                                                              NetworkImage(AppUrl
-                                                                  .profileserviceIconEndPoint +
-                                                                  value.dataList1
-                                                                      .data!
-                                                                      .data[index]
-                                                                      .img,
-                                                              ),
-                                                              //   AssetImage(
-                                                              //       'assets/images/user_profile.png'),
-                                                            ),
+                                                              width: 41,
+                                                              height: 46,
+                                                              child: value.dataList1.data!.data[index].img.isNotEmpty ?
+                                                              CircleAvatar(
+                                                                  backgroundImage:
+                                                                  NetworkImage(AppUrl.profileserviceIconEndPoint + value.dataList1.data!.data[index].img,)
+
+                                                              ) :  CircleAvatar(
+                                                                backgroundImage:   AssetImage('assets/images/user_profile.png'),
+                                                              )
+
                                                           ),
                                                           Align(
                                                             alignment: Alignment
@@ -485,39 +479,39 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                     .circular(4),
                                                               ),
                                                               child:  Center(
-                                                                child: value.dataList1.data?.data[index].status=="active" ?
-                                                                const Text(
-                                                                  'Active',
-                                                                  style: TextStyle(
-                                                                    color: Color(
-                                                                        0xffFBFBFC),
-                                                                    fontSize: 10,
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight
-                                                                        .w600,
-                                                                  ),
-                                                                ) : value.dataList1.data?.data[index].status=="unassigned" ?
-                                                                const Text(
-                                                                  'UnAssigned',
-                                                                  style: TextStyle(
-                                                                    color: Color(
-                                                                        0xffFBFBFC),
-                                                                    fontSize: 7,
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight
-                                                                        .w600,
-                                                                  ),
-                                                                ) :   const Text(
-                                                                  'InActive',
-                                                                  style: TextStyle(
-                                                                    color: Color(
-                                                                        0xffFBFBFC),
-                                                                    fontSize: 10,
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight
-                                                                        .w600,
-                                                                  ),
-                                                                )
+                                                                  child: value.dataList1.data?.data[index].status=="active" ?
+                                                                  const Text(
+                                                                    'Active',
+                                                                    style: TextStyle(
+                                                                      color: Color(
+                                                                          0xffFBFBFC),
+                                                                      fontSize: 10,
+                                                                      fontFamily: 'Lato',
+                                                                      fontWeight: FontWeight
+                                                                          .w600,
+                                                                    ),
+                                                                  ) : value.dataList1.data?.data[index].status=="unassigned" ?
+                                                                  const Text(
+                                                                    'UnAssigned',
+                                                                    style: TextStyle(
+                                                                      color: Color(
+                                                                          0xffFBFBFC),
+                                                                      fontSize: 7,
+                                                                      fontFamily: 'Lato',
+                                                                      fontWeight: FontWeight
+                                                                          .w600,
+                                                                    ),
+                                                                  ) :   const Text(
+                                                                    'InActive',
+                                                                    style: TextStyle(
+                                                                      color: Color(
+                                                                          0xffFBFBFC),
+                                                                      fontSize: 10,
+                                                                      fontFamily: 'Lato',
+                                                                      fontWeight: FontWeight
+                                                                          .w600,
+                                                                    ),
+                                                                  )
                                                               ),
                                                             ),
                                                           ),

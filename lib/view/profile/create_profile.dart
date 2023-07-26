@@ -65,7 +65,6 @@ class _CreateProfileState extends State<CreateProfile> {
 
   void openGallery() async {
     var imgGallery = await imgPicker.pickImage(source: ImageSource.gallery);
-
     userViewModel.fetchouserProfileimg(imgGallery!.path, context);
     setState(() {
       imgFile = File(imgGallery.path);
@@ -558,7 +557,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 "dateofjoining": doj.text.toString(),
                                 "dob": dob.text.toString(),
                                 // "img":sp.getString('uprofile'),
-                                "img": imgFile.toString(),
+                                "img": userViewModel.filename,
                                 "relation": "self"
                               };
                               // print(data);

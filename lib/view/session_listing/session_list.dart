@@ -478,8 +478,7 @@ class _SessionListState extends State<SessionList>
                                           toDateController
                                               .text.isEmpty)
                                           ? ListView.builder(
-                                          controller:
-                                          _scrollController,
+                                          controller: _scrollController,
                                           itemCount: value
                                               .dataList
                                               .data!

@@ -54,11 +54,6 @@ class _Bank_DetailsState extends State<Bank_Details> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
                 onPressed: () {
-                  /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Edit_Bank_Details()),
-                  );*/
                   Get.off(() => const Edit_Bank_Details(
                   ),
                       transition: Transition.rightToLeft);
@@ -112,7 +107,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                                   fontSize: 16,
                                   height: 2),
                               decoration: InputDecoration(
-                                hintText: '${value.dataList.data?.academyname}',
+                                hintText: value.dataList.data!.bankDetails.isNotEmpty ?'${value.dataList.data?.bankDetails[0].acHolderName}' :'',
                                 hintStyle: TextStyle(
                                   fontSize: 14,
                                   height: 3,

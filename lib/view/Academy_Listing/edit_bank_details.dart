@@ -14,6 +14,7 @@ import '../../../data/response/status.dart';
 import '../../../view_model/academy_view_model.dart';
 import '../../model/Qr_model.dart';
 import '../../res/app_url.dart';
+import '../../utils/utils.dart';
 
 class Edit_Bank_Details extends StatefulWidget {
   const Edit_Bank_Details({super.key});
@@ -255,12 +256,12 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: acHolderName,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter valid academy name';
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter valid academy name';
+                                      //   }
+                                      //   return null;
+                                      // },
                                       // readOnly: true,
                                       style: TextStyle(
                                           color: Color(0xff23282E),
@@ -300,12 +301,12 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: bankName,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter valid bank name';
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter valid bank name';
+                                      //   }
+                                      //   return null;
+                                      // },
                                       // readOnly: true,
                                       style: TextStyle(
                                           color: Color(0xff23282E),
@@ -345,12 +346,12 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: accountNumber,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter valid account number';
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter valid account number';
+                                      //   }
+                                      //   return null;
+                                      // },
                                       keyboardType: TextInputType.number,
                                       // readOnly: true,
                                       style: TextStyle(
@@ -391,13 +392,13 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: ifsc,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter the ifsc code';
-                                        }
-                                        return null;
-                                      },
-                                      // readOnly: true,
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter the ifsc code';
+                                      //   }
+                                      //   return null;
+                                      // },
+
                                       style: TextStyle(
                                           color: Color(0xff23282E),
                                           fontStyle: FontStyle.normal,
@@ -436,13 +437,13 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: bankBranch,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter the bank address';
-                                        }
-                                        return null;
-                                      },
-                                      // readOnly: true,
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter the bank address';
+                                      //   }
+                                      //   return null;
+                                      // },
+
                                       style: TextStyle(
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.bold,
@@ -480,15 +481,14 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: googlePayNo,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter academy Google Pay no.';
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter academy Google Pay no.';
+                                      //   }
+                                      //   return null;
+                                      // },
 
                                       keyboardType: TextInputType.number,
-                                      // readOnly: true,
                                       style: TextStyle(
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.bold,
@@ -526,12 +526,12 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: paytmNo,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter academy Phone Pay No.';
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter academy Phone Pay No.';
+                                      //   }
+                                      //   return null;
+                                      // },
 
                                       keyboardType: TextInputType.number,
                                       // readOnly: true,
@@ -573,13 +573,13 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                     height: 48,
                                     child: TextFormField(
                                       controller: upi,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter upi number';
-                                        }
-                                        return null;
-                                      },
-                                      // readOnly: true,
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'Please enter upi number';
+                                      //   }
+                                      //   return null;
+                                      // },
+
                                       style: TextStyle(
                                           color: Color(0xff23282E),
                                           fontStyle: FontStyle.normal,
@@ -704,7 +704,6 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                                 borderRadius: BorderRadius.circular(8)),
                                             backgroundColor: Color(0xff2A62B8)),
                                         onPressed: () {
-                                          if (_formKey.currentState!.validate()) {
                                             Map data = {
                                               'ac_holder_name': acHolderName.text,
                                               'bank_name': bankName.text,
@@ -714,26 +713,16 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                               'googlepay_no': googlePayNo.text,
                                               'paytm_no': paytmNo.text,
                                               'upi': upi.text,
-                                              'qr': academyListViewViewModel.filename,
+                                              'qr': academyListViewViewModel
+                                                  .filename,
                                             };
-                                            List editedData = [
-                                              acHolderName.text,
-                                              bankName.text,
-                                              accountNumber.text,
-                                              ifsc.text,
-                                              bankBranch.text,
-                                              googlePayNo.text,
-                                              paytmNo.text,
-                                              upi.text,
-                                            ];
                                             print(data);
-                                            bankDetailsViewModel.fetchBankDetailsApi(data, context);
-                                            Get.to(
-                                                    () => Bank_Details(
-                                                //  editData: editedData,
-                                                ),
-                                                transition: Transition.rightToLeft);
-                                          }
+                                            bankDetailsViewModel
+                                                .fetchBankDetailsApi(
+                                                data, context);
+                                            Get.to(() => Bank_Details(),
+                                                transition: Transition
+                                                    .rightToLeft);
                                         },
                                         child: const Text(
                                           "Submit",

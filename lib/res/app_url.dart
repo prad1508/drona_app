@@ -21,7 +21,7 @@ class AppUrl {
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
-  static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimgtest/';
+  static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimg';
   static var UserprofileAdd = '$baseUrl/academy/coach';
   static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';

@@ -20,6 +20,7 @@ class CoachViewProfile extends StatefulWidget {
 }
 
 class _CoachViewProfileState extends State<CoachViewProfile> {
+ // CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   TraineeViewModel traineeViewModel = TraineeViewModel();
   MyservicesViewViewModel myServicesViewViewModel = MyservicesViewViewModel();
   ProgramViewViewModel programViewViewModel = ProgramViewViewModel();
@@ -27,9 +28,9 @@ class _CoachViewProfileState extends State<CoachViewProfile> {
 
   @override
   void initState() {
-    data = {"filter_batch_uid": "", "search": ""};
-    myServicesViewViewModel.fetchMyservicesListApi();
-    traineeViewModel.fetchTraineeListSearchApi(data);
+   // data = {"filter_batch_uid": "", "search": ""};
+   // myServicesViewViewModel.fetchMyservicesListApi();
+  //  traineeViewModel.fetchTraineeListSearchApi(data);
     for (var node in programViewViewModel.focusNodes) {
       node.addListener(() {
         setState(() {});
@@ -84,20 +85,20 @@ class _CoachViewProfileState extends State<CoachViewProfile> {
           'View Profile',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: IconButton(
-                icon: const Icon(Icons.edit, color: Colors.black),
-                onPressed: () {
-                  Get.to(
-                      () => EditProfileDetails(
-                            index: widget.index,
-                          ),
-                      transition: Transition.leftToRight);
-                },
-              ))
-        ],
+        // actions: [
+        //   Padding(
+        //       padding: const EdgeInsets.only(right: 10.0),
+        //       child: IconButton(
+        //         icon: const Icon(Icons.edit, color: Colors.black),
+        //         onPressed: () {
+        //           Get.to(
+        //               () => EditProfileDetails(
+        //                     index: widget.index,
+        //                   ),
+        //               transition: Transition.leftToRight);
+        //         },
+        //       ))
+        // ],
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,

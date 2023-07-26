@@ -79,6 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
 
                   case Status.completed:
+                    print(value.dataList.data?.collection);
+
                     return
                       Scaffold(
                           appBar:
@@ -246,19 +248,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .todayAttendancePercentage
                                                   .toDouble()),
                                           DashboardCard(
-                                              color: const Color.fromARGB(
-                                                  255, 8, 174, 229),
-                                              icon: Icons
-                                                  .account_balance_wallet_outlined,
+                                              color: const Color.fromARGB(255, 8, 174, 229),
+                                              icon: Icons.account_balance_wallet_outlined,
                                               title: 'Collection (M)',
-                                              subtitle:
-                                              '${value.dataList.data!.totalDue} - Due Amount',
-                                              count: value
-                                                  .dataList.data!.totalCollection
-                                                  .toString(),
-                                              line: value
-                                                  .dataList.data!.totalCollection
-                                                  .toDouble()),
+                                              subtitle: '${value.dataList.data!.totalDue} - Due Amount',
+                                              count: value.dataList.data!.totalCollection.toString(),
+                                              line: value.dataList.data!.totalCollection.toDouble()),
                                         ],
                                       ),
                                       const SizedBox(
