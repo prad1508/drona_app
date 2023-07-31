@@ -33,7 +33,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
   bool clay = false;
   bool hard = false;
   bool _customTileExpanded = false;
-  final TextEditingController nofacility = TextEditingController();
+   TextEditingController nofacility = TextEditingController();
   int CountSurfaces = 0;
   String facilityname = '';
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -242,7 +242,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                           TextFormField(
                                             enabled: true,
                                             controller: nofacility,
-                                            maxLength: 2,
+                                            maxLength: 1,
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                               fillColor: Colors.grey,
@@ -483,8 +483,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                 ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: 1,
-                                    itemBuilder: (context, index) {
-                                      CountSurfaces = 0;
+                                    itemBuilder: (context, index) {CountSurfaces = 0;
                                       List checkboxOption = List.generate(
                                           value
                                               .dataList
@@ -517,8 +516,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                               };
                                             }
                                           });
-                                      checkboxOptionOther
-                                          .removeWhere((value) => value == null);
+                                      checkboxOptionOther.removeWhere((value) => value == null);
                                       List.filled(_otherLength ?? 0, false);
                                       data = {
                                         'cat_name': value.dataList.data?.catName.toString(),
@@ -527,11 +525,12 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                         'service_id': value.dataList.data?.serviceId.toString(),
                                         'facility_uid': value.dataList.data?.uid.toString(),
                                         'inputtextname': value.dataList.data?.inputtextname.toString(),
-                                        'inputtextdata': nofacility.toString(),
+                                        'inputtextdata': nofacility.text.toString(),
                                         'checkboxwithselectoption': checkboxOption,
                                         'checkboxwithselectoptionname': value.dataList.data?.checkboxwithselectoptionname.toString(),
                                         'other': checkboxOptionOther
                                       };
+                                      print("data==$data");
                                     }),
                               ],
                             );
@@ -579,9 +578,12 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         color: Theme.of(context).primaryColor,
                         onPress: () {
                           if (nofacility.text.isEmpty) {
+                            print("data$data");
                             registration.facilityePost(data, context);
                           } else {
                             if (CountSurfaces == int.parse(nofacility.text)) {
+                              print("data$data");
+
                               registration.facilityePost(data, context);
                             } else {
                               Utils.flushBarErrorMessage(

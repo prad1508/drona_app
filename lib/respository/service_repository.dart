@@ -5,6 +5,7 @@ import '/model/service_model.dart';
 import '/res/app_url.dart';
 
 class ServiceRepository {
+
   final BaseApiServices _apiServices = NetworkApiService() ;
 
   Future<ServiceListModel> fetchServiceListApi(data)async{

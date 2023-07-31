@@ -11,6 +11,7 @@ class AppUrl {
   static var categoryListEndPoint = '$baseUrl/academy/cat';
   static var basicDetailsListEndPoint = '$baseUrl/academy/basicdetail';
   static var serviceListEndPoint = '$baseUrl/academy/service/';
+  static var serviceProgramListEndPoint = '$baseUrl/academy/facilityprogram/';
   static var serviceIconEndPoint = '$baseUrl/static/service/';
   static var profileserviceIconEndPoint = '$baseUrl/static/profile/';
 
@@ -22,10 +23,17 @@ class AppUrl {
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimg';
+  static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
+
+
+  //coach
   static var UserprofileAdd = '$baseUrl/academy/coach';
   static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
-  static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
+  static var coachActivate = '$baseUrl/academy/coach/activate';
+  static var coachDeactivate = '$baseUrl/academy/coach/deactivate';
+
+
   //batch
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
   static var EditbatchListEndPoint = '$baseUrl/academy/batch';

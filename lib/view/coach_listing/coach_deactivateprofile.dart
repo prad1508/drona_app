@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/data/response/status.dart';
 import 'package:drona/res/app_url.dart';
 import 'package:drona/res/widget/round_button.dart';
@@ -9,47 +10,32 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
+import '../../model/coach_list_model.dart';
 import '../../utils/color.dart';
+import '../../utils/utils.dart';
+import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/program_view_model.dart';
 
 class CoachDeactivateProfile extends StatefulWidget {
-  const CoachDeactivateProfile({super.key, required this.index});
+  String coachProfileUid;
+  int index;
+  List<Datum> coachList;
+   CoachDeactivateProfile({super.key, required this.index, required this.coachList, required this.coachProfileUid});
 
-  final int index;
 
   @override
   State<CoachDeactivateProfile> createState() => _CoachDeactivateProfileState();
 }
 
 class _CoachDeactivateProfileState extends State<CoachDeactivateProfile> {
-  TraineeViewModel traineeViewModel = TraineeViewModel();
-  MyservicesViewViewModel myServicesViewViewModel = MyservicesViewViewModel();
-  ProgramViewViewModel programViewViewModel = ProgramViewViewModel();
+  CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
+
+
   TextEditingController dob = TextEditingController();
-  late Map<String, dynamic> data;
 
   @override
   void initState() {
-    data = {"filter_batch_uid": "", "search": ""};
-    myServicesViewViewModel.fetchMyservicesListApi();
-    traineeViewModel.fetchTraineeListSearchApi(data);
-    for (var node in programViewViewModel.focusNodes) {
-      node.addListener(() {
-        setState(() {});
-      });
-    }
-    for (var node in programViewViewModel.focusNodesByage) {
-      node.addListener(() {
-        setState(() {});
-      });
-    }
-    for (var node in programViewViewModel.customfocusNodes) {
-      node.addListener(() {
-        setState(() {});
-      });
-    }
-    // TODO: implement initState
     super.initState();
   }
 
@@ -75,9 +61,14 @@ class _CoachDeactivateProfileState extends State<CoachDeactivateProfile> {
   late String catUid;
   late String userUid;
   final List<int> _selectedItems = <int>[];
+  TextEditingController tDateController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -107,313 +98,388 @@ class _CoachDeactivateProfileState extends State<CoachDeactivateProfile> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ChangeNotifierProvider<TraineeViewModel>(
-          create: (BuildContext context) => traineeViewModel,
-          child: Consumer<TraineeViewModel>(
-            builder: (context, value, _) {
-              switch (value.dataList.status!) {
-                case Status.loading:
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.teal,
+      body:  Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+//color: Colors.grey,
+              width: w,
+              height: h * 0.08,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+//Profile Image;
+                    SizedBox(
+                      height: h * 0.05,
+                      width: w * 0.1,
+                      child:   CircleAvatar(
+                          backgroundColor: Colors.black,
+                          child: CachedNetworkImage(
+                              fit: BoxFit.contain,
+                              imageUrl: AppUrl.ouserProfileimgListEndPoint +widget.coachList[widget.index].img,
+                              errorWidget: (context, url, error) =>
+                              // Image.asset("assets/images/user.png")
+                              const Icon(Icons.person,size: 30,color: Colors.white,)
+
+
+                          )
+                        /* Text(
+                                  getInitials(widget
+                                      .traineeList[widget.index].traineeName),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),*/
+                        // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                      ),
                     ),
-                  );
-                case Status.completed:
-                  return SingleChildScrollView(
-                    child: Column(
+//SizedBox(width: w*0.05,),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 50),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12, right: 12),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.coachList[widget.index]
+                                  .name,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              widget.coachList[widget.index]
+                                  .joinStatus ==
+                                  "not_onboarded"
+                                  ? "Not Onboarded"
+                                  : "Onboarded",
+                              style: TextStyle(
+                                  color: widget
+                                      .coachList[
+                                  widget.index]
+                                      .joinStatus ==
+                                      "not_onboarded"
+                                      ? Colors.red
+                                      : Colors.green,
+                                  fontSize: 10),
+                            ),
+                          ],
+                        ),
+//Gender and Age;
+                        SizedBox(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment:
+                            MainAxisAlignment.start,
                             children: [
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    width: 41,
-                                    height: 46,
-                                    child: value.dataList.data!
-                                            .data[widget.index].image.isNotEmpty
-                                        ? CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              AppUrl.profileserviceIconEndPoint +
-                                                  value.dataList.data!
-                                                      .data[widget.index].image,
-                                            ),
-                                            // AssetImage('assets/images/user_profile.png'),
-                                          )
-                                        : CircleAvatar(
-                                            backgroundColor: Colors.blue,
-                                            child: Text(
-                                              getInitials(value
-                                                  .dataList
-                                                  .data!
-                                                  .data[widget.index]
-                                                  .traineeName),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white),
-                                            ),
-                                            // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
-                                          ),
-                                    // AssetImage('assets/images/user_profile.png'),
-                                  ),
-                                ],
+                              Text(
+                                widget.coachList[widget.index]
+                                    .gender,
+                                style: TextStyle(fontSize: 12),
                               ),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        value.dataList.data!.data[widget.index]
-                                            .traineeName,
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                      Container(
-                                        height: 20,
-                                        margin: const EdgeInsets.only(left: 10),
-                                        padding: const EdgeInsets.only(
-                                            left: 5, right: 5, top: 2),
-                                        decoration: BoxDecoration(
-                                            color: value
-                                                        .dataList
-                                                        .data!
-                                                        .data[widget.index]
-                                                        .join_status ==
-                                                    'not_onboarded'
-                                                ? const Color.fromRGBO(
-                                                    255, 232, 231, 1)
-                                                : const Color(0xffEDF9F3),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        child: Text(
-                                          value
-                                                      .dataList
-                                                      .data!
-                                                      .data[widget.index]
-                                                      .join_status ==
-                                                  'not_onboarded'
-                                              ? 'Not Onboarded'
-                                              : 'Onboarded',
-                                          style: TextStyle(
-                                              color: value
-                                                          .dataList
-                                                          .data!
-                                                          .data[widget.index]
-                                                          .join_status ==
-                                                      'not_onboarded'
-                                                  ? secondryColor
-                                                  : successColor,
-                                              fontSize: 12),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Padding(
-                                      padding: EdgeInsets.only(top: 5)),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        value.dataList.data!.data[widget.index]
-                                                    .gender ==
-                                                'male'
-                                            ? 'Male'
-                                            : 'Female',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      const Text(" | "),
-                                      Text(
-                                        '${DateTime.now().year - int.parse(value.dataList.data!.data[widget.index]
-                                            .dob.split('/')[2])} Years',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "|",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                widthFactor: 1.5,
-                                child: SizedBox(
-                                    width: 34,
-                                    height: 34,
-                                    child: Image.network(
-                                      AppUrl.serviceIconEndPoint +
-                                          value.dataList.data!
-                                              .data[widget.index].serviceicon,
-                                    )),
+                              // Text("Dob :"),
+                              Text(
+                                widget
+                                    .coachList[widget.index].dob,
+                                style: TextStyle(fontSize: 12),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 35),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Container(
-                            width: 342,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
+                      ],
+                    ),
+
+                    SizedBox(
+                      width: 35,
+                      height: 35,
+                     /* child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            AppUrl.serviceIconEndPoint +
+                                widget.coachList[widget.index]
+                                    .serviceicon),
+                        backgroundColor: Colors.white,
+                      ),*/
+                    ),
+                  ],
+                ),
+              ),
+            ),
+// SizedBox(height: h * 0.005),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Card(
+                color: Colors.grey.shade50,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(10))),
+                child: SizedBox(
+                  width: w,
+                  height: h * 0.08,
+                  child: Column(children: [
+                    Center(
+                      child: Container(
+                        width: w * 0.85,
+                        height: h * 0.08,
+                        decoration: BoxDecoration(
+//color: Colors.grey
+                        ),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        '₹1800',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                            fontFamily: 'Loto-Bold'),
+                                  Text(
+                                    "₹${widget.coachList[widget.index].salaryMonthly}",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                    width: 25,
+                                    child: CircleAvatar(
+                                      backgroundColor:
+                                      Color(0xff173564),
+                                      child: Icon(
+                                        Icons.currency_rupee,
+                                        color: Colors.white,
+                                        size: 15,
                                       ),
-                                      Text(
-                                        'Due on 06 July, 2023',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                            color: Colors.grey[500],
-                                            fontFamily: 'Loto-Bold'),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 2),
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.black),
-                                    height: 24,
-                                    width: 24,
-                                    child: const Icon(
-                                      Icons.currency_rupee,
-                                      size: 16,
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
-                          ),
+                          /*  SizedBox(height: 4),
+                            Text(
+                              "Due on ${widget.coachList[widget.index].}",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey),
+                            )*/
+                          ],
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                          child: Text(
-                            "Deactivation Date",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff39404A)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                          child: SizedBox(
-                            width: 342,
-                            height: 48,
-                            child: TextFormField(
-                              readOnly: true,
-                              controller: dob,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                suffixIcon: const Icon(
-                                  Icons.calendar_month,
-                                  size: 30.0,
-                                ),
-                                hintText: '10-01-2022',
-                                contentPadding: const EdgeInsets.all(10),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
+                      ),
+                    ),
+                  ]),
+                ),
+              ),
+            ), // SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 12.0, left: 22.0, right: 26.0),
+              child: SizedBox(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Deactivation Date',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff39404A)),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    SizedBox(
+                        width: 344,
+                        height: 48,
+                        child:TextFormField(
+                          readOnly: true,
+                          controller: tDateController,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                            suffixIcon: const Icon(
+                              Icons.calendar_month,
+                              size: 30.0,
+                            ),
+                            hintText: '01-01-2023',
+                            contentPadding: const EdgeInsets.all(5),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
                               ),
-                              onTap: () async {
-                                var lastDate =
-                                DateFormat('yyyy').format(DateTime.now().add(const Duration(
-                                  days: 356,
-                                )));
-                                var date = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2022),
-                                    lastDate: DateTime(int.parse(lastDate)));
-                                if (date != null) {
-                                  dob.text = DateFormat('dd/MM/yyyy').format(date);
-                                }
-                              },
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * .4,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: SizedBox(
-                            width: 342,
-                            height: 48,
-                            child: RoundButton(
-                                loading: false,
-                                title: 'Submit',
-                                textColor: Colors.white,
-                                rounded: true,
-                                color: Theme.of(context).primaryColor,
-                                onPress: () {}),
-                          ),
-                        ),
-                      ],
+                          onTap: () async {
+                            DateTime now = DateTime.now();
+                            DateTime firstDate =
+                            DateTime(now.year, now.month);
+                            var date = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: firstDate,
+                              lastDate:
+                              DateTime.now().add(Duration(days: 90)),
+                            );
+                            if (date != null) {
+                              tDateController.text =
+                                  DateFormat('dd-MM-yyyy').format(date);
+                            }
+                          },
+                        )
                     ),
-                  );
-                case Status.error:
-                  return Center(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: Theme.of(context).primaryColorDark,
-                        size: 100.0,
-                      ),
-                      const NoData()
-                      // Text(
-                      //   value.dataList.message.toString(),
-                      //   style: TextStyle(
-                      //       color: Theme.of(context).primaryColor,
-                      //       fontSize: 20,
-                      //       height: 2),
-                      // )
-                    ],
-                  ));
-              }
-            },
-          ),
-        ),
-      ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height *
+                            0.42),
+
+                    SizedBox(
+                      width: 342,
+                      height: 45,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              backgroundColor: Color(0xff2A62B8)),
+                          onPressed: () {
+                            //Dialog Box;
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SizedBox(
+                                    width: 342,
+                                    height: 300,
+                                    child: AlertDialog(
+                                      icon: SizedBox(
+                                        width: 44,
+                                        height: 44,
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.yellow.shade700,
+                                          child: Icon(
+                                            Icons.priority_high,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      title: Text(
+                                        "Deactivate",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontFamily: 'Lato',
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      alignment: Alignment.center,
+                                      content: Wrap(children: [
+                                        Center(
+                                          child: SizedBox(
+                                            width: 300,
+                                            height: 60,
+                                            child: Text(
+                                              "Please Confirm Deactivation Of\n ${widget.coachList[widget.index].name}!",
+                                              style: TextStyle(
+                                                  color: Color(0xff626D7E),
+                                                  fontSize: 16,
+                                                  fontFamily: 'Lato',
+                                                  fontWeight: FontWeight.w600),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                      // contentPadding: EdgeInsets.all(24),
+                                      actions: [
+                                        Container(
+                                          width: 139,
+                                          height: 48,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                  Color(0xffDFE1E4),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(8)))),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                "Cancel",
+                                                style: TextStyle(
+                                                    color: Color(0xff23282E),
+                                                    fontSize: 15,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w600),
+                                              )),
+                                        ),
+                                        Container(
+                                          width: 139,
+                                          height: 48,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(8)),
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                  Color(0xff2A62B8),
+                                                  shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              8)))),
+                                              onPressed: () {
+                                                if (tDateController.text == "") {
+                                                  Utils.flushBarErrorMessage("Please select DeActivation Date", context);
+                                                  // setState(() {});
+                                                }else{
+
+                                                  Map<String, dynamic> data = {
+                                                    "coach_profile_uid":widget.coachProfileUid,
+                                                    "deactivate_date":tDateController.text};
+                                                  print("data==$data");
+                                                  coachlistViewViewModel.deActivateCoachListApi(data, context);
+
+                                                }
+                                              },
+                                              child: const Text(
+                                                "Confirm",
+                                                style: TextStyle(
+                                                    color: Color(0xffFBFBFC),
+                                                    fontSize: 15,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w600),
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: const Text(
+                            "Submit",
+                            style: TextStyle(fontSize: 15, fontFamily: 'Lato'),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ])
     );
   }
 }

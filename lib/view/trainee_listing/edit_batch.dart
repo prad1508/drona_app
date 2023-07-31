@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../model/trainee_list_model.dart';
+import '../../view_model/batchList_view_model.dart';
 
 class Edit_Page extends StatefulWidget {
   String traineeProfileUid;
@@ -18,34 +20,20 @@ class Edit_Page extends StatefulWidget {
 }
 
 class _Edit_PageState extends State<Edit_Page> {
-
-
   TextEditingController feeController = TextEditingController();
-
-  List<DropdownMenuItem<String>> get sportsItem {
-    List<DropdownMenuItem<String>> serviceDetails = [
-      const DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
-      const DropdownMenuItem(value: "Golf", child: Text("Golf")),
-    ];
-    return serviceDetails;
-  }
-
-  List<DropdownMenuItem<String>> get batchTime {
-    List<DropdownMenuItem<String>> sportsTiming = [
-      const DropdownMenuItem(
-          value: "Tennis Batch Morning", child: Text("Tennis Batch Morning")),
-      const DropdownMenuItem(
-          value: "Golf Batch Morning", child: Text("Golf Batch Morning")),
-      const DropdownMenuItem(
-          value: "Tennis Batch Evening", child: Text("Tennis Batch Evening")),
-      const DropdownMenuItem(
-          value: "Golf Batch Evening", child: Text("Golf Batch Evening")),
-    ];
-    return sportsTiming;
-  }
-
+  BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
   String selectedItem = 'Tennis';
   String selectedTiming = "Tennis Batch Morning";
+  String? selectedService1;
+
+  List<DropdownMenuItem<String>> dropdownItems1 = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    batchListViewViewModel.fetchBatchListListApi();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,30 +148,50 @@ class _Edit_PageState extends State<Edit_Page> {
                           fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 4),
-                    SizedBox(
-                        width: 342,
-                        height: 48,
-                        child: InputDecorator(
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(5),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8))),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff626D7E)),
-                                  icon: Icon(Icons.expand_more),
-                                  isExpanded: true,
-                                  value: selectedTiming,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      selectedTiming = newValue!;
-                                    });
-                                  },
-                                  items: batchTime),
-                            ))),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 1,
+                            color: const Color.fromARGB(255, 218, 216, 216)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: ChangeNotifierProvider<BatchListViewViewModel>(
+                          create: (context) => batchListViewViewModel,
+                          child: Consumer<BatchListViewViewModel>(
+                              builder: (context, value, child) {
+                            if (value.dataList.data != null) {
+                              dropdownItems1.clear();
+                              for (var i = 0;
+                                  i < value.dataList.data!.data!.length;
+                                  i++) {
+                                if (selectedService1 ==
+                                    value.dataList.data!.data?[i].uid)
+
+                                  /// check service with batch name
+                                  dropdownItems1.add(DropdownMenuItem(
+                                      value: value.dataList.data!.data![i].uid
+                                          .toString(),
+                                      child: Text(value
+                                          .dataList.data!.data![i].batchName
+                                          .toString())));
+                              }
+                            }
+                            return DropdownButton(
+                                isExpanded: true,
+                                hint: const Text("Choose Batch"),
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                value: selectedService1,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedService1 = newValue!;
+                                  });
+                                },
+                                items: dropdownItems1);
+                          })),
+                    ),
                     SizedBox(height: 16),
 
                     Text(
@@ -372,7 +380,6 @@ class _Edit_PageState extends State<Edit_Page> {
                                                             .fees
                                                         : feeController.text
                                                   };
-
 
                                                   print("data=$data");
                                                 },

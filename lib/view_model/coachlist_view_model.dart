@@ -1,6 +1,10 @@
+import 'package:drona/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import '../model/active_deactive_model.dart';
 import '../model/coach_list_model.dart';
 import '../model/coachlist_model.dart';
+import '../view/coach_listing/coach_listselected.dart';
 import '/data/response/api_response.dart';
 import '/respository/coachlist_repository.dart';
 
@@ -9,12 +13,17 @@ class CoachlistViewViewModel with ChangeNotifier {
 
   ApiResponse<CoachlistListModel> dataList = ApiResponse.loading();
   ApiResponse<CoachlistModel> dataList1 = ApiResponse.loading();
+  ApiResponse<ActiveDeactiveModel> dataList2 = ApiResponse.loading();
   setDataList(ApiResponse<CoachlistListModel> response) {
     dataList = response;
     notifyListeners();
   }
   setDataList1(ApiResponse<CoachlistModel> response) {
     dataList1 = response;
+    notifyListeners();
+  }
+  setDataList2(ApiResponse<ActiveDeactiveModel> response) {
+    dataList2 = response;
     notifyListeners();
   }
 
@@ -44,4 +53,43 @@ class CoachlistViewViewModel with ChangeNotifier {
       print("coachlist error$error");
     });
   }
+
+  Future<void> activateCoachListApi(Map<String, dynamic> data, BuildContext context) async {
+    setDataList2(ApiResponse.loading());
+    _myRepo.activateCoachListApi(data).then((value) {
+      print(value);
+      setDataList2(ApiResponse.completed(value));
+      Utils.toastMessage(value.msg);
+
+      Navigator.of(context).pop();
+      Get.to(() =>CoachListSelected(), transition: Transition.rightToLeft);
+      print("activateCoachListApi api succeed");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+
+      print("activateCoachListApi api  not succeed");
+      print("activateCoachListApi error$error");
+    });
+  }
+  Future<void> deActivateCoachListApi(Map<String, dynamic> data, BuildContext context) async {
+    setDataList2(ApiResponse.loading());
+    _myRepo.deActivateCoachListApi(data).then((value) {
+      print(value);
+      setDataList2(ApiResponse.completed(value));
+      Utils.toastMessage(value.msg);
+      Navigator.of(context).pop();
+      Get.to(() =>CoachListSelected(), transition: Transition.rightToLeft);
+      print("deActivateCoachListApi api succeed");
+    }).onError((error, stackTrace) {
+      setDataList2(ApiResponse.error(error.toString()));
+      Utils.toastMessage(error.toString());
+
+      print("deActivateCoachListApi api  not succeed");
+      print("deActivateCoachListApi error$error");
+    });
+  }
+
+
+
 }

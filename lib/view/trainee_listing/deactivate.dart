@@ -30,6 +30,8 @@ class Deactivate_Page extends StatefulWidget {
 class _Deactivate_PageState extends State<Deactivate_Page> {
   TraineeViewModel traineeViewModel = TraineeViewModel();
 
+
+
   List<String> PayMode = ["Pay", "Won't Pay"];
   String name = "Riyaz mohammed";
   String? ModePayment = 'p';

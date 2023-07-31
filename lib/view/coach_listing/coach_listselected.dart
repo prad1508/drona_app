@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/response/status.dart';
+import '../../model/coach_list_model.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
@@ -34,7 +35,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
 
 
   //bottomsheet popup
-  showBottomSheet({required String status, int? index, String? fullname}) {
+  showBottomSheet({required String status, int? index, String? fullname, required List<Datum> coachList}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
@@ -92,7 +93,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                           alignment: Alignment.topLeft,
                           child: TextButton(
                             onPressed: () {
-                              Get.to(() => CoachDeactivateProfile(index: index!),
+                              Get.to(() => CoachDeactivateProfile(index: index!, coachProfileUid: coachList[index].uid, coachList: coachList),
                                   transition: Transition.leftToRight);
                             },
                             child: Text(
@@ -102,12 +103,12 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                             ),
                           ),
                         )
-                            : status == "inactive" ?
+                            : status == "deactive" ?
                         Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
                             onPressed: () {
-                              Get.to(() => CoachActivateProfile(index: index!),
+                              Get.to(() => CoachActivateProfile(index: index!, coachProfileUid: coachList[index].uid, coachList: coachList,),
                                   transition: Transition.leftToRight);
                             },
                             child: Text(
@@ -436,7 +437,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                 showBottomSheet(
                                                     status: value.dataList1.data!.data[index].status,
                                                     index: index,
-                                                    fullname: value.dataList1.data!.data[index].name
+                                                    fullname: value.dataList1.data!.data[index].name,
+                                                    coachList: value.dataList1.data!.data
                                                 );
                                               },
                                               child: Container(
@@ -462,7 +464,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                   backgroundImage:
                                                                   NetworkImage(AppUrl.profileserviceIconEndPoint + value.dataList1.data!.data[index].img,)
 
-                                                              ) :  CircleAvatar(
+                                                              ) :  const CircleAvatar(
                                                                 backgroundImage:   AssetImage('assets/images/user_profile.png'),
                                                               )
 
@@ -588,6 +590,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                               .data
                                                                               ?.data[index]
                                                                               .gender ==
+                                                                              'm' || value.dataList1
+                                                                              .data
+                                                                              ?.data[index]
+                                                                              .gender ==
                                                                               'male'
                                                                               ? const Text(
                                                                             "Male",
@@ -607,7 +613,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                               .data
                                                                               ?.data[index]
                                                                               .gender ==
-                                                                              'female'
+                                                                              'f'
                                                                               ? const Text(
                                                                             "Female",
                                                                             style: TextStyle(
@@ -644,8 +650,8 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        '${DateTime.now().year - int.parse(value.dataList1.data!.data[index]
-                                                                            .dob.split('/')[2])} Years | ${value
+                                                                        '${value.dataList1.data!.data[index]
+                                                                            .dob} Years | ${value
                                                                             .dataList1
                                                                             .data
                                                                             ?.data[index]
@@ -665,7 +671,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                                   Align(
                                                                     alignment: Alignment
                                                                         .center,
-                                                                    widthFactor: 2.5,
+                                                                    widthFactor: 2,
                                                                     child: Container(
                                                                       width: 24,
                                                                       height: 24,

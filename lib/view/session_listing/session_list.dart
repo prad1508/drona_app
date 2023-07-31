@@ -109,7 +109,8 @@ class _SessionListState extends State<SessionList>
     if (_scrollController.offset >=
         _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
-      sessionViewModel.fetchSessionListSearchApi(data, pageSize, ++pageNo);
+      pageNo++;
+      sessionViewModel.fetchSessionListSearchApi(data, pageSize, pageNo);
     }
   }
 

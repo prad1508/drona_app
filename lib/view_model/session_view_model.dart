@@ -128,18 +128,27 @@ class SessionViewViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> postMarkAttendanceApi(dynamic data,BuildContext context) async {
+  Future<void> postMarkAttendanceApi(dynamic data,BuildContext context, {required String id}) async {
     setDataList3(ApiResponse.loading());
 
     _myRepo.postMarkedAttendanceApi(data).then((value) {
-      setDataList3(ApiResponse.completed(value));
+      //setDataList3(ApiResponse.completed(value));
       Utils.toastMessage(value.msg);
+      Navigator.of(
+          context)
+          .pop();
+      Get.to(() =>
+          ViewDetailClosed(
+            id: id,
+          ), transition: Transition.rightToLeft);
 
       print("api postMarkAttendanceApi success");
     }).onError((error, stackTrace) {
-      setDataList3(ApiResponse.error(error.toString()));
+     // setDataList3(ApiResponse.error(error.toString()));
       Utils.toastMessage(error.toString());
-
+      Navigator.of(
+          context)
+          .pop();
       print("api  postMarkAttendanceApi not success");
       print(error);
       print("error${ApiResponse.error(error.toString())}");

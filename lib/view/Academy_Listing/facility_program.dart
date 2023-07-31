@@ -2,14 +2,25 @@
 
 import 'package:flutter/material.dart';
 
+import '../../view_model/service_program_view_model.dart';
+
 class FacilityProgram extends StatefulWidget {
-  const FacilityProgram({super.key});
+  String serviceUid;
+   FacilityProgram({super.key, required this.serviceUid});
 
   @override
   State<FacilityProgram> createState() => _FacilityProgramState();
 }
 
 class _FacilityProgramState extends State<FacilityProgram> {
+  ServiceProgramViewModel serviceProgramViewModel = ServiceProgramViewModel();
+
+  @override
+  void initState() {
+    serviceProgramViewModel.fetchServiceProgramListApi(widget.serviceUid);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +37,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
           scrollDirection: Axis.vertical,
           physics: AlwaysScrollableScrollPhysics(),
           child:
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Column(
@@ -42,7 +53,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                         color: Color.fromRGBO(223, 225, 228, .5),
                       ),
                       child:
-                      Image(image: AssetImage("assets/images/tennis.png")),
+                          Image(image: AssetImage("assets/images/tennis.png")),
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 15)),
@@ -64,7 +75,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 15, bottom: 15),
               decoration:
-              BoxDecoration(color: Color.fromRGBO(251, 251, 252, 1)),
+                  BoxDecoration(color: Color.fromRGBO(251, 251, 252, 1)),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Column(
@@ -95,7 +106,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                     Text(
                       "Surface",
                       style:
-                      TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 5),
                     Row(
@@ -170,7 +181,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                     Text(
                       "Others",
                       style:
-                      TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 5),
                     Row(
@@ -226,7 +237,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                     Text(
                       "Gallrey",
                       style:
-                      TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 5),
                     Row(
@@ -283,7 +294,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 15, bottom: 15),
               decoration:
-              BoxDecoration(color: Color.fromRGBO(251, 251, 252, 1)),
+                  BoxDecoration(color: Color.fromRGBO(251, 251, 252, 1)),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Padding(
@@ -327,7 +338,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff626D7E)),
                               text:
-                              'Abc sports management flagship course is geared for professional excellence. Players in this exclusive'),
+                                  'Abc sports management flagship course is geared for professional excellence. Players in this exclusive'),
                           TextSpan(
                               style: TextStyle(
                                   fontSize: 12,
@@ -605,7 +616,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                             Container(
                               height: 20,
                               padding:
-                              const EdgeInsets.only(left: 5.0, right: 5.0),
+                                  const EdgeInsets.only(left: 5.0, right: 5.0),
                               decoration: BoxDecoration(
                                   color: Color(0xffEAEFF8),
                                   borderRadius: BorderRadius.circular(4)),

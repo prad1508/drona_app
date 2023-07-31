@@ -29,6 +29,10 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
 
   @override
   Widget build(BuildContext context) {
+
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -63,166 +67,98 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
       body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                //Listing of Academy Sercive and Programe;
-                SizedBox(height: 15),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 80,
-                    child:
-                    ChangeNotifierProvider<AcademyViewViewModel>(
-                      create: (BuildContext context) => academyListViewViewModel,
-                      child: Consumer<AcademyViewViewModel>(builder: (context, value, _) {
-                        switch (value.dataList.status!) {
-                          case Status.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.teal,
-                              ),
-                            );
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  //Listing of Academy Sercive and Programe;
+                  SizedBox(height: 15),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: h*0.8,
+                      child:
+                      ChangeNotifierProvider<AcademyViewViewModel>(
+                        create: (BuildContext context) => academyListViewViewModel,
+                        child: Consumer<AcademyViewViewModel>(builder: (context, value, _) {
+                          switch (value.dataList.status!) {
+                            case Status.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.teal,
+                                ),
+                              );
 
-                          case Status.completed:
-                            return
-                              ListView.builder(
-                                  itemCount: value.dataList.data?.totalService,
-                                  itemBuilder: (context, index) {
-                                    return
-                                      Column(
-                                        children: [
-                                          ListTile(
-                                            onTap: () {
-                                              /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Facility_Program()),
-                  );*/
-                                              Get.to(() => const FacilityProgram(),
-                                                  transition: Transition.rightToLeft);
-                                            },
-                                            contentPadding: EdgeInsets.all(5),
-                                            leading: SizedBox(
-                                              width: 40,
-                                              height: 40,
-                                              child: Image(
-                                                image: NetworkImage(AppUrl.serviceIconEndPoint + value.dataList.data!.services![index].serviceIconname!,
-                                                ),),
-                                            ),
-                                            title: Text(
-                                              value.dataList.data!.services![index].serviceName!,
-                                              style: TextStyle(
-                                                color: Color(0xff39404A),
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
+                            case Status.completed:
+                              return
+                                ListView.builder(
+                                    itemCount: value.dataList.data?.totalService,
+                                    itemBuilder: (context, index) {
+                                      return
+                                        Column(
+                                          children: [
+                                            ListTile(
+                                              onTap: () {
+                                                Get.to(() =>  FacilityProgram(serviceUid: value.dataList.data!.services[index].uid,),
+                                                    transition: Transition.rightToLeft);
+                                              },
+                                              contentPadding: EdgeInsets.all(5),
+                                              leading: SizedBox(
+                                                width: 30,
+                                                height: 30,
+                                                child: Image(
+                                                  image: NetworkImage(AppUrl.serviceIconEndPoint + value.dataList.data!.services[index].serviceIconname!,
+                                                  ),),
+                                              ),
+                                              title: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  value.dataList.data!.services[index].serviceName,
+                                                  style: TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                              trailing: Container(
+                                                width: w*0.2,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      value.dataList.data!.services[index].status,
+                                                      style: TextStyle(
+                                                        color: value.dataList.data!.services[index].status == "active" ? Colors.green : Colors.red,
+                                                        fontStyle: FontStyle.normal,
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.arrow_forward_ios_outlined,
+                                                      size: 15,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                            subtitle: Padding(
-                                                padding: const EdgeInsets.only(top: 5.0),
-                                                child: Column(children: [
-                                                  Row(children: [
-                                                    Container(
-                                                        width: 56,
-                                                        height: 20,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xffEAEFF8),
-                                                            borderRadius: BorderRadius.circular(4)),
-                                                        child: Center(
-                                                          child: Text(
-                                                            "Beginner",
-                                                            style: TextStyle(
-                                                              color: Color(0xff2A62B8),
-                                                              fontStyle: FontStyle.normal,
-                                                              fontWeight: FontWeight.w400,
-                                                              fontSize: 10,
-                                                            ),
-                                                          ),
-                                                        )),
-                                                    Padding(padding: EdgeInsets.only(left: 5)),
-                                                    Container(
-                                                        width: 56,
-                                                        height: 20,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xffEAEFF8),
-                                                            borderRadius: BorderRadius.circular(4)),
-                                                        child: Center(
-                                                          child: Text(
-                                                            "Intermediate",
-                                                            style: TextStyle(
-                                                              color: Color(0xff2A62B8),
-                                                              fontStyle: FontStyle.normal,
-                                                              fontWeight: FontWeight.w400,
-                                                              fontSize: 10,
-                                                            ),
-                                                          ),
-                                                        ))
-                                                  ]),
-                                                  Padding(padding: EdgeInsets.only(bottom: 10)),
-                                                  Row(children: [
-                                                    Row(
-                                                      children: const [
-                                                        Text(
-                                                          "Total Batch : ",
-                                                          style: TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontStyle: FontStyle.normal,
-                                                            fontWeight: FontWeight.w700,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          " 22",
-                                                          style: TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontStyle: FontStyle.normal,
-                                                            fontWeight: FontWeight.w400,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(padding: EdgeInsets.only(left: 5)),
-                                                    Row(children: const [
-                                                      Text(
-                                                        "Total Trainee : ",
-                                                        style: TextStyle(
-                                                          color: Color(0xff39404A),
-                                                          fontStyle: FontStyle.normal,
-                                                          fontWeight: FontWeight.w700,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
-                                                      Text(" 90",
-                                                          style: TextStyle(
-                                                            color: Color(0xff39404A),
-                                                            fontStyle: FontStyle.normal,
-                                                            fontWeight: FontWeight.w400,
-                                                            fontSize: 12,
-                                                          )),
-                                                    ]),
-                                                  ])
-                                                ])),
-                                            isThreeLine: true,
-                                            trailing: Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              size: 15,
-                                            ),
-                                          ),
-                                          Divider(),
-                                        ],
-                                      );
-                                  }
-                              );
-                          case Status.error:
-                            return Center(
-                                child: Text(''));
-                        }
+                                            Divider(),
+                                          ],
+                                        );
+                                    }
+                                );
+                            case Status.error:
+                              return Center(
+                                  child: Text(''));
+                          }
 
-                      }
-                      ),
-                    )
-                )
-              ],
+                        }
+                        ),
+                      )
+                  )
+                ],
+              ),
             ),
           )),
     );

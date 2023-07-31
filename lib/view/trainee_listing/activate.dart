@@ -38,32 +38,8 @@ class _Activate_PageState extends State<Activate_Page> {
   final TextEditingController fees = TextEditingController();
    TextEditingController tDateController = TextEditingController();
 
-  List<DropdownMenuItem<String>> get sportsItem {
-    List<DropdownMenuItem<String>> serviceDetails = [
-      DropdownMenuItem(value: "Tennis", child: Text("Tennis")),
-      DropdownMenuItem(value: "Golf", child: Text("Golf")),
-    ];
-    return serviceDetails;
-  }
 
-  List<DropdownMenuItem<String>> get batchTime {
-    List<DropdownMenuItem<String>> sportsTiming = [
-      DropdownMenuItem(
-          value: "Tennis Batch Morning", child: Text("Tennis Batch Morning")),
-      DropdownMenuItem(
-          value: "Golf Batch Morning", child: Text("Golf Batch Morning")),
-      DropdownMenuItem(
-          value: "Tennis Batch Evening", child: Text("Tennis Batch Evening")),
-      DropdownMenuItem(
-          value: "Golf Batch Evening", child: Text("Golf Batch Evening")),
-    ];
-    return sportsTiming;
-  }
-
-  String selectedItem = 'Tennis';
-  String selectedTiming = "Tennis Batch Morning";
-
-  @override
+   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.height;

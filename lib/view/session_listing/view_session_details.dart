@@ -1224,21 +1224,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                       sessionViewModel
                                                                           .postMarkAttendanceApi(
                                                                           data,
-                                                                          context)
-                                                                          .then((value) {
-                                                                        Navigator.of(
-                                                                            context)
-                                                                            .pop();
-                                                                            Get.to(() =>
-                                                                                ViewDetailClosed(
-                                                                                  id: attendanceList[i]
-                                                                                      .sessionUid,
-
-                                                                                ),
-                                                                            transition: Transition
-                                                                                .rightToLeft);
-                                                                      }
-                                                                      );
+                                                                          context, id:attendanceList[i]
+                                                                          .sessionUid);
                                                                     }
                                                                   },
                                                                   style: ElevatedButton.styleFrom(
