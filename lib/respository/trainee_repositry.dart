@@ -71,6 +71,10 @@ class TraineeRepository {
       rethrow;
     }
   }
+
+  //Trainee batch edit
+
+
   Future<ActiveDeactiveModel> traineeBatchEditApi(dynamic data) async {
     try {
       dynamic response = await _apiServices.getPutApiResponseWithData(

@@ -146,12 +146,14 @@ class TraineeViewModel with ChangeNotifier {
     });
   }
   /// traineeBatchEditApi api
-  Future<void> traineeBatchEditApi(dynamic data) async {
+  Future<void> traineeBatchEditApi(dynamic data, BuildContext context) async {
     setDataList2(ApiResponse.loading());
 
     _myRepo.traineeBatchEditApi(data).then((value) {
       setDataList2(ApiResponse.completed(value));
       Utils.toastMessage(value.msg);
+      Navigator.of(context).pop();
+      Get.to(() => const Layout(selectedIndex: 3), transition: Transition.rightToLeft);
 
       //Utils.flushBarErrorMessage(value.msg, context);
       print("traineeBatchEditApi success");
@@ -202,6 +204,8 @@ class TraineeViewModel with ChangeNotifier {
       //Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
+
 
 
 

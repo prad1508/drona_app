@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../model/trainee_list_model.dart';
@@ -9,11 +10,12 @@ class Edit_Page extends StatefulWidget {
   String traineeProfileUid;
   int index;
   List<Datum> traineeList;
-  Edit_Page(
-      {super.key,
-      required this.traineeProfileUid,
-      required this.index,
-      required this.traineeList});
+  Edit_Page({
+    super.key,
+    required this.traineeProfileUid,
+    required this.index,
+    required this.traineeList,
+  });
 
   @override
   State<Edit_Page> createState() => _Edit_PageState();
@@ -22,9 +24,12 @@ class Edit_Page extends StatefulWidget {
 class _Edit_PageState extends State<Edit_Page> {
   TextEditingController feeController = TextEditingController();
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
+  TraineeViewModel traineeViewModel = TraineeViewModel();
   String selectedItem = 'Tennis';
   String selectedTiming = "Tennis Batch Morning";
   String? selectedService1;
+  String? selectedBatch;
+  String? selectedBatchid;
 
   List<DropdownMenuItem<String>> dropdownItems1 = [];
 
@@ -32,6 +37,8 @@ class _Edit_PageState extends State<Edit_Page> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedBatch = widget.traineeList[widget.index].batchname;
+    selectedBatchid = widget.traineeList[widget.index].batchUid;
     batchListViewViewModel.fetchBatchListListApi();
   }
 
@@ -163,11 +170,14 @@ class _Edit_PageState extends State<Edit_Page> {
                               builder: (context, value, child) {
                             if (value.dataList.data != null) {
                               dropdownItems1.clear();
+                              print(value);
                               for (var i = 0;
                                   i < value.dataList.data!.data!.length;
                                   i++) {
-                                if (selectedService1 ==
-                                    value.dataList.data!.data?[i].uid)
+                                // if (selectedService1 == value.dataList.data!.data?[i].serviceUid)
+                                if (widget.traineeList[widget.index]
+                                        .serviceName ==
+                                    value.dataList.data!.data?[i].serviceName)
 
                                   /// check service with batch name
                                   dropdownItems1.add(DropdownMenuItem(
@@ -183,10 +193,10 @@ class _Edit_PageState extends State<Edit_Page> {
                                 hint: const Text("Choose Batch"),
                                 underline: DropdownButtonHideUnderline(
                                     child: Container()),
-                                value: selectedService1,
+                                value: selectedBatchid,
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    selectedService1 = newValue!;
+                                    selectedBatchid = newValue!;
                                   });
                                 },
                                 items: dropdownItems1);
@@ -366,7 +376,7 @@ class _Edit_PageState extends State<Edit_Page> {
                                                 onPressed: () {
                                                   Map<String, dynamic> data = {
                                                     "batch_uid":
-                                                        "v317jp1ntel2ueujxymt",
+                                                        selectedBatchid,
                                                     "trainee_profile_uid":
                                                         widget
                                                             .traineeList[
@@ -380,8 +390,11 @@ class _Edit_PageState extends State<Edit_Page> {
                                                             .fees
                                                         : feeController.text
                                                   };
-
                                                   print("data=$data");
+
+                                                  traineeViewModel.traineeBatchEditApi(data, context);
+
+
                                                 },
                                                 child: Text(
                                                   "Confirm",
