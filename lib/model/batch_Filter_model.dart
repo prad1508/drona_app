@@ -5,6 +5,7 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+
 BatchFilterModel batchFilterModelFromJson(String str) => BatchFilterModel.fromJson(json.decode(str));
 
 String batchFilterModelToJson(BatchFilterModel data) => json.encode(data.toJson());

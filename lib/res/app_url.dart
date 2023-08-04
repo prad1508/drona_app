@@ -14,9 +14,13 @@ class AppUrl {
   static var serviceProgramListEndPoint = '$baseUrl/academy/facilityprogram/';
   static var serviceIconEndPoint = '$baseUrl/static/service/';
   static var profileserviceIconEndPoint = '$baseUrl/static/profile/';
+  static var facilityGalleryImageEndPoint = '$baseUrl/static/facility/';
+
+
 
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
+  static var facilityeEditEndPoint = '$baseUrl/academy/facility';
   static var facilityGetEndPoint = '$baseUrl/academy/myfacility/';
   static var programListEndPoint = '$baseUrl/academy/program/';
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
@@ -25,14 +29,12 @@ class AppUrl {
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimg';
   static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
 
-
   //coach
   static var UserprofileAdd = '$baseUrl/academy/coach';
   static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
   static var coachActivate = '$baseUrl/academy/coach/activate';
   static var coachDeactivate = '$baseUrl/academy/coach/deactivate';
-
 
   //batch
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
@@ -54,9 +56,6 @@ class AppUrl {
   static var deactivateTrainee = "$baseUrl/academy/trainee/deactivate";
   static var traineeBatchEdit = "$baseUrl/academy/trainee/editbatch";
 
-
-
-
   //session
   static var createsessionListEndPoint = "$baseUrl/session/create";
   static var sessionListEndPoint = '$baseUrl/academy/session';
@@ -74,10 +73,17 @@ class AppUrl {
   static var uploadLogo = "$baseUrl/academy/logo";
   static var academylogo = "$baseUrl/static/logo/";
 
+  // facility gallery image upload
+  static var facilityGalleryImg = "$baseUrl/academy/myfacility/gallery/";
+
+  //sigle program update
+  static var singleProgramUpdateApi = "$baseUrl/academy/single-program";
+
+
+
   static var uploadQr = "$baseUrl/static/qr/";
   static var uploadQrImg = "$baseUrl/academy/uploadqr";
   static var billingInvoiceMonthly = '$baseUrl/academy/billing_invoice/month';
   static var billingViewInvoiceMonthly =
       '$baseUrl/academy/invoice_payment/month';
 }
-

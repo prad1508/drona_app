@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/response/status.dart';
+import '../../model/batch_Filter_model.dart';
 import '../../res/app_url.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/round_button.dart';
@@ -30,7 +36,6 @@ class _SearchBatchListState extends State<SearchBatchList> {
   //multi language support
   final FlutterLocalization _localization = FlutterLocalization.instance;
   BatchListViewViewModel batchListViewViewModel = BatchListViewViewModel();
-  AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
   List<int> _selectedItems = <int>[];
   bool notFound = false;
@@ -41,6 +46,61 @@ class _SearchBatchListState extends State<SearchBatchList> {
   final ScrollController _scrollController = ScrollController();
   TextEditingController searchController = TextEditingController();
 
+  Future<BatchFilterModel?>? batchFilterModel;
+
+  List<Datum> items = [];
+  int? totalDataCount;
+  var newDataLength = 1;
+
+  Future<BatchFilterModel?> batchFilterModelApi(
+      {required String status,
+      required String serviceUid,
+      required String searchText,
+      required int newDataLength}) async {
+    final prefsToken = await SharedPreferences.getInstance();
+    dynamic token = prefsToken.getString('token');
+
+    print("token$token");
+    var headers = {
+      'Content-Type': 'application/json',
+      'token': token.toString()
+    };
+    var request =
+        http.Request('PUT', Uri.parse("${AppUrl.batchsearch}/10/$newDataLength"));
+
+    request.body = json.encode({
+      "filter_status": status,
+      "filter_service_uid": serviceUid,
+      "search": searchText
+    });
+    request.headers.addAll(headers);
+    print("request$request");
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final str = await response.stream.bytesToString();
+      print("productListApi Api res-----$str");
+      //
+
+      var user = BatchFilterModel.fromJson(json.decode(str));
+      setState(() {
+        totalDataCount = user.totalDataCount;
+      });
+      for (var element in user.data) {
+        setState(() {
+          items.add(element);
+        });
+      }
+
+      return user;
+    } else {
+
+      print(response.reasonPhrase);
+      print("api not hit");
+    }
+  }
+
   Map<String, dynamic> data = {
     "filter_status": "",
     "filter_service_uid": "",
@@ -50,12 +110,19 @@ class _SearchBatchListState extends State<SearchBatchList> {
   @override
   initState() {
     super.initState();
-    batchListViewViewModel.fetchBatchSearchListApi(data, pageSize, pageNo);
-    academyViewViewModel.fetchAcademyListApi();
+    // batchListViewViewModel.fetchBatchSearchListApi(data, pageSize, pageNo);
+    batchFilterModel = batchFilterModelApi(
+        newDataLength: newDataLength,
+        status: '',
+        serviceUid: '',
+        searchText: '');
+
+/*
     _scrollController.addListener(_scrollListener);
+*/
   }
 
-  void _scrollListener() {
+  /* void _scrollListener() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
@@ -69,7 +136,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
     _scrollController.dispose();
     searchController.dispose();
     super.dispose();
-  }
+  }*/
 /*
   void dataFilter(String enteredKeyword) {
     /// call api
@@ -111,11 +178,12 @@ class _SearchBatchListState extends State<SearchBatchList> {
         AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
         academyViewViewModel.fetchAcademyListApi();
         List<DropdownMenuItem<String>> activeServices = [];
-        String  selectedService = '';
+        String selectedService = '';
 
-        return StatefulBuilder(  // Use StatefulBuilder to handle state updates within the build method
+        return StatefulBuilder(
+          // Use StatefulBuilder to handle state updates within the build method
           builder: (BuildContext context, StateSetter setState) {
-           /* assignSeviceId(selectedServiceValue) {
+            /* assignSeviceId(selectedServiceValue) {
               setState(() {
                 selectedService = selectedServiceValue;
               });
@@ -179,19 +247,22 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                 width: 1,
                                 color: const Color.fromARGB(255, 218, 216, 216),
                               ),
-                              borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
                             ),
                             child: ChangeNotifierProvider<AcademyViewViewModel>(
                               create: (context) => academyViewViewModel,
                               child: Consumer<AcademyViewViewModel>(
                                 builder: (context, value, child) {
-
                                   activeServices = List.generate(
                                     value.dataList.data!.services.length,
-                                        (index) {
-                                          value.dataList.data != null ? selectedService = value.dataList.data!.services[index].uid : null;
+                                    (index) {
+                                      value.dataList.data != null
+                                          ? selectedService = value.dataList
+                                              .data!.services[index].uid
+                                          : null;
 
-                                          return DropdownMenuItem(
+                                      return DropdownMenuItem(
                                         value: value
                                             .dataList.data!.services[index].uid
                                             .toString(),
@@ -236,8 +307,29 @@ class _SearchBatchListState extends State<SearchBatchList> {
     );
   }
 
+  String PageRfreshedText = "Page Refreshed";
+
+  Future<void> refreshItems() async {
+    print("api call api call");
+
+    setState(() {
+      newDataLength = 0;
+      //items.clear();
+
+      batchFilterModel = batchFilterModelApi(
+          status: '',
+          serviceUid: '',
+          searchText: '',
+          newDataLength: newDataLength);
+      //productByCatModel = productListApi2();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -288,541 +380,673 @@ class _SearchBatchListState extends State<SearchBatchList> {
                   ),
           ],
         ),
-        body: Container(
-            // padding: const EdgeInsets.all(20),
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: showFilter,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 55,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey)),
-                      child: const Icon(
-                        Icons.filter_list,
-                      ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: showFilter,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 55,
+                    width: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey)),
+                    child: const Icon(
+                      Icons.filter_list,
                     ),
                   ),
-                  Expanded(
-                    child: Card(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        side: BorderSide(
-                          color: Color.fromARGB(255, 197, 196, 196),
-                        ),
+                ),
+                Expanded(
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      elevation: 0,
-                      child: ListTile(
-                        title: TextFormField(
-                          controller: searchController,
-                          onChanged: (val) {
-                            setState(() {
-                              searchController.text;
-                              Map<String, dynamic> data = {
-                                "filter_status": "",
-                                "filter_service_uid": "",
-                                "search": searchController.text
-                              };
+                      side: BorderSide(
+                        color: Color.fromARGB(255, 197, 196, 196),
+                      ),
+                    ),
+                    elevation: 0,
+                    child: ListTile(
+                      title: TextFormField(
+                        controller: searchController,
+                        onChanged: (val) {
+                          setState(() {
+                            searchController.text;
+                           batchFilterModelApi(status: "", serviceUid: "", searchText: searchController.text, newDataLength: newDataLength);
 
-                              batchListViewViewModel.fetchBatchSearchListApi(
-                                  data, pageSize, pageNo);
-                            });
-                          },
-                          decoration: const InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 0.0),
-                              hintText: 'Search',
-                              border: InputBorder.none),
-                        ),
-                        trailing: const Icon(Icons.search),
+
+
+                           /* batchListViewViewModel.fetchBatchSearchListApi(
+                                data, pageSize, pageNo);*/
+                          });
+                        },
+                        decoration: const InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 0.0),
+                            hintText: 'Search',
+                            border: InputBorder.none),
                       ),
+                      trailing: const Icon(Icons.search),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            ChangeNotifierProvider<BatchListViewViewModel>(
-                create: (BuildContext context) => batchListViewViewModel,
-                child: Consumer<BatchListViewViewModel>(
-                    builder: (context, value, _) {
-                      switch (value.dataList2.status!) {
-                    case Status.loading:
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.teal,
-                        ),
-                      );
-                      case Status.completed:
-                      return Expanded(
-                          child: searchController.text == ""
-                              ? ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: value.dataList2.data!.data.length,
-                                  itemBuilder: (context, index) => Card(
-                                    key: ValueKey(
-                                        value.dataList2.data!.data[index].id),
-                                    elevation: 0,
-                                    margin:
-                                        const EdgeInsets.symmetric(vertical: 0),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          tileColor: Color(0XFFDFE1E4)
-                                              .withOpacity(0.3),
-                                          // isThreeLine: true,
-                                          leading: Container(
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)),
-                                              color: Color(0XFFDFE1E4),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: CircleAvatar(
-                                                radius: 10,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                child: _selectedItems
-                                                        .contains(index)
-                                                    ? const Icon(Icons.check,
-                                                        color: Color.fromRGBO(
-                                                            71, 192, 136, 1),
-                                                        size: 30.0)
-                                                    : Image(
-                                                        image: NetworkImage(AppUrl
-                                                                .serviceIconEndPoint +
-                                                            value
-                                                                .dataList2
-                                                                .data!
-                                                                .data[index]
-                                                                .serviceIconname)),
-                                              ),
-                                            ),
-                                          ),
-                                          title: Row(
-                                            children: [
-                                              Expanded(
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: RefreshIndicator(
+                onRefresh: () {
+                  return Future.delayed(
+                    Duration(seconds: 1),
+                    () {
+                      setState(() {
+                        print("api call");
+                        refreshItems();
+                      });
+                      Fluttertoast.showToast(
+                          msg: PageRfreshedText,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 2,
+                          textColor: Colors.white,
+                          fontSize: 18.0);
+                    },
+                  );
+                },
+                child: FutureBuilder<BatchFilterModel?>(
+                    future: batchFilterModel,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return
+                          searchController.text.isEmpty ?
+                          ListView.builder(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: w * 0.01),
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: items.length + 1,
+                            itemBuilder: (context, index) {
+                              // items = snapshot.data!.data.products;
+                              // print("wishlist===${items[index].wishList1}");
+                              return (index == items.length)
+                                  ? items.isEmpty
+                                      ? Center(
+                                          child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              margin: EdgeInsets.only(
+                                                  top: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.45),
+                                              child: CircularProgressIndicator(
+                                                  // color: Mycolors.GradientLeftColor,
+                                                  )),
+                                        )
+                                      : totalDataCount! > items.length
+                                          ? Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.brown),
+                                              child: TextButton(
                                                 child: Text(
-                                                  value.dataList2.data!
-                                                      .data[index].batchName,
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
+                                                  "Load More",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18),
                                                 ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    newDataLength += 1;
+                                                    // newvarlength = newDataLength;
+                                                    //   print("newvarlength$newvarlength");
+                                                    //print("newDataLength print$newDataLength");
+                                                    batchFilterModel =
+                                                        batchFilterModelApi(
+                                                            status: '',
+                                                            serviceUid: '',
+                                                            searchText: '',
+                                                            newDataLength:
+                                                                newDataLength);
+                                                  });
+                                                },
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8),
-                                                child: Container(
+                                            )
+                                          : SizedBox()
+                                  : GestureDetector(
+                                      onTap: () {},
+                                      child: Card(
+                                          key: ValueKey(items[index].id),
+                                          elevation: 0,
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 0),
+                                          child: Column(
+                                            children: [
+                                              ListTile(
+                                                tileColor: Color(0XFFDFE1E4)
+                                                    .withOpacity(0.3),
+                                                // isThreeLine: true,
+                                                leading: Container(
                                                   decoration:
                                                       const BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
-                                                                20.0)),
+                                                                20)),
                                                     color: Color(0XFFDFE1E4),
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsets.all(3.0),
-                                                    child: Text(
-                                                      value
-                                                          .dataList2
-                                                          .data!
-                                                          .data[index]
-                                                          .totalTrainee
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12),
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: CircleAvatar(
+                                                      radius: 10,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      child: _selectedItems
+                                                              .contains(index)
+                                                          ? const Icon(
+                                                              Icons.check,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      71,
+                                                                      192,
+                                                                      136,
+                                                                      1),
+                                                              size: 30.0)
+                                                          : Image(
+                                                              image: NetworkImage(AppUrl
+                                                                      .serviceIconEndPoint +
+                                                                  items[index]
+                                                                      .serviceIconname)),
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                          trailing: Container(
-                                            height: 20,
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                                color: value
-                                                            .dataList2
-                                                            .data!
-                                                            .data[index]
-                                                            .status ==
-                                                        "Active"
-                                                    ? Colors.green
-                                                    : value
-                                                                .dataList2
-                                                                .data!
-                                                                .data[index]
-                                                                .status ==
-                                                            "New"
-                                                        ? Colors.blue
-                                                        : Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: Text(
-                                                  value.dataList2.data!
-                                                      .data[index].status
-                                                      .toString(),
-                                                  maxLines: 2,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.white),
+                                                title: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        items[index]
+                                                            .batchName,
+                                                        style: const TextStyle(
+                                                            color: Color
+                                                                .fromRGBO(
+                                                                    57,
+                                                                    64,
+                                                                    74,
+                                                                    1),
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700,
+                                                            fontFamily:
+                                                                'Loto-Regular'),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .only(left: 8),
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      20.0)),
+                                                          color: Color(
+                                                              0XFFDFE1E4),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  3.0),
+                                                          child: Text(
+                                                            items[index]
+                                                                .totalTrainee
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontSize: 12),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          subtitle: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${value.dataList2.data!.data[index].programName} - ${value.dataList2.data!.data[index].batchDaysShort.join(",").characters} - ${value.dataList2.data!.data[index].batchTimingFrom} to ${value.dataList2.data!.data[index].batchTimingTo}',
-                                                style: const TextStyle(
-                                                    // color: Color.fromRGBO(57, 64, 74, 1),
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Loto-Regular'),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Text("Coach Name : ",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff39404A),
+                                                trailing: Container(
+                                                  height: 20,
+                                                  width: 60,
+                                                  decoration: BoxDecoration(
+                                                      color: items[index]
+                                                                  .status ==
+                                                              "Active"
+                                                          ? Colors.green
+                                                          : items[index]
+                                                                      .status ==
+                                                                  "New"
+                                                              ? Colors.blue
+                                                              : Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10)),
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .all(2.0),
+                                                      child: Text(
+                                                        items[index]
+                                                            .status
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            const TextStyle(
+                                                                fontSize: 10,
+                                                                color: Colors
+                                                                    .white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                subtitle: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                  children: [
+                                                    Text(
+                                                      '${items[index].programName} - ${items[index].batchDaysShort.join(",").characters} - ${items[index].batchTimingFrom} to ${items[index].batchTimingTo}',
+                                                      style: const TextStyle(
+                                                          // color: Color.fromRGBO(57, 64, 74, 1),
                                                           fontSize: 13,
                                                           fontWeight:
-                                                              FontWeight.w500)),
-                                                  Text(
-                                                    value.dataList2.data!
-                                                        .data[index].coachName,
-                                                  ),
-                                                ],
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'Loto-Regular'),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        const Text(
+                                                            "Coach Name : ",
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff39404A),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500)),
+                                                        Text(
+                                                          items[index]
+                                                              .coachName,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ViewBatchDetails(
+                                                                ListIndex:
+                                                                    index,
+                                                                batchUid: items[
+                                                                        index]
+                                                                    .uid
+                                                                    .toString(),
+                                                                totalTrainee: items[
+                                                                        index]
+                                                                    .totalTrainee
+                                                                    .toString(),
+                                                                pathPage: widget
+                                                                    .pathPage,
+                                                              )));
+                                                },
+                                                onLongPress: () {
+                                                  if (!_selectedItems
+                                                      .contains(index)) {
+                                                    setState(() {
+                                                      _selectedItems
+                                                          .add(index);
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      _selectedItems
+                                                          .removeWhere(
+                                                              (val) =>
+                                                                  val ==
+                                                                  index);
+                                                    });
+                                                  }
+                                                },
+                                              ),
+                                              const Divider(
+                                                height: 5,
+                                                thickness: 1,
                                               ),
                                             ],
-                                          ),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ViewBatchDetails(
-                                                          ListIndex: index,
-                                                          batchUid: value
-                                                              .dataList2
-                                                              .data!
-                                                              .data[index]
-                                                              .uid
-                                                              .toString(),
-                                                          totalTrainee: value
-                                                              .dataList2
-                                                              .data!
-                                                              .data[index]
-                                                              .totalTrainee
-                                                              .toString(),
-                                                          pathPage:
-                                                              widget.pathPage,
-                                                        )));
-                                          },
-                                          onLongPress: () {
-                                            if (!_selectedItems
-                                                .contains(index)) {
-                                              setState(() {
-                                                _selectedItems.add(index);
-                                              });
-                                            } else {
-                                              setState(() {
-                                                _selectedItems.removeWhere(
-                                                    (val) => val == index);
-                                              });
-                                            }
-                                          },
-                                        ),
-                                        const Divider(
-                                          height: 5,
-                                          thickness: 1,
-                                        ),
-                                      ],
+                                          )));
+                            }) :ListView.builder(
+                              padding:
+                              EdgeInsets.symmetric(horizontal: w * 0.01),
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: items.length + 1,
+                              itemBuilder: (context, index) {
+                                // items = snapshot.data!.data.products;
+                                // print("wishlist===${items[index].wishList1}");
+                                return (index == items.length)
+                                    ? items.isEmpty
+                                    ? Center(
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      margin: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.45),
+                                      child: CircularProgressIndicator(
+                                        // color: Mycolors.GradientLeftColor,
+                                      )),
+                                )
+                                    : totalDataCount! > items.length
+                                    ? Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.brown),
+                                  child: TextButton(
+                                    child: Text(
+                                      "Load More",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18),
                                     ),
+                                    onPressed: () {
+                                      setState(() {
+                                        newDataLength += 1;
+                                        // newvarlength = newDataLength;
+                                        //   print("newvarlength$newvarlength");
+                                        //print("newDataLength print$newDataLength");
+                                        batchFilterModel =
+                                            batchFilterModelApi(
+                                                status: '',
+                                                serviceUid: '',
+                                                searchText: '',
+                                                newDataLength:
+                                                newDataLength);
+                                      });
+                                    },
                                   ),
                                 )
-                              : ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: value.dataList2.data!.data.length,
-                                  itemBuilder: (context, index) => Card(
-                                    key: ValueKey(
-                                        value.dataList2.data!.data[index].id),
-                                    elevation: 0,
-                                    margin:
-                                        const EdgeInsets.symmetric(vertical: 0),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          tileColor: Color(0XFFDFE1E4)
-                                              .withOpacity(0.3),
-                                          // isThreeLine: true,
-                                          leading: Container(
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)),
-                                              color: Color(0XFFDFE1E4),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: CircleAvatar(
-                                                radius: 10,
-                                                backgroundColor:
+                                    : SizedBox()
+                                    : GestureDetector(
+                                    onTap: () {},
+                                    child: Card(
+                                        key: ValueKey(items[index].id),
+                                        elevation: 0,
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 0),
+                                        child: Column(
+                                          children: [
+                                            ListTile(
+                                              tileColor: Color(0XFFDFE1E4)
+                                                  .withOpacity(0.3),
+                                              // isThreeLine: true,
+                                              leading: Container(
+                                                decoration:
+                                                const BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.circular(
+                                                          20)),
+                                                  color: Color(0XFFDFE1E4),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(
+                                                      8.0),
+                                                  child: CircleAvatar(
+                                                    radius: 10,
+                                                    backgroundColor:
                                                     Colors.transparent,
-                                                child: _selectedItems
+                                                    child: _selectedItems
                                                         .contains(index)
-                                                    ? const Icon(Icons.check,
-                                                        color: Color.fromRGBO(
-                                                            71, 192, 136, 1),
+                                                        ? const Icon(
+                                                        Icons.check,
+                                                        color: Color
+                                                            .fromRGBO(
+                                                            71,
+                                                            192,
+                                                            136,
+                                                            1),
                                                         size: 30.0)
-                                                    : Image(
+                                                        : Image(
                                                         image: NetworkImage(AppUrl
-                                                                .serviceIconEndPoint +
-                                                            value
-                                                                .dataList2
-                                                                .data!
-                                                                .data[index]
+                                                            .serviceIconEndPoint +
+                                                            items[index]
                                                                 .serviceIconname)),
-                                              ),
-                                            ),
-                                          ),
-                                          title: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  value.dataList2.data!
-                                                      .data[index].batchName,
-                                                  style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          57, 64, 74, 1),
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily:
-                                                          'Loto-Regular'),
+                                                  ),
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8),
-                                                child: Container(
-                                                  decoration:
+                                              title: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      items[index]
+                                                          .batchName,
+                                                      style: const TextStyle(
+                                                          color: Color
+                                                              .fromRGBO(
+                                                              57,
+                                                              64,
+                                                              74,
+                                                              1),
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w700,
+                                                          fontFamily:
+                                                          'Loto-Regular'),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .only(left: 8),
+                                                    child: Container(
+                                                      decoration:
                                                       const BoxDecoration(
-                                                    borderRadius:
+                                                        borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 20.0)),
-                                                    color: Color(0XFFDFE1E4),
-                                                  ),
+                                                        color: Color(
+                                                            0XFFDFE1E4),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsets.all(
+                                                            3.0),
+                                                        child: Text(
+                                                          items[index]
+                                                              .totalTrainee
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              trailing: Container(
+                                                height: 20,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                    color: items[index]
+                                                        .status ==
+                                                        "Active"
+                                                        ? Colors.green
+                                                        : items[index]
+                                                        .status ==
+                                                        "New"
+                                                        ? Colors.blue
+                                                        : Colors.red,
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(10)),
+                                                child: Center(
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsets.all(3.0),
+                                                    const EdgeInsets
+                                                        .all(2.0),
                                                     child: Text(
-                                                      value
-                                                          .dataList2
-                                                          .data!
-                                                          .data[index]
-                                                          .totalTrainee
+                                                      items[index]
+                                                          .status
                                                           .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12),
+                                                      maxLines: 2,
+                                                      textAlign:
+                                                      TextAlign.center,
+                                                      style:
+                                                      const TextStyle(
+                                                          fontSize: 10,
+                                                          color: Colors
+                                                              .white),
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                          trailing: Container(
-                                            height: 20,
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                                color: value
-                                                            .dataList2
-                                                            .data!
-                                                            .data[index]
-                                                            .status ==
-                                                        "Active"
-                                                    ? Colors.green
-                                                    : value
-                                                                .dataList2
-                                                                .data!
-                                                                .data[index]
-                                                                .status ==
-                                                            "New"
-                                                        ? Colors.blue
-                                                        : Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(2.0),
-                                                child: Text(
-                                                  value.dataList2.data!
-                                                      .data[index].status
-                                                      .toString(),
-                                                  maxLines: 2,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.white),
-                                                ),
                                               ),
-                                            ),
-                                          ),
-                                          subtitle: Column(
-                                            mainAxisAlignment:
+                                              subtitle: Column(
+                                                mainAxisAlignment:
                                                 MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${value.dataList2.data!.data[index].programName} - ${value.dataList2.data!.data[index].batchDaysShort.join(",").characters} - ${value.dataList2.data!.data[index].batchTimingFrom} to ${value.dataList2.data!.data[index].batchTimingTo}',
-                                                style: const TextStyle(
-                                                    // color: Color.fromRGBO(57, 64, 74, 1),
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Loto-Regular'),
-                                              ),
-                                              Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
                                                 children: [
-                                                  const Text("Coach Name : ",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff39404A),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
                                                   Text(
-                                                    value.dataList2.data!
-                                                        .data[index].coachName,
+                                                    '${items[index].programName} - ${items[index].batchDaysShort.join(",").characters} - ${items[index].batchTimingFrom} to ${items[index].batchTimingTo}',
+                                                    style: const TextStyle(
+                                                      // color: Color.fromRGBO(57, 64, 74, 1),
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                        FontWeight.w400,
+                                                        fontFamily:
+                                                        'Loto-Regular'),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      const Text(
+                                                          "Coach Name : ",
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff39404A),
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w500)),
+                                                      Text(
+                                                        items[index]
+                                                            .coachName,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ViewBatchDetails(
-                                                          ListIndex: index,
-                                                          batchUid: value
-                                                              .dataList2
-                                                              .data!
-                                                              .data[index]
-                                                              .uid
-                                                              .toString(),
-                                                          totalTrainee: value
-                                                              .dataList2
-                                                              .data!
-                                                              .data[index]
-                                                              .totalTrainee
-                                                              .toString(),
-                                                          pathPage:
-                                                              widget.pathPage,
-                                                        )));
-                                          },
-                                          onLongPress: () {
-                                            if (!_selectedItems
-                                                .contains(index)) {
-                                              setState(() {
-                                                _selectedItems.add(index);
-                                              });
-                                            } else {
-                                              setState(() {
-                                                _selectedItems.removeWhere(
-                                                    (val) => val == index);
-                                              });
-                                            }
-                                          },
-                                        ),
-                                        const Divider(
-                                          height: 5,
-                                          thickness: 1,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ));
-
-                    case Status.error:
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ViewBatchDetails(
+                                                              ListIndex:
+                                                              index,
+                                                              batchUid: items[
+                                                              index]
+                                                                  .uid
+                                                                  .toString(),
+                                                              totalTrainee: items[
+                                                              index]
+                                                                  .totalTrainee
+                                                                  .toString(),
+                                                              pathPage: widget
+                                                                  .pathPage,
+                                                            )));
+                                              },
+                                              onLongPress: () {
+                                                if (!_selectedItems
+                                                    .contains(index)) {
+                                                  setState(() {
+                                                    _selectedItems
+                                                        .add(index);
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    _selectedItems
+                                                        .removeWhere(
+                                                            (val) =>
+                                                        val ==
+                                                            index);
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                            const Divider(
+                                              height: 5,
+                                              thickness: 1,
+                                            ),
+                                          ],
+                                        )));
+                              });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: NoData(),
+                        );
+                        //Text('${snapshot.error}');
+                      }
                       return Center(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: Theme.of(context).primaryColorDark,
-                            size: 100.0,
-                          ),
-                          NoData()
-                          // Text(
-                          //   value.dataList.message.toString(),
-                          //   style: TextStyle(
-                          //       color: Theme.of(context).primaryColor,
-                          //       fontSize: 20,
-                          //       height: 2),
-                          // )
-                        ],
-                      ));
-                  }
-                })),
-            const SizedBox(
-              height: 15,
-            ),
-            widget.pathPage == "onBoarding"
-                ? RoundButton(
-                    loading: false,
-                    title: AppLocale.conts.getString(context),
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                    onPress: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             Layout(selectedIndex: 0)));
-                      Get.to(() => const Layout(selectedIndex: 0),
-                          transition: Transition.rightToLeft);
-                    })
-                : SizedBox()
-          ],
-        )),
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: const CircularProgressIndicator()),
+                      );
+                    })),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          widget.pathPage == "onBoarding"
+              ? RoundButton(
+                  loading: false,
+                  title: AppLocale.conts.getString(context),
+                  textColor: Colors.white,
+                  rounded: true,
+                  color: Theme.of(context).primaryColor,
+                  onPress: () {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             Layout(selectedIndex: 0)));
+                    Get.to(() => const Layout(selectedIndex: 0),
+                        transition: Transition.rightToLeft);
+                  })
+              : SizedBox()
+            ],
+          ),
+        ),
       ),
     );
   }

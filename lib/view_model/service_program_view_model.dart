@@ -20,6 +20,7 @@ class ServiceProgramViewModel with ChangeNotifier {
     setDataList(ApiResponse.loading());
     print("fetchServiceProgramListApi api success");
     _myRepo.fetchServiceProgramListApi(serviceUid).then((value){
+
       setDataList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){

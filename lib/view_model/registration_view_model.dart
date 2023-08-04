@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/Academy_Listing/facility_program.dart';
 import '../view/dashboard/layout.dart';
 import '../view/registeration/choose_program.dart';
 import '../view/registeration/detail_filled.dart';
@@ -205,6 +206,26 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+  // edit facility
+
+  Future<void> facilityeEditApiPost(dynamic data, BuildContext context, String serviceUid) async {
+    setLoading(true);
+    _myRepo.facilityEditListApi(data).then((value) async {
+      setLoading(false);
+      Utils.flushBarErrorMessage('Facility Saved Successfully', context);
+
+      //Navigator.pushNamed(context, RoutesName.chooseprogram);
+      Get.to(() =>  FacilityProgram(serviceUid: serviceUid,),transition: Transition.rightToLeft);
+
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+
+
+
 
 //////////////program Save ////////////////////////////////////
   Future<void> programPost(dynamic data, BuildContext context) async {

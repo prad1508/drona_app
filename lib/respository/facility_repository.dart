@@ -26,4 +26,27 @@ class FacilityRepository {
     }
   }
 
+  Future<dynamic> uploadGalleryImg(data, String facilityUid) async {
+    try {
+      dynamic response = await _apiServices.uploadImageHTTP("${AppUrl.facilityGalleryImg}/$facilityUid", data);
+      print("uploadGalleryImg upload");
+      return response;
+    } catch (e) {
+      print("uploadGalleryImg  not  upload");
+      rethrow;
+    }
+  }
+
+  Future<dynamic> updateSingleProgramApi(data) async {
+    try {
+      dynamic response = await _apiServices.getPutApiResponseWithData(AppUrl.singleProgramUpdateApi, data);
+      print("updateSingleProgramApi success");
+      return response;
+    } catch (e) {
+      print("updateSingleProgramApi  not  success");
+      rethrow;
+    }
+  }
+
+
 }

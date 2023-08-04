@@ -70,6 +70,7 @@ class Myfacility {
   String cDate;
   String cTime;
   String addedByProfileUid;
+  List<String> images;
 
   Myfacility({
     required this.id,
@@ -88,6 +89,7 @@ class Myfacility {
     required this.cDate,
     required this.cTime,
     required this.addedByProfileUid,
+    required this.images,
   });
 
   factory Myfacility.fromJson(Map<String, dynamic> json) => Myfacility(
@@ -107,6 +109,7 @@ class Myfacility {
     cDate: json["cDate"],
     cTime: json["cTime"],
     addedByProfileUid: json["added_by_profile_uid"],
+    images: List<String>.from(json["images"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -126,6 +129,7 @@ class Myfacility {
     "cDate": cDate,
     "cTime": cTime,
     "added_by_profile_uid": addedByProfileUid,
+    "images": List<dynamic>.from(images.map((x) => x)),
   };
 }
 

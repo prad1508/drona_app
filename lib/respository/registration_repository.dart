@@ -63,6 +63,21 @@ class RegistrationRepository {
     }
   }
 
+  // edit Facility
+
+  Future<dynamic> facilityEditListApi(dynamic data) async {
+    try {
+      dynamic response =
+      await _apiServices.getPutApiResponseWithData(AppUrl.facilityeEditEndPoint, data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+
+
   //Program post 
 
  Future<dynamic> programPostListApi(dynamic data) async {

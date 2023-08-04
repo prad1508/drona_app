@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../utils/no_data.dart';
 import '../../view_model/service_program_view_model.dart';
+import '../registeration/choose_facility.dart';
+import 'add_program.dart';
+import 'edit_facility.dart';
+import 'edit_program.dart';
 
 class FacilityProgram extends StatefulWidget {
   String serviceUid;
@@ -21,6 +26,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
 
   @override
   void initState() {
+    print("widget.serviceUid${widget.serviceUid}");
     serviceProgramViewModel.fetchServiceProgramListApi(widget.serviceUid);
     super.initState();
   }
@@ -125,13 +131,21 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                                 .myfacility[0].inputtextdata),
                                           ],
                                         ),
-                                        SizedBox(
-                                            width: 17,
-                                            height: 17,
-                                            child: Image.asset(
-                                              'assets/images/edit_icon.png',
-                                              color: Color(0xff99A0AB),
-                                            )),
+                                        GestureDetector(
+                                          onTap: (){
+                                            Get.to(()=> EditFacility(serviceUid: value.dataList.data!
+                                                .myfacility[0].serviceUid, myFacility: value.dataList.data!
+                                                .myfacility,));
+                                          },
+
+                                          child: SizedBox(
+                                              width: 17,
+                                              height: 17,
+                                              child: Image.asset(
+                                                'assets/images/edit_icon.png',
+                                                color: Color(0xff99A0AB),
+                                              )),
+                                        ),
                                       ]),
                                   SizedBox(height: 15),
                                   Text(
@@ -257,6 +271,45 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                       ),
                                     ],
                                   ),
+
+                                  SizedBox(height: 20,),
+
+                                  Text("Gallery"),
+
+                                  Row(
+                                    mainAxisAlignment:MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: h*0.1,
+                                        width: w*0.9,
+                                        child: ListView.builder(
+                                            shrinkWrap: true,
+
+                                            scrollDirection: Axis.horizontal,
+                                          itemCount: value.dataList.data!.myfacility[0].images.length,
+                                            itemBuilder: (context, index){
+                                            return Container(
+                                              height: 50,
+                                                width: 50,
+                                              margin: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                               // color: Colors.red,
+                                                image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                    image: NetworkImage(
+
+                                                        AppUrl.facilityGalleryImageEndPoint+value.dataList.data!.myfacility[0].images[index]))
+
+                                              ),
+                                                
+                                              );
+                                            }),
+                                      )
+
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -268,16 +321,18 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                 const EdgeInsets.only(left: 20.0, right: 20.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children:  [
                                 Text(
                                   "Program Details",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.black,
+                                IconButton(
+                                  onPressed: () {
+                                    Get.to(()=> Add_Program());
+                                  },
+                                  icon: Icon(Icons.add,color: Colors.black,),
                                 )
                               ],
                             ),
@@ -287,6 +342,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                             height: h*0.4,
                             width: w,
                             child: ListView.builder(
+                              shrinkWrap: true,
                               itemCount: value.dataList.data!.myprogram.length,
                                 itemBuilder: (BuildContext context, int index) {
                               return Container(
@@ -303,6 +359,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                     padding: const EdgeInsets.only(right: 5.0),
                                     child:
                                     ListView.builder(
+                                      shrinkWrap: true,
                                       itemCount: value.dataList.data!.myprogram[index].programs.length,
                                       itemBuilder: (BuildContext context, int int) {
                                         return  Column(
@@ -314,13 +371,18 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                               MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text("${value.dataList.data!.myprogram[index].programs[int].programName} (${value.dataList.data!.myprogram[index].name})"),
-                                                SizedBox(
-                                                    width: 17,
-                                                    height: 17,
-                                                    child: Image.asset(
-                                                      'assets/images/edit_icon.png',
-                                                      color: Color(0xff99A0AB),
-                                                    )),
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    Get.to(()=> Edit_Program(programs: value.dataList.data!.myprogram[index].programs, serviceUid: widget.serviceUid,index: index, index2: int,));
+                                                  },
+                                                  child: SizedBox(
+                                                      width: 17,
+                                                      height: 17,
+                                                      child: Image.asset(
+                                                        'assets/images/edit_icon.png',
+                                                        color: Color(0xff99A0AB),
+                                                      )),
+                                                ),
                                               ],
                                             ),
                                             SizedBox(height: 10),
@@ -496,9 +558,10 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                                 ),
                                               ],
                                             ),*/
-                                            SizedBox(height: 25),
+                                            SizedBox(height: 35),
 
-                                            Divider(thickness: 2,)
+                                            Divider(thickness: 2,),
+                                            SizedBox(height: 80),
                                           ],
                                         );
 
