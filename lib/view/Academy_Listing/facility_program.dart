@@ -330,7 +330,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    Get.to(()=> Add_Program());
+                                    Get.to(()=> Add_Program(service: value.dataList.data!.serviceName, serviceId: widget.serviceUid ,));
                                   },
                                   icon: Icon(Icons.add,color: Colors.black,),
                                 )
