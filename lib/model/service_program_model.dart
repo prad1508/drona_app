@@ -236,8 +236,8 @@ class Myprogram {
 class Program {
   String uid;
   String programName;
-  String amount;
-  String registrationfee;
+  var amount;
+  var registrationfee;
   String curriculumTitle;
   String curriculumDesc;
 

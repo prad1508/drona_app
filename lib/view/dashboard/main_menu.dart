@@ -19,6 +19,7 @@ import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../Support and Feedback/support_Feedback_Page.dart';
+import '../performance/new_assignment.dart';
 import '../trainee_listing/add_trainee_list.dart';
 import '../batch_listing/batchlist_search.dart';
 import '../coach_listing/coach_listselected.dart';
@@ -390,6 +391,86 @@ class _MainMenuState extends State<MainMenu> {
                               size: 20,
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    color: const Color.fromARGB(255, 253, 253, 253),
+                    elevation: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Text(
+                              'Assignment',
+                              style: TextStyle(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Get.to(() => const NewAssignment(),
+                                  transition: Transition.rightToLeft);
+                            },
+                            leading: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.grey.shade100,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Image(
+                                    image:
+                                    AssetImage('assets/images/coach.png'),
+                                    width: 15,
+                                  ),
+                                )),
+                            title: const Text(
+                              'Assignments',
+                            ),
+                            trailing:
+                            const Icon(Icons.arrow_forward_ios, size: 20),
+                          ),
+                          // ListTile(
+                          //   onTap: () {
+                          //     /* Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (BuildContext context) =>
+                          //         const Trainee_Listing(),
+                          //       ),
+                          //     );*/
+                          //     //   Get.to(()=> const Trainee_Listing(),transition: Transition.rightToLeft);
+                          //     Get.to(() => AddTraineeList(),
+                          //         transition: Transition.rightToLeft);
+                          //   },
+                          //   leading: CircleAvatar(
+                          //       radius: 20,
+                          //       backgroundColor: Colors.grey.shade100,
+                          //       child: const Padding(
+                          //         padding: EdgeInsets.all(10.0),
+                          //         child: Image(
+                          //           image: AssetImage('assets/images/user.png'),
+                          //           width: 15,
+                          //         ),
+                          //       )),
+                          //   title: const Text(
+                          //     'Trainee',
+                          //   ),
+                          //   trailing:
+                          //   const Icon(Icons.arrow_forward_ios, size: 20),
+                          // ),
                         ],
                       ),
                     ),

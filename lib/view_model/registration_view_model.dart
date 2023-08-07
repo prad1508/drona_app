@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
+import '../view/Academy_Listing/chooose_program2.dart';
 import '../view/Academy_Listing/facility_program.dart';
 import '../view/dashboard/layout.dart';
 import '../view/registeration/choose_program.dart';
@@ -192,13 +193,15 @@ class RegistrationViewModel with ChangeNotifier {
   }
 
   //////////////add facility ////////////////////////////////////
-  Future<void> facilityePost(dynamic data, BuildContext context) async {
+  Future<void> facilityePost(dynamic data, BuildContext context, {required String path, required String serviceUid}) async {
     setLoading(true);
     _myRepo.facilityePostListApi(data).then((value) async {
       setLoading(false);
       Utils.flushBarErrorMessage('Facility Saved Successfully', context);
-
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
+      print("serviceuid==$serviceUid");
+      print("path==$path");
+      path.isNotEmpty ? Get.to(() =>  ChooseProgram2(serviceUid: serviceUid,),transition: Transition.rightToLeft):
       Get.to(() => const ChooseProgram(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {

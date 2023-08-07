@@ -33,11 +33,13 @@ class _Edit_ProgramState extends State<Edit_Program> {
   @override
   void initState() {
     print("widget--${widget.index2}");
-    feeController.text = widget.programs[widget.index2].amount;
-    registrationFessController.text = widget.programs[widget.index2].registrationfee;
+    feeController.text = widget.programs[widget.index2].amount.toString();
+    registrationFessController.text = widget.programs[widget.index2].registrationfee.toString();
+    curriculumTitle.text = widget.programs[widget.index2].curriculumTitle;
+    curriculumTitleDescription.text = widget.programs[widget.index2].curriculumDesc;
+
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -48,7 +50,6 @@ class _Edit_ProgramState extends State<Edit_Program> {
     // TODO: implement dispose
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -420,17 +421,21 @@ class _Edit_ProgramState extends State<Edit_Program> {
                                                           ? widget
                                                               .programs[
                                                                   widget.index2]
-                                                              .amount.toString()
-                                                          : feeController.text.toString(),
+                                                              .amount
+                                                              .toString()
+                                                          : feeController.text
+                                                              .toString(),
                                                   "registrationfee":
                                                       registrationFessController
                                                               .text.isEmpty
                                                           ? widget
                                                               .programs[
                                                                   widget.index2]
-                                                              .registrationfee.toString()
+                                                              .registrationfee
+                                                              .toString()
                                                           : registrationFessController
-                                                              .text.toString(),
+                                                              .text
+                                                              .toString(),
                                                   "curriculum_title":
                                                       curriculumTitle.text,
                                                   "curriculum_desc":
@@ -441,7 +446,9 @@ class _Edit_ProgramState extends State<Edit_Program> {
 
                                                 facilityViewViewModel
                                                     .updateSingleProgramApi(
-                                                        data, context, widget.serviceUid);
+                                                        data,
+                                                        context,
+                                                        widget.serviceUid);
                                               },
                                               child: const Text(
                                                 "Save",

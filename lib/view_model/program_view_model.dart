@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/program_model.dart';
+import '../view/Academy_Listing/chooose_program2.dart';
 import '../view/registeration/choose_program.dart';
 import '/data/response/api_response.dart';
 import '/respository/program_repository.dart';
@@ -41,6 +42,7 @@ class ProgramViewViewModel with ChangeNotifier {
 
        /// custom
       List<GroupControllers> groupControllers = [];
+      List<GroupControllers2> groupControllers3 = [];
       List<TextField> nameFields = [];
       List<TextField> amountFields = [];
       late List customChecked;
@@ -48,6 +50,7 @@ class ProgramViewViewModel with ChangeNotifier {
       //custom program registration fee
       late List customChecked2;
       List<GroupControllers> groupControllers2 = [];
+      List<GroupControllers2> groupControllers4 = [];
       List<TextField> nameFields2 = [];
       List<TextField> amountFields2 = [];
 

@@ -8,8 +8,10 @@ import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
+import '../Academy_Listing/choose_facility2.dart';
 import '../Academy_Listing/facility_program.dart';
 import '../Academy_Listing/service_offring_page.dart';
+import '../registeration/choose_facility.dart';
 
 class Servicelist_Page extends StatefulWidget {
   const Servicelist_Page({super.key});
@@ -98,7 +100,10 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                                           children: [
                                             ListTile(
                                               onTap: () {
-                                                Get.to(() =>  FacilityProgram(serviceUid: value.dataList.data!.services[index].uid,),
+                                                //ChooseFacility
+                                                value.dataList.data!.services[index].status == "active" ?
+                                                Get.to(() => FacilityProgram(serviceUid: value.dataList.data!.services[index].uid),
+                                                    transition: Transition.rightToLeft)  : Get.to(() => ChooseFacility2(serviceUid: value.dataList.data!.services[index].uid, serviceName: value.dataList.data!.services[index].serviceName,),
                                                     transition: Transition.rightToLeft);
                                               },
                                               contentPadding: EdgeInsets.all(5),
