@@ -1,6 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../data/response/status.dart';
 import '../../utils/no_data.dart';
 import '../../view_model/myprogram_view_model.dart';
@@ -8,7 +8,7 @@ import '../../view_model/myprogram_view_model.dart';
 class Add_Program extends StatefulWidget {
   String service;
   String serviceId;
-   Add_Program({this.service='' , this.serviceId='',super.key});
+  Add_Program({this.service='' , this.serviceId='',super.key});
 
   @override
   State<Add_Program> createState() => _Add_ProgramState();
@@ -18,8 +18,15 @@ bool advance = false;
 bool professional = false;
 
 class _Add_ProgramState extends State<Add_Program> {
+  List<TextEditingController> titleControllers = [];
+  List<TextEditingController> descControllers = [];
+  List<TextEditingController> amountControllers = [];
+  List<TextEditingController> registrationControllers = [];
+  List<bool> check = [];
+  List<bool> visible = [];
+  List<String> values = [];
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
-
+  List<Program> programList = [];
   @override
   void initState() {
     myProgramViewViewModel.fetchMyProgramListApi(widget.serviceId);
@@ -27,6 +34,8 @@ class _Add_ProgramState extends State<Add_Program> {
   }
   @override
   Widget build(BuildContext context) {
+    programList = [];
+    int? num;
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -43,8 +52,6 @@ class _Add_ProgramState extends State<Add_Program> {
           child:
           Padding(padding: EdgeInsets.all(20.0),
             child:
-
-
           ChangeNotifierProvider<MyProgramViewViewModel>(
           create: (BuildContext context) => myProgramViewViewModel,
           child: Consumer<MyProgramViewViewModel>(
@@ -57,17 +64,44 @@ class _Add_ProgramState extends State<Add_Program> {
                   ),
                 );
               case Status.completed:
+                print(value);
+
+                generateControllers(value.dataList.data?.data![0].programs!.length);
+                num = value.dataList.data?.data![0].programs!.length;
+                for(var index = 0 ; index<num! ;index++)
+                  {
+                    generateVariable(value.dataList.data?.data![0].programs![index].programName);
+                    Program program = Program(
+                      program_name: value.dataList.data?.data![0].programs![index].programName,
+                      amount: value.dataList.data?.data![0].programs![index].amount.toString(),
+                      registrationfee: value.dataList.data?.data![0].programs![index].registrationfee.toString(),
+                      curriculum_title: value.dataList.data?.data![0].programs![index].curriculumTitle,
+                      curriculum_desc: value.dataList.data?.data![0].programs![index].curriculumDescription,
+                    );
+                    programList.add(program);
+                    }
+
                 return
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: screenHeight * 0.5,
-                          child:  ListView.builder(
-                             // scrollDirection: Axis.horizontal,
+                          height: screenHeight * 0.6,
+                              child:  ListView.builder(
                               shrinkWrap: true,
                               itemCount: value.dataList.data?.data![0].programs?.length,
                               itemBuilder: (context, index) {
+                                if(value.dataList.data!.data![0].programs![index].amount != '0')
+                                  {
+                                    print("coming here");
+                                    amountControllers[index].text = value.dataList.data!.data![0].programs![index].amount.toString();
+                                    registrationControllers[index].text = value.dataList.data!.data![0].programs![index].registrationfee.toString();
+                                  }
+                                else {
+                                  amountControllers[index].text = '0';
+                                  registrationControllers[index].text = '0';
+
+                                }
                                 print(value.dataList.data?.data![0].programs![index].amount);
                                 return
                                 Column(
@@ -114,6 +148,7 @@ class _Add_ProgramState extends State<Add_Program> {
                                                   height: 50,
                                                   width: screenWidth * .88,
                                                   child: TextField(
+                                                    controller: titleControllers[index],
                                                     decoration: InputDecoration(
                                                         filled: true,
                                                         fillColor: Colors.white,
@@ -145,6 +180,7 @@ class _Add_ProgramState extends State<Add_Program> {
                                                   //  decoration: BoxDecoration(border: Border.all(color: Color(0xffDFE1E4)),borderRadius: BorderRadius.circular(10)),
                                                   child:
                                                   TextField(
+                                                     controller: descControllers[index],
                                                       maxLines: 5,
                                                       decoration: InputDecoration(
                                                           filled: true,
@@ -180,16 +216,17 @@ class _Add_ProgramState extends State<Add_Program> {
                                                     mainAxisAlignment: MainAxisAlignment
                                                         .spaceBetween,
                                                     children: [
-                                                      Text('Registration Fees:',
+                                                      Text('Registration Fees: ${value.dataList.data?.data![0].programs![index].registrationfee}',
                                                           style: TextStyle(
                                                               fontFamily: 'Lato',
                                                               fontWeight: FontWeight.w400)),
+
                                                       Row(
                                                         children: [
                                                           Text('Fees:', style: TextStyle(
                                                               fontFamily: 'Lato',
                                                               fontWeight: FontWeight.w400)),
-                                                          Text('${value.dataList.data?.data![0].programs![index].registrationfee}/M', style: TextStyle(
+                                                          Text('${value.dataList.data?.data![0].programs![index].amount}/M', style: TextStyle(
                                                               fontFamily: 'Lato',
                                                               fontWeight: FontWeight.w400)),
                                                         ],
@@ -206,17 +243,223 @@ class _Add_ProgramState extends State<Add_Program> {
 
                                     Row(
                                       children: [
-                                        Checkbox(value: professional, onChanged: (value) {
+                                        Checkbox(
+                                          value: check[index],
+                                          onChanged: (value) {
                                           setState(() {
-                                            professional = value!;
+                                            check[index] = value!;
                                           });
                                         },),
                                         Text('${value.dataList.data?.data![0].programs![index].programName}')
                                       ],
                                     ),
-                                    const SizedBox(
-                                        height: 5
-                                    ),
+
+                                    check[index] ?
+                                    Padding(padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("Curriculum / Program Details"),
+                                          const SizedBox(
+                                              height: 7
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                            width: screenWidth * .88,
+                                            child: TextField(
+                                              controller: titleControllers[index],
+                                              decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight: FontWeight.normal
+                                                  ),
+                                                  contentPadding: const EdgeInsets
+                                                      .only(left: 8,
+                                                      right: 8,
+                                                      top: 8,
+                                                      bottom: 5),
+                                                  hintText: 'High-Performance Coaching',
+                                                  border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(10),
+                                                      borderSide: BorderSide(
+                                                          color: Color(0xffDFE1E4)))),
+                                            ),
+
+                                          ),
+                                          const SizedBox(
+                                              height: 10
+                                          ),
+
+                                          Container(
+                                            //   height: 100,
+                                            width: screenWidth * .88,
+                                            //  decoration: BoxDecoration(border: Border.all(color: Color(0xffDFE1E4)),borderRadius: BorderRadius.circular(10)),
+                                            child:
+                                            TextField(
+                                                controller: descControllers[index],
+                                                maxLines: 5,
+                                                decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    hintStyle: const TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight: FontWeight.normal
+                                                    ),
+                                                    contentPadding: const EdgeInsets
+                                                        .only(left: 8,
+                                                        right: 8,
+                                                        top: 8,
+                                                        bottom: 5),
+                                                    hintText: "Abc sports management flagship course is geared for professional excellence. Players in this exclusive",
+                                                    border: OutlineInputBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Color(
+                                                                0xffDFE1E4)))),
+
+                                                style: TextStyle(fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14)),
+
+                                          ),
+                                          const SizedBox(
+                                              height: 15
+                                          ),
+
+                                        ],
+                                      ),
+                                    ) : Container(),
+                                    check[index] ?
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8,right: 18),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text("Program Fees"),
+                                          const Text("Registartion Fees"),
+                                        ],
+                                      ),
+                                    ) : Container(),
+                                    check[index] ?
+                                    const SizedBox(height: 4) : Container(),
+                                    check[index] ?
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 51,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: const Color(0xff2A62B8)),
+                                            borderRadius: const BorderRadius.only(
+                                                bottomLeft: Radius.circular(10),
+                                                topLeft: Radius.circular(10)),
+                                            color: const Color(0xff2A62B8),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "₹/M",
+                                              style: TextStyle(
+                                                  color: Color(0xffFBFBFC),
+                                                  fontSize: 14,
+                                                  fontFamily: 'Lato',
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                          ),
+                                        ),
+                                         SizedBox(
+                                          width: screenWidth * 0.30,
+                                          height: 50,
+                                          child: Center(
+                                            child: TextField(
+                                              controller: amountControllers[index],
+                                              cursorHeight: 20,
+                                              cursorRadius: Radius.circular(10),
+                                              keyboardType: TextInputType.number,
+                                              textAlign: TextAlign.start,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(15),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Color(0xff2A62B8)),
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(10),
+                                                    bottomRight: Radius.circular(10),
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Color(0xff2A62B8)),
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(10),
+                                                    bottomRight: Radius.circular(10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 8),
+                                          child: Container(
+                                            width: 51,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: const Color(0xff2A62B8)),
+                                              borderRadius: const BorderRadius.only(
+                                                  bottomLeft: Radius.circular(10),
+                                                  topLeft: Radius.circular(10)),
+                                              color: const Color(0xff2A62B8),
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                "₹/M",
+                                                style: TextStyle(
+                                                    color: Color(0xffFBFBFC),
+                                                    fontSize: 14,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w700),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: screenWidth * 0.30,
+                                          height: 50,
+                                          child: Center(
+                                            child: TextField(
+                                                 controller: registrationControllers[index],
+                                              cursorHeight: 20,
+                                              cursorRadius: Radius.circular(10),
+                                              keyboardType: TextInputType.number,
+                                              textAlign: TextAlign.start,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(15),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Color(0xff2A62B8)),
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(10),
+                                                    bottomRight: Radius.circular(10),
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: Color(0xff2A62B8)),
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(10),
+                                                    bottomRight: Radius.circular(10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )  : Container() ,
+                                    check[index] ?
+                                    const SizedBox(height: 10) : Container(),
+
                                   ],
                                 );
                                 //Intermediate Box
@@ -362,7 +605,27 @@ class _Add_ProgramState extends State<Add_Program> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8)),
                                 backgroundColor: Color(0xff2A62B8)),
-                            onPressed: () {},
+                            onPressed: () {
+                              int num = value.dataList.data!.data![0].programs!.length;
+                              for(var i=0 ; i <num; i++)
+                                {
+                                  programList[i].curriculum_title = titleControllers[i].text;
+                                  programList[i].curriculum_desc = descControllers[i].text;
+                                  programList[i].amount = amountControllers[i].text;
+                                  programList[i].registrationfee = registrationControllers[i].text;
+                                }
+                          //    print(programListToJson(programList));
+                              Map<String, dynamic> data = {
+                                'service_uid':value.dataList.data!.data![0].serviceUid.toString(),
+                                'name': value.dataList.data!.data![0].name.toString(),
+                                'custom':value.dataList.data!.data![0].custom,
+                                'programs' : programListToJson(programList)
+                              };
+
+                          print(data);
+                              myProgramViewViewModel.fetchMyProgramAddListApi(data);
+
+                            },
                             child: Text("Continue"),
                           ),
                         ),
@@ -381,22 +644,71 @@ class _Add_ProgramState extends State<Add_Program> {
                           size: 100.0,
                         ),
                         const NoData()
-                        // Text(
-                        //   value.dataList.message.toString(),
-                        //   style: TextStyle(
-                        //       color: Theme.of(context).primaryColor,
-                        //       fontSize: 20,
-                        //       height: 2),
-                        // )
                       ],
                     ));
             }
           })
-
-
       ),
     )
     )
     );
   }
+
+  void generateControllers(int? len) {
+    for (var i = 0; i < len!; i++) {
+      titleControllers.add(TextEditingController());
+      descControllers.add(TextEditingController());
+      amountControllers.add(TextEditingController());
+      registrationControllers.add(TextEditingController());
+    }
+  }
+
+  List<Map<String, dynamic>> programListToJson(List<Program> programList) {
+    List<Map<String, dynamic>> programJsonList = programList.map((program) => {
+      'program_name': program.program_name,
+      'amount': program.amount,
+      'registrationfee': program.registrationfee,
+      'curriculum_title': program.curriculum_title,
+      'curriculum_desc': program.curriculum_desc,
+    }).toList();
+
+    return programJsonList;
+    //return jsonEncode(programJsonList);
+  }
+
+  generateVariable(String? a) {
+    check.add(false);
+    values.add(a!);
+  }
+
+
 }
+
+
+class Program {
+  final String? program_name;
+   String? amount;
+   String? registrationfee;
+    String? curriculum_title;
+    String? curriculum_desc;
+
+  Program({
+    this.program_name,
+     this.amount = '0',
+     this.registrationfee = '0',
+    required this.curriculum_title,
+    required this.curriculum_desc,
+  });
+}
+
+// class variable {
+//   bool isChecked ;
+//   bool isVisible;
+//
+//   variable({
+//   this.isChecked = false ,
+//   this.isVisible = false,
+// });
+// }
+
+

@@ -16,14 +16,28 @@ class MyProgramViewViewModel with ChangeNotifier {
   }
   Future<void> fetchMyProgramListApi (dynamic data)async{
     setDataList(ApiResponse.loading());
-     print("program list api success");
+
     _myRepo.fetchMyProgramListApi(data).then((value){
+      print("program list api success");
       setDataList(ApiResponse.completed(value));
 
     }).onError((error, stackTrace){
       print("program list api not success");
       print(error);
       setDataList(ApiResponse.error(error.toString()));
+    });
+  }
+  Future<void> fetchMyProgramAddListApi (dynamic data)async{
+   // setDataList(ApiResponse.loading());
+    _myRepo.fetchAddSingleMyProgramListApi(data).then((value){
+      print("single program list api success");
+    //  setDataList(ApiResponse.completed(value));
+
+
+    }).onError((error, stackTrace){
+      print("single program list api not success");
+      print(error);
+     // setDataList(ApiResponse.error(error.toString()));
     });
   }
 }

@@ -17,4 +17,14 @@ class MyProgramRepository {
     }
   }
 
+  Future<MyProgramListModel> fetchAddSingleMyProgramListApi(data)async{
+    try{
+      dynamic response = await _apiServices.getPutApiResponseWithData(AppUrl.programListEndPoint1,data);
+      return response = MyProgramListModel.fromJson(response);
+
+    }catch(e){
+      rethrow ;
+    }
+  }
+
 }

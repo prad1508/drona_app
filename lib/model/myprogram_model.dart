@@ -99,16 +99,20 @@ class Data {
 class Programs {
   String? uid;
   String? programName;
+   String? curriculumTitle;
+   String? curriculumDescription;
   dynamic? amount;
   dynamic? registrationfee;
 
-  Programs({this.uid, this.programName, this.amount, this.registrationfee});
+  Programs({this.uid, this.programName, this.amount, this.registrationfee , this.curriculumDescription='',this.curriculumTitle=''});
 
   Programs.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     programName = json['program_name'];
     amount = json['amount'];
     registrationfee = json['registrationfee'];
+    curriculumTitle = json['curriculum_title'];
+    curriculumDescription = json['curriculum_desc'];
   }
 
   Map<String, dynamic> toJson() {
@@ -117,6 +121,8 @@ class Programs {
     data['program_name'] = this.programName;
     data['amount'] = this.amount;
     data['registrationfee'] = this.registrationfee;
+    data['curriculum_title'] = this.curriculumTitle;
+    data['curriculum_desc'] = this.curriculumDescription;
     return data;
   }
 }
