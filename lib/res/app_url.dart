@@ -23,6 +23,7 @@ class AppUrl {
   static var facilityeEditEndPoint = '$baseUrl/academy/facility';
   static var facilityGetEndPoint = '$baseUrl/academy/myfacility/';
   static var programListEndPoint = '$baseUrl/academy/program/';
+  static var programListEndPoint1 = '$baseUrl/academy/program';
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
@@ -83,7 +84,6 @@ class AppUrl {
   //sigle program update
   static var singleProgramUpdateApi = "$baseUrl/academy/single-program";
   static var singleServiceAddApi = "$baseUrl/academy/addservice";
-  static var programListEndPoint1 = '$baseUrl/academy/program';
 
 
 

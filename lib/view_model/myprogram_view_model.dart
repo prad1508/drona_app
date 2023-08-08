@@ -34,10 +34,11 @@ class MyProgramViewViewModel with ChangeNotifier {
       //  setDataList(ApiResponse.completed(value));
 
 
+
     }).onError((error, stackTrace){
       print("single program list api not success");
       print(error);
-      // setDataList(ApiResponse.error(error.toString()));
+
     });
   }
 }

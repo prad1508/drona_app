@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drona/model/service_program_model.dart';
 
 import '../data/network/base_apiservices.dart';
@@ -12,7 +14,10 @@ class ServiceProgramRepository {
 
     try{
       dynamic response = await _apiServices.getGetApiResponse("${AppUrl.serviceProgramListEndPoint}$serviceUid");
+      log("response==$response");
+
       return response = ServiceProgramModel.fromJson(response);
+
 
     }catch(e){
       rethrow ;

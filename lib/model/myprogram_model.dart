@@ -99,8 +99,9 @@ class Data {
 class Programs {
   String? uid;
   String? programName;
-  String? curriculumTitle;
-  String? curriculumDescription;
+
+   String? curriculumTitle;
+   String? curriculumDescription;
   dynamic? amount;
   dynamic? registrationfee;
 

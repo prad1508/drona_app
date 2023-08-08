@@ -252,11 +252,11 @@ class Program {
 
   factory Program.fromJson(Map<String, dynamic> json) => Program(
     uid: json["uid"],
-    programName: json["program_name"],
-    amount: json["amount"],
-    registrationfee: json["registrationfee"],
-    curriculumTitle: json["curriculum_title"],
-    curriculumDesc: json["curriculum_desc"],
+    programName: json["program_name"]??"",
+    amount: json["amount"]??'',
+    registrationfee: json["registrationfee"]??"",
+    curriculumTitle: json["curriculum_title"]??"",
+    curriculumDesc: json["curriculum_desc"]??"",
   );
 
   Map<String, dynamic> toJson() => {
