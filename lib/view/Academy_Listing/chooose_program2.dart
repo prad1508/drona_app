@@ -38,15 +38,14 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
   late TabController _tabController;
   String serviceName='';
 
-  getData()
-  async {
+  /*getData() async {
     final prefs = await SharedPreferences.getInstance();
     serviceName = prefs.getString('service_name')!;
-  }
+  }*/
 
   @override
   void initState() {
-    getData();
+   // getData();
     for (var node in programViewViewModel.focusNodes) {
       node.addListener(() {
         setState(() {});
@@ -67,8 +66,25 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
     serviceId();
   }
 
-  TextEditingController curriculumTitle = TextEditingController();
-  TextEditingController curriculumTitleDescription = TextEditingController();
+  TextEditingController curriculumTitle1 = TextEditingController();
+  TextEditingController curriculumTitle2 = TextEditingController();
+  TextEditingController curriculumTitle3 = TextEditingController();
+  TextEditingController curriculumTitle4 = TextEditingController();
+  TextEditingController curriculumTitle5 = TextEditingController();
+  TextEditingController curriculumTitle6 = TextEditingController();
+  TextEditingController curriculumTitle7 = TextEditingController();
+  TextEditingController curriculumTitle8 = TextEditingController();
+  TextEditingController curriculumTitle9 = TextEditingController();
+  TextEditingController curriculumTitleDescription1 = TextEditingController();
+  TextEditingController curriculumTitleDescription2 = TextEditingController();
+  TextEditingController curriculumTitleDescription3 = TextEditingController();
+  TextEditingController curriculumTitleDescription4 = TextEditingController();
+  TextEditingController curriculumTitleDescription5 = TextEditingController();
+  TextEditingController curriculumTitleDescription6 = TextEditingController();
+  TextEditingController curriculumTitleDescription7 = TextEditingController();
+  TextEditingController curriculumTitleDescription8 = TextEditingController();
+  TextEditingController curriculumTitleDescription9 = TextEditingController();
+
 
   void _handleTabChange() {
     int currentIndex = _tabController.index;
@@ -78,11 +94,8 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
 
   //load program with service id
   serviceId() async {
-    final prefsData = await SharedPreferences.getInstance();
-    List<String>? serviceId = prefsData.getStringList('SelectedServices');
-    print("11111");
-    print(serviceId);
-    programViewViewModel.fetchProgramListApi(serviceId![0].toString());
+
+    programViewViewModel.fetchProgramListApi(widget.serviceUid);
   }
 
   @override
@@ -106,8 +119,8 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
               title: Row(
                 children: [
                   ProgressPills(
-                      number: 7,
-                      active: 5,
+                      number: 4,
+                      active: 2,
                       color: Theme.of(context).primaryColorLight),
                 ],
               ),
@@ -273,9 +286,6 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                                         ),
                                                                       )
                                                                           : Container(),
-
-
-
                                                                     ],
                                                                   ),
                                                                   programViewViewModel.bylevelBeginner
@@ -291,7 +301,7 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                                         height: 50,
                                                                         width: w * .88,
                                                                         child: TextField(
-                                                                          controller: curriculumTitle,
+                                                                          controller: curriculumTitle1,
                                                                           decoration: InputDecoration(
                                                                               contentPadding: const EdgeInsets.all(10),
                                                                               hintText: 'Enter Curriculum Title',
@@ -311,10 +321,10 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                                           child: Padding(
                                                                             padding: EdgeInsets.all(10),
                                                                             child: TextField(
-                                                                              controller: curriculumTitleDescription,
+                                                                              controller: curriculumTitleDescription1,
                                                                               maxLines: 3,
-                                                                              decoration: InputDecoration(
-                                                                                  contentPadding: const EdgeInsets.all(5),
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
                                                                                   hintText: 'Enter Curriculum Description',
                                                                                   border:
                                                                                   OutlineInputBorder(borderSide: BorderSide.none)
@@ -341,51 +351,110 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
-                                                                  Checkbox(
-                                                                      checkColor: Colors.white,
-                                                                      activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelIntermediate,
-                                                                      onChanged: (_) { programViewViewModel.togglebylevelIntermediate();
-                                                                      programViewViewModel.handleTextFieldChange('');}
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                          checkColor: Colors.white,
+                                                                          activeColor: Theme.of(context).primaryColor,
+                                                                          value: programViewViewModel.bylevelIntermediate,
+                                                                          onChanged: (_) { programViewViewModel.togglebylevelIntermediate();
+                                                                          programViewViewModel.handleTextFieldChange('');}
 
+                                                                      ),
+                                                                      Text(
+                                                                        'Intermediate', style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+
+                                                                      programViewViewModel.bylevelIntermediate ? SizedBox(
+                                                                        width: 150,
+                                                                        child:
+                                                                        TextFormField(focusNode: programViewViewModel.focusNodes[1],
+                                                                          controller: programViewViewModel.txtBylevelIntermediate,
+                                                                          onChanged: (newValue) {
+                                                                            programViewViewModel.handleTextFieldChange(newValue);
+                                                                          },
+                                                                          onTap: () {},
+                                                                          keyboardType: TextInputType.number,
+                                                                          decoration: InputDecoration(hintText: '  Fees',
+                                                                            contentPadding: const EdgeInsets.all(15),
+                                                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
+                                                                                color: Colors.blue, width: 1.0),
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            prefixIcon: Container(
+                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodes[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.all(15),
+                                                                                  child: Text('₹/M',
+                                                                                    style: TextStyle(color: programViewViewModel.focusNodes[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Intermediate', style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+                                                                  programViewViewModel.bylevelIntermediate
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelIntermediate
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle2,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription2,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelIntermediate ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodes[1],
-                                                                  controller: programViewViewModel.txtBylevelIntermediate,
-                                                                  onChanged: (newValue) {
-                                                                    programViewViewModel.handleTextFieldChange(newValue);
-                                                                  },
-                                                                  onTap: () {},
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration: InputDecoration(hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
-                                                                        color: Colors.blue, width: 1.0),
-                                                                      borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(15),
-                                                                          child: Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodes[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         //Advance
                                                         const SizedBox(
@@ -395,56 +464,113 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                      checkColor: Colors.white,
-                                                                      activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelAdvance,
-                                                                      onChanged: (_) {
-                                                                        programViewViewModel.togglebylevelAdvance();
-                                                                        programViewViewModel.handleTextFieldChange('');
-                                                                      }
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                          checkColor: Colors.white,
+                                                                          activeColor: Theme.of(context).primaryColor,
+                                                                          value: programViewViewModel.bylevelAdvance,
+                                                                          onChanged: (_) {
+                                                                            programViewViewModel.togglebylevelAdvance();
+                                                                            programViewViewModel.handleTextFieldChange('');
+                                                                          }
+                                                                      ),
+                                                                      Text(
+                                                                        'Advance', style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+
+                                                                      programViewViewModel.bylevelAdvance
+                                                                          ? SizedBox(width: 150,child:
+                                                                      TextFormField(focusNode: programViewViewModel.focusNodes[2],
+                                                                        controller: programViewViewModel.txtBylevelAdvance,
+                                                                        onTap:
+                                                                            () {},
+                                                                        onChanged: (newValue) {
+                                                                          programViewViewModel.handleTextFieldChange(newValue);
+                                                                        },
+                                                                        keyboardType: TextInputType.number,
+                                                                        decoration: InputDecoration(
+                                                                          hintText: '  Fees',
+                                                                          contentPadding: const EdgeInsets.all(15),
+                                                                          border: OutlineInputBorder(
+                                                                            borderRadius: BorderRadius.circular(10),),
+                                                                          focusedBorder: OutlineInputBorder(
+                                                                            borderSide: const BorderSide(
+                                                                                color:
+                                                                                Colors.blue,
+                                                                                width: 1.0),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                          ),
+                                                                          prefixIcon: Container(
+                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodes[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(15),
+                                                                                child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                      ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Advance', style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+                                                                  programViewViewModel.bylevelAdvance
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelAdvance
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle3,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription3,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelAdvance
-                                                                  ? SizedBox(width: 150,child:
-                                                              TextFormField(focusNode: programViewViewModel.focusNodes[2],
-                                                                controller: programViewViewModel.txtBylevelAdvance,
-                                                                onTap:
-                                                                    () {},
-                                                                onChanged: (newValue) {
-                                                                  programViewViewModel.handleTextFieldChange(newValue);
-                                                                },
-                                                                keyboardType: TextInputType.number,
-                                                                decoration: InputDecoration(
-                                                                  hintText: '  Fees',
-                                                                  contentPadding: const EdgeInsets.all(15),
-                                                                  border: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),),
-                                                                  focusedBorder: OutlineInputBorder(
-                                                                    borderSide: const BorderSide(
-                                                                        color:
-                                                                        Colors.blue,
-                                                                        width: 1.0),
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(10),
-                                                                  ),
-                                                                  prefixIcon: Container(
-                                                                      decoration: BoxDecoration(color: programViewViewModel.focusNodes[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                      child: Padding(
-                                                                        padding: const EdgeInsets.all(15),
-                                                                        child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                        ),
-                                                                      )),
-                                                                ),
-                                                              ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         //Professional
                                                         const SizedBox(
@@ -458,63 +584,120 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                      checkColor:
-                                                                      Colors.white,
-                                                                      activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelprof,
-                                                                      onChanged: (newValue) {
-                                                                        programViewViewModel.togglebylevelprof();
-                                                                        programViewViewModel.handleTextFieldChange('');
-                                                                      }
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                          checkColor:
+                                                                          Colors.white,
+                                                                          activeColor: Theme.of(context).primaryColor,
+                                                                          value: programViewViewModel.bylevelprof,
+                                                                          onChanged: (newValue) {
+                                                                            programViewViewModel.togglebylevelprof();
+                                                                            programViewViewModel.handleTextFieldChange('');
+                                                                          }
 
+                                                                      ),
+                                                                      Text(
+                                                                        'Professional',
+                                                                        style: Theme.of(
+                                                                            context)
+                                                                            .textTheme
+                                                                            .bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+
+                                                                      programViewViewModel.bylevelprof
+                                                                          ? SizedBox(width: 150, child:
+                                                                      TextFormField(focusNode: programViewViewModel.focusNodes[3],
+                                                                        controller: programViewViewModel.txtBylevelprof,
+                                                                        onTap:
+                                                                            () {},
+                                                                        onChanged: (newValue) {
+                                                                          programViewViewModel.handleTextFieldChange(newValue);
+                                                                        },
+                                                                        keyboardType: TextInputType.number,
+                                                                        decoration: InputDecoration(
+                                                                          hintText: '  Fees',
+                                                                          contentPadding: const EdgeInsets.all(15),
+                                                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                                                                          focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                          ),
+                                                                          prefixIcon: Container(
+                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodes[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                              child: Padding(
+                                                                                padding:
+                                                                                const EdgeInsets.all(15),
+                                                                                child:
+                                                                                Text(
+                                                                                  '₹/M',
+                                                                                  style: TextStyle(color: programViewViewModel.focusNodes[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                      ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Professional',
-                                                                    style: Theme.of(
-                                                                        context)
-                                                                        .textTheme
-                                                                        .bodyMedium,
-                                                                  ),
+                                                                  programViewViewModel.bylevelprof
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelprof
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle4,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription4,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelprof
-                                                                  ? SizedBox(width: 150, child:
-                                                              TextFormField(focusNode: programViewViewModel.focusNodes[3],
-                                                                controller: programViewViewModel.txtBylevelprof,
-                                                                onTap:
-                                                                    () {},
-                                                                onChanged: (newValue) {
-                                                                  programViewViewModel.handleTextFieldChange(newValue);
-                                                                },
-                                                                keyboardType: TextInputType.number,
-                                                                decoration: InputDecoration(
-                                                                  hintText: '  Fees',
-                                                                  contentPadding: const EdgeInsets.all(15),
-                                                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                                                                  focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                    borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(10),
-                                                                  ),
-                                                                  prefixIcon: Container(
-                                                                      decoration: BoxDecoration(color: programViewViewModel.focusNodes[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                      child: Padding(
-                                                                        padding:
-                                                                        const EdgeInsets.all(15),
-                                                                        child:
-                                                                        Text(
-                                                                          '₹/M',
-                                                                          style: TextStyle(color: programViewViewModel.focusNodes[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                        ),
-                                                                      )),
-                                                                ),
-                                                              ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         const SizedBox(
                                                           height: 15,
@@ -818,29 +1001,29 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                                     "program_name": "beginner",
                                                                     "amount": programViewViewModel.txtBylevelBeginner.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner.text,
                                                                     "registrationfee": programViewViewModel.txtBylevelBeginner2.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner2.text,
-                                                                    "curriculum_title":curriculumTitle.text,
-                                                                    "curriculum_desc":curriculumTitleDescription.text,
+                                                                    "curriculum_title":curriculumTitle1.text,
+                                                                    "curriculum_desc":curriculumTitleDescription1.text,
                                                                   },
                                                                   {
                                                                     "program_name": "intermediate",
                                                                     "amount": programViewViewModel.txtBylevelIntermediate.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate.text,
                                                                     "registrationfee": programViewViewModel.txtBylevelIntermediate2.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate2.text,
-                                                                    "curriculum_title":"ABC",
-                                                                    "curriculum_desc":"XYZ"
+                                                                    "curriculum_title":curriculumTitle2.text,
+                                                                    "curriculum_desc":curriculumTitleDescription2.text,
                                                                   },
                                                                   {
                                                                     "program_name": "advance",
                                                                     "amount": programViewViewModel.txtBylevelAdvance.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance.text,
                                                                     "registrationfee": programViewViewModel.txtBylevelAdvance2.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance2.text,
-                                                                    "curriculum_title":"ABC",
-                                                                    "curriculum_desc":"XYZ"
+                                                                    "curriculum_title":curriculumTitle3.text,
+                                                                    "curriculum_desc":curriculumTitleDescription3.text,
                                                                   },
                                                                   {
                                                                     "program_name": "professional",
                                                                     "amount": programViewViewModel.txtBylevelprof.text.isEmpty ? '0' : programViewViewModel.txtBylevelprof.text,
                                                                     "registrationfee": programViewViewModel.txtBylevelProf2.text.isEmpty ? '0' : programViewViewModel.txtBylevelProf2.text,
-                                                                    "curriculum_title":"ABC",
-                                                                    "curriculum_desc":"XYZ"
+                                                                    "curriculum_title":curriculumTitle4.text,
+                                                                    "curriculum_desc":curriculumTitleDescription4.text,
                                                                   }
                                                                 ]
                                                               };
@@ -862,60 +1045,118 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                    checkColor: Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelUnder12,
-                                                                    onChanged: (value) {
-                                                                      programViewViewModel.togglebylevelUnder12();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        checkColor: Colors.white,
+                                                                        activeColor: Theme.of(context).primaryColor,
+                                                                        value: programViewViewModel.bylevelUnder12,
+                                                                        onChanged: (value) {
+                                                                          programViewViewModel.togglebylevelUnder12();
+                                                                          programViewViewModel.handleTextFieldChange('');
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        'Under 12',
+                                                                        style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+                                                                      programViewViewModel.bylevelUnder12
+                                                                          ? SizedBox(
+                                                                        width: 150,
+                                                                        child:
+                                                                        TextFormField(focusNode: programViewViewModel.focusNodesByage[0],
+                                                                          controller: programViewViewModel.txtBylevelUnder12,
+                                                                          onTap: () {},
+                                                                          onChanged: (value){
+                                                                            programViewViewModel.handleTextFieldChange(value);
+                                                                          },
+                                                                          keyboardType: TextInputType.number,
+                                                                          decoration:
+                                                                          InputDecoration(
+                                                                            hintText: '  Fees',
+                                                                            contentPadding: const EdgeInsets.all(15),
+                                                                            border:
+                                                                            OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
+                                                                            focusedBorder:
+                                                                            OutlineInputBorder(
+                                                                              borderSide: const BorderSide(
+                                                                                  color: Colors.blue,
+                                                                                  width: 1.0),
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            prefixIcon: Container(
+                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.all(15),
+                                                                                  child:
+                                                                                  Text('₹/M',
+                                                                                    style: TextStyle(color: programViewViewModel.focusNodesByage[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Under 12',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+
+                                                                  programViewViewModel.bylevelUnder12
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelUnder12
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle5,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription5,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
+
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelUnder12
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodesByage[0],
-                                                                  controller: programViewViewModel.txtBylevelUnder12,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange(value);
-                                                                  },
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         //under 14
                                                         const SizedBox(
@@ -925,67 +1166,126 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                    checkColor:
-                                                                    Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelUnder14,
-                                                                    onChanged: (value) {
-                                                                      programViewViewModel.togglebylevelUnder14();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        checkColor:
+                                                                        Colors.white,
+                                                                        activeColor: Theme.of(context).primaryColor,
+                                                                        value: programViewViewModel.bylevelUnder14,
+                                                                        onChanged: (value) {
+                                                                          programViewViewModel.togglebylevelUnder14();
+                                                                          programViewViewModel.handleTextFieldChange('');
+                                                                        },
+                                                                      ),
+
+                                                                      Text(
+                                                                        'Under 14',
+                                                                        style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+
+                                                                      SizedBox(width: w*0.22,),
+                                                                      programViewViewModel.bylevelUnder14
+                                                                          ? SizedBox(
+                                                                        width: 150,
+                                                                        child:
+                                                                        TextFormField(
+                                                                          focusNode: programViewViewModel.focusNodesByage[1],
+                                                                          controller: programViewViewModel.txtBylevelUnder14,
+                                                                          onTap: () {},
+                                                                          onChanged: (value){
+                                                                            programViewViewModel.handleTextFieldChange(value);
+                                                                          },
+                                                                          keyboardType:
+                                                                          TextInputType
+                                                                              .number,
+                                                                          decoration:
+                                                                          InputDecoration(
+                                                                            hintText: '  Fees',
+                                                                            contentPadding: const EdgeInsets.all(15),
+                                                                            border: OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),),
+                                                                            focusedBorder:
+                                                                            OutlineInputBorder(
+                                                                              borderSide: const BorderSide(
+                                                                                  color: Colors.blue,
+                                                                                  width: 1.0),
+                                                                              borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                            ),
+                                                                            prefixIcon: Container(
+                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                                child: Padding(
+                                                                                  padding:
+                                                                                  const EdgeInsets.all(15),
+                                                                                  child:
+                                                                                  Text(
+                                                                                    '₹/M',
+                                                                                    style: TextStyle(color: programViewViewModel.focusNodesByage[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Under 14',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+
+                                                                  programViewViewModel.bylevelUnder14
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelUnder14
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle6,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription6,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelUnder14
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(
-                                                                  focusNode: programViewViewModel.focusNodesByage[1],
-                                                                  controller: programViewViewModel.txtBylevelUnder14,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange(value);
-                                                                  },
-                                                                  keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border: OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(10),),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text(
-                                                                            '₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         //Under 16
                                                         const SizedBox(
@@ -995,65 +1295,124 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                    checkColor:
-                                                                    Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value:programViewViewModel.bylevelUnder16,
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      programViewViewModel.togglebylevelUnder16();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        checkColor:
+                                                                        Colors.white,
+                                                                        activeColor: Theme.of(context).primaryColor,
+                                                                        value:programViewViewModel.bylevelUnder16,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          programViewViewModel.togglebylevelUnder16();
+                                                                          programViewViewModel.handleTextFieldChange('');
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        'Under 16',
+                                                                        style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+
+
+                                                                      programViewViewModel.bylevelUnder16
+                                                                          ? SizedBox(
+                                                                        width: 150,
+                                                                        child:
+                                                                        TextFormField(
+                                                                          focusNode: programViewViewModel.focusNodesByage[2],
+                                                                          controller: programViewViewModel.txtBylevelUnder16,
+                                                                          onTap: () {},
+                                                                          onChanged: (value){
+                                                                            programViewViewModel.handleTextFieldChange('');
+                                                                          },
+                                                                          keyboardType: TextInputType.number,
+                                                                          decoration:
+                                                                          InputDecoration(hintText: '  Fees',
+                                                                            contentPadding: const EdgeInsets.all(15),
+                                                                            border:
+                                                                            OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            focusedBorder:
+                                                                            OutlineInputBorder(
+                                                                              borderSide: const BorderSide(
+                                                                                  color: Colors.blue,
+                                                                                  width: 1.0),
+                                                                              borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                            ),
+                                                                            prefixIcon: Container(
+                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.all(15),
+                                                                                  child: Text(
+                                                                                    '₹/M',
+                                                                                    style: TextStyle(color: programViewViewModel.focusNodesByage[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Under 16',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+
+                                                                  programViewViewModel.bylevelUnder16
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelUnder16
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle7,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription7,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelUnder16
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(
-                                                                  focusNode: programViewViewModel.focusNodesByage[2],
-                                                                  controller: programViewViewModel.txtBylevelUnder16,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange('');
-                                                                  },
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration:
-                                                                  InputDecoration(hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(15),
-                                                                          child: Text(
-                                                                            '₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         //Adult
                                                         const SizedBox(
@@ -1063,65 +1422,123 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: <Widget>[
-                                                              Row(
+                                                              Column(
                                                                 children: [
-                                                                  Checkbox(
-                                                                    checkColor: Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelAdult,
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      programViewViewModel.togglebylevelAdult();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        checkColor: Colors.white,
+                                                                        activeColor: Theme.of(context).primaryColor,
+                                                                        value: programViewViewModel.bylevelAdult,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          programViewViewModel.togglebylevelAdult();
+                                                                          programViewViewModel.handleTextFieldChange('');
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        'Adult',
+                                                                        style: Theme.of(context).textTheme.bodyMedium,
+                                                                      ),
+                                                                      SizedBox(width: w*0.22,),
+
+                                                                      programViewViewModel.bylevelAdult
+                                                                          ? SizedBox(
+                                                                        width: 150,
+                                                                        child:
+                                                                        TextFormField(focusNode: programViewViewModel.focusNodesByage[3],
+                                                                          controller: programViewViewModel.txtBylevelAdult,
+                                                                          onTap:
+                                                                              () {},
+                                                                          onChanged: (value){
+                                                                            programViewViewModel.handleTextFieldChange('');
+                                                                          },
+                                                                          keyboardType:
+                                                                          TextInputType
+                                                                              .number,
+                                                                          decoration:
+                                                                          InputDecoration(
+                                                                            hintText: '  Fees',
+                                                                            contentPadding: const EdgeInsets.all(15),
+                                                                            border:
+                                                                            OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            focusedBorder:
+                                                                            OutlineInputBorder(
+                                                                              borderSide: const BorderSide(
+                                                                                  color: Colors.blue,
+                                                                                  width: 1.0),
+                                                                              borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                            ),
+                                                                            prefixIcon: Container(
+                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                                child: Padding(padding: const EdgeInsets.all(15),
+                                                                                  child:
+                                                                                  Text('₹/M',
+                                                                                    style: TextStyle(color: programViewViewModel.focusNodesByage[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                          : Container(),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Adult',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
+
+                                                                  programViewViewModel.bylevelAdult
+                                                                      ? SizedBox(height: h*0.02) : SizedBox(),
+                                                                  programViewViewModel.bylevelAdult
+                                                                      ?
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Text("Curriculum / Program Details"),
+                                                                      const SizedBox(height: 10),
+                                                                      SizedBox(
+                                                                        height: 50,
+                                                                        width: w * .88,
+                                                                        child: TextField(
+                                                                          controller: curriculumTitle8,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: const EdgeInsets.all(10),
+                                                                              hintText: 'Enter Curriculum Title',
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  borderSide:
+                                                                                  const BorderSide(color: Color(0xffDFE1E4)))),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(height: 10),
+                                                                      Container(
+                                                                          height: 100,
+                                                                          width: w * .88,
+                                                                          decoration: BoxDecoration(
+                                                                              border: Border.all(color: const Color(0xffDFE1E4)),
+                                                                              borderRadius: BorderRadius.circular(10)),
+                                                                          child: Padding(
+                                                                            padding: EdgeInsets.all(10),
+                                                                            child: TextField(
+                                                                              controller: curriculumTitleDescription8,
+                                                                              maxLines: 3,
+                                                                              decoration: const InputDecoration(
+                                                                                  contentPadding: EdgeInsets.all(5),
+                                                                                  hintText: 'Enter Curriculum Description',
+                                                                                  border:
+                                                                                  OutlineInputBorder(borderSide: BorderSide.none)
+                                                                                /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),borderSide:const BorderSide(color: Color(0xffDFE1E4)))*/
+
+                                                                              ),
+                                                                            ),
+                                                                          )),
+
+
+                                                                    ],
+                                                                  ) : Container(),
                                                                 ],
                                                               ),
-                                                              programViewViewModel.bylevelAdult
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodesByage[3],
-                                                                  controller: programViewViewModel.txtBylevelAdult,
-                                                                  onTap:
-                                                                      () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange('');
-                                                                  },
-                                                                  keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(padding: const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
+
                                                             ]),
                                                         const SizedBox(
                                                           height: 15,
@@ -1432,22 +1849,30 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                                   {
                                                                     "program_name": "Under 12",
                                                                     "amount": programViewViewModel.txtBylevelUnder12.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder12Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12Second.text
+                                                                    "registrationfee": programViewViewModel.txtBylevelUnder12Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12Second.text,
+                                                                    "curriculum_title":curriculumTitle5.text,
+                                                                    "curriculum_desc":curriculumTitleDescription5.text
                                                                   },
                                                                   {
                                                                     "program_name": "Under 14",
                                                                     "amount": programViewViewModel.txtBylevelUnder14.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder14Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14Second.text
+                                                                    "registrationfee": programViewViewModel.txtBylevelUnder14Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14Second.text,
+                                                                    "curriculum_title":curriculumTitle6.text,
+                                                                    "curriculum_desc":curriculumTitleDescription6.text
                                                                   },
                                                                   {
                                                                     "program_name": "Under 16",
                                                                     "amount": programViewViewModel.txtBylevelUnder16.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder16Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16Second.text
+                                                                    "registrationfee": programViewViewModel.txtBylevelUnder16Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16Second.text,
+                                                                    "curriculum_title":curriculumTitle7.text,
+                                                                    "curriculum_desc":curriculumTitleDescription7.text
                                                                   },
                                                                   {
                                                                     "program_name": "Adult",
                                                                     "amount": programViewViewModel.txtBylevelAdult.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdult.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelAdultSecond.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdultSecond.text
+                                                                    "registrationfee": programViewViewModel.txtBylevelAdultSecond.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdultSecond.text,
+                                                                    "curriculum_title":curriculumTitle8.text,
+                                                                    "curriculum_desc":curriculumTitleDescription8.text
                                                                   }
                                                                 ]
                                                               };
@@ -1731,12 +2156,12 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                               rounded: true,
                               color: isContinueButtonEnabled ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
                               onPress: () async {
-                                print(data);
+                                print("data==$data");
                                 // programViewViewModel.isContinueButtonEnabled ?
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 /// open modal
-                                registration.programPost(data, context);
-                                openModal(context , serviceName);
+                                registration.programPostFromDashboard(data, context, serviceUid:  widget.serviceUid, serviceName: serviceName);
+                               /* openModal(context , serviceName);*/
 
                                 //     :null;
                               },

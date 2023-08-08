@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:drona/view/academy/academy_setting.dart';
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/profile/view_profile_details.dart';
 import 'package:drona/view/registeration/login_view.dart';
 import 'package:drona/view/reports/attendance.dart';
@@ -336,8 +337,8 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(
-                                      () => SearchBatchList(
-                                    pathPage: 'dashBoard',
+                                      () => Layout(
+                                   selectedIndex: 2,
                                   ),
                                   transition: Transition.rightToLeft);
                             },
@@ -420,28 +421,7 @@ class _MainMenuState extends State<MainMenu> {
                               ),
                             ),
                           ),
-                          ListTile(
-                            onTap: () {
-                              Get.to(() => const NewAssignment(),
-                                  transition: Transition.rightToLeft);
-                            },
-                            leading: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey.shade100,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Image(
-                                    image:
-                                    AssetImage('assets/images/coach.png'),
-                                    width: 15,
-                                  ),
-                                )),
-                            title: const Text(
-                              'Assignments',
-                            ),
-                            trailing:
-                            const Icon(Icons.arrow_forward_ios, size: 20),
-                          ),
+
                           // ListTile(
                           //   onTap: () {
                           //     /* Navigator.push(
@@ -532,7 +512,7 @@ class _MainMenuState extends State<MainMenu> {
                                 ),
                               );*/
                               //   Get.to(()=> const Trainee_Listing(),transition: Transition.rightToLeft);
-                              Get.to(() => AddTraineeList(),
+                              Get.to(() => const Layout(selectedIndex: 3),
                                   transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(

@@ -52,5 +52,18 @@ class CoachlistRepository {
     }
   }
 
+  Future<dynamic> addMultiCoachApi(dynamic data) async {
+    try {
+      print("addMultiCoachApi post api success");
+      dynamic response =
+      await _apiServices.getPostApiResponse(AppUrl.multiCoachEndPoint, data);
+      return response;
+    } catch (e) {
+      print("$e");
+      print("addMultiCoachApi post api not success");
+      rethrow;
+    }
+  }
+
 
 }

@@ -4,6 +4,7 @@ import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../batch_listing/ViewBatchDetails2.dart';
+import '../reports/attendance.dart';
 import '../trainee_listing/add_trainee_list.dart';
 import '../batch_listing/batch_list.dart';
 import '../batch_listing/batchlist_search.dart';
@@ -29,7 +30,7 @@ class _LayoutState extends State<Layout> {
 
   final pages = [
     const HomeScreen(),
-    const SessionList(),
+    const Attendance(),
     SearchBatchList(
       pathPage: 'dashBoard',
     ),
@@ -91,6 +92,16 @@ class _LayoutState extends State<Layout> {
             ),
           );
         });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      pageIndex = widget.selectedIndex;
+
+    });
+    super.initState();
   }
 
   @override

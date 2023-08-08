@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drona/view/Academy_Listing/select_multiCoach.dart';
 import 'package:drona/view/registeration/choose_facility.dart';
 import 'package:drona/view/registeration/choose_service.dart';
 import 'package:drona/view/registeration/login_view.dart';
@@ -15,6 +16,7 @@ import '../model/user_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 import '../view/Academy_Listing/chooose_program2.dart';
+import '../view/Academy_Listing/choose_facility2.dart';
 import '../view/Academy_Listing/facility_program.dart';
 import '../view/dashboard/layout.dart';
 import '../view/registeration/choose_program.dart';
@@ -191,6 +193,26 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+  /// service post from dashboard
+  Future<void> servicePostFromDashBoard(dynamic data, BuildContext context, {required String serviceUid, required String serviceName}) async {
+    setLoading(true);
+   //setUid(uid);
+
+  print("serviceUid==$serviceUid");
+  print("serviceName==$serviceName");
+
+    _myRepo.servicePostSingleApi(data).then((value) async {
+      setLoading(false);
+      Utils.flushBarErrorMessage('Services update Successfully', context);
+      //Navigator.pushNamed(context, RoutesName.chooseFacility);
+      Get.to(() =>  ChooseFacility2(serviceUid: serviceUid, serviceName: serviceName),transition: Transition.rightToLeft);
+
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
 
   //////////////add facility ////////////////////////////////////
   Future<void> facilityePost(dynamic data, BuildContext context, {required String path, required String serviceUid}) async {
@@ -280,6 +302,26 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
+  /// program post from onboarding
+  Future<void> programPostFromDashboard(dynamic data, BuildContext context, {required String serviceUid, required String serviceName}) async {
+
+    setLoading(true);
+    _myRepo.programPostListApi(data).then((value) async {
+      setLoading(false);
+      Get.to(() =>  MultiCoachScreen(serviceUid: serviceUid, serviceName: serviceName,));
+
+
+    }).onError((error, stackTrace) {
+      setLoading(false);
+
+      //    var newerror = jsonDecode(error.toString()) ;
+
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+
 
   //////////////////////Details for owner /////////////////////////////////////
   Future<void> detailsOwner(dynamic data, BuildContext context) async {

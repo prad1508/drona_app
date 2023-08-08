@@ -1,4 +1,6 @@
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../res/widget/datefield.dart';
 import 'bar_chart.dart';
@@ -21,34 +23,37 @@ class _AttendanceState extends State<Attendance> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {
-                  //=>
-                     Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-          title: Text(
-            'Attendance',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                //=>
+                setState(() {
+                  Get.to(()=> const Layout(selectedIndex: 0));
+
+                });
+              },
+            ),
+          ],
         ),
-        body: SingleChildScrollView(
+        title: Text(
+          'Attendance',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+           // mainAxisSize: MainAxisSize.max,
             children: [
               const SizedBox(
                 height: 20,
@@ -60,7 +65,7 @@ class _AttendanceState extends State<Attendance> {
                     child: Text(
                       'Overall Avg Attendance',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     )),
               ),
               const SizedBox(
@@ -219,7 +224,7 @@ class _AttendanceState extends State<Attendance> {
                     child: Text(
                       'Batch Wise Attendance',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     )),
               ),
               const SizedBox(

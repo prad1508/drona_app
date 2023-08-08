@@ -27,6 +27,7 @@ import '../../utils/color.dart' as AppColor;
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/trainee_view_model.dart';
 import '../dashboard/layout.dart';
+import '../performance/new_assignment.dart';
 import 'activate.dart';
 import 'add_trainee_in_existingBatch.dart';
 import 'deactivate.dart';
@@ -162,6 +163,21 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             },
                             child: Text(
                               'Edit Batch',
+                              style:
+                              Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ): Container(),
+
+                        status == true
+                            ? Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() =>  const NewAssignment(), transition:  Transition.rightToLeft);
+                            },
+                            child: Text(
+                              'Performance Assessment',
                               style:
                               Theme.of(context).textTheme.bodyMedium,
                             ),

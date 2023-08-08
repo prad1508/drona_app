@@ -23,6 +23,8 @@ class Servicelist_Page extends StatefulWidget {
 class _Servicelist_PageState extends State<Servicelist_Page> {
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
 
+  var catUid = '';
+
   initState() {
     super.initState();
     academyListViewViewModel.fetchAcademyListApi();
@@ -60,7 +62,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                 MaterialPageRoute(
                     builder: (context) => Service_Offering_Page()),
               );*/
-              Get.to(()=> const Service_Offering_Page(),transition: Transition.rightToLeft);
+              Get.to(()=>  Service_Offering_Page(serviceUid: catUid.toString()),transition: Transition.rightToLeft);
 
             },
           )
@@ -95,6 +97,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                                 ListView.builder(
                                     itemCount: value.dataList.data?.totalService,
                                     itemBuilder: (context, index) {
+                                        catUid = value.dataList.data!.services[0].catUid;
                                       return
                                         Column(
                                           children: [
@@ -102,6 +105,7 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
                                               onTap: () {
                                                 //ChooseFacility
                                                 value.dataList.data!.services[index].status == "active" ?
+
                                                 Get.to(() => FacilityProgram(serviceUid: value.dataList.data!.services[index].uid),
                                                     transition: Transition.rightToLeft)  : Get.to(() => ChooseFacility2(serviceUid: value.dataList.data!.services[index].uid, serviceName: value.dataList.data!.services[index].serviceName,),
                                                     transition: Transition.rightToLeft);

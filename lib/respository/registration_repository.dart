@@ -51,6 +51,18 @@ class RegistrationRepository {
     }
   }
 
+  //services single post
+
+  Future<dynamic> servicePostSingleApi(dynamic data) async {
+    try {
+      dynamic response =
+      await _apiServices.getPostApiResponse(AppUrl.singleServiceAddApi, data);
+      print("data==$response");
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
   //facility post 
 
  Future<dynamic> facilityePostListApi(dynamic data) async {

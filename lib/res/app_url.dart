@@ -26,15 +26,19 @@ class AppUrl {
   static var myProgramListEndPoint = '$baseUrl/academy/myprogram/';
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
+
+
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimg';
   static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
 
   //coach
-  static var UserprofileAdd = '$baseUrl/academy/coach';
-  static var coachlistListEndPoint = '$baseUrl/academy/coach';
+  static var UserprofileAdd ='$baseUrl/academy/coach';
+  static var coachlistListEndPoint ='$baseUrl/academy/coach';
+  static var multiCoachEndPoint = '$baseUrl/academy/service/multiple-coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
   static var coachActivate = '$baseUrl/academy/coach/activate';
   static var coachDeactivate = '$baseUrl/academy/coach/deactivate';
+
 
   //batch
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
@@ -78,6 +82,8 @@ class AppUrl {
 
   //sigle program update
   static var singleProgramUpdateApi = "$baseUrl/academy/single-program";
+  static var singleServiceAddApi = "$baseUrl/academy/addservice";
+  static var programListEndPoint1 = '$baseUrl/academy/program';
 
 
 

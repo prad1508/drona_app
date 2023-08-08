@@ -4,12 +4,22 @@ import 'package:get/get.dart';
 import '../model/active_deactive_model.dart';
 import '../model/coach_list_model.dart';
 import '../model/coachlist_model.dart';
+import '../view/academy/service_program.dart';
 import '../view/coach_listing/coach_listselected.dart';
 import '/data/response/api_response.dart';
 import '/respository/coachlist_repository.dart';
 
 class CoachlistViewViewModel with ChangeNotifier {
   final _myRepo = CoachlistRepository();
+  bool _loading = false;
+  bool get loading => _loading;
+
+
+
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   ApiResponse<CoachlistListModel> dataList = ApiResponse.loading();
   ApiResponse<CoachlistModel> dataList1 = ApiResponse.loading();
@@ -89,6 +99,23 @@ class CoachlistViewViewModel with ChangeNotifier {
       print("deActivateCoachListApi error$error");
     });
   }
+
+  Future<void> addMultiCoachApi(dynamic data, BuildContext context) async {
+    setLoading(true);
+
+    _myRepo.addMultiCoachApi(data).then((value) async {
+      setLoading(false);
+
+      Get.to(() =>  const Servicelist_Page(),transition: Transition.rightToLeft);
+
+      Utils.flushBarErrorMessage(value['msg'], context);
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      print("error.toString()");
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
 
 
 

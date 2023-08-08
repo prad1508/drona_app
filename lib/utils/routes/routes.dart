@@ -18,7 +18,6 @@ import '../../view/dashboard/layout.dart';
 import '../../view/language.dart';
 import '../../view/profile/batch_list.dart';
 import '../../view/profile/view_profile.dart';
-import '../../view/registeration/choose _service.dart';
 import '../../view/registeration/choose_program.dart';
 import '../../view/registeration/detail_filled.dart';
 import '../../view/registeration/reset_password.dart';
