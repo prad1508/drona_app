@@ -67,10 +67,10 @@ class Myfacility {
   List<Checkboxwithselectoption> checkboxwithselectoption;
   String checkboxwithselectoptionname;
   List<Other> other;
+  List<dynamic> images;
   String cDate;
   String cTime;
   String addedByProfileUid;
-  List<String> images;
 
   Myfacility({
     required this.id,
@@ -86,10 +86,10 @@ class Myfacility {
     required this.checkboxwithselectoption,
     required this.checkboxwithselectoptionname,
     required this.other,
+    required this.images,
     required this.cDate,
     required this.cTime,
     required this.addedByProfileUid,
-    required this.images,
   });
 
   factory Myfacility.fromJson(Map<String, dynamic> json) => Myfacility(
@@ -106,10 +106,10 @@ class Myfacility {
     checkboxwithselectoption: List<Checkboxwithselectoption>.from(json["checkboxwithselectoption"].map((x) => Checkboxwithselectoption.fromJson(x))),
     checkboxwithselectoptionname: json["checkboxwithselectoptionname"],
     other: List<Other>.from(json["other"].map((x) => Other.fromJson(x))),
+    images: List<dynamic>.from(json["images"].map((x) => x)),
     cDate: json["cDate"],
     cTime: json["cTime"],
     addedByProfileUid: json["added_by_profile_uid"],
-    images: List<String>.from(json["images"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -126,10 +126,10 @@ class Myfacility {
     "checkboxwithselectoption": List<dynamic>.from(checkboxwithselectoption.map((x) => x.toJson())),
     "checkboxwithselectoptionname": checkboxwithselectoptionname,
     "other": List<dynamic>.from(other.map((x) => x.toJson())),
+    "images": List<dynamic>.from(images.map((x) => x)),
     "cDate": cDate,
     "cTime": cTime,
     "added_by_profile_uid": addedByProfileUid,
-    "images": List<dynamic>.from(images.map((x) => x)),
   };
 }
 
@@ -236,8 +236,8 @@ class Myprogram {
 class Program {
   String uid;
   String programName;
-  var amount;
-  var registrationfee;
+  dynamic amount;
+  dynamic registrationfee;
   String curriculumTitle;
   String curriculumDesc;
 
@@ -252,11 +252,11 @@ class Program {
 
   factory Program.fromJson(Map<String, dynamic> json) => Program(
     uid: json["uid"],
-    programName: json["program_name"]??"",
-    amount: json["amount"]??'',
-    registrationfee: json["registrationfee"]??"",
-    curriculumTitle: json["curriculum_title"]??"",
-    curriculumDesc: json["curriculum_desc"]??"",
+    programName: json["program_name"],
+    amount: json["amount"],
+    registrationfee: json["registrationfee"],
+    curriculumTitle: json["curriculum_title"],
+    curriculumDesc: json["curriculum_desc"],
   );
 
   Map<String, dynamic> toJson() => {
