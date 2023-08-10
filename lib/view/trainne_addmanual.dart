@@ -278,7 +278,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                DateOfjoining(controller: doj, hintText: 'Doj'),
+                                DateOfjoining(controller: doj, hintText: 'e.g 01/01/2023'),
 
                               ],
                             ),

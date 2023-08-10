@@ -46,6 +46,7 @@ class _RecordPaymentState extends State<RecordPayment> {
 
   @override
   void initState() {
+    dateOfBilling.text = widget.traineeList[widget.index].monthOfBilling.toString();
     fixedFeeAmount = widget.fess;
     feeController.text = fixedFeeAmount.toStringAsFixed(2);
     super.initState();

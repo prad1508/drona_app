@@ -63,7 +63,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     const Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Please Enter Your Phone Number To Receive a Verification Code',
+                        'Please Enter Your Phone Number To Receive A Verification Code',
                         style:
                         TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
                       ),
@@ -100,7 +100,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             registration.forgetPassword(data, context);
                           }
                           else{
-                            Utils.flushBarErrorMessage('Invalid mobile number. Must be 10 digits.', context);
+                            Utils.flushBarErrorMessage('Please Enter 10 Digit Mobile Number', context);
                           }
                         }),
 

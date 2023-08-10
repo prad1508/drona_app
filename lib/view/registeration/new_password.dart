@@ -202,7 +202,7 @@ class _NewPasswordState extends State<NewPassword> {
                           if( oldPassword.text.toString().isEmpty){
                             Utils.flushBarErrorMessage('Please fill field', context);
                           }
-                          else if(newPassword.text.length > 5){
+                          else if(newPassword.text.length >= 6){
                             showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -261,7 +261,7 @@ class _NewPasswordState extends State<NewPassword> {
 
                           }
                           else if(oldPassword.text.toString() == newPassword.text.toString()){
-                            Utils.flushBarErrorMessage('Password shoud be more than 5 latter', context);
+                            Utils.flushBarErrorMessage('Password should be 6 latter or more than ', context);
                           }
                           else{
                             Utils.flushBarErrorMessage('Confirm password does not match', context);

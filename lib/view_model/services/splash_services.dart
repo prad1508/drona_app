@@ -29,7 +29,7 @@ class SplashServices with ChangeNotifier {
   }
 
   Future<UserModel> getUserDate() => UserViewModel().getUser();
-  void checkAuthentication(BuildContext context) async {
+  Future<dynamic> checkAuthentication(BuildContext context) async {
     final userPreference = Provider.of<UserViewModel>(context, listen: false);
     try {
       final value = await _myRepo.academyRegistrationTrack();
@@ -191,6 +191,7 @@ class SplashServices with ChangeNotifier {
       }
     }).onError((error, stackTrace) {
       if (kDebugMode) {
+        print("error is==");
         print(error.toString());
       }
     });

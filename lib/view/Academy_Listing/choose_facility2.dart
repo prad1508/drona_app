@@ -560,12 +560,12 @@ class _ChooseFacility2State extends State<ChooseFacility2> {
                         onPress: () {
                           if (nofacility.text.isEmpty) {
                             print("data$data");
-                            registration.facilityePost(data, context,path: 'choose_program2', serviceUid: widget.serviceUid);
+                            registration.facilityePost(data, context,path: 'choose_program2', serviceUid: widget.serviceUid, serviceName: widget.serviceName);
                           } else {
                             if (CountSurfaces == int.parse(nofacility.text)) {
                               print("data$data");
 
-                              registration.facilityePost(data, context,path: 'choose_program2', serviceUid: widget.serviceUid);
+                              registration.facilityePost(data, context,path: 'choose_program2', serviceUid: widget.serviceUid, serviceName: widget.serviceName);
                             } else {
                               Utils.flushBarErrorMessage(
                                   'Total facility should be equal to ${nofacility.text.toString()}',

@@ -8,9 +8,10 @@ class UserRepository {
   //user login
   Future<dynamic> loginApi(dynamic data) async {
     try {
-      print("login api success ");
       dynamic response =
           await _apiServices.getPostWithoutApiResponse(AppUrl.userloginEndPint, data);
+      print("login api success ");
+
       return response;
     } catch (e) {
       print("login api not successful error");
@@ -24,6 +25,7 @@ class UserRepository {
       dynamic response =
           await _apiServices.getGetApiResponse(AppUrl.academyRegistrationTrackEndPint);
       print("academy api success");
+      print("respons$response");
       /// call api my program check the status and then navigate according to the screen
       // print(response);
       return response;
@@ -47,9 +49,11 @@ class UserRepository {
   //user logout
   Future<dynamic> fetchUserListApi() async {
     try {
-      dynamic response = await _apiServices.getGetApiResponse(AppUrl.userLogout);
+      dynamic response = await _apiServices.deleteApiResponse(AppUrl.userLogout);
+      print("response$response");
       return response;
     } catch (e) {
+      print("e==$e");
       rethrow;
     }
   }

@@ -242,7 +242,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                           TextFormField(
                                             enabled: true,
                                             controller: nofacility,
-                                            maxLength: 1,
+                                            maxLength: 2,
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                               fillColor: Colors.grey,
@@ -579,12 +579,12 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         onPress: () {
                           if (nofacility.text.isEmpty) {
                             print("data$data");
-                            registration.facilityePost(data, context, path: '', serviceUid: '');
+                            registration.facilityePost(data, context, path: '', serviceUid: '', serviceName: '');
                           } else {
                             if (CountSurfaces == int.parse(nofacility.text)) {
                               print("data$data");
 
-                              registration.facilityePost(data, context, path: '', serviceUid: '');
+                              registration.facilityePost(data, context, path: '', serviceUid: '', serviceName: '');
                             } else {
                               Utils.flushBarErrorMessage(
                                   'Total facility should be equal to ${nofacility.text.toString()}',

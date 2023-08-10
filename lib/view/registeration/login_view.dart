@@ -23,7 +23,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
 
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     super.dispose();
 
-    _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
@@ -103,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
                 height: 15,
               ),
               TextFormField(
-                controller: _emailController..text = usr.toString()..selection = TextSelection(
+                controller: _phoneController..text = usr.toString()..selection = TextSelection(
                             baseOffset: usr.length,
                             extentOffset: usr.length),
                 keyboardType: TextInputType.name,
@@ -220,17 +220,17 @@ class _LoginViewState extends State<LoginView> {
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).scaffoldBackgroundColor,
                 onPress: () {
-                  if (_emailController.text.isEmpty) {
-                    Utils.flushBarErrorMessage('Please enter email', context);
+                  if (_phoneController.text.isEmpty) {
+                    Utils.flushBarErrorMessage('Please Enter 10 Digit Mobile Number', context);
                   } else if (_passwordController.text.isEmpty) {
                     Utils.flushBarErrorMessage(
-                        'Please enter password', context);
+                        'Please Enter Password', context);
                   } else if (_passwordController.text.length < 6) {
                     Utils.flushBarErrorMessage(
-                        'Please enter 6 digit password', context);
+                        'Please Enter 6 Digit Password', context);
                   } else {
                     Map<String, String> data = {
-                      'userid': _emailController.text,
+                      'userid': _phoneController.text,
                       'password': _passwordController.text.toString(),
                     };
                     authViewMode.loginApi(data, value, context);
@@ -249,7 +249,7 @@ class _LoginViewState extends State<LoginView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Dont Have an Account?"),
+                      const Text("Don't Have An Account?"),
                       TextButton(
                         style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(0)),

@@ -24,7 +24,8 @@ bool sendData = false;
 class ChooseProgram2 extends StatefulWidget {
 
   String serviceUid;
-   ChooseProgram2({super.key, required this.serviceUid});
+  String serviceName;
+   ChooseProgram2({super.key, required this.serviceUid, required this.serviceName});
 
   @override
   State<ChooseProgram2> createState() => _ChooseProgram2State();
@@ -36,7 +37,6 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
   ProgramViewViewModel programViewViewModel = ProgramViewViewModel();
   late Map<String, dynamic> data;
   late TabController _tabController;
-  String serviceName='';
 
   /*getData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -164,7 +164,7 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                                       style: Theme.of(context).textTheme.titleLarge,
                                                     ),
                                                     Text(" "),
-                                                    Text("For $serviceName" , style: Theme.of(context).textTheme.titleLarge,),
+                                                    Text("For ${widget.serviceName}" , style: Theme.of(context).textTheme.titleLarge,),
                                                   ],
                                                 )
 
@@ -2160,7 +2160,7 @@ class _ChooseProgram2State extends State<ChooseProgram2>with SingleTickerProvide
                                 // programViewViewModel.isContinueButtonEnabled ?
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 /// open modal
-                                registration.programPostFromDashboard(data, context, serviceUid:  widget.serviceUid, serviceName: serviceName);
+                                registration.programPostFromDashboard(data, context, serviceUid:  widget.serviceUid, serviceName: widget.serviceName);
                                /* openModal(context , serviceName);*/
 
                                 //     :null;

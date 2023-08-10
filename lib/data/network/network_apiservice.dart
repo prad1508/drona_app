@@ -77,12 +77,34 @@ class NetworkApiService extends BaseApiServices {
   Future getGetApiResponse(String url) async {
     final prefsToken = await SharedPreferences.getInstance();
     dynamic token = prefsToken.getString('token');
+    print("token==$token");
     dynamic responseJson;
     try {
       if (kDebugMode) {
         print(url);
       }
       final response = await http.get(Uri.parse(url), headers: {
+        "token": token,
+        "Content-Type": "application/json",
+      }).timeout(const Duration(seconds: 120));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('API Connection Error');
+    }
+    return responseJson;
+  }
+
+  @override
+  Future deleteApiResponse(String url) async {
+    final prefsToken = await SharedPreferences.getInstance();
+    dynamic token = prefsToken.getString('token');
+    print("token==$token");
+    dynamic responseJson;
+    try {
+      if (kDebugMode) {
+        print(url);
+      }
+      final response = await http.delete(Uri.parse(url), headers: {
         "token": token,
         "Content-Type": "application/json",
       }).timeout(const Duration(seconds: 120));

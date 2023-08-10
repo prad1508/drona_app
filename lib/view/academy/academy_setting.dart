@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
+import 'Holiday_calender/confirm_holiday.dart';
 import 'bank_detail.dart';
 
 
@@ -27,6 +28,7 @@ class academy_setting extends StatefulWidget {
 class _academy_settingState extends State<academy_setting> {
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
 
+  @override
   initState() {
     super.initState();
     academyListViewViewModel.fetchAcademyListApi();
@@ -34,6 +36,7 @@ class _academy_settingState extends State<academy_setting> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -574,19 +577,42 @@ class _academy_settingState extends State<academy_setting> {
                                       );
                                     },
                                   ),
+
+                                  ListTile(
+                                    leading: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Holiday Calender",
+                                        style: TextStyle(
+                                            color: Color(0xff39404A),
+                                            fontSize: 14,
+                                            fontFamily: 'Lato',
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    trailing: Icon(Icons.arrow_forward_ios,
+                                      size: 15,
+                                    ),
+                                    onTap: () {
+                                      Get.to(()=> const Confirm_Holiday(),transition: Transition.rightToLeft);
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 215,
+                            height: h*0.2,
                           ),
-                          SizedBox(
-                            width: 120.4,
-                            height: 40,
-                            child: Image(
-                              alignment: Alignment.bottomCenter,
-                              image: AssetImage('assets/images/logo2.png'),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: SizedBox(
+                              width: 120.4,
+                              height: 50,
+                              child: Image(
+                                alignment: Alignment.bottomCenter,
+                                image: AssetImage('assets/images/logo2.png'),
+                              ),
                             ),
                           )
                         ],

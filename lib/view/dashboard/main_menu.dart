@@ -27,6 +27,8 @@ import '../coach_listing/coach_listselected.dart';
 import '../session_listing/session_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'activity_log.dart';
+
 
 
 class MainMenu extends StatefulWidget {
@@ -71,6 +73,9 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context);
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+
 
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
@@ -78,20 +83,23 @@ class _MainMenuState extends State<MainMenu> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: (() {
-                Navigator.pop(context);
-              }),
-              icon: const Icon(Icons.close),
-              color: Colors.black,
-              iconSize: 20,
-            ),
-          ],
+        appBar: PreferredSize(
+          preferredSize: Size(w, h*0.04),
+          child: AppBar(
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              IconButton(
+                onPressed: (() {
+                  Navigator.pop(context);
+                }),
+                icon: const Icon(Icons.close),
+                color: Colors.black,
+                iconSize: 20,
+              ),
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           child: Material(
@@ -396,65 +404,7 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: const Color.fromARGB(255, 253, 253, 253),
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(left: 20),
-                            child: Text(
-                              'Assignment',
-                              style: TextStyle(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
 
-                          // ListTile(
-                          //   onTap: () {
-                          //     /* Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (BuildContext context) =>
-                          //         const Trainee_Listing(),
-                          //       ),
-                          //     );*/
-                          //     //   Get.to(()=> const Trainee_Listing(),transition: Transition.rightToLeft);
-                          //     Get.to(() => AddTraineeList(),
-                          //         transition: Transition.rightToLeft);
-                          //   },
-                          //   leading: CircleAvatar(
-                          //       radius: 20,
-                          //       backgroundColor: Colors.grey.shade100,
-                          //       child: const Padding(
-                          //         padding: EdgeInsets.all(10.0),
-                          //         child: Image(
-                          //           image: AssetImage('assets/images/user.png'),
-                          //           width: 15,
-                          //         ),
-                          //       )),
-                          //   title: const Text(
-                          //     'Trainee',
-                          //   ),
-                          //   trailing:
-                          //   const Icon(Icons.arrow_forward_ios, size: 20),
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ),
                   const SizedBox(
                     height: 5,
                   ),
@@ -538,7 +488,7 @@ class _MainMenuState extends State<MainMenu> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Card(
+                 /* Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -577,14 +527,14 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                /* Navigator.push(
+                                *//* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const Coach_Listing()),
-                                );*/
-                                /*Get.to(() =>  RecordPayment(traineeList: [],),
-                                    transition: Transition.rightToLeft);*/
+                                );*//*
+                                *//*Get.to(() =>  RecordPayment(traineeList: [],),
+                                    transition: Transition.rightToLeft);*//*
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -620,7 +570,7 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                   const SizedBox(
                     height: 5,
-                  ),
+                  ),*/
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -771,6 +721,29 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {}),
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              iconSize: 20,
+                            ),
+                          ),
+                          ListTile(
+                            leading: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.grey.shade100,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child:
+                                  Image(
+                                      image:
+                                      AssetImage('assets/images/activity.png')),
+                                )),
+                            title: const Text(
+                              'Activity Log',
+                            ),
+                            trailing: IconButton(
+                              onPressed: (() {
+                                Get.to(() => const Activity_Log(),
+                                    transition: Transition.rightToLeft);
+                              }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
                             ),

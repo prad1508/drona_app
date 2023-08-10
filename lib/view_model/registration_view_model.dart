@@ -92,7 +92,7 @@ class RegistrationViewModel with ChangeNotifier {
 
       prefs.setString('role',value['data']['role']);
       // ignore: use_build_context_synchronously
-      Utils.flushBarErrorMessage('Register Successfully', context);
+     // Utils.flushBarErrorMessage('Register Successfully', context);
       // ignore: use_build_context_synchronously
      /* Navigator.push(
         context,
@@ -215,7 +215,7 @@ class RegistrationViewModel with ChangeNotifier {
 
 
   //////////////add facility ////////////////////////////////////
-  Future<void> facilityePost(dynamic data, BuildContext context, {required String path, required String serviceUid}) async {
+  Future<void> facilityePost(dynamic data, BuildContext context, {required String path, required String serviceUid,required String serviceName}) async {
     setLoading(true);
     _myRepo.facilityePostListApi(data).then((value) async {
       setLoading(false);
@@ -223,7 +223,7 @@ class RegistrationViewModel with ChangeNotifier {
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
       print("serviceuid==$serviceUid");
       print("path==$path");
-      path.isNotEmpty ? Get.to(() =>  ChooseProgram2(serviceUid: serviceUid,),transition: Transition.rightToLeft):
+      path.isNotEmpty ? Get.to(() =>  ChooseProgram2(serviceUid: serviceUid, serviceName: serviceName),transition: Transition.rightToLeft):
       Get.to(() => const ChooseProgram(),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
@@ -309,6 +309,7 @@ class RegistrationViewModel with ChangeNotifier {
     setLoading(true);
     _myRepo.programPostListApi(data).then((value) async {
       setLoading(false);
+      print("serviceName==$serviceName");
       Get.to(() =>  MultiCoachScreen(serviceUid: serviceUid, serviceName: serviceName,));
 
 

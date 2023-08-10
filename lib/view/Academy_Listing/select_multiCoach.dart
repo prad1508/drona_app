@@ -125,7 +125,9 @@ class _MultiCoachScreenState extends State<MultiCoachScreen> {
                           MediaQuery.of(context).size.width * 0.7,
                           items: item,
                           title: Text(
-                            AppLocale.title15.getString(context),
+
+                            //AppLocale.title15.getString(context),
+                            "choose your Coach",
                             style: const TextStyle(fontSize: 15),
                           ),
                           selectedColor: Colors.blue,
@@ -142,7 +144,8 @@ class _MultiCoachScreenState extends State<MultiCoachScreen> {
                             color: Colors.blue,
                           ),
                           buttonText: Text(
-                            AppLocale.title15.getString(context),
+                            //AppLocale.title15.getString(context),
+                            "Select Coach For Service",
                             style: const TextStyle(
                               fontSize: 16,
                             ),
@@ -190,7 +193,7 @@ class _MultiCoachScreenState extends State<MultiCoachScreen> {
                           _selectedAnimals2[index].serviceuid.toString(),
                         };
                       });
-                      Map data = {"service_uid": widget.serviceUid, "services": servicesUid};
+                      Map data = {"service_uid": widget.serviceUid, "coach": servicesUid};
                       print("data==$data");
                       //registration.detailsOwner(data, context);
                       coachlistViewViewModel.addMultiCoachApi(data, context);

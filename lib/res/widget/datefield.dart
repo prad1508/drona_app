@@ -34,20 +34,21 @@ class _DateOfBirthState extends State<DateOfBirth> {
         ),
       ),
       onTap: () async {
-        var lastDate =
-            DateFormat('yyyy').format(DateTime.now().subtract(Duration(
-          days: 6574,
-        )));
+        var currentDate = DateTime.now();
+        var startingYear = currentDate.year - 70; // 50 years before current year
+        var endingYear = currentDate.year - 5; // 5 years before current year
         var date = await showDatePicker(
-            context: context,
-            initialDate: DateTime(1990),
-            firstDate: DateTime(1930),
-            lastDate: DateTime(int.parse(lastDate)));
+          context: context,
+          initialDate: DateTime(1990),
+          firstDate: DateTime(1950),
+          lastDate: DateTime(endingYear),
+        );
         if (date != null) {
           widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
         }
       },
-    );
+    )
+    ;
   }
 }
 
@@ -64,7 +65,8 @@ class DateOfjoining extends StatefulWidget {
 class _DateOfjoiningState extends State<DateOfjoining> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return
+      /*TextFormField(
       readOnly: true,
       controller: widget.controller,
       keyboardType: TextInputType.name,
@@ -95,9 +97,47 @@ class _DateOfjoiningState extends State<DateOfjoining> {
           widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
         }
       },
+    )*/
+    TextFormField(
+      readOnly: true,
+      controller: widget.controller,
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        suffixIcon: const Icon(
+          Icons.calendar_month,
+          size: 30.0,
+        ),
+        hintText: 'Select a date',
+        contentPadding: const EdgeInsets.all(10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
+      onTap: () async {
+        DateTime now = DateTime.now();
+        DateTime firstDate = DateTime(now.year, now.month);
+        var date = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: firstDate,
+          lastDate: DateTime.now().add(Duration(days: 90)),
+          selectableDayPredicate: (DateTime day) {
+            // Allow current month's dates and future dates within the next 90 days
+            return day.isAfter(firstDate.subtract(Duration(days: 1))) && day.isBefore(DateTime(now.year, now.month + 1).subtract(Duration(days: 1)));
+          },
+        );
+        if (date != null) {
+          widget.controller.text = DateFormat('dd/MM/yyyy').format(date);
+        }
+      },
     );
   }
 }
+
+
 
 class YearMonthPicker extends StatefulWidget {
   final TextEditingController controller;

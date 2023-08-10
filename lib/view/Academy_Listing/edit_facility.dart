@@ -127,9 +127,7 @@ class _EditFacilityState extends State<EditFacility> {
   serviceId() async {
     facilityViewViewModel.fetchFacilityListApi(widget.serviceUid.toString());
     await Future.delayed(const Duration(seconds: 1));
-
-    List data =
-        facilityViewViewModel.setDataForFacillityEdit(widget.myFacility);
+    List data = facilityViewViewModel.setDataForFacillityEdit(widget.myFacility);
     _surfaceisChecked = data[0];
     surfaceselectedlist = data[1];
     selectedValue = data[2];

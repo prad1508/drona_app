@@ -216,7 +216,7 @@ class _Edit_ProgramState extends State<Edit_Program> {
                             builder: (context) {
                               return PopDialog(
                                 hintTitle: widget
-                                    .programs[widget.index].registrationfee,
+                                    .programs[widget.index].registrationfee.toString(),
                                 text: '',
                                 title: 'Change Registration Fees',
                                 controller: registrationFessController,
@@ -416,15 +416,8 @@ class _Edit_ProgramState extends State<Edit_Program> {
                                                   "program_uid": widget
                                                       .programs[widget.index2]
                                                       .uid,
-                                                  "amount":
-                                                      feeController.text.isEmpty
-                                                          ? widget
-                                                              .programs[
-                                                                  widget.index2]
-                                                              .amount
-                                                              .toString()
-                                                          : feeController.text
-                                                              .toString(),
+                                                  "amount": feeController.text.isEmpty ? widget.programs[widget.index2].amount
+                                                      : int.parse(feeController.text),
                                                   "registrationfee":
                                                       registrationFessController
                                                               .text.isEmpty
@@ -432,18 +425,14 @@ class _Edit_ProgramState extends State<Edit_Program> {
                                                               .programs[
                                                                   widget.index2]
                                                               .registrationfee
-                                                              .toString()
-                                                          : registrationFessController
-                                                              .text
-                                                              .toString(),
+
+                                                          : int.parse(registrationFessController.text),
                                                   "curriculum_title":
                                                       curriculumTitle.text,
                                                   "curriculum_desc":
                                                       curriculumTitleDescription
-                                                          .text
-                                                };
+                                                          .text};
                                                 print("data==$data");
-
                                                 facilityViewViewModel
                                                     .updateSingleProgramApi(
                                                         data,

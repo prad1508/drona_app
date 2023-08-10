@@ -241,7 +241,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                   onChanged: (newValue) {
                                                                     programViewViewModel.handleTextFieldChange(newValue);
                                                                   },
-                                                                  keyboardType: TextInputType.number,
+                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                  textInputAction:TextInputAction.done,
+                                                                  inputFormatters: <TextInputFormatter>[
+                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                  ],
                                                                   decoration: InputDecoration(
                                                                     hintText: '  Fees',
                                                                     contentPadding: const EdgeInsets.all(15),
@@ -294,8 +298,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                     programViewViewModel.handleTextFieldChange(newValue);
                                                                   },
                                                                   onTap: () {},
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration: InputDecoration(hintText: '  Fees',
+                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                  textInputAction:TextInputAction.done,
+                                                                  inputFormatters: <TextInputFormatter>[
+                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                  ],                                                                  decoration: InputDecoration(hintText: '  Fees',
                                                                     contentPadding: const EdgeInsets.all(15),
                                                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
                                                                     ),
@@ -418,8 +425,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                 onChanged: (newValue) {
                                                                   programViewViewModel.handleTextFieldChange(newValue);
                                                                 },
-                                                                keyboardType: TextInputType.number,
-                                                                decoration: InputDecoration(
+                                                                keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                textInputAction:TextInputAction.done,
+                                                                inputFormatters: <TextInputFormatter>[
+                                                                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                ],                                                                decoration: InputDecoration(
                                                                   hintText: '  Fees',
                                                                   contentPadding: const EdgeInsets.all(15),
                                                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -503,8 +513,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -564,8 +577,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -632,8 +648,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -696,8 +715,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -810,8 +832,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                   onChanged: (value){
                                                                     programViewViewModel.handleTextFieldChange(value);
                                                                   },
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration:
+                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                  textInputAction:TextInputAction.done,
+                                                                  inputFormatters: <TextInputFormatter>[
+                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                  ],                                                                  decoration:
                                                                   InputDecoration(
                                                                     hintText: '  Fees',
                                                                     contentPadding: const EdgeInsets.all(15),
@@ -946,8 +971,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                   onChanged: (value){
                                                                     programViewViewModel.handleTextFieldChange('');
                                                                   },
-                                                                  keyboardType: TextInputType.number,
-                                                                  decoration:
+                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                  textInputAction:TextInputAction.done,
+                                                                  inputFormatters: <TextInputFormatter>[
+                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                  ],                                                                  decoration:
                                                                   InputDecoration(hintText: '  Fees',
                                                                     contentPadding: const EdgeInsets.all(15),
                                                                     border:
@@ -1110,8 +1138,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -1175,8 +1206,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -1238,7 +1272,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],
                                                                         decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
@@ -1300,8 +1338,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                             (value) {
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
-                                                                        keyboardType: TextInputType.number,
-                                                                        decoration: InputDecoration(
+                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                        textInputAction:TextInputAction.done,
+                                                                        inputFormatters: <TextInputFormatter>[
+                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                        ],                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -1450,8 +1491,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                           onChanged: (value){
                                                                             programViewViewModel.handleTextFieldChange(value);
                                                                           },
-                                                                          keyboardType:
-                                                                          TextInputType.number,
+                                                                          keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                          textInputAction:TextInputAction.done,
+                                                                          inputFormatters: <TextInputFormatter>[
+                                                                            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                          ],
                                                                           decoration:
                                                                           InputDecoration(
                                                                             hintText: '  Fees',
@@ -1544,7 +1588,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                               programViewViewModel.handleTextFieldChange(value);
                                                                             },
                                                                             // programViewViewModel.handleTextFieldChange(value);
-                                                                            keyboardType: TextInputType.number,
+                                                                            keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                            textInputAction:TextInputAction.done,
+                                                                            inputFormatters: <TextInputFormatter>[
+                                                                              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                            ],
                                                                             decoration: InputDecoration(
                                                                               hintText: '  Fees',
                                                                               contentPadding: const EdgeInsets.all(15),
@@ -1733,8 +1781,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                 //focusNode: _customfocusNodes[7],
                                 controller: controller,
                                 onTap: () {},
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
+                                keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                textInputAction:TextInputAction.done,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                ],                                decoration: InputDecoration(
                                   hintText: hint,
                                   contentPadding:
                                   const EdgeInsets.all(15),
@@ -1767,6 +1818,11 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                               )
                                   : TextField(
                                 controller: controller,
+                                keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                textInputAction:TextInputAction.done,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                ],
                                 decoration: InputDecoration(
                                   labelText: hint,
                                   contentPadding: const EdgeInsets.only(left: 5),
