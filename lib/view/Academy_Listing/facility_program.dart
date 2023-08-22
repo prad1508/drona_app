@@ -362,7 +362,10 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                       shrinkWrap: true,
                                       itemCount: value.dataList.data!.myprogram[index].programs.length,
                                       itemBuilder: (BuildContext context, int int) {
-                                        return  Column(
+
+                                        return
+                                          value.dataList.data!.myprogram[index].programs[int].amount > 0 ?
+                                          Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: [
@@ -563,7 +566,7 @@ class _FacilityProgramState extends State<FacilityProgram> {
                                             Divider(thickness: 2,),
                                             SizedBox(height: 80),
                                           ],
-                                        );
+                                        ) : SizedBox();
 
                                       },
 

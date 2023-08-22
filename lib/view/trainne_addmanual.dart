@@ -220,7 +220,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 ),
                                 DateOfBirth(
                                     controller: dob,
-                                    hintText: AppLocale.dob.getString(context)),
+                                    hintText: "e.g 01/01/2023"),
                               ],
                             ),
                           ),

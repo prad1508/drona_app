@@ -54,9 +54,13 @@ class _Bank_DetailsState extends State<Bank_Details> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
                 onPressed: () {
-                  Get.off(() => const Edit_Bank_Details(
+                  Get.to(() => const Edit_Bank_Details(
                   ),
-                      transition: Transition.rightToLeft);
+                      transition: Transition.rightToLeft)!.then((value) {
+                  print("success");
+                  value == "" ? null : academyviewmodel.fetchAcademyListApi();
+
+                  });
                 },
                 icon: Icon(Icons.edit)),
           )

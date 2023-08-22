@@ -7,10 +7,12 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/response/status.dart';
 import '../../res/language/language.dart';
 import '../../res/widget/datefield.dart';
 import '../../res/widget/progress_pills.dart';
 import '../../res/widget/round_button.dart';
+import '../../utils/no_data.dart';
 import '../../view_model/coachlist_view_model.dart';
 import '../../view_model/myservices_view_model.dart';
 import '../../view_model/registration_view_model.dart';
@@ -103,57 +105,89 @@ class _MultiCoachScreenState extends State<MultiCoachScreen> {
                     create: (context) => coachlistViewViewModel,
                     child: Consumer<CoachlistViewViewModel>(
                       builder: (context, value, child) {
-                         List<Myservices2> myservices = List.generate(
-                            value.dataList1.data!.data.length ?? 0,
-                                (index) => Myservices2(
-                                serviceuid: value
-                                    .dataList1.data!.data[index].uid
-                                    .toString() ??
-                                    '',
-                                servicename: value.dataList1.data
-                                    ?.data[index].name
-                                    .toString() ??
-                                    ''));
-                        var item = myservices.map((myservices) => MultiSelectItem<Myservices2>(
-                            myservices, myservices.servicename))
-                            .toList();
-                        // providerCreate.updateServicesList(items);
-                        print("item.length==${item.length}");
-                        return MultiSelectDialogField(
-                          dialogWidth: MediaQuery.of(context).size.width * 2,
-                          dialogHeight:
-                          MediaQuery.of(context).size.width * 0.7,
-                          items: item,
-                          title: Text(
+                        switch (value.dataList1.status!) {
+                          case Status.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.teal,
+                              ),
+                            );
 
-                            //AppLocale.title15.getString(context),
-                            "choose your Coach",
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          selectedColor: Colors.blue,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 156, 156, 156),
-                              width: 1,
-                            ),
-                          ),
-                          buttonIcon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.blue,
-                          ),
-                          buttonText: Text(
-                            //AppLocale.title15.getString(context),
-                            "Select Coach For Service",
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          onConfirm: (results) {
-                            _selectedAnimals2 = results;
-                          },
-                        );
+                          case Status.completed:
+                            List<Myservices2> myservices = List.generate(
+                                value.dataList1.data!.data.length ?? 0,
+                                    (index) => Myservices2(
+                                    serviceuid: value
+                                        .dataList1.data!.data[index].uid
+                                        .toString() ??
+                                        '',
+                                    servicename: value.dataList1.data
+                                        ?.data[index].name
+                                        .toString() ??
+                                        ''));
+                            var item = myservices.map((myservices) => MultiSelectItem<Myservices2>(
+                                myservices, myservices.servicename))
+                                .toList();
+                            // providerCreate.updateServicesList(items);
+                            print("item.length==${item.length}");
+                            return MultiSelectDialogField(
+                              dialogWidth: MediaQuery.of(context).size.width * 2,
+                              dialogHeight:
+                              MediaQuery.of(context).size.width * 0.7,
+                              items: item,
+                              title: Text(
+
+                                //AppLocale.title15.getString(context),
+                                "choose your Coach",
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                              selectedColor: Colors.blue,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 156, 156, 156),
+                                  width: 1,
+                                ),
+                              ),
+                              buttonIcon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.blue,
+                              ),
+                              buttonText: Text(
+                                //AppLocale.title15.getString(context),
+                                "Select Coach For Service",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              onConfirm: (results) {
+                                _selectedAnimals2 = results;
+                              },
+                            );
+                          case Status.error:
+                            return Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Theme.of(context).primaryColorDark,
+                                      size: 100.0,
+                                    ),
+                                    const NoData()
+                                    // Text(
+                                    //   value.dataList.message.toString(),
+                                    //   style: TextStyle(
+                                    //       color: Theme.of(context).primaryColor,
+                                    //       fontSize: 20,
+                                    //       height: 2),
+                                    // )
+                                  ],
+                                ));
+                        }
+
                       },
                     )),
                 SizedBox(
@@ -189,8 +223,7 @@ class _MultiCoachScreenState extends State<MultiCoachScreen> {
                       List servicesUid =
                       List.generate(_selectedAnimals2.length, (index) {
                         return {
-                          'service_uid':
-                          _selectedAnimals2[index].serviceuid.toString(),
+                          'profile_uid': _selectedAnimals2[index].serviceuid.toString(),
                         };
                       });
                       Map data = {"service_uid": widget.serviceUid, "coach": servicesUid};

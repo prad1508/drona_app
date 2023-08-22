@@ -163,7 +163,7 @@ class _AttendanceState extends State<Attendance> {
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * .4,
                     height: 50,
-                    child: DateOfBirth(controller: dob, hintText: 'Jun 2023'),
+                    child: DateOfBirth(controller: dob, hintText: 'DOJ'),
                   ),
                   const SizedBox(
                     width: 15,
@@ -238,7 +238,7 @@ class _AttendanceState extends State<Attendance> {
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * .4,
                     height: 50,
-                    child: DateOfBirth(controller: dob, hintText: 'Jun 2023'),
+                    child: DateOfBirth(controller: dob, hintText: 'DOJ'),
                   ),
                   const SizedBox(
                     width: 15,

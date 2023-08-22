@@ -1,5 +1,6 @@
 import 'package:drona/model/category_model.dart';
 import 'package:drona/model/service_program_model.dart';
+import 'package:drona/view/academy/service_program.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../model/facility_model.dart';
@@ -142,18 +143,13 @@ class FacilityViewViewModel with ChangeNotifier {
       Navigator.of(context).pop();
       Utils.toastMessage(value["msg"]);
 
-      Get.to(() => FacilityProgram(serviceUid: serviceUid,), transition: Transition.rightToLeft);
-
+      Get.to(() => ServiceListPage(path: 'program&facility'), transition: Transition.rightToLeft);
       print("updateSingleProgramApi ");
 
     }).onError((error, stackTrace) {
       Navigator.of(context).pop();
-
       Utils.toastMessage(error.toString());
-
       setLoading(true);
-
-
     });
   }
 

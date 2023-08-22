@@ -95,17 +95,11 @@ class _SearchBatchListState extends State<SearchBatchList> {
 
       return user;
     } else {
-
       print(response.reasonPhrase);
       print("api not hit");
     }
   }
 
-  Map<String, dynamic> data = {
-    "filter_status": "",
-    "filter_service_uid": "",
-    "search": ""
-  };
 
   @override
   initState() {
@@ -740,7 +734,8 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                               ),
                                             ],
                                           )));
-                            }) :ListView.builder(
+                            })
+                              :ListView.builder(
                               padding:
                               EdgeInsets.symmetric(horizontal: w * 0.01),
                               physics: BouncingScrollPhysics(),

@@ -29,10 +29,10 @@ class CustomRadio<T> extends StatelessWidget {
             width: 1,
             color: isSelected ? btnColor.withOpacity(0.1) : Colors.black),
         borderRadius: const BorderRadius.all(
-            Radius.circular(5)),
+            Radius.circular(10)),
         color: isSelected ? Colors.white : Colors.black,
       ),
-      padding: const EdgeInsets.fromLTRB(32, 15, 32, 15),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

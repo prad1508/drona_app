@@ -106,7 +106,7 @@ class CoachlistViewViewModel with ChangeNotifier {
     _myRepo.addMultiCoachApi(data).then((value) async {
       setLoading(false);
 
-      Get.to(() =>  const Servicelist_Page(),transition: Transition.rightToLeft);
+      Get.to(() =>   ServiceListPage(path: 'multiSelectCoach'),transition: Transition.rightToLeft);
 
       Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {

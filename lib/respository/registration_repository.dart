@@ -146,7 +146,20 @@ class RegistrationRepository {
     } catch (e) {
       rethrow;
     }
-  } 
+  }
+
+  //Change Password
+  Future<dynamic> changePasswordListApi(dynamic data) async {
+    try {
+      dynamic response =
+      await _apiServices.getPostApiResponse(AppUrl.changePassword, data);
+      print("Data Change Password$response $data");
+      return response;
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
 
   
 

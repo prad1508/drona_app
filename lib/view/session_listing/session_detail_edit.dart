@@ -346,7 +346,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                         "coach_profile_uid":widget.coachProfileUid
                       };
                       print("data==$data");
-                      sessionViewViewModel.sessionEditApi(data, context).then((value) => Get.to(const SessionList()));
+                      sessionViewViewModel.sessionEditApi(data, context);
 
                     }),
                 const SizedBox(

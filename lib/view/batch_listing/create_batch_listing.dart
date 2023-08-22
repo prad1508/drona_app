@@ -54,7 +54,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
     return (value) => setState(() => _groupBatch = value!);
   }
 
-  bool value = true;
+  bool value = false;
   bool agree = true;
 
   final TextEditingController batchName = TextEditingController();

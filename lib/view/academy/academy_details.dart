@@ -13,6 +13,7 @@ import '../../res/app_url.dart';
 import '../../res/widget/customradio.dart';
 import '../../view_model/academy_view_model.dart';
 import '../Academy_Listing/academy_details_edit.dart';
+import 'academy_setting.dart';
 
 class Academy_Detail_Page extends StatefulWidget {
   const Academy_Detail_Page({super.key});
@@ -34,8 +35,10 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
     'SU': false,
   };
 
+  @override
   initState() {
     super.initState();
+
     academyListViewViewModel.fetchAcademyListApi();
   }
 
@@ -59,6 +62,11 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
     // academyListViewViewModel.fetchAcademyListApi();
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(onPressed: () {
+            Get.back();
+          }, icon: Icon(Icons.arrow_back_ios),
+            
+          ),
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -71,7 +79,12 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                   onPressed: () {
                     Get.to(()=> const Edit_Academy_Detail(
 
-                    ),transition: Transition.rightToLeft);
+                    ),transition: Transition.rightToLeft)!.then((value) {
+
+                      print("value==$value");
+                      value == ""
+                          ? null : academyListViewViewModel.fetchAcademyListApi();
+                    } );
                   },
                   icon: Icon(Icons.edit)),
             )

@@ -7,6 +7,7 @@ import '../model/academy_model.dart';
 import '../utils/utils.dart';
 import '../view/academy/academy_details.dart';
 
+import '../view/academy/academy_setting.dart';
 import '/data/response/api_response.dart';
 import '/respository/academy_repository.dart';
 class AcademyViewViewModel with ChangeNotifier {
@@ -49,13 +50,15 @@ class AcademyViewViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> fetchEditAcademy(dynamic data)async{
+  Future<void> fetchEditAcademy(dynamic data, String path)async{
     setDataList1(ApiResponse.loading());
 
     _myRepo.fetchEditAcademyListApi(data).then((value){
       print("academy edit details api success");
       setDataList1(ApiResponse.completed(value));
-      Get.to(()=> Academy_Detail_Page(),transition: Transition.rightToLeft);
+      print("path$path");
+      Get.back(result: "success");
+      //Get.to(()=> academy_setting( pathofpage: path,),transition: Transition.rightToLeft);
 
 
     }).onError((error, stackTrace){

@@ -61,7 +61,6 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final authViewMode = Provider.of<AuthViewModel>(context);
-
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(

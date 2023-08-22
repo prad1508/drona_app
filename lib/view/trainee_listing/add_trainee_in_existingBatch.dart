@@ -1,6 +1,3 @@
-
-
-
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +25,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddTrainneInExisitingBatch extends StatefulWidget {
   int listindex;
   String pathPage;
-  AddTrainneInExisitingBatch({super.key , this.listindex=-1, this.pathPage=''});
+  AddTrainneInExisitingBatch(
+      {super.key, this.listindex = -1, this.pathPage = ''});
   @override
-  State<AddTrainneInExisitingBatch> createState() => _AddTrainneInExisitingBatchState();
+  State<AddTrainneInExisitingBatch> createState() =>
+      _AddTrainneInExisitingBatchState();
 }
 
-class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch> {
+class _AddTrainneInExisitingBatchState
+    extends State<AddTrainneInExisitingBatch> {
   final TextEditingController coachName = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController inviteCode = TextEditingController();
@@ -193,14 +193,12 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
     final user = Provider.of<UserViewModel>(context);
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
-      child:
-      MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:  Scaffold(
+        home: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            leading:
-            IconButton(
+            leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -211,7 +209,6 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
             centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
-
           ),
           body: SingleChildScrollView(
             child: Material(
@@ -242,7 +239,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                     backgroundColor: Colors.white,
                                     backgroundImage: imgFile == null
                                         ? const AssetImage(
-                                        'assets/images/user_profile.png')
+                                            'assets/images/user_profile.png')
                                         : FileImage(imgFile!) as ImageProvider,
                                   ),
                                 ),
@@ -292,9 +289,9 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                         keyboardType: TextInputType.phone,
                         hintText: 'eg. 9876521233',
                         isValidatingMessage:
-                        'Enter a valid 10 digit mobile number',
+                            'Enter a valid 10 digit mobile number',
                         valueIsInvalidMessage:
-                        'Enter a valid 10 digit mobile number'),
+                            'Enter a valid 10 digit mobile number'),
                     const SizedBox(
                       height: 15,
                     ),
@@ -335,9 +332,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                     const SizedBox(
                       height: 10,
                     ),
-                    DateOfBirth(
-                        controller: dob,
-                        hintText: AppLocale.dob.getString(context)),
+                    DateOfBirth(controller: dob, hintText: "e.g 01/01/2023"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -362,41 +357,49 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                         border: Border.all(
                             width: 1,
                             color: const Color.fromARGB(255, 218, 216, 216)),
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
                       ),
                       child: ChangeNotifierProvider<MyservicesViewViewModel>(
                           create: (context) => myservicesViewViewModel,
                           child: Consumer<MyservicesViewViewModel>(
                               builder: (context, value, child) {
-                                if(value.dataList.data!=null)
-                                {
-                                  dropdownItems.clear();
-                                  for (var i = 0; i < value.dataList.data!.services!.length; i++) {
-                                    dropdownItems.add(DropdownMenuItem(
-                                        value: value.dataList.data!.services![i].uid.toString(),
-                                        child: Text(value.dataList.data!.services![i].serviceName.toString())));
-                                  }
+                            if (value.dataList.data != null) {
+                              dropdownItems.clear();
+                              for (var i = 0;
+                                  i < value.dataList.data!.services!.length;
+                                  i++) {
+                                if (value.dataList.data!.services![i].status ==
+                                    "active") {
+                                  dropdownItems.add(
+                                    DropdownMenuItem(
+                                        value: value
+                                            .dataList.data!.services![i].uid
+                                            .toString(),
+                                        child: Text(value.dataList.data!
+                                            .services![i].serviceName
+                                            .toString())),
+                                  );
                                 }
-                                return DropdownButton(
-                                    isExpanded: true,
-                                    hint: const Text("Choose Service"),
-                                    underline: DropdownButtonHideUnderline(
-                                        child: Container()),
-                                    value: selectedService,
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        selectedService = newValue!;
-                                      });
-                                    },
-                                    items: dropdownItems);
-
-
-                              })),
+                              }
+                            }
+                            return DropdownButton(
+                                isExpanded: true,
+                                hint: const Text("Choose Service"),
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                value: selectedService,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedService = newValue!;
+                                  });
+                                },
+                                items: dropdownItems);
+                          })),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-
 
                     Align(
                       alignment: Alignment.topLeft,
@@ -414,57 +417,71 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                         border: Border.all(
                             width: 1,
                             color: const Color.fromARGB(255, 218, 216, 216)),
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
                       ),
                       child: ChangeNotifierProvider<BatchListViewViewModel>(
                           create: (context) => batchListViewViewModel,
                           child: Consumer<BatchListViewViewModel>(
                               builder: (context, value, child) {
-                                if(value.dataList.data!=null)
-                                {
-                                  dropdownItems1.clear();
-                                  for (var i = 0; i < value.dataList.data!.data!.length; i++) {
-                                    if(selectedService1 == value.dataList.data!.data?[i].uid )
-                                      {
-                                        salary.text =  value.dataList.data!.data![i].fees.toString();
-                                      }
-                                    /// check service with batch name
-                                    if(value.dataList.data!.data?[i].serviceUid == selectedService) {
-                                      dropdownItems1.add(
-                                        DropdownMenuItem(
-                                        value: value.dataList.data!.data![i].uid.toString(),
-                                        child: Text(value.dataList.data!.data![i].batchName.toString()))
-                                    );
-                                    }
-                                  }
+                            if (value.dataList.data != null) {
+                              dropdownItems1.clear();
+                              for (var i = 0;
+                                  i < value.dataList.data!.data!.length;
+                                  i++) {
+                                if (selectedService1 ==
+                                    value.dataList.data!.data?[i].uid) {
+                                  salary.text = value
+                                      .dataList.data!.data![i].fees
+                                      .toString();
                                 }
-                                return DropdownButton(
-                                    isExpanded: true,
-                                    hint: const Text("Choose Batch"),
-                                    underline: DropdownButtonHideUnderline(
-                                        child: Container()),
-                                    value: selectedService1,
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        selectedService1 = newValue!;
-                                      });
-                                    },
-                                    items: dropdownItems1);
 
-
-                              })),
+                                /// check service with batch name
+                                if (value.dataList.data!.data?[i].serviceUid ==
+                                    selectedService) {
+                                  dropdownItems1.add(DropdownMenuItem(
+                                      value: value.dataList.data!.data![i].uid
+                                          .toString(),
+                                      child: Text(value
+                                          .dataList.data!.data![i].batchName
+                                          .toString())));
+                                }
+                              }
+                            }
+                            return DropdownButton(
+                                isExpanded: true,
+                                hint: const Text("Choose Batch"),
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                value: selectedService1,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedService1 = newValue!;
+                                  });
+                                },
+                                items: dropdownItems1);
+                          })),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocale.fee.getString(context),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            AppLocale.fee.getString(context),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                        TextButton(onPressed: (){
+                          /// open modal
+                          _openModal(context);
+                        }, child: const Text("Edit Fees"))
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
@@ -505,7 +522,6 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                                 height: 15,
                               ),
                               DateOfjoining(controller: doj, hintText: 'Doj'),
-
                             ],
                           ),
                         ),
@@ -543,7 +559,7 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                         textColor: Colors.white,
                         rounded: true,
                         color: Theme.of(context).primaryColor,
-                        onPress: ()  {
+                        onPress: () {
                           // final SharedPreferences sp = await SharedPreferences.getInstance();
                           if (phone.text.isEmpty) {
                             Utils.flushBarErrorMessage(
@@ -563,34 +579,31 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                           else if (doj.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Please Enter Date of Joining', context);
-                          }
-                          else if (monthofBilling.text.isEmpty) {
+                          } else if (monthofBilling.text.isEmpty) {
                             Utils.flushBarErrorMessage(
                                 'Please Enter Month of Billing', context);
-                          }
-                          else if (selectedService==null && selectedService!=''  ) {
+                          } else if (selectedService == null &&
+                              selectedService != '') {
                             Utils.flushBarErrorMessage(
                                 'Please Select Service', context);
-                          }
-                          else
-                          {
+                          } else {
+                            Map<String, dynamic> data = {
+                              "batch_uid": selectedService1.toString(),
+                              "fullname": coachName.text,
+                              "ccode": "91",
+                              "mobno": phone.text,
+                              "gender": _genderValue,
+                              "fees": salary.text,
+                              "dateofjoining": doj.text,
+                              // "age": age.text,
+                              "dob": dob.text,
+                              "monthofbilling": monthofBilling.text,
+                              "img": "",
+                              "relation": "self"
+                            };
 
-                              Map<String, dynamic> data = {
-                                "batch_uid": selectedService1.toString(),
-                                "fullname": coachName.text,
-                                "ccode": "91",
-                                "mobno": phone.text,
-                                "gender": _genderValue,
-                                "fees": salary.text,
-                                "dateofjoining": doj.text,
-                                // "age": age.text,
-                                "dob": dob.text,
-                                "monthofbilling": monthofBilling.text,
-                                "img": "",
-                                "relation": "self"
-                              };
-
-                              traineeViewModel.fetchTraineeAddListApi(data, context ,"onboarding");
+                            traineeViewModel.fetchTraineeAddListApi(
+                                data, context, "onboarding");
 
                             //  traineeViewModel.fetchTraineeAddListApi(data, context ,"onboarding");
 
@@ -678,8 +691,6 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                             //   },
                             // );
                           }
-
-
                         }),
                   ],
                 ),
@@ -688,6 +699,81 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
           ),
         ),
       ),
+    );
+  }
+
+  void _openModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height*.4,
+            ),
+            Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      //readOnly: true,
+                      keyboardType: TextInputType.number,
+                      controller: salary,
+                      decoration: InputDecoration(
+                        hintText: "Enter Fees",
+                        contentPadding: const EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Dismiss the modal
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: ElevatedButton(
+                            onPressed: () {
+
+                              // String enteredText = _textEditingController.text;
+                              if(salary.text.isEmpty || int.parse(salary.text) <=0)
+                              {
+                                Utils.flushBarErrorMessage("Please enter valid fees", context);
+                              }
+                              else
+                              {
+                                  salary.text = salary.text;
+                                  Navigator.of(context).pop();
+
+                              }
+
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -715,15 +801,15 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
                     children: [
                       Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                            ),
-                            child: const Text("No",
-                                style: TextStyle(color: Colors.black)),
-                          )),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                        ),
+                        child: const Text("No",
+                            style: TextStyle(color: Colors.black)),
+                      )),
                       const SizedBox(width: 15),
                       Expanded(
                         child: ElevatedButton(
@@ -747,6 +833,4 @@ class _AddTrainneInExisitingBatchState extends State<AddTrainneInExisitingBatch>
           );
         });
   }
-
-
 }

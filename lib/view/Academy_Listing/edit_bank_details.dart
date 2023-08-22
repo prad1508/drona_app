@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/academy/bank_detail.dart';
 import 'package:drona/view_model/bankdetails_view_model.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
@@ -720,9 +721,9 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                             bankDetailsViewModel
                                                 .fetchBankDetailsApi(
                                                 data, context);
-                                            Get.to(() => Bank_Details(),
+                                          /*  Get.to(() => academy_setting(pathofpage: "bankEdit"),
                                                 transition: Transition
-                                                    .rightToLeft);
+                                                    .rightToLeft);*/
                                         },
                                         child: const Text(
                                           "Submit",

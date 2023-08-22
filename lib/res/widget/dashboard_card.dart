@@ -4,7 +4,7 @@ class DashboardCard extends StatefulWidget {
   final Color color;
   final IconData icon;
   final String title;
-  final String count;
+  final int count;
   final String subtitle;
   final double line;
   const DashboardCard({super.key, required this.color, required this.icon, required this.count, required this.title, required this.subtitle, required this.line});
@@ -14,6 +14,30 @@ class DashboardCard extends StatefulWidget {
 }
 
 class _DashboardCardState extends State<DashboardCard> {
+  int complete = 0;
+  double total = 0;
+  double progress = 0;
+  double input = 0;
+  @override
+  void initState() {
+    calculationOfProgress();
+    super.initState();
+  }
+
+  void calculationOfProgress() {
+    complete = widget.count; // Use the completed count from the widget
+    input = widget.line;
+    total = complete+input;
+    // Use the total count from the widget
+    setState(() {
+      progress = complete / total;
+      progress = progress.clamp(0.0, 1.0);
+    });
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +46,7 @@ class _DashboardCardState extends State<DashboardCard> {
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: widget.color.withOpacity(.1),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Column(
                         children: [
@@ -40,7 +64,7 @@ class _DashboardCardState extends State<DashboardCard> {
                                         fontFamily: 'Loto-Regular'),
                                   ),
                                   Text(
-                                    widget.count,
+                                    widget.count.toString(),
                                     style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w500,
@@ -67,10 +91,10 @@ class _DashboardCardState extends State<DashboardCard> {
                             height: 20,
                           ),
                            LinearProgressIndicator(
-                            color: widget.color,
+                            color:  /*progress == 1.0 ?  Colors.white :*/ widget.color,
                             backgroundColor: Colors.white,
                             minHeight: 8,
-                            value: widget.line,
+                            value: progress,
                             semanticsLabel: 'Linear progress indicator',
                           ),
                           const SizedBox(

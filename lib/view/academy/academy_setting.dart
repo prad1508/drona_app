@@ -5,6 +5,7 @@ import 'package:drona/view/academy/billing_invoice.dart';
 import 'package:drona/view/academy/communication.dart';
 import 'package:drona/view/academy/service_program.dart';
 import 'package:drona/view/academy/academy_details.dart';
+import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/reports/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,8 @@ import 'bank_detail.dart';
 
 
 class academy_setting extends StatefulWidget {
-  const academy_setting({super.key});
+   final String pathofpage;
+   academy_setting({super.key,required this.pathofpage});
 
   @override
   State<academy_setting> createState() => _academy_settingState();
@@ -31,6 +33,7 @@ class _academy_settingState extends State<academy_setting> {
   @override
   initState() {
     super.initState();
+    widget.pathofpage;
     academyListViewViewModel.fetchAcademyListApi();
   }
 
@@ -40,6 +43,16 @@ class _academy_settingState extends State<academy_setting> {
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
+          leading: IconButton(
+            onPressed: () {
+              /*print("widget.path${widget.pathofpage}");
+              widget.pathofpage == "academyDetails" || widget.pathofpage == "bankEdit" ? Get.to(()=> Layout(selectedIndex: 0)) : Get.back();
+           */
+              Get.back();
+
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
           centerTitle: true,
           backgroundColor: Colors.white,
           title: const Text('Academy Setting',
@@ -341,9 +354,9 @@ class _academy_settingState extends State<academy_setting> {
                                       // Navigator.push(
                                       //   context,
                                       //   MaterialPageRoute(
-                                      //       builder: (context) => const Servicelist_Page()),
+                                      //       builder: (context) => const ServiceListPage()),
                                       // );
-                                      Get.to(() => const Servicelist_Page(),
+                                      Get.to(() =>  ServiceListPage(path: '',),
                                           transition: Transition.rightToLeft);
                                     },
                                   ),

@@ -6,6 +6,8 @@ class AppUrl {
   static var otpListEndPoint = '$baseUrl/ouser/verifyotp';
   static var resetotpVerify = '$baseUrl/ouser/passresetverifyotp';
   static var verifynewPassword = '$baseUrl/ouser/setnewpassword';
+  static var changePassword = '$baseUrl/ouser/changepassword';
+
 
   static var postofficeListEndPoint = 'https://api.postalpincode.in/pincode/';
   static var categoryListEndPoint = '$baseUrl/academy/cat';
@@ -72,6 +74,8 @@ class AppUrl {
 
   // dashboard
   static var dashBoardHome = "$baseUrl/academy/dashboard";
+  static var dashBoardSessionHome = "$baseUrl/academy/dashboard/session";
+
   static var bankDetails = "$baseUrl/academy/bankdetails";
   // academy
   static var academydetails = "$baseUrl/academy/academy";

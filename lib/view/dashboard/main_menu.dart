@@ -20,6 +20,7 @@ import '../../res/app_url.dart';
 import '../../view_model/academy_view_model.dart';
 import '../../view_model/user_view_model.dart';
 import '../Support and Feedback/support_Feedback_Page.dart';
+import '../drawer_screens/change_password.dart';
 import '../performance/new_assignment.dart';
 import '../trainee_listing/add_trainee_list.dart';
 import '../batch_listing/batchlist_search.dart';
@@ -28,8 +29,6 @@ import '../session_listing/session_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'activity_log.dart';
-
-
 
 class MainMenu extends StatefulWidget {
   final String? name;
@@ -76,7 +75,6 @@ class _MainMenuState extends State<MainMenu> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
 
-
     return MaterialApp(
       supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
@@ -84,7 +82,7 @@ class _MainMenuState extends State<MainMenu> {
       home: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
-          preferredSize: Size(w, h*0.04),
+          preferredSize: Size(w, h * 0.04),
           child: AppBar(
             centerTitle: true,
             backgroundColor: Colors.white,
@@ -112,7 +110,10 @@ class _MainMenuState extends State<MainMenu> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => const academy_setting(),
+                      Get.to(
+                          () => academy_setting(
+                                pathofpage: '',
+                              ),
                           transition: Transition.rightToLeft);
                     },
                     child: Card(
@@ -122,179 +123,247 @@ class _MainMenuState extends State<MainMenu> {
                         color: const Color.fromARGB(255, 244, 247, 245),
                         elevation: 1,
                         child:
-                        /// call api
-                        ChangeNotifierProvider<AcademyViewViewModel>(
-                            create: (BuildContext context) => academyListViewViewModel,
-                            child: Consumer<AcademyViewViewModel>(builder: (context, value, _) {
-                              switch (value.dataList.status!) {
-                                case Status.loading:
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.teal,
-                                    ),
-                                  );
-                                case Status.completed:
 
-                                  return
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 10),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(left: 8),
-                                                      child: Text(
-                                                        '${value.dataList.data?.academyname}',
-                                                        style: const TextStyle(
-                                                          color: Colors.blue,
-                                                          fontStyle: FontStyle.normal,
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 18,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        const Padding(
-                                                          padding:
-                                                          EdgeInsets.only(left: 12),
-                                                          child: Text(
-                                                            'Services',
-                                                            style: TextStyle(
-                                                                color: Colors.black,
-                                                                fontStyle: FontStyle.normal,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 16,
-                                                                height: 2),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          height: 20,
-                                                          width: 150,
-                                                          child: ListView.builder(
-                                                            scrollDirection: Axis.horizontal,
-                                                            itemCount: value.dataList.data?.totalService,
-                                                            itemBuilder: (context, index) {
-                                                              return Padding(
-                                                                padding: EdgeInsets.symmetric(horizontal: 4),
-                                                                child: Image(
-                                                                  image: NetworkImage(
-                                                                    AppUrl.serviceIconEndPoint +
-                                                                        value.dataList.data!.services![index].serviceIconname!,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    value.dataList.data!.islogo ?
-                                                    Container(
-                                                      width: 90,
-                                                      height: 90,
-                                                      child: Align(
-                                                        alignment: Alignment.center,
-                                                        child: FittedBox(
-                                                          fit: BoxFit.contain,
-                                                          child: Stack(
-                                                            alignment: Alignment.center,
-                                                            children: [
-                                                              Container(
-                                                                width: 80,
-                                                                height: 80,
-                                                                decoration: BoxDecoration(
-                                                                  shape: BoxShape.circle,
-                                                                  color: Colors.white,
-                                                                ),
-                                                                child: CircleAvatar(
-                                                                  radius: 40,
-                                                                  backgroundColor: Colors.white,
-                                                                  backgroundImage: NetworkImage(
-                                                                    AppUrl.academylogo + value.dataList.data!.logo,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                width: 80,
-                                                                height: 80,
-                                                                decoration: BoxDecoration(
-                                                                  shape: BoxShape.circle,
-                                                                  color: Colors.transparent,
-                                                                ),
-                                                                child: CircularPercentIndicator(
-                                                                  radius: 40,
-                                                                  lineWidth: 4,
-                                                                  percent: value.dataList.data!.academyProgress / 100,
-                                                                  center: CircleAvatar(
-                                                                    radius: 38,
-                                                                    backgroundColor: Colors.transparent,
-                                                                  ),
-                                                                  progressColor: Colors.green,
-                                                                  backgroundColor: Colors.transparent,
-                                                                  circularStrokeCap: CircularStrokeCap.round,
-                                                                ),
-                                                              ),
-                                                            ],
+                            /// call api
+                            ChangeNotifierProvider<AcademyViewViewModel>(
+                                create: (BuildContext context) =>
+                                    academyListViewViewModel,
+                                child: Consumer<AcademyViewViewModel>(
+                                    builder: (context, value, _) {
+                                  switch (value.dataList.status!) {
+                                    case Status.loading:
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.teal,
+                                        ),
+                                      );
+                                    case Status.completed:
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 8),
+                                                        child: Text(
+                                                          '${value.dataList.data?.academyname}',
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.blue,
+                                                            fontStyle: FontStyle
+                                                                .normal,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18,
                                                           ),
                                                         ),
                                                       ),
-                                                    )
-
-                                                        :
-                                                    const Image (
-                                                      image :
-                                                      AssetImage(
-                                                          'assets/images/coachlogo.png'),
-                                                      width: 80,),
-
-                                                    ElevatedButton(
-                                                      onPressed: () {},
-                                                      style: ElevatedButton.styleFrom(
-                                                          shape: const StadiumBorder(
-                                                              side: BorderSide(
-                                                                  color: Colors.green,
-                                                                  width: 2)),
-                                                          backgroundColor: Colors.green),
-                                                      child:  Row(
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
                                                         children: [
-                                                          Text('${value.dataList.data?.academyProgress} %'),
-                                                          Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 10,
-                                                          )
+                                                          const Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 12),
+                                                            child: Text(
+                                                              'Services',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .normal,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
+                                                                  height: 2),
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            height: 20,
+                                                            width: 150,
+                                                            child: ListView
+                                                                .builder(
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              itemCount: value
+                                                                  .dataList
+                                                                  .data
+                                                                  ?.totalService,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return Padding(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
+                                                                          horizontal:
+                                                                              4),
+                                                                  child: Image(
+                                                                    image:
+                                                                        NetworkImage(
+                                                                      AppUrl.serviceIconEndPoint +
+                                                                          value
+                                                                              .dataList
+                                                                              .data!
+                                                                              .services![index]
+                                                                              .serviceIconname!,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      value.dataList.data!
+                                                              .islogo
+                                                          ? Container(
+                                                              width: 90,
+                                                              height: 90,
+                                                              child: Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    FittedBox(
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  child: Stack(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        width:
+                                                                            80,
+                                                                        height:
+                                                                            80,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                        child:
+                                                                            CircleAvatar(
+                                                                          radius:
+                                                                              40,
+                                                                          backgroundColor:
+                                                                              Colors.white,
+                                                                          backgroundImage:
+                                                                              NetworkImage(
+                                                                            AppUrl.academylogo +
+                                                                                value.dataList.data!.logo,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        width:
+                                                                            80,
+                                                                        height:
+                                                                            80,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle,
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                        ),
+                                                                        child:
+                                                                            CircularPercentIndicator(
+                                                                          radius:
+                                                                              40,
+                                                                          lineWidth:
+                                                                              4,
+                                                                          percent:
+                                                                              value.dataList.data!.academyProgress / 100,
+                                                                          center:
+                                                                              CircleAvatar(
+                                                                            radius:
+                                                                                38,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                          ),
+                                                                          progressColor:
+                                                                              Colors.green,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          circularStrokeCap:
+                                                                              CircularStrokeCap.round,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const Image(
+                                                              image: AssetImage(
+                                                                  'assets/images/coachlogo.png'),
+                                                              width: 80,
+                                                            ),
+                                                      ElevatedButton(
+                                                        onPressed: () {},
+                                                        style: ElevatedButton.styleFrom(
+                                                            shape: const StadiumBorder(
+                                                                side: BorderSide(
+                                                                    color: Colors
+                                                                        .green,
+                                                                    width: 2)),
+                                                            backgroundColor:
+                                                                Colors.green),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                '${value.dataList.data?.academyProgress} %'),
+                                                            Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios,
+                                                              size: 10,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                case Status.error:
-                                  return Center(
-                                      child: Text(''));
-                              }
-                            }))),),
-
+                                          ],
+                                        ),
+                                      );
+                                    case Status.error:
+                                      return Center(child: Text(''));
+                                  }
+                                }))),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -306,8 +375,10 @@ class _MainMenuState extends State<MainMenu> {
                     title: Text(
                       widget.name.toString(),
                     ),
-                    onTap: (){ Get.to(() => const ViewProfileDetails(),
-                        transition: Transition.rightToLeft);},
+                    onTap: () {
+                      Get.to(() => const ViewProfileDetails(),
+                          transition: Transition.rightToLeft);
+                    },
                     trailing: IconButton(
                       onPressed: (() {
                         Get.to(() => const ViewProfileDetails(),
@@ -345,9 +416,9 @@ class _MainMenuState extends State<MainMenu> {
                           ListTile(
                             onTap: () {
                               Get.to(
-                                      () => Layout(
-                                   selectedIndex: 2,
-                                  ),
+                                  () => Layout(
+                                        selectedIndex: 2,
+                                      ),
                                   transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
@@ -404,7 +475,6 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                   ),
-
                   const SizedBox(
                     height: 5,
                   ),
@@ -432,7 +502,10 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           ListTile(
                             onTap: () {
-                              Get.to(() => CoachListSelected(enabled: 1,),
+                              Get.to(
+                                  () => CoachListSelected(
+                                        enabled: 1,
+                                      ),
                                   transition: Transition.rightToLeft);
                             },
                             leading: CircleAvatar(
@@ -442,7 +515,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                    AssetImage('assets/images/coach.png'),
+                                        AssetImage('assets/images/coach.png'),
                                     width: 15,
                                   ),
                                 )),
@@ -450,7 +523,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Coach',
                             ),
                             trailing:
-                            const Icon(Icons.arrow_forward_ios, size: 20),
+                                const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                           ListTile(
                             onTap: () {
@@ -479,7 +552,7 @@ class _MainMenuState extends State<MainMenu> {
                               'Trainee',
                             ),
                             trailing:
-                            const Icon(Icons.arrow_forward_ios, size: 20),
+                                const Icon(Icons.arrow_forward_ios, size: 20),
                           ),
                         ],
                       ),
@@ -488,7 +561,7 @@ class _MainMenuState extends State<MainMenu> {
                   const SizedBox(
                     height: 5,
                   ),
-                 /* Card(
+                  /* Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -527,14 +600,14 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             trailing: IconButton(
                               onPressed: (() {
-                                *//* Navigator.push(
+                                */ /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const Coach_Listing()),
-                                );*//*
-                                *//*Get.to(() =>  RecordPayment(traineeList: [],),
-                                    transition: Transition.rightToLeft);*//*
+                                );*/ /*
+                                */ /*Get.to(() =>  RecordPayment(traineeList: [],),
+                                    transition: Transition.rightToLeft);*/ /*
                               }),
                               icon: const Icon(Icons.arrow_forward_ios),
                               iconSize: 20,
@@ -633,7 +706,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                     image:
-                                    AssetImage('assets/images/finance.png'),
+                                        AssetImage('assets/images/finance.png'),
                                     width: 20,
                                   ),
                                 )),
@@ -725,16 +798,38 @@ class _MainMenuState extends State<MainMenu> {
                               iconSize: 20,
                             ),
                           ),
+                          //
                           ListTile(
                             leading: CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.grey.shade100,
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
-                                  child:
-                                  Image(
-                                      image:
-                                      AssetImage('assets/images/activity.png')),
+                                  child: Image(
+                                      image: AssetImage(
+                                          'assets/images/changePassword.png')),
+                                )),
+                            title: const Text(
+                              'Change Password',
+                            ),
+                            trailing: IconButton(
+                              onPressed: (() {
+                                Get.to(() => const ChangePassword(),
+                                    transition: Transition.rightToLeft);
+                              }),
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              iconSize: 20,
+                            ),
+                          ),
+                          ListTile(
+                            leading: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.grey.shade100,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Image(
+                                      image: AssetImage(
+                                          'assets/images/activity.png')),
                                 )),
                             title: const Text(
                               'Activity Log',
@@ -756,7 +851,7 @@ class _MainMenuState extends State<MainMenu> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
                                       image:
-                                      AssetImage('assets/images/info.png')),
+                                          AssetImage('assets/images/info.png')),
                                 )),
                             title: const Text(
                               'About',
@@ -826,7 +921,6 @@ class _MainMenuState extends State<MainMenu> {
                       width: 150,
                     ),
                   )
-
                 ],
               ),
             ),

@@ -66,7 +66,7 @@ class UserViewModel with ChangeNotifier {
   Future<dynamic> remove(context) async {
     //remove token to server and local
     final SharedPreferences sp = await SharedPreferences.getInstance();
-      // Clears all the data in SharedPreferences
+    // Clears all the data in SharedPreferences
     // value['Profiles'][0]['role'].toString(),
     // value['Profiles'][0]['name'].toString(),
     // value['Profiles'][0]['email'].toString(),
@@ -82,8 +82,7 @@ class UserViewModel with ChangeNotifier {
       print("logout");
       Utils.flushBarErrorMessage('Logout Successfully', context);
       sp.remove('token');
-    }
-    );
+    });
     return true;
   }
 
@@ -94,7 +93,7 @@ class UserViewModel with ChangeNotifier {
       sp.setString('uprofile', value['imgname']);
       filename = value['imgname'];
       //print(value);
-     // print(value['imgname']);
+      // print(value['imgname']);
       // Utils.flushBarErrorMessage(value['msg'], context);
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -105,26 +104,32 @@ class UserViewModel with ChangeNotifier {
   }
 
   //user profile add
-  Future<void> userProfileAdd(dynamic data, BuildContext context, String pathPage , [int listindex = -1]) async {
+  Future<void> userProfileAdd(
+      dynamic data, BuildContext context, String pathPage,
+      [int listindex = -1]) async {
     setLoading(true);
     _myRepo.fetchUserprofileAddListApi(data).then((value) async {
       setLoading(false);
       print(value);
       Utils.flushBarErrorMessage(value['msg'], context);
       print("api success of adding coach");
-   //if(listindex!=-1)
-     //{
-       /// create batch
-    //  pathPage == "dashBoard"?
-      Get.to(()=>  CreateBatchListing(pathPage: pathPage,),transition: Transition.rightToLeft);
-    //  Get.to(()=>  CreateBatchListing(pathPage: pathPage),transition: Transition.rightToLeft);
-     //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.rightToLeft);
-   //  }
-   // else
-   //   {
-   //     Get.to(()=>  CoachListSelected(),transition: Transition.rightToLeft);
-   //   }
-
+      //if(listindex!=-1)
+      //{
+      /// create batch
+      pathPage == "dashBoard"
+          ? Get.back(result: "success")
+          : Get.to(
+              () => CreateBatchListing(
+                    pathPage: pathPage,
+                  ),
+              transition: Transition.rightToLeft);
+      //  Get.to(()=>  CreateBatchListing(pathPage: pathPage),transition: Transition.rightToLeft);
+      //  Get.to(()=>  CoachListSelected(Listindex : listindex),transition: Transition.rightToLeft);
+      //  }
+      // else
+      //   {
+      //     Get.to(()=>  CoachListSelected(),transition: Transition.rightToLeft);
+      //   }
     }).onError((error, stackTrace) {
       setLoading(false);
       print("api  not success");
@@ -133,9 +138,4 @@ class UserViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
-
-
-
 }
-
-

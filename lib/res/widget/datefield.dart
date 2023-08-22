@@ -24,7 +24,7 @@ class _DateOfBirthState extends State<DateOfBirth> {
           Icons.calendar_month,
           size: 30.0,
         ),
-        hintText: 'Dob',
+        hintText: widget.hintText,
         contentPadding: const EdgeInsets.all(10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),

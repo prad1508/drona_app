@@ -1425,10 +1425,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                               sessionViewModel
                                                                   .sessionCancelApi(
                                                                   data,
-                                                                  context).then((value) => {
-                                                               Navigator.of(context).pop(),
-                                                                  Get.to(()=>  SessionList(), transition: Transition.rightToLeft)
-                                                              });
+                                                                  context);
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(

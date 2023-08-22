@@ -161,13 +161,14 @@ class SessionViewViewModel with ChangeNotifier {
     _myRepo.putSessionCancelApi(data).then((value) {
       setDataList4(ApiResponse.completed(value));
       Utils.toastMessage(value.msg);
+      Navigator.of(context).pop();
+      Get.to(()=>  const SessionList(), transition: Transition.rightToLeft);
       print("api sessionCancelApi success");
     }).onError((error, stackTrace) {
       setDataList4(ApiResponse.error(error.toString()));
      Utils.toastMessage(error.toString());
+      Navigator.of(context).pop();
       //Navigator.pop(context);
-
-
       print("api  sessionCancelApi not success");
       print(error);
       print("error${ApiResponse.error(error.toString())}");
@@ -180,6 +181,7 @@ class SessionViewViewModel with ChangeNotifier {
       setDataList6(ApiResponse.completed(value));
      // Utils.flushBarErrorMessage(value.msg, context);
       Utils.toastMessage(value.msg);
+      Get.to(const SessionList());
 
       //Get.back();i
       print("api sessionEditApi success");
@@ -187,6 +189,8 @@ class SessionViewViewModel with ChangeNotifier {
       setDataList6(ApiResponse.error(error.toString()));
       //Utils.toastMessage(error.toString());
       Utils.toastMessage(error.toString());
+      Get.to(const SessionList());
+
 
       print("api  sessionEditApi not success");
       print(error);

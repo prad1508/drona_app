@@ -86,14 +86,14 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
                                 DashboardCard(
                                     color: Color(0xff173564),
                                     icon: Icons.currency_rupee_outlined,
-                                    count: widget.totalFeePaid,
+                                    count: int.parse(widget.totalFeePaid),
                                     title: 'Fee Paid',
                                     subtitle: '${widget.totalFeeDue} Trainee Due',
                                     line: .8),
                                 DashboardCard(
                                     color: Color(0xff0095F7),
                                     icon: Icons.account_balance_wallet_outlined,
-                                    count: widget.totalCollectionPaid,
+                                    count:int.parse(widget.totalCollectionPaid) ,
                                     title: 'Collection',
                                     subtitle: '${widget.totalCollectionDue} - Due Amount',
                                     line: .8)

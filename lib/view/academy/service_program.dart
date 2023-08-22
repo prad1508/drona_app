@@ -11,16 +11,18 @@ import '../../view_model/academy_view_model.dart';
 import '../Academy_Listing/choose_facility2.dart';
 import '../Academy_Listing/facility_program.dart';
 import '../Academy_Listing/service_offring_page.dart';
+import '../dashboard/layout.dart';
 import '../registeration/choose_facility.dart';
 
-class Servicelist_Page extends StatefulWidget {
-  const Servicelist_Page({super.key});
+class ServiceListPage extends StatefulWidget {
+  String path;
+   ServiceListPage({super.key,required this.path});
 
   @override
-  State<Servicelist_Page> createState() => _Servicelist_PageState();
+  State<ServiceListPage> createState() => _ServiceListPageState();
 }
 
-class _Servicelist_PageState extends State<Servicelist_Page> {
+class _ServiceListPageState extends State<ServiceListPage> {
   AcademyViewViewModel academyListViewViewModel = AcademyViewViewModel();
 
   var catUid = '';
@@ -39,6 +41,13 @@ class _Servicelist_PageState extends State<Servicelist_Page> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            print("widget.path${widget.path}");
+            widget.path == "multiSelectCoach" || widget.path == "program&facility" ? Get.to(()=> Layout(selectedIndex: 0)) : Get.back();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,

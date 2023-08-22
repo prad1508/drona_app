@@ -349,7 +349,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                     radius: 70,
                                                     child: CircleAvatar(
                                                       radius: 65,
-                                                      backgroundColor: Colors.white,
+                                                      backgroundColor: Colors.grey.shade300,
                                                       backgroundImage: imgFile == null
                                                           ?
                                                       NetworkImage(
@@ -523,7 +523,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             height: 2),
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
-                                          hintText: '987654253',
+                                          hintText: 'e.g 987654253',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -1092,8 +1092,18 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             else if (address.text.isEmpty) {
                                               Utils.flushBarErrorMessage("Please enter address", context);
                                             }
-                                            else if (AlternateNumber.text.isNotEmpty && AlternateNumber.text.trim().length !=10) {
-                                              Utils.flushBarErrorMessage("Please enter correct number ", context);
+                                            else if (AlternateNumber.text.isEmpty && AlternateNumber.text.trim().length !=10) {
+                                              Utils.flushBarErrorMessage("Please enter alternate number ", context);
+                                            }
+                                            if (email.text.isEmpty) {
+                                              Utils.flushBarErrorMessage("Please enter email", context);
+                                            } else if (!_isValidEmail(email.text)) {
+                                              Utils.flushBarErrorMessage("Please enter a valid email", context);
+                                            }
+                                            if (website.text.isEmpty) {
+                                              Utils.flushBarErrorMessage("Please enter website", context);
+                                            } else if (!_isValidWebsite(website.text)) {
+                                              Utils.flushBarErrorMessage("Please enter a valid website URL", context);
                                             }
                                             else if (city.text.isEmpty) {
                                               Utils.flushBarErrorMessage("Please enter city", context);
@@ -1124,7 +1134,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                               };
 
 
-                                              academyListViewViewModel.fetchEditAcademy(data);
+                                              academyListViewViewModel.fetchEditAcademy(data,'academyDetails');
                                               // Get.back();
 
                                             }
@@ -1159,6 +1169,30 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
         )
     );
   }
+  bool _isValidEmail(String email) {
+    // Regular expression pattern for basic email validation
+    final RegExp emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _isValidWebsite(String website) {
+    // Regular expression pattern for basic website URL validation
+    final RegExp websiteRegex = RegExp(
+      r'^(http(s)?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\S*)?$',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return websiteRegex.hasMatch(website);
+  }
+
+
+
+
+
 
 
   dialog(BuildContext context) {

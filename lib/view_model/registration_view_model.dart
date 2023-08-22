@@ -18,6 +18,7 @@ import '../utils/utils.dart';
 import '../view/Academy_Listing/chooose_program2.dart';
 import '../view/Academy_Listing/choose_facility2.dart';
 import '../view/Academy_Listing/facility_program.dart';
+import '../view/academy/service_program.dart';
 import '../view/dashboard/layout.dart';
 import '../view/registeration/choose_program.dart';
 import '../view/registeration/detail_filled.dart';
@@ -240,7 +241,7 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage('Facility Saved Successfully', context);
 
       //Navigator.pushNamed(context, RoutesName.chooseprogram);
-      Get.to(() =>  FacilityProgram(serviceUid: serviceUid,),transition: Transition.rightToLeft);
+      Get.to(() =>  ServiceListPage(path: 'program&facility'),transition: Transition.rightToLeft);
 
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -435,4 +436,30 @@ class RegistrationViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
+
+  //////////////////////Set New password /////////////////////////////////////
+  Future<void> confirmnewPassword(String newPass,String oldPass, BuildContext context) async {
+    setLoading(true);
+   /* setUid(uid);
+    final prefsToken = await SharedPreferences.getInstance();
+    String token = prefsToken.getString('token')!;
+    print("token==$token");*/
+    Map<String, dynamic> data = {
+      "newpassword": newPass,
+      "oldpassword": oldPass,
+    };
+    _myRepo.changePasswordListApi(data).then((value) async {
+      setLoading(false);
+      Utils.flushBarErrorMessage(value['msg'], context);
+      //Navigator.pushNamed(context, RoutesName.login);
+      Get.to(() => const LoginView(),transition: Transition.rightToLeft);
+
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+
+
 }
