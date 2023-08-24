@@ -58,6 +58,7 @@ class AppUrl {
   static var traineeAddinBatchEndpoint = "$baseUrl/academy/addtraineeinbatch";
   static var recordPayment = "$baseUrl/academy/recordpayment";
   static var traineeListinBatchEndpoint = "$baseUrl/academy/trainee/10/1";
+  static var traineeListEndpoint = "$baseUrl/academy/trainee";
   static var ledgerEndpoint = "$baseUrl/academy/trainee/ledger";
   static var activateTrainee = "$baseUrl/academy/trainee/activate";
   static var deactivateTrainee = "$baseUrl/academy/trainee/deactivate";

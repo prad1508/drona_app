@@ -75,22 +75,6 @@ class TraineeViewModel with ChangeNotifier {
     });
   }
 
-/*
-  Future<void> fetchTraineelistListApi() async {
-    setDataList(ApiResponse.loading());
-
-    _myRepo.fetchTraineelistListApi().then((value) {
-      setDataList(ApiResponse.completed(value));
-
-      print("api trainne list success");
-    }).onError((error, stackTrace) {
-      setDataList(ApiResponse.error(error.toString()));
-      print('error is + ${error}');
-
-      print("api  trainne list not success");
-    });
-  }
-*/
 
   ///  Trainee list api
   Future<void> fetchTraineeListSearchApi(dynamic data) async {

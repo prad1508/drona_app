@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/batch_Filter_model.dart';
 import '../../model/myservices_model.dart';
+import '../../res/app_url.dart';
 
 
 
@@ -16,13 +18,11 @@ class BatchFilterPage extends StatefulWidget {
     /*required this.drop,*/
     required this.search,
   });
-
   @override
   State<BatchFilterPage> createState() => _BatchFilterPageState();
 }
 
 class _BatchFilterPageState extends State<BatchFilterPage> {
-  Datum? dropValue;
   Services? dropValue1;
 
 
@@ -32,11 +32,12 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
 
 
   void myServiceApi() async {
-
+    final prefsToken = await SharedPreferences.getInstance();
+    dynamic token = prefsToken.getString('token');
     var headers = {
-      'token': 'd84s5f4il3b8ly1k09yu9gm80gk0p504o7d9e4if'
+      'token': token.toString()
     };
-    var request = http.Request('GET', Uri.parse('https://apidrona.moozetech.in/academy/myservices'));
+    var request = http.Request('GET', Uri.parse(AppUrl.myservicesListEndPoint));
     request.body = '''''';
     request.headers.addAll(headers);
 
@@ -72,7 +73,6 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
   }
 
   String _value = "Active";
-  List<String> mydrop = ["New", "Active", "Inactive"];
   @override
   Widget build(BuildContext context) {
     return Padding(

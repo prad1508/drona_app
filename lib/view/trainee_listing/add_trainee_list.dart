@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/batch_listing/viewprofile_details.dart';
@@ -10,6 +12,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../../data/response/status.dart';
 import '../../model/trainee_list_model.dart';
@@ -44,8 +48,640 @@ class AddTraineeList extends StatefulWidget {
 }
 
 class _AddTraineeListState extends State<AddTraineeList> {
-  //bottomsheet popup
-  //bottomsheet popup
+  int pageSize = 20;
+  int pageNo = 1;
+
+  TraineeListModel? traineeListModel;
+
+  List<Datum> foundData = [];
+  List<Datum> infoData = [];
+  bool isNextPage = false;
+  bool isLoading = false;
+
+  int? totalDataCount;
+  var newDataLength = 1;
+
+  TraineeViewModel traineeViewModel = TraineeViewModel();
+
+  void getData({required int newDataLength}) async {
+
+    setState(() {
+      isLoading = true;
+    });
+    final prefsToken = await SharedPreferences.getInstance();
+    dynamic token = prefsToken.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'token': token.toString()
+    };
+    var request = http.Request('PUT',
+        Uri.parse("${AppUrl.traineeListEndpoint}/$pageSize/$newDataLength"));
+    request.body = json.encode({"filter_batch_uid": "", "search": ""});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var jsonData = await response.stream.bytesToString();
+      print(jsonData.toString());
+
+      traineeListModel = TraineeListModel.fromJson(jsonDecode(jsonData));
+      setState(() {
+        isLoading = false;
+      });
+      var infolist = traineeListModel!.data;
+      print("api call success==$infolist");
+      setState(() {
+        infoData.addAll(infolist);
+        isNextPage = traineeListModel!.nextPageAvailable;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      print(response.reasonPhrase);
+    }
+  }
+
+  @override
+  initState() {
+    getData(newDataLength: newDataLength);
+    foundData = infoData;
+
+    super.initState();
+  }
+
+  runFilter(String enteredKey) {
+    List<Datum> result = [];
+    if (enteredKey.isEmpty) {
+      result = infoData;
+    } else {
+      result = infoData
+          .where((data) => data.traineeName
+              .toString()
+              .toLowerCase()
+              .contains(enteredKey.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      foundData = result;
+    });
+    // print(foundData);
+  }
+
+  runFilter1(String enteredKey, String myStatus, String onBoardStatus) {
+    print("enteredKey==$enteredKey");
+    print("myStatus==$myStatus");
+    print("onBoardStatus==$onBoardStatus");
+    // print("key==.$enteredKey");
+    List<Datum> result = [];
+    if (enteredKey.isEmpty && myStatus.isEmpty && onBoardStatus.isEmpty) {
+      result = infoData;
+    } else {
+      result = infoData
+          .where((data) => data.batchname
+              .toString()
+              .toLowerCase()
+              .contains(enteredKey.toLowerCase()))
+          .where((element) => element.status.toString().contains(myStatus))
+          .where((element) =>
+              element.join_status.toString().contains(onBoardStatus))
+          .toList();
+    }
+    setState(() {
+      foundData = result;
+    });
+    // print("key==.");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Get.to(() => const Layout(selectedIndex: 0),
+                transition: Transition.rightToLeft),
+          ),
+          title: Text(
+            'Trainee Listing',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          actions: [
+            IconButton(
+              onPressed: (() {
+                Get.to(() => AddTrainneInExisitingBatch(),
+                    transition: Transition.rightToLeft);
+              }),
+              icon: const Icon(Icons.add),
+              iconSize: 25,
+              color: Colors.black,
+            ),
+          ],
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: bottomSheetWidget(),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 8,
+                      child: searchWidget(),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  //color:Colors.green,
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: isLoading
+                      ? const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+
+                      Center(
+                        child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(
+                            color: Colors.teal,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                      : buildListView()
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  buildListView() {
+    return foundData.isEmpty
+        ? const Center(child: Text("No Data"))
+        : ListView.builder(
+            itemCount: foundData.length,
+            itemBuilder: (context, index) {
+              /*print(
+                        'traineeProfileUid UID ${foundData[index].traineeProfileUid}  Trainee Name ${foundData[index].image}');*/
+              return (index == foundData.length)
+                  ? foundData.isEmpty
+                      ? Center(
+                          child: Container(
+                              height: 20,
+                              width: 20,
+                              margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.45),
+                              child: const CircularProgressIndicator(
+                                  // color: Mycolors.GradientLeftColor,
+                                  )),
+                        )
+                      : isNextPage
+                          ? Container(
+                              decoration:
+                                  const BoxDecoration(color: Colors.brown),
+                              child: TextButton(
+                                child: const Text(
+                                  "Load More",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    newDataLength += 1;
+
+                                    getData(newDataLength: newDataLength);
+                                  });
+                                },
+                              ),
+                            )
+                          : SizedBox()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showBottomSheet(
+                              status: foundData[index].status == 'active'
+                                  ? true
+                                  : false,
+                              index: index,
+                              traineeList: foundData,
+                            );
+                          },
+                          child: Container(
+                            color: const Color(0XFFDFE1E4).withOpacity(0.3),
+                            //padding: const EdgeInsets.all(5),
+                            height: 110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(height: 5),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 8.0),
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: const BoxDecoration(
+                                            color: Colors.grey,
+                                            shape: BoxShape.circle),
+                                        child: foundData[index].image.isNotEmpty
+                                            ? CachedNetworkImage(
+                                                fit: BoxFit.contain,
+                                                imageUrl: AppUrl
+                                                        .ouserProfileimgListEndPoint +
+                                                    foundData[index].image,
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    // Image.asset("assets/images/user.png")
+                                                    Icon(
+                                                      Icons.person,
+                                                      size: 30,
+                                                    ))
+                                            : CircleAvatar(
+                                                backgroundColor: Colors.blue,
+                                                child: Text(
+                                                  getInitials(foundData[index]
+                                                      .traineeName),
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.white),
+                                                ),
+                                                // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
+                                              ),
+                                        // AssetImage('assets/images/user_profile.png'),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Container(
+                                        width: 40,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: foundData[index].status ==
+                                                  "active"
+                                              ? const Color(0xff47C088)
+                                              : Colors.redAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: Center(
+                                            child: foundData[index].status ==
+                                                    "active"
+                                                ? const Text(
+                                                    "Active",
+                                                    style: TextStyle(
+                                                      color: Color(0xffFBFBFC),
+                                                      fontSize: 10,
+                                                      fontFamily: 'Lato',
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  )
+                                                : const Text(
+                                                    "Inactive",
+                                                    style: TextStyle(
+                                                      color: Color(0xffFBFBFC),
+                                                      fontSize: 10,
+                                                      fontFamily: 'Lato',
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 5),
+                                    Container(
+                                      //color: Colors.grey,
+                                      width:
+                                          MediaQuery.sizeOf(context).width * .8,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Text(
+                                              foundData[index].traineeName,
+                                              style: const TextStyle(
+                                                color: Color(0xff39404A),
+                                                fontSize: 14,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                          // const SizedBox(width: 10),
+                                          Container(
+                                            height: 20,
+                                            padding: const EdgeInsets.only(
+                                                left: 5, right: 5, top: 2),
+                                            decoration: BoxDecoration(
+                                                color: foundData[index]
+                                                            .join_status ==
+                                                        'not_onboarded'
+                                                    ? const Color.fromRGBO(
+                                                        255, 232, 231, 1)
+                                                    : const Color(0xffEDF9F3),
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Text(
+                                              foundData[index].join_status ==
+                                                      'not_onboarded'
+                                                  ? 'Not Onboarded'
+                                                  : 'Onboarded',
+                                              style: TextStyle(
+                                                  color: foundData[index]
+                                                              .join_status ==
+                                                          'not_onboarded'
+                                                      ? const Color.fromRGBO(
+                                                          253, 29, 13, 1)
+                                                      : Colors.green,
+                                                  fontSize: 12),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width: 24,
+                                              height: 24,
+                                              child: Image.network(
+                                                AppUrl.serviceIconEndPoint +
+                                                    foundData[index]
+                                                        .serviceicon,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 1),
+                                    Container(
+                                      width:
+                                          MediaQuery.sizeOf(context).width * .5,
+                                      padding: EdgeInsets.only(
+                                          left:
+                                              MediaQuery.sizeOf(context).width *
+                                                  .025),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          foundData[index].gender == 'male'
+                                              ? const Text(
+                                                  "Male",
+                                                  style: TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                )
+                                              : foundData[index].gender ==
+                                                      'female'
+                                                  ? const Text(
+                                                      "Female",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff39404A),
+                                                        fontSize: 12,
+                                                        fontFamily: 'Lato',
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    )
+                                                  : const Text(
+                                                      "Others",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff39404A),
+                                                        fontSize: 12,
+                                                        fontFamily: 'Lato',
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                          const Text(
+                                            " | ",
+                                            style: TextStyle(
+                                              color: Color(0xff39404A),
+                                              fontSize: 12,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          Text(
+                                            foundData[index].dob,
+                                            style: const TextStyle(
+                                              color: Color(0xff39404A),
+                                              fontSize: 12,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    SizedBox(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          .75,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: Text(
+                                              foundData[index].batchname,
+                                              style: const TextStyle(
+                                                color: Color(0xff39404A),
+                                                fontSize: 14,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '${foundData[index].batch_timing_from} to ${foundData[index].batch_timing_to}',
+                                            style: const TextStyle(
+                                              color: Color(0xff39404A),
+                                              fontSize: 12,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    //const SizedBox(height: 5),
+                                    Container(
+                                      width: 300,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "Fee : ",
+                                                  style: TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontSize: 14,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '₹ ${foundData[index].fees}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xff39404A),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // Row(
+                                            //   children: [
+                                            //     const Text(
+                                            //       "Due : ",
+                                            //       style: TextStyle(
+                                            //         color: Color(0xff39404A),
+                                            //         fontSize: 14,
+                                            //         fontFamily: 'Lato',
+                                            //         fontWeight: FontWeight.w700,
+                                            //       ),
+                                            //     ),
+                                            //     Text(
+                                            //       '₹ ${value.dataList.data?.data[index].fees}',
+                                            //       style: const TextStyle(
+                                            //         color: Color(0xff39404A),
+                                            //         fontSize: 12,
+                                            //         fontFamily: 'Lato',
+                                            //         fontWeight: FontWeight.w400,
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          height: 1,
+                          thickness: 1,
+                        ),
+                      ],
+                    );
+            },
+          );
+  }
+
+  String getInitials(String name) {
+    List<String> nameParts = name.split(' ');
+    if (nameParts.length > 1) {
+      return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase();
+    } else if (nameParts.length == 1) {
+      String firstName = nameParts[0];
+      if (firstName.length >= 2) {
+        return firstName.substring(0, 2).toUpperCase();
+      } else {
+        return firstName[0].toUpperCase();
+      }
+    } else {
+      return '';
+    }
+  }
+
+  TextField bottomSheetWidget() {
+    return TextField(
+      readOnly: true,
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+            ),
+            builder: (context) => Filter(
+                  // drop: infoData,
+                  search: runFilter1,
+                ));
+      },
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+          prefixIcon: const Center(child: Icon(Icons.filter_list)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+    );
+  }
+
+  TextField searchWidget() {
+    return TextField(
+      style: const TextStyle(color: Colors.black),
+      onChanged: (value) {
+        runFilter(value);
+      },
+      decoration: InputDecoration(
+          hintText: "Search",
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          suffixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+    );
+  }
+
+  ///bottomsheet popup
   showBottomSheet(
       {bool? status, required int index, required List<Datum> traineeList}) {
     showModalBottomSheet<void>(
@@ -368,1035 +1004,6 @@ class _AddTraineeListState extends State<AddTraineeList> {
                   )
                 ],
               ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
-  final TextEditingController FullName = TextEditingController();
-  final TextEditingController phone = TextEditingController();
-  final TextEditingController email = TextEditingController();
-  TraineeViewModel traineeViewModel = TraineeViewModel();
-  List<Map<String, dynamic>> _foundUsers = [];
-  List<int> _selectedItems = <int>[];
-  int _selectedIndex = -1;
-  late Map<String, dynamic> data;
-
-  final List<Map<String, dynamic>> _allUsers = [
-    {
-      "id": 1,
-      "name": "Shivendar Singh",
-      "proImg": "assets/images/user_profile.png",
-      "categorgyImg": "assets/images/Golf.png"
-    },
-    {
-      "id": 2,
-      "name": "Aarush mishra",
-      "proImg": "assets/images/user_profile.png",
-      "categorgyImg": "assets/images/Golf.png"
-    },
-    {
-      "id": 3,
-      "name": "Divya Shah",
-      "detail": 'Male, +9189555296811',
-      "proImg": "assets/images/user_profile.png",
-      "categorgyImg": "assets/images/Golf.png"
-    }
-  ];
-  @override
-  initState() {
-    data = {"filter_batch_uid": "", "search": ""};
-    traineeViewModel.fetchTraineeListSearchApi(data);
-    _foundUsers = _allUsers;
-    super.initState();
-  }
-
-  void dataFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = _allUsers;
-    } else {
-      results = _allUsers
-          .where((user) =>
-              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
-    setState(() {
-      _foundUsers = results;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Get.to(() => const Layout(selectedIndex: 0),
-                  transition: Transition.rightToLeft),
-            ),
-            title: Text(
-              'Trainee Listing',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            actions: [
-              IconButton(
-                onPressed: (() {
-                  Get.to(() => AddTrainneInExisitingBatch(),
-                      transition: Transition.rightToLeft);
-                }),
-                icon: const Icon(Icons.add),
-                iconSize: 25,
-                color: Colors.black,
-              ),
-            ],
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            elevation: 0,
-          ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: showFilter,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 55,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey)),
-                        child: const Icon(
-                          Icons.filter_list,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                          side: BorderSide(
-                            color: Color.fromARGB(255, 197, 196, 196),
-                          ),
-                        ),
-                        elevation: 0,
-                        child: ListTile(
-                          title: TextField(
-                            onChanged: (searchData) => dataFilter(searchData),
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 0.0),
-                                hintText: 'Search',
-                                border: InputBorder.none),
-                          ),
-                          trailing: const Icon(Icons.search),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ChangeNotifierProvider<TraineeViewModel>(
-                create: (BuildContext context) => traineeViewModel,
-                child: Consumer<TraineeViewModel>(
-                  builder: (context, value, _) {
-                    switch (value.dataList.status!) {
-                      case Status.loading:
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.teal,
-                          ),
-                        );
-                      case Status.completed:
-                        return SingleChildScrollView(
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            //color:Colors.green,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: ListView.builder(
-                              itemCount: value.dataList.data?.data.length,
-                              itemBuilder: (context, index) {
-                                print(
-                                    ' traineeProfileUid UID ${value.dataList.data!.data[index].traineeProfileUid}  Trainee Name ${value.dataList.data!.data[index].image}');
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        showBottomSheet(
-                                          status: value.dataList.data!
-                                                      .data[index].status ==
-                                                  'active'
-                                              ? true
-                                              : false,
-                                          index: index,
-                                          traineeList:
-                                              value.dataList.data!.data,
-                                        );
-                                      },
-                                      child: Container(
-                                        color: const Color(0XFFDFE1E4)
-                                            .withOpacity(0.3),
-                                        //padding: const EdgeInsets.all(5),
-                                        height: 110,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                const SizedBox(height: 5),
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 8.0),
-                                                  child: Container(
-                                                    width: 30,
-                                                    height: 30,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                            color: Colors.grey,
-                                                            shape: BoxShape
-                                                                .circle),
-                                                    child: value
-                                                            .dataList
-                                                            .data!
-                                                            .data[index]
-                                                            .image
-                                                            .isNotEmpty
-                                                        ? CachedNetworkImage(
-                                                            fit: BoxFit.contain,
-                                                            imageUrl: AppUrl
-                                                                    .ouserProfileimgListEndPoint +
-                                                                value
-                                                                    .dataList
-                                                                    .data!
-                                                                    .data[index]
-                                                                    .image,
-                                                            errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
-                                                                // Image.asset("assets/images/user.png")
-                                                                Icon(
-                                                                  Icons.person,
-                                                                  size: 30,
-                                                                ))
-                                                        : CircleAvatar(
-                                                            backgroundColor:
-                                                                Colors.blue,
-                                                            child: Text(
-                                                              getInitials(value
-                                                                  .dataList
-                                                                  .data!
-                                                                  .data[index]
-                                                                  .traineeName),
-                                                              style: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                            // backgroundImage: getInitials(value.dataList.data!.data[index].traineeName),
-                                                          ),
-                                                    // AssetImage('assets/images/user_profile.png'),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 2,
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomLeft,
-                                                  child: Container(
-                                                    width: 40,
-                                                    height: 20,
-                                                    decoration: BoxDecoration(
-                                                      color: value
-                                                                  .dataList
-                                                                  .data!
-                                                                  .data[index]
-                                                                  .status ==
-                                                              "active"
-                                                          ? const Color(
-                                                              0xff47C088)
-                                                          : Colors.redAccent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                    ),
-                                                    child: Center(
-                                                        child: value
-                                                                    .dataList
-                                                                    .data!
-                                                                    .data[index]
-                                                                    .status ==
-                                                                "active"
-                                                            ? const Text(
-                                                                "Active",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Color(
-                                                                      0xffFBFBFC),
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      'Lato',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                              )
-                                                            : const Text(
-                                                                "Inactive",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Color(
-                                                                      0xffFBFBFC),
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      'Lato',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                              )),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(height: 5),
-                                                Container(
-                                                  //color: Colors.grey,
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          .8,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 10.0),
-                                                        child: Text(
-                                                          value
-                                                              .dataList
-                                                              .data!
-                                                              .data[index]
-                                                              .traineeName,
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Color(
-                                                                0xff39404A),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // const SizedBox(width: 10),
-                                                      Container(
-                                                        height: 20,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 5,
-                                                                right: 5,
-                                                                top: 2),
-                                                        decoration: BoxDecoration(
-                                                            color: value
-                                                                        .dataList
-                                                                        .data!
-                                                                        .data[
-                                                                            index]
-                                                                        .join_status ==
-                                                                    'not_onboarded'
-                                                                ? const Color
-                                                                        .fromRGBO(
-                                                                    255,
-                                                                    232,
-                                                                    231,
-                                                                    1)
-                                                                : const Color(
-                                                                    0xffEDF9F3),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5)),
-                                                        child: Text(
-                                                          value
-                                                                      .dataList
-                                                                      .data!
-                                                                      .data[
-                                                                          index]
-                                                                      .join_status ==
-                                                                  'not_onboarded'
-                                                              ? 'Not Onboarded'
-                                                              : 'Onboarded',
-                                                          style: TextStyle(
-                                                              color: value
-                                                                          .dataList
-                                                                          .data!
-                                                                          .data[
-                                                                              index]
-                                                                          .join_status ==
-                                                                      'not_onboarded'
-                                                                  ? const Color
-                                                                          .fromRGBO(
-                                                                      253,
-                                                                      29,
-                                                                      13,
-                                                                      1)
-                                                                  : Colors
-                                                                      .green,
-                                                              fontSize: 12),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                          width: 24,
-                                                          height: 24,
-                                                          child: Image.network(
-                                                            AppUrl.serviceIconEndPoint +
-                                                                value
-                                                                    .dataList
-                                                                    .data!
-                                                                    .data[index]
-                                                                    .serviceicon,
-                                                          )),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 1),
-                                                Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          .5,
-                                                  padding: EdgeInsets.only(
-                                                      left: MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width *
-                                                          .025),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      value
-                                                                  .dataList
-                                                                  .data
-                                                                  ?.data[index]
-                                                                  .gender ==
-                                                              'male'
-                                                          ? const Text(
-                                                              "Male",
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xff39404A),
-                                                                fontSize: 12,
-                                                                fontFamily:
-                                                                    'Lato',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                            )
-                                                          : value
-                                                                      .dataList
-                                                                      .data
-                                                                      ?.data[
-                                                                          index]
-                                                                      .gender ==
-                                                                  'female'
-                                                              ? const Text(
-                                                                  "Female",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xff39404A),
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontFamily:
-                                                                        'Lato',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                  ),
-                                                                )
-                                                              : const Text(
-                                                                  "Others",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xff39404A),
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontFamily:
-                                                                        'Lato',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                  ),
-                                                                ),
-                                                      const Text(
-                                                        " | ",
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xff39404A),
-                                                          fontSize: 12,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        value.dataList.data!
-                                                            .data[index].dob,
-                                                        style: const TextStyle(
-                                                          color:
-                                                              Color(0xff39404A),
-                                                          fontSize: 12,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 12),
-                                                SizedBox(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          .75,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 15.0),
-                                                        child: Text(
-                                                          value
-                                                              .dataList
-                                                              .data!
-                                                              .data[index]
-                                                              .batchname,
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Color(
-                                                                0xff39404A),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        '${value.dataList.data!.data[index].batch_timing_from} to ${value.dataList.data!.data[index].batch_timing_to}',
-                                                        style: const TextStyle(
-                                                          color:
-                                                              Color(0xff39404A),
-                                                          fontSize: 12,
-                                                          fontFamily: 'Lato',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 5),
-                                                //const SizedBox(height: 5),
-                                                Container(
-                                                  width: 300,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 15),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const Text(
-                                                              "Fee : ",
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xff39404A),
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    'Lato',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              '₹ ${value.dataList.data?.data[index].fees}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Color(
-                                                                    0xff39404A),
-                                                                fontSize: 12,
-                                                                fontFamily:
-                                                                    'Lato',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        // Row(
-                                                        //   children: [
-                                                        //     const Text(
-                                                        //       "Due : ",
-                                                        //       style: TextStyle(
-                                                        //         color: Color(0xff39404A),
-                                                        //         fontSize: 14,
-                                                        //         fontFamily: 'Lato',
-                                                        //         fontWeight: FontWeight.w700,
-                                                        //       ),
-                                                        //     ),
-                                                        //     Text(
-                                                        //       '₹ ${value.dataList.data?.data[index].fees}',
-                                                        //       style: const TextStyle(
-                                                        //         color: Color(0xff39404A),
-                                                        //         fontSize: 12,
-                                                        //         fontFamily: 'Lato',
-                                                        //         fontWeight: FontWeight.w400,
-                                                        //       ),
-                                                        //     ),
-                                                        //   ],
-                                                        // )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 1,
-                                      thickness: 1,
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      case Status.error:
-                        return Center(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Theme.of(context).primaryColorDark,
-                              size: 100.0,
-                            ),
-                            const NoData()
-                            // Text(
-                            //   value.dataList.message.toString(),
-                            //   style: TextStyle(
-                            //       color: Theme.of(context).primaryColor,
-                            //       fontSize: 20,
-                            //       height: 2),
-                            // )
-                          ],
-                        ));
-                    }
-                  },
-                ),
-              ),
-            ],
-          )),
-    );
-  }
-
-  String getInitials(String name) {
-    List<String> nameParts = name.split(' ');
-    if (nameParts.length > 1) {
-      return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase();
-    } else if (nameParts.length == 1) {
-      String firstName = nameParts[0];
-      if (firstName.length >= 2) {
-        return firstName.substring(0, 2).toUpperCase();
-      } else {
-        return firstName[0].toUpperCase();
-      }
-    } else {
-      return '';
-    }
-  }
-
-  showAlertDialog(BuildContext context) {
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: const EdgeInsets.all(10),
-
-          backgroundColor: Colors.white,
-          title: const Text(
-            "Confirm Addition Of The Trainee",
-            style: TextStyle(fontSize: 14),
-          ),
-
-          content: ListView.separated(
-            itemCount: 3,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                height: 115,
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(10.0))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/images/user_profile.png"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 2,
-                              ),
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 20,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.green.shade700,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: const Text(
-                                  "Active",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 5, bottom: 10),
-                              child: Text(
-                                "Shivendra Singh",
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 50),
-                              child: Text(
-                                "Male | 34 Year",
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: Container(
-                            padding: const EdgeInsets.only(),
-                            decoration: BoxDecoration(
-                                color: Colors.green.shade100,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: const Text(
-                              "Onboarded",
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.green),
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 10,
-                            top: 5,
-                          ),
-                          child: SizedBox(
-                            height: 30,
-                            width: 40,
-                            child: CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/images/Golf.png")),
-                          ),
-                        )
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 55),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Tenni Batch Evening",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          Text(
-                            "03:00 PM to 05:30 PM",
-                            style: TextStyle(fontSize: 10, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 50),
-                      child: Row(
-                        //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                " Joining Date:",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                "01 Jan,23",
-                                style:
-                                    TextStyle(fontSize: 10, color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                " Billing Date:",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Text(
-                                  "10 Jan,23",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.grey),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.grey,
-                    )
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Container(
-                color: Colors.grey,
-                height: 1,
-              );
-            },
-          ),
-
-          actions: [
-            SizedBox(
-              height: 40,
-              width: 130,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.grey.shade300,
-                    textStyle: const TextStyle(
-                        // fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                child: const Text(
-                  "Cancle",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              width: 130,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    textStyle: const TextStyle(
-                        // fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                child: const Text("Confirm",
-                    style: TextStyle(
-                      //    color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    )),
-                onPressed: () {
-                  // showAlertDialogs(context);
-                },
-              ),
-            ),
-          ],
-          actionsAlignment: MainAxisAlignment.center,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(20),
-          // ),
-        );
-      },
-    );
-  }
-
-  //bottomsheet popup
-  showFilter() {
-    showModalBottomSheet<void>(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        double screenWidth = MediaQuery.of(context).size.width;
-        double screenHeight = MediaQuery.of(context).size.height;
-        AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
-        academyViewViewModel.fetchAcademyListApi();
-        List<DropdownMenuItem<String>> activeServices = [];
-        String? selectedService;
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            height: screenHeight * .7,
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  height: screenHeight * .45,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 3,
-                          width: 50,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Filters',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Loto-Regular'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Divider(color: Colors.grey),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 342,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffDFE1E4)),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Batch_DropDown(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: screenHeight * .25,
-                        padding: const EdgeInsets.only(left: 8.0),
-                        // decoration: BoxDecoration(
-                        //   border: Border.all(
-                        //       width: 1,
-                        //       color: const Color.fromARGB(255, 218, 216, 216)),
-                        //   borderRadius:
-                        //   const BorderRadius.all(Radius.circular(5)),
-                        // ),
-                        child: ChangeNotifierProvider<AcademyViewViewModel>(
-                            create: (context) => academyViewViewModel,
-                            child: Consumer<AcademyViewViewModel>(
-                                builder: (context, value, child) {
-                              return
-                                  //Custom Filter Bar
-                                  const Filter();
-                            })),
-                      ),
-                    ],
-                  ),
-                )
-              ],
             ),
           ),
         );
