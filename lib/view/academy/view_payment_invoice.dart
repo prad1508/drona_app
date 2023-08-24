@@ -36,6 +36,9 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -102,9 +105,12 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
                           ),
                           SizedBox(height: 20),
                           Center(
-                            child: SizedBox(
+                            child: Container(
                               width: MediaQuery.of(context).size.width * 0.98,
-                              child: DataTable(
+                              height: h,
+                              color: Colors.white,
+                              child:
+                              DataTable(
                                 columnSpacing: 40,
                                 dataRowHeight: 45,
                                 headingRowColor: MaterialStatePropertyAll(Color(0xffEAEFF8)),
@@ -117,58 +123,77 @@ class _Payment_Invoice_PageState extends State<Payment_Invoice_Page> {
                                   DataColumn(label: Text("PAID")),
                                   DataColumn(label: Text("DUE")),
                                 ],
-                                //Data Table Row;
-                                rows: value.dataList1.data!.data.map((e) {
-                                  return  DataRow(
-                                      cells: <DataCell>[
-                                        DataCell(
-                                            Text(
-                                              "#",
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Lato',
-                                                  color: Color(0xff39404A)),
-                                            )),
-                                        DataCell(Text(
-                                          e.traineeName,
+                                // Data Table Rows
+                                rows: value.dataList1.data!.data.asMap().entries.map((entry) {
+                                  final index = entry.key + 1; // Adding 1 to start counting from 1 instead of 0
+                                  final e = entry.value;
+                                  Color rowColor = e.paid == 0 ? Colors.grey[200]! : Colors.white;
+
+
+                                  return DataRow(
+                                    color: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.selected)) {
+                                        return rowColor; // Apply color when row is selected
+                                      }
+                                      return Colors.white; // Use default color for unselected rows
+                                    }),                                    cells: <DataCell>[
+                                      DataCell(
+                                        Text(
+                                          index.toString(), // Display the index
                                           style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: 'Lato',
-                                              color: Color(0xff39404A)),
-                                        )),
-                                        DataCell(
-                                          Text(
-                                            e.fees.toString(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: 'Lato',
-                                                color: Color(0xff39404A)),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Lato',
+                                            color: Color(0xff39404A),
                                           ),
                                         ),
-                                        DataCell(Text(
-                                          e.paid.toString(),
+                                      ),
+                                      DataCell(Text(
+                                        e.traineeName,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: Color(0xff39404A),
+                                        ),
+                                      )),
+                                      DataCell(
+                                        Text(
+                                          e.fees.toString(),
                                           style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: 'Lato',
-                                              color: Color(0xff47C088)),
-                                        )),
-                                        DataCell(Text(
-                                          e.due.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: 'Lato',
-                                              color: Color(0xff39404A)),
-                                        ))]);}
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Lato',
+                                            color: Color(0xff39404A),
+                                          ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                          Text(
+                                        e.paid.toString(),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: e.paid == 0  ? Color(0xff39404A):Color(0xff47C088),
+                                        ),
+                                      )),
+                                      DataCell(Text(
+                                        e.due.toString(),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Lato',
+                                          color: Color(0xff39404A),
+                                        ),
+                                      )),
+                                    ],
+                                  );
+                                }).toList(),
+                              )
 
-                                ).toList(),
 
 
-                              ),
                             ),
                           )
                         ],

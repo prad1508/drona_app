@@ -28,10 +28,17 @@ class _DashboardCardState extends State<DashboardCard> {
     complete = widget.count; // Use the completed count from the widget
     input = widget.line;
     total = complete+input;
+    print("complete==$complete");
+    print("input=$input");
+    print("total=$total");
+
+
     // Use the total count from the widget
     setState(() {
       progress = complete / total;
-      progress = progress.clamp(0.0, 1.0);
+      print("progress=$progress");
+      progress = progress.clamp(0.0, total);
+
     });
   }
 
@@ -91,7 +98,7 @@ class _DashboardCardState extends State<DashboardCard> {
                             height: 20,
                           ),
                            LinearProgressIndicator(
-                            color:  /*progress == 1.0 ?  Colors.white :*/ widget.color,
+                            color:  progress == 1.0 ?  Colors.white : widget.color,
                             backgroundColor: Colors.white,
                             minHeight: 8,
                             value: progress,

@@ -59,6 +59,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
 
   //Payment DueDate DropDown List;
 
+/*
   List<DropdownMenuItem<String>> get paymentItems {
     List<DropdownMenuItem<String>> paymentCycle = [
       DropdownMenuItem(
@@ -126,6 +127,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
     ];
     return paymentCycle;
   }
+*/
 
   String paymentSelect = "1 of Every Months";
 
@@ -384,7 +386,8 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                           MainAxisAlignment.spaceBetween,
                                           children:  [
                                             Text(
-                                              "${value.dataList.data!.totalDataCount} Trainee",
+
+                                              "${value.dataList.data!.data[index].totalTrainee} Trainee",
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
