@@ -11,8 +11,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../model/batch_Filter_model.dart';
 
 class Filter extends StatefulWidget {
-  final void Function(String newSearch, String myStatus, String onBoardStatus) search;
-  const Filter({super.key,    required this.search,
+  final void Function(String newSearch, String myStatus, String onBoardStatus)
+      search;
+  const Filter({
+    super.key,
+    required this.search,
   });
 
   @override
@@ -20,57 +23,45 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
+  int pageSize = 50;
+  int newDataLength = 1;
 
-   int pageSize = 50;
-   int newDataLength = 1;
+  BatchFilterModel? batchFilterModel;
+  List<Datum> myBatchList = [];
+  Datum? dropValue1;
+  String _value = "active";
+  String _value1 = "onboarded";
 
-   BatchFilterModel? batchFilterModel;
-   List<Datum>  myBatchList = [];
-   Datum? dropValue1;
-   String _value = "active";
-   String _value1 = "onboarded";
-
-
-
-
-
-   void batchListApi() async {
-
+  void batchListApi() async {
     final prefsToken = await SharedPreferences.getInstance();
     dynamic token = prefsToken.getString('token');
     var headers = {
       'Content-Type': 'application/json',
       'token': token.toString()
     };
-    var request = http.Request('PUT', Uri.parse("${AppUrl.batchsearch}/$pageSize/$newDataLength"));
-    request.body = json.encode({
-      "filter_status": "",
-      "filter_service_uid": "",
-      "search": ""
-    });
+    var request = http.Request(
+        'PUT', Uri.parse("${AppUrl.batchsearch}/$pageSize/$newDataLength"));
+    request.body = json
+        .encode({"filter_status": "", "filter_service_uid": "", "search": ""});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-    /* if (kDebugMode) {
+      /* if (kDebugMode) {
        print(await response.stream.bytesToString());
      }*/
-     var str = await response.stream.bytesToString();
+      var str = await response.stream.bytesToString();
 
-     batchFilterModel = BatchFilterModel.fromJson(jsonDecode(str));
+      batchFilterModel = BatchFilterModel.fromJson(jsonDecode(str));
 
-     var batchList = batchFilterModel!.data;
-     setState(() {
-       myBatchList.addAll(batchList);
-     });
-
-    }
-    else {
+      var batchList = batchFilterModel!.data;
+      setState(() {
+        myBatchList.addAll(batchList);
+      });
+    } else {
       print(response.reasonPhrase);
     }
-
-
   }
 
   @override
@@ -80,12 +71,10 @@ class _FilterState extends State<Filter> {
     batchListApi();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:const EdgeInsets.fromLTRB(0, 34, 0, 12),
+      padding: const EdgeInsets.fromLTRB(0, 34, 0, 12),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         const Align(
           alignment: Alignment.centerLeft,
@@ -119,7 +108,8 @@ class _FilterState extends State<Filter> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: DropdownButtonFormField(
-            hint: const Text("Select Batch",
+            hint: const Text(
+              "Select Batch",
               style: TextStyle(color: Color(0xff23282E), fontSize: 14),
             ),
             items: [
@@ -130,7 +120,6 @@ class _FilterState extends State<Filter> {
                       item.batchName.toString(),
                       style: TextStyle(color: Color(0xff23282E), fontSize: 14),
                     ))
-
             ],
             onChanged: (value) {
               setState(() {
@@ -161,11 +150,12 @@ class _FilterState extends State<Filter> {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               "Trainee Status",
-              style: TextStyle(color: Color(0xff39404A), fontSize: 12), ),
+              style: TextStyle(color: Color(0xff39404A), fontSize: 12),
+            ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -181,7 +171,8 @@ class _FilterState extends State<Filter> {
                     "Active",
                     style: TextStyle(
                         color: Color(0xff39404A),
-                        fontSize: 13, fontWeight: FontWeight.bold),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
                   ),
                   value: "active",
                   groupValue: _value,
@@ -204,7 +195,9 @@ class _FilterState extends State<Filter> {
                     "Inactive",
                     style: TextStyle(
                         color: Color(0xff39404A),
-                        fontSize: 13, fontWeight: FontWeight.bold),                  ),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
+                  ),
                   value: "new",
                   groupValue: _value,
                   onChanged: (value) {
@@ -228,7 +221,9 @@ class _FilterState extends State<Filter> {
                     "Unassigned",
                     style: TextStyle(
                         color: Color(0xff39404A),
-                        fontSize: 13, fontWeight: FontWeight.bold),                  ),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
+                  ),
                   value: "unassigned",
                   groupValue: _value,
                   onChanged: (value) {
@@ -248,14 +243,15 @@ class _FilterState extends State<Filter> {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               "Onboard Status",
-              style: TextStyle(color: Color(0xff39404A), fontSize: 12), ),
+              style: TextStyle(color: Color(0xff39404A), fontSize: 12),
+            ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -271,7 +267,8 @@ class _FilterState extends State<Filter> {
                     "Onboarded",
                     style: TextStyle(
                         color: Color(0xff39404A),
-                        fontSize: 13, fontWeight: FontWeight.bold),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
                   ),
                   value: "onboarded",
                   groupValue: _value1,
@@ -294,7 +291,9 @@ class _FilterState extends State<Filter> {
                     "Not Onboarded",
                     style: TextStyle(
                         color: Color(0xff39404A),
-                        fontSize: 13, fontWeight: FontWeight.bold),                  ),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
+                  ),
                   value: "not_onboarded",
                   groupValue: _value1,
                   onChanged: (value) {
@@ -307,7 +306,6 @@ class _FilterState extends State<Filter> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -321,17 +319,17 @@ class _FilterState extends State<Filter> {
                       minimumSize: const Size(150, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
-                      backgroundColor:
-                      Color(0xffDFE1E4)),
+                      backgroundColor: Color(0xffDFE1E4)),
                   onPressed: () {
-                    widget.search("", "","");
+                    widget.search("", "", "");
                     Navigator.of(context).pop();
                   },
-                  child:const Text('Clear All',
+                  child: const Text(
+                    'Clear All',
                     style: TextStyle(
                         color: Color(0xff23282E),
-                        fontSize: 13, fontWeight: FontWeight.bold),
-
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
                   )),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -342,17 +340,18 @@ class _FilterState extends State<Filter> {
                   onPressed: () {
                     // print("valuedrop==> ${dropValue!.serviceName.toString()}");
 
-                    widget.search(dropValue1!.batchName.toString(),_value, _value1);
+                    widget.search(
+                        dropValue1!.batchName.toString(), _value, _value1);
                     Navigator.of(context).pop();
                   },
                   child: const Text(
                     'Apply',
-                    style: TextStyle(
-                        color: Color(0xffFBFBFC)),
+                    style: TextStyle(color: Color(0xffFBFBFC)),
                   ))
             ],
           ),
         )
       ]),
     );
-  }}
+  }
+}

@@ -64,7 +64,6 @@ class _AddTraineeListState extends State<AddTraineeList> {
   TraineeViewModel traineeViewModel = TraineeViewModel();
 
   void getData({required int newDataLength}) async {
-
     setState(() {
       isLoading = true;
     });
@@ -207,28 +206,26 @@ class _AddTraineeListState extends State<AddTraineeList> {
               ),
               SingleChildScrollView(
                 child: Container(
-                  margin: const EdgeInsets.all(10),
-                  //color:Colors.green,
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  child: isLoading
-                      ? const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-
-                      Center(
-                        child: SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: CircularProgressIndicator(
-                            color: Colors.teal,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                      : buildListView()
-                ),
+                    margin: const EdgeInsets.all(10),
+                    //color:Colors.green,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: isLoading
+                        ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.teal,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        : buildListView()),
               ),
             ],
           ),

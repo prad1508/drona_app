@@ -8,7 +8,6 @@ class AppUrl {
   static var verifynewPassword = '$baseUrl/ouser/setnewpassword';
   static var changePassword = '$baseUrl/ouser/changepassword';
 
-
   static var postofficeListEndPoint = 'https://api.postalpincode.in/pincode/';
   static var categoryListEndPoint = '$baseUrl/academy/cat';
   static var basicDetailsListEndPoint = '$baseUrl/academy/basicdetail';
@@ -17,8 +16,6 @@ class AppUrl {
   static var serviceIconEndPoint = '$baseUrl/static/service/';
   static var profileserviceIconEndPoint = '$baseUrl/static/profile/';
   static var facilityGalleryImageEndPoint = '$baseUrl/static/facility/';
-
-
 
   static var facilityListEndPoint = '$baseUrl/academy/facility/';
   static var facilityeAddListEndPoint = '$baseUrl/academy/facility';
@@ -30,18 +27,16 @@ class AppUrl {
   static var myservicesListEndPoint = '$baseUrl/academy/myservices';
   static var detailsOwnerListEndPoint = '$baseUrl/academy/ownercoachdetail';
 
-
   static var ouserProfileimgListEndPoint = '$baseUrl/ouser/profileimg';
   static var myprofiListEndPoint = '$baseUrl/ouser/myprofile';
 
   //coach
-  static var UserprofileAdd ='$baseUrl/academy/coach';
-  static var coachlistListEndPoint ='$baseUrl/academy/coach';
+  static var UserprofileAdd = '$baseUrl/academy/coach';
+  static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var multiCoachEndPoint = '$baseUrl/academy/service/multiple-coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
   static var coachActivate = '$baseUrl/academy/coach/activate';
   static var coachDeactivate = '$baseUrl/academy/coach/deactivate';
-
 
   //batch
   static var createbatchListEndPoint = '$baseUrl/academy/batch';
@@ -50,7 +45,7 @@ class AppUrl {
   static var batchsearch = '$baseUrl/academy/batch';
 
   static var userloginEndPint = '$baseUrl/ouser/login';
-  static var academyRegistrationTrackEndPint ='$baseUrl/academy';
+  static var academyRegistrationTrackEndPint = '$baseUrl/academy';
   static var userLogout = '$baseUrl/ouser/logout';
 
   //trainee
@@ -89,8 +84,6 @@ class AppUrl {
   //sigle program update
   static var singleProgramUpdateApi = "$baseUrl/academy/single-program";
   static var singleServiceAddApi = "$baseUrl/academy/addservice";
-
-
 
   static var uploadQr = "$baseUrl/static/qr/";
   static var uploadQrImg = "$baseUrl/academy/uploadqr";
