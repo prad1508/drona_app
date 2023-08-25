@@ -19,6 +19,7 @@ class CoachlistViewViewModel with ChangeNotifier {
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
+
   }
 
   ApiResponse<CoachlistListModel> dataList = ApiResponse.loading();

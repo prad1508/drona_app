@@ -1,34 +1,19 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:drona/view/batch_listing/add_coach_profile.dart';
 import 'package:drona/view/batch_listing/viewprofile_details.dart';
-import 'package:drona/view/profile/batch_list.dart';
 import 'package:drona/view/trainee_listing/ledger.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_localization/flutter_localization.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../../data/response/status.dart';
 import '../../model/trainee_list_model.dart';
 import '../../res/app_url.dart';
-import '../../res/language/language.dart';
-import '../../res/widget/Trainee_Listing_Class/batch_name.dart';
+
 import '../../res/widget/Trainee_Listing_Class/filter_trainee_list.dart';
-import '../../res/widget/customTextField.dart';
-import '../../res/widget/customradio.dart';
-import '../../res/widget/progressPills.dart';
-import '../../res/widget/round_button.dart';
-import '../../utils/no_data.dart';
-import '../../utils/routes/routes_name.dart';
-import '../../utils/color.dart' as AppColor;
-import '../../view_model/academy_view_model.dart';
+
 import '../../view_model/trainee_view_model.dart';
 import '../dashboard/layout.dart';
 import '../performance/new_assignment.dart';
@@ -39,8 +24,10 @@ import 'edit_batch.dart';
 import 'record_payment.dart';
 
 class AddTraineeList extends StatefulWidget {
-  AddTraineeList({
+  String path;
+   AddTraineeList({
     super.key,
+    required this.path
   });
 
   @override
@@ -160,8 +147,13 @@ class _AddTraineeListState extends State<AddTraineeList> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Get.to(() => const Layout(selectedIndex: 0),
-                transition: Transition.rightToLeft),
+            onPressed: () {
+              widget.path == "dashBoard"?
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const Layout(selectedIndex: 0),),)
+              : Navigator.of(context).pop();
+
+
+               },
           ),
           title: Text(
             'Trainee Listing',

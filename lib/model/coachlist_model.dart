@@ -1,5 +1,6 @@
 class CoachlistListModel {
   CoachlistListModel({
+
     required this.msg,
     required this.academyUid,
     required this.academyName,

@@ -57,16 +57,18 @@ class _AddTrainneInExisitingBatchState
 
 //profille image picke
   File? imgFile;
+  String img = "";
   final imgPicker = ImagePicker();
   String? selectedService;
   String? selectedService1;
   void openCamera() async {
     var imgCamera = await imgPicker.pickImage(source: ImageSource.camera);
-    userViewModel.fetchouserProfileimg(imgCamera!.path, context);
+   // userViewModel.fetchouserProfileimg(imgCamera!.path, context);
     // ignore: use_build_context_synchronously
 
     setState(() {
-      imgFile = File(imgCamera.path);
+      imgFile = File(imgCamera!.path);
+      img = imgCamera.path;
       print("imgFile$imgFile");
     });
     // ignore: use_build_context_synchronously
@@ -598,9 +600,10 @@ class _AddTrainneInExisitingBatchState
                               // "age": age.text,
                               "dob": dob.text,
                               "monthofbilling": monthofBilling.text,
-                              "img": "",
+                              "img": img,
                               "relation": "self"
                             };
+                            print("data==$data");
 
                             traineeViewModel.fetchTraineeAddListApi(
                                 data, context, "onboarding");

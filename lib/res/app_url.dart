@@ -35,6 +35,9 @@ class AppUrl {
   static var coachlistListEndPoint = '$baseUrl/academy/coach';
   static var multiCoachEndPoint = '$baseUrl/academy/service/multiple-coach';
   static var coachlistfilteroint = '$baseUrl/academy/coach/10/1';
+  static var coachList = '$baseUrl/academy/coach';
+
+
   static var coachActivate = '$baseUrl/academy/coach/activate';
   static var coachDeactivate = '$baseUrl/academy/coach/deactivate';
 

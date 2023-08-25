@@ -102,7 +102,7 @@ class Routes {
             builder: (BuildContext context) => const AddBatch());
       case RoutesName.AddTraineeList:
         return MaterialPageRoute(
-            builder: (BuildContext context) => AddTraineeList());
+            builder: (BuildContext context) => AddTraineeList(path: '',));
       case RoutesName.CoachProfileAdd:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CoachProfileAdd());

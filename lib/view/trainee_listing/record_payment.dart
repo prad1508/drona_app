@@ -996,7 +996,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                                 .then((value) {
                                               Navigator.of(context).pop();
 
-                                              Get.to(AddTraineeList());
+                                              Get.to(AddTraineeList(path: '',));
                                             });
                                           },
                                           child: const Text(

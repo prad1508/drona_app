@@ -34,7 +34,7 @@ class _LayoutState extends State<Layout> {
     SearchBatchList(
       pathPage: 'dashBoard',
     ),
-    AddTraineeList()
+    AddTraineeList(path: 'dashBoard')
   ];
 
   Future<bool> showExitPopup(context) async {

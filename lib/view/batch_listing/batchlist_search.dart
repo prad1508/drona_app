@@ -144,9 +144,18 @@ class _SearchBatchListState extends State<SearchBatchList> {
         leading: Row(
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Get.to(const Layout(selectedIndex: 0)),
-            ),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () {
+                  widget.pathPage == "dashBoard"
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const Layout(selectedIndex: 0),
+                          ),
+                        )
+                      : Navigator.of(context).pop();
+                }),
           ],
         ),
         title: Text(
@@ -242,7 +251,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                       Get.to(() => const Layout(selectedIndex: 0),
                           transition: Transition.rightToLeft);
                     })
-                : SizedBox()
+                : const SizedBox()
           ],
         ),
       ),
