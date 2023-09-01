@@ -51,6 +51,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   flutter_switch: ^0.3.2
   flutter_svg: ^2.0.5
+  intl: ^0.18.0
   percent_indicator: ^4.2.3
   get: ^4.6.5
   fl_chart: ^0.63.0

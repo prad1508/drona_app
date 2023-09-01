@@ -170,12 +170,12 @@ class _SessionDetailCancelState extends State<SessionDetailCancel> {
                                             MainAxisAlignment.spaceBetween,
                                             children: [
                                               Chip(
-                                                  backgroundColor: Colors.green
-                                                      .withOpacity(.2),
+                                                  backgroundColor: const Color(0xffFFF9EE),
                                                   label: Text(
                                                     value.dataList2.data!.data[0].status,
-                                                    style: const TextStyle(
-                                                        color: Colors.green),
+                                                    style:  TextStyle(
+                                                        color: Color(0xffD8A54C)
+                                                    ),
                                                   )),
                                               CircleAvatar(
                                                 radius: 20,
@@ -465,7 +465,7 @@ class _SessionDetailCancelState extends State<SessionDetailCancel> {
                                           );
                                         })),
                               ),
-                              const SizedBox(
+                              /*const SizedBox(
                                 height: 10,
                               ),
                               Container(
@@ -527,7 +527,7 @@ class _SessionDetailCancelState extends State<SessionDetailCancel> {
                                   }),
                               const SizedBox(
                                 height: 30,
-                              ),
+                              ),*/
                             ],
                           );
                         case Status.error:

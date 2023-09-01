@@ -134,24 +134,20 @@ class SessionViewViewModel with ChangeNotifier {
     _myRepo.postMarkedAttendanceApi(data).then((value) {
       //setDataList3(ApiResponse.completed(value));
       Utils.toastMessage(value.msg);
-      Navigator.of(
-          context)
-          .pop();
-      Get.to(() =>
-          ViewDetailClosed(
-            id: id,
-          ), transition: Transition.rightToLeft);
+      Navigator.of(context).pop();
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>  ViewDetailClosed(
+        id: id,
+      )));
+
 
       print("api postMarkAttendanceApi success");
     }).onError((error, stackTrace) {
      // setDataList3(ApiResponse.error(error.toString()));
       Utils.toastMessage(error.toString());
-      Navigator.of(
-          context)
-          .pop();
+      Navigator.of(context).pop();
       print("api  postMarkAttendanceApi not success");
-      print(error);
-      print("error${ApiResponse.error(error.toString())}");
+     // print(error);
+      /*print("error${ApiResponse.error(error.toString())}");*/
     });
   }
 
@@ -205,7 +201,8 @@ class SessionViewViewModel with ChangeNotifier {
       setDataList5(ApiResponse.completed(value));
       Utils.toastMessage(value.msg);
       print("api sessionCloseApi success");
-      Get.to(()=> SessionList(),transition: Transition.rightToLeft);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SessionList()));
+      //Get.to(()=> SessionList(),transition: Transition.rightToLeft);
     }).onError((error, stackTrace) {
       setDataList5(ApiResponse.error(error.toString()));
       Utils.toastMessage(error.toString());

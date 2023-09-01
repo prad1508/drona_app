@@ -99,7 +99,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
   bool sun = false;
   List batchDays = [];
   String profileUid = "";
-  bool onlineSession = true;
+  bool onlineSession = false;
   AcademyViewViewModel academyViewViewModel = AcademyViewViewModel();
   CoachlistViewViewModel coachlistViewViewModel = CoachlistViewViewModel();
   MyProgramViewViewModel myProgramViewViewModel = MyProgramViewViewModel();
@@ -536,7 +536,7 @@ class _CreateBatchListingState extends State<CreateBatchListing> {
                       height: 10,
                     ),
                     TextFormField(
-                      readOnly: onlineSession ? false : true,
+                      readOnly: onlineSession ? true : false,
                       controller: onlineUrl,
                       decoration: InputDecoration(
                         hintText: 'e.g. ww.xyz.com',

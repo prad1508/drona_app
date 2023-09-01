@@ -34,8 +34,8 @@ class CoachListSelected extends StatefulWidget {
 }
 
 class _CoachListSelectedState extends State<CoachListSelected> {
-  List<Datum> foundData = [];
-  List<Datum> infoData = [];
+  List<CoachData> foundData = [];
+  List<CoachData> infoData = [];
   bool isNextPage = false;
   bool isLoading = false;
 
@@ -93,7 +93,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
   }
 
   runFilter(String enteredKey) {
-    List<Datum> result = [];
+    List<CoachData> result = [];
     if (enteredKey.isEmpty) {
       result = infoData;
     } else {
@@ -115,7 +115,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
     print("myStatus==$myStatus");
     print("onBoardStatus==$onBoardStatus");
     // print("key==.$enteredKey");
-    List<Datum> result = [];
+    List<CoachData> result = [];
     if (/*enteredKey.isEmpty &&*/ myStatus.isEmpty && onBoardStatus.isEmpty) {
       result = infoData;
     } else {
@@ -143,6 +143,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -228,7 +229,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                         )
                       ],
                     )
-                  : buildListView(),
+                  : buildListView(h,w),
             ),
             const SizedBox(
               height: 15,
@@ -264,7 +265,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
     );
   }
 
-  buildListView() {
+  buildListView(h, w) {
     return foundData.isEmpty
         ? const Center(child: Text("No Data"))
         : ListView.builder(
@@ -277,7 +278,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                   InkWell(
                     onTap: () {
                       showBottomSheet(
-                          status: foundData[index].status,
+                          status: foundData[index].status.toString(),
                           index: index,
                           fullname: foundData[index].name,
                           coachList: foundData);
@@ -364,10 +365,10 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                 children: [
                                   SizedBox(
                                     width:
-                                        MediaQuery.sizeOf(context).width * .6,
+                                        MediaQuery.sizeOf(context).width * .75,
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -409,6 +410,36 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                                 fontSize: 10,
                                                 height: 1.5),
                                             textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Container(
+                                            width: w*0.08,
+                                            height: 24,
+                                            // color: Colors.yellow,
+
+                                            child: ListView.builder(
+                                              itemCount: foundData[index].services.length,
+                                              itemBuilder: (BuildContext context, int int) {
+                                                return Center(
+                                                  child: Container(
+                                                    width: 20,
+                                                    height: 30,
+                                                    decoration:  BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                AppUrl.serviceIconEndPoint+foundData[index].services[int].serviceIconname
+                                                            ),
+                                                            alignment: Alignment
+                                                                .centerRight)),
+                                                  ),
+                                                );
+                                              },
+
+                                            ),
+
+
                                           ),
                                         ),
                                       ],
@@ -493,72 +524,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
                                             ),
                                           ],
                                         ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          widthFactor: 2,
-                                          child: Container(
-                                            width: 24,
-                                            height: 24,
-                                            decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/images/tennis.png'),
-                                                    alignment:
-                                                        Alignment.centerLeft)),
-                                            child: OverflowBox(
-                                              maxWidth: 42,
-                                              maxHeight: 30,
-                                              child: Container(
-                                                width: 48,
-                                                height: 24,
-                                                decoration: const BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            'assets/images/Golf.png'),
-                                                        alignment: Alignment
-                                                            .centerRight)),
-                                                child: OverflowBox(
-                                                  maxWidth: 66,
-                                                  maxHeight: 30,
-                                                  child: Container(
-                                                    width: 58,
-                                                    height: 24,
-                                                    decoration: const BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                'assets/images/tennis.png'),
-                                                            alignment: Alignment
-                                                                .centerRight)),
-                                                    child: OverflowBox(
-                                                      maxWidth: 120,
-                                                      maxHeight: 30,
-                                                      child: Container(
-                                                        width: 74,
-                                                        height: 24,
-                                                        decoration: const BoxDecoration(
-                                                            image: DecorationImage(
-                                                                image: AssetImage(
-                                                                    'assets/images/Golf.png'),
-                                                                alignment: Alignment
-                                                                    .centerRight)),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
 
-                                            // child: CircleAvatar(
-                                            //   backgroundImage:
-                                            //       // NetworkImage(AppUrl.serviceIconEndPoint +
-                                            //       //     value.dataList.data!.data[index].serviceicon,
-                                            //       // ),
-                                            //       AssetImage(
-                                            //           'assets/images/tennis.png'),
-                                            //   //  backgroundColor: Colors.white,
-                                            // ),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -719,7 +685,7 @@ class _CoachListSelectedState extends State<CoachListSelected> {
       {required String status,
       int? index,
       String? fullname,
-      required List<Datum> coachList}) {
+      required List<CoachData> coachList}) {
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,

@@ -414,12 +414,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _batchSession(
       BuildContext context, width, height, List<Datum> sessionList) {
     return SizedBox(
-      height: 202,
+      height: height * .3,
       width: width,
       child: Center(
           child: Container(
         width: width * .9,
-        height: height * .25,
+        height: height * .3,
         padding: const EdgeInsets.only(top: 15.0, bottom: 15),
         child: ListView.builder(
             shrinkWrap: true,

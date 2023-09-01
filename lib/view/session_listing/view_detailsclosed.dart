@@ -225,6 +225,7 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                               Row(
                                 children: [
                                   Checkbox(
+
                                     value: value1,
                                     onChanged: (value) {
                                       setState(() {
@@ -818,13 +819,13 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                         const SizedBox(
                           height: 30,
                         ),
-                        value.dataList2.data!.status == "close"? SizedBox():
+                        value.dataList2.data!.status == "closed"? SizedBox():
                         RoundButton(
                             loading: false,
                             title: 'Close Session',
                             textColor: Colors.white,
                             rounded: true,
-                            color: Theme.of(context).primaryColor,
+                            color: const Color(0xff2A62B8),
                             onPress: () {
                               //  markedAttendencePopup(context, );
 

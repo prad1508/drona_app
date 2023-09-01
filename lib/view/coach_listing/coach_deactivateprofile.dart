@@ -20,7 +20,7 @@ import '../../view_model/program_view_model.dart';
 class CoachDeactivateProfile extends StatefulWidget {
   String coachProfileUid;
   int index;
-  List<Datum> coachList;
+  List<CoachData> coachList;
    CoachDeactivateProfile({super.key, required this.index, required this.coachList, required this.coachProfileUid});
 
 

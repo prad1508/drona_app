@@ -22,7 +22,7 @@ import '../../view_model/program_view_model.dart';
 class CoachActivateProfile extends StatefulWidget {
   int index;
   String coachProfileUid;
-  List<Datum> coachList;
+  List<CoachData> coachList;
 
   CoachActivateProfile(
       {super.key,
@@ -542,7 +542,6 @@ class _CoachActivateProfileState extends State<CoachActivateProfile> {
                                                             .coachList[
                                                                 widget.index]
                                                             .salaryMonthly
-                                                            .toInt()
                                                         : fees.text,
                                                     "activate_date":
                                                         tDateController.text
