@@ -780,7 +780,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                     width: 209,
                                                     height: 60,
                                                     child: Text(
-                                                      "Are You Sure Youn Want To Send\nReminder To ${traineeList[index].traineeName}!",
+                                                      "Are You Sure You Want To Send\nReminder To ${traineeList[index].traineeName}!",
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xff626D7E),
@@ -796,71 +796,78 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                               ]),
                                               // contentPadding: EdgeInsets.all(24),
                                               actions: [
-                                                Container(
-                                                  width: 139,
-                                                  height: 48,
-                                                  child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            Color(0xffDFE1E4),
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                            Radius.circular(8),
+
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 100,
+                                                      height: 48,
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            backgroundColor:
+                                                                Color(0xffDFE1E4),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.all(
+                                                                Radius.circular(8),
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Cancel",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff23282E),
-                                                            fontSize: 15,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      )),
-                                                ),
-                                                Container(
-                                                  width: 139,
-                                                  height: 48,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
+                                                          onPressed: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: const Text(
+                                                            "Cancel",
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff23282E),
+                                                                fontSize: 15,
+                                                                fontFamily: 'Lato',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      width: 100,
+                                                      height: 48,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
                                                           BorderRadius.circular(
                                                               8)),
-                                                  child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            backgroundColor:
                                                             const Color(
                                                                 0xff2A62B8),
-                                                        shape:
+                                                            shape:
                                                             const RoundedRectangleBorder(
-                                                          borderRadius:
+                                                              borderRadius:
                                                               BorderRadius.all(
-                                                            Radius.circular(8),
+                                                                Radius.circular(8),
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {},
-                                                      child: const Text(
-                                                        "Confirm",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xffFBFBFC),
-                                                            fontSize: 15,
-                                                            fontFamily: 'Lato',
-                                                            fontWeight:
+                                                          onPressed: () {},
+                                                          child: const Text(
+                                                            "Confirm",
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xffFBFBFC),
+                                                                fontSize: 15,
+                                                                fontFamily: 'Lato',
+                                                                fontWeight:
                                                                 FontWeight
                                                                     .w600),
-                                                      )),
-                                                )
+                                                          )),
+                                                    )
+                                                  ],
+                                                ),
+
                                               ],
                                             ),
                                           );

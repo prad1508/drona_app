@@ -293,7 +293,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                     height: 2),
                                               ),
                                               Text(
-                                                '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} ,${attendanceList[0].sdd} ${attendanceList[0].smm} ${attendanceList[0].syy} ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
+                                                '${value.dataList2.data!.programName} - ${attendanceList[0].dayShort} , ${attendanceList[0].sdd}-${attendanceList[0].smm}-${attendanceList[0].syy}, ${attendanceList[0].batchTimingFrom} to ${attendanceList[0].batchTimingTo}',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontStyle: FontStyle.normal,
@@ -392,13 +392,22 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                             71, 192, 136, 1),
                                                         size: 30.0,
                                                       )
-                                                          : Text(
-                                                        "${attendanceList[index].traineeName.split(" ")[0][0].toUpperCase()}"
-                                                            "${attendanceList[index].traineeName.split(" ")[1][0].toUpperCase()}",
+                                                          : Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              Text(
+                                                        attendanceList[index].traineeName.split(" ")[0][0].toUpperCase(),
                                                         style:
                                                         const TextStyle(
-                                                            fontSize: 14),
+                                                                fontSize: 14),
                                                       ),
+                                                              attendanceList[index].traineeName.split(" ")[1][0].isNotEmpty ?  Text(
+                                                                attendanceList[index].traineeName.split(" ")[1][0].toUpperCase(),
+                                                                style: const TextStyle(
+                                                                    fontSize: 14),
+                                                              ): const SizedBox(),
+                                                            ],
+                                                          ),
                                                     ),
                                                     title: Text(
                                                       attendanceList[index]

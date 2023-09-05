@@ -26,9 +26,10 @@ import 'view_model/postoffice_view_model.dart';
 import 'view_model/program_view_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AppTranslate());
 }
 
+/*
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         home: const AppTranslate());
   }
 }
+*/
 
 class AppTranslate extends StatefulWidget {
   const AppTranslate({super.key});

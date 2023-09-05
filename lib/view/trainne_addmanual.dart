@@ -324,7 +324,13 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           TextButton(onPressed: (){
                             /// open modal
                             _openModal(context);
-                          }, child: const Text("Edit Fees"))
+                          }, child: const Text("Edit Fees",
+                            style: TextStyle(
+                              color: Color(
+                                0xffFD685D,
+                              ),
+                            ),
+                          ),)
                         ],
                       ),
                       // const SizedBox(

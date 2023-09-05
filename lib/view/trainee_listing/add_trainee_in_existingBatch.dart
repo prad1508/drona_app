@@ -425,12 +425,10 @@ class _AddTrainneInExisitingBatchState
                           for (var i = 0;
                               i < value.dataList.data!.data!.length;
                               i++) {
-                            if (
-                                selectedService1 ==
-                                    value.dataList.data!.data?[i].uid) {
+                            if (selectedService1 ==
+                                value.dataList.data!.data?[i].uid) {
                               salary.text =
                                   value.dataList.data!.data![i].fees.toString();
-
                             }
 
                             /// check service with batch name
@@ -474,17 +472,25 @@ class _AddTrainneInExisitingBatchState
                       ),
                     ),
                     TextButton(
-                        onPressed: () {
-                          /// open modal
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => FeeDialog(
-                              salaryController: salary,
-                              isSalarySet: isSalarySet,
-                            ),
-                          );
-                        },
-                        child: const Text("Edit Fees"))
+                      onPressed: () {
+                        /// open modal
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => FeeDialog(
+                            salaryController: salary,
+                            isSalarySet: isSalarySet,
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Edit Fees",
+                        style: TextStyle(
+                          color: Color(
+                            0xffFD685D,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -605,8 +611,6 @@ class _AddTrainneInExisitingBatchState
 
                         traineeViewModel.fetchTraineeAddListApi(
                             data, context, "onboarding");
-
-
                       }
                     }),
               ],

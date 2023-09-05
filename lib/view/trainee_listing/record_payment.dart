@@ -98,6 +98,9 @@ class _RecordPaymentState extends State<RecordPayment> {
 
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -114,17 +117,18 @@ class _RecordPaymentState extends State<RecordPayment> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   color: const Color(0XFFDFE1E4).withOpacity(0.3),
                   //padding: const EdgeInsets.all(5),
-                  height: 110,
+                  height: h*0.17,
+                  width: w*0.92,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -248,7 +252,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                widthFactor: 3.5,
+                                widthFactor: 3.2,
                                 child: SizedBox(
                                     width: 20,
                                     height: 20,
@@ -320,7 +324,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                           ),
                           const SizedBox(height: 12),
                           SizedBox(
-                            width: MediaQuery.sizeOf(context).width * .75,
+                            width: MediaQuery.sizeOf(context).width * .73,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
