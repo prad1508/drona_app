@@ -1,7 +1,9 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:drona/data/response/status.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view_model/academy_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +49,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Bank Details',
+        title:  Text(AppLocale.bankDetails.getString(context),
             style: TextStyle(color: Colors.black, fontSize: 18)),
         actions: [
           Padding(
@@ -88,7 +90,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Academy Name As Per Bank",
+                            AppLocale.academyNameAsPerBank.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -135,7 +137,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy Bank Name",
+                            AppLocale.academyBankName.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -182,7 +184,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy Bank Account No",
+                            AppLocale.academyBankAc.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -229,7 +231,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy IFSC",
+                            AppLocale.academyIfsc.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -276,7 +278,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy Bank Branch Address",
+                            AppLocale.academyBankBranchAdd.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -324,7 +326,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy Google Pay No",
+                            AppLocale.academyGpay.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -372,7 +374,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy Paytm No",
+                            AppLocale.academyPaytm.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -420,7 +422,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            "Academy UPI No",
+                            AppLocale.academyUPI.getString(context),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Loto',
@@ -511,7 +513,7 @@ class _Bank_DetailsState extends State<Bank_Details> {
                                               )
                                           ),
                                           child: Text(
-                                            "View File",
+                                            AppLocale.viewFile.getString(context),
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -120,7 +121,7 @@ class _SessionDetailCancelState extends State<SessionDetailCancel> {
             ],
           ),
           title: Text(
-            'View Session Details',
+            AppLocale.viewSessionDetails.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -222,13 +223,14 @@ class _SessionDetailCancelState extends State<SessionDetailCancel> {
                                   MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
-                                      children: const [
+                                      children:  [
                                         Icon(
                                           Icons.check_circle,
                                           color: Colors.grey,
                                           size: 25.0,
                                         ),
-                                        Text('Attendance Pending')
+                                        Text(AppLocale.attendancePending.getString(context),
+                                        )
                                       ],
                                     ),
 

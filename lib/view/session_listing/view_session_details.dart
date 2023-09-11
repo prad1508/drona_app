@@ -159,7 +159,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
             ],
           ),
           title: Text(
-            'View Session Details',
+            AppLocale.viewSessionDetails.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -312,18 +312,18 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
-                                        children: const [
+                                        children:  [
                                           Icon(
                                             Icons.check_circle,
                                             color: Colors.grey,
                                             size: 25.0,
                                           ),
-                                          Text('Attendance Pending')
+                                          Text(AppLocale.attendancePending.getString(context))
                                         ],
                                       ),
                                       Row(
                                         children: [
-                                          const Text('Mark all present'),
+                                           Text(AppLocale.markAllPresent.getString(context)),
                                           Checkbox(
                                             value: isMarkAllPresent,
                                             onChanged: (v) {
@@ -595,7 +595,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                     ),
-                                    child: const Row(
+                                    child:  Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                       children: [
@@ -609,7 +609,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                               size: 20.0,
                                             )),
                                         Text(
-                                          'Click to upload your attachment',
+                                          AppLocale.clickToUpload.getString(context),
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontStyle: FontStyle.normal,
@@ -625,7 +625,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                 value1
                                     ? RoundButton(
                                     loading: false,
-                                    title: 'Submit Attendance',
+                                    title: AppLocale.submitAttendance.getString(context),
                                     textColor: Colors.white,
                                     rounded: true,
                                     color: Theme.of(context).primaryColor,
@@ -643,8 +643,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                         CrossAxisAlignment
                                                             .center,
                                                         children: [
-                                                          const Text(
-                                                              "Confirm Marked Attendance"),
+                                                           Text(
+                                                              AppLocale.confirmMarkAttendance.getString(context)),
                                                           SizedBox(
                                                             height: 5,
                                                           ),
@@ -680,8 +680,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                             child:
                                                                             Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
-                                                                              label: const Text(
-                                                                                'Present',
+                                                                              label:  Text(
+                                                                                AppLocale.present.getString(context),
                                                                                 style: TextStyle(color: Colors.blue),
                                                                               ),
                                                                               avatar: CircleAvatar(
@@ -696,8 +696,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                             child:
                                                                             Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
-                                                                              label: const Text(
-                                                                                'Absent',
+                                                                              label:  Text(
+                                                                                AppLocale.absent.getString(context),
                                                                               ),
                                                                               avatar: CircleAvatar(
                                                                                 backgroundColor: Colors.green.shade100,
@@ -713,8 +713,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                             child:
                                                                             Chip(
                                                                               backgroundColor: const Color.fromARGB(255, 242, 242, 242),
-                                                                              label: const Text(
-                                                                                'Leave',
+                                                                              label:  Text(
+                                                                                AppLocale.leave.getString(context),
                                                                               ),
                                                                               avatar: CircleAvatar(
                                                                                 backgroundColor: Colors.brown.shade100,
@@ -891,8 +891,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                                     ),
                                                                                   );
                                                                                 })
-                                                                                : const Text(
-                                                                              'No results found',
+                                                                                :  Text(
+                                                                          AppLocale.noData.getString(context),
                                                                               style: TextStyle(fontSize: 24),
                                                                             ),
                                                                             attendanceList.isNotEmpty
@@ -1027,8 +1027,9 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                                     ),
                                                                                   );
                                                                                 })
-                                                                                : const Text(
-                                                                              'No results found',
+                                                                                :  Text(
+                                                                              AppLocale.noData.getString(context),
+
                                                                               style: TextStyle(fontSize: 24),
                                                                             ),
                                                                             attendanceList.isNotEmpty
@@ -1163,8 +1164,9 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                                     ),
                                                                                   );
                                                                                 })
-                                                                                : const Text(
-                                                                              'No results found',
+                                                                                :  Text(
+                                                                              AppLocale.noData.getString(context),
+
                                                                               style: TextStyle(fontSize: 24),
                                                                             ),
                                                                           ],
@@ -1193,8 +1195,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                           196,
                                                                           196),
                                                                     ),
-                                                                    child: const Text(
-                                                                        "Cancel",
+                                                                    child:  Text(
+                                                                        AppLocale.cancel.getString(context),
                                                                         style: TextStyle(
                                                                             color: Colors
                                                                                 .black)),
@@ -1242,8 +1244,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                       Theme.of(
                                                                           context)
                                                                           .primaryColor),
-                                                                  child: const Text(
-                                                                    "Submit",
+                                                                  child:  Text(
+                                                                    AppLocale.submit.getString(context),
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .white),
@@ -1264,7 +1266,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                     })
                                     : RoundButton(
                                     loading: false,
-                                    title: 'Submit Attendance',
+                                    title: AppLocale.submitAttendance.getString(context),
                                     textColor: Colors.white,
                                     rounded: true,
                                     color: Theme.of(context)
@@ -1278,7 +1280,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                 ),
                                 RoundButton(
                                     loading: false,
-                                    title: 'Cancel Session',
+                                    title: AppLocale.cancelSession.getString(context),
                                     textColor: Colors.white,
                                     rounded: true,
                                     color: Colors.redAccent,
@@ -1308,9 +1310,10 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                     SizedBox(
                                                       height: 5,
                                                     ),
-                                                    const Text("Are you sure?"),
-                                                    const Text(
-                                                      " you want to cancel this session?",
+                                                     Text(AppLocale.areYouSure.getString(context)),
+                                                     Text(""),
+                                                     Text(
+                                                       AppLocale.wantToCancel.getString(context),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                       ),
@@ -1414,7 +1417,7 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                 Color.fromARGB(255,
                                                                     197, 196, 196),
                                                               ),
-                                                              child: const Text("No",
+                                                              child:  Text(AppLocale.no.getString(context),
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .black)),
@@ -1441,8 +1444,8 @@ class ViewSessionalDetailsState extends State<ViewSessionalDetails> {
                                                                 backgroundColor:
                                                                 Colors
                                                                     .redAccent),
-                                                            child: const Text(
-                                                              "Yes",
+                                                            child:  Text(
+                                                              AppLocale.yes.getString(context),
                                                               style: TextStyle(
                                                                   color:
                                                                   Colors.white),

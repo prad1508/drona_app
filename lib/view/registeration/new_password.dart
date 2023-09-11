@@ -1,3 +1,4 @@
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -108,7 +109,7 @@ class _NewPasswordState extends State<NewPassword> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title:const Text('Confirm New password', style: TextStyle(fontSize: 18),),
+          title: Text(AppLocale.confirmPassword.getString(context), style: TextStyle(fontSize: 18),),
           centerTitle: true,
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
@@ -127,10 +128,10 @@ class _NewPasswordState extends State<NewPassword> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Align(
+                     Align(
                       alignment: Alignment.center,
-                      child: Text('Your New Password Must be Different from previously use password',
-                        style: TextStyle(fontSize: 16, fontFamily:  'Loto-Regular'),
+                      child: Text(AppLocale.passwordDiffFromPrevious.getString(context),
+                        style: const TextStyle(fontSize: 16, fontFamily:  'Loto-Regular'),
                       ),
                     ),
                     const SizedBox(
@@ -138,7 +139,7 @@ class _NewPasswordState extends State<NewPassword> {
                     ),
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Text("New Password",
+                      child: Text(AppLocale.newPassword.getString(context),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -165,7 +166,7 @@ class _NewPasswordState extends State<NewPassword> {
                     ),
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Confirm Password",
+                      child: Text(AppLocale.conPassword.getString(context),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -193,14 +194,14 @@ class _NewPasswordState extends State<NewPassword> {
 
                     RoundButton(
                         loading: false,
-                        title: 'Submit',
+                        title: AppLocale.submit.getString(context),
                         textColor: Colors.white,
                         rounded: true,
                         color: Theme.of(context).primaryColor,
                         onPress: () {
                           FocusManager.instance.primaryFocus?.unfocus();
                           if( oldPassword.text.toString().isEmpty){
-                            Utils.flushBarErrorMessage('Please fill field', context);
+                            Utils.flushBarErrorMessage(AppLocale.fillField.getString(context), context);
                           }
                           else if(newPassword.text.length >= 6){
                             showDialog(
@@ -226,7 +227,7 @@ class _NewPasswordState extends State<NewPassword> {
                                           ),
                                         ),
                                         const SizedBox(height: 5),
-                                        const Text("Your password has been changed",style: TextStyle(
+                                         Text(AppLocale.passwordChanged.getString(context),style: TextStyle(
                                             fontSize: 14
                                         ),),
                                         const SizedBox(height: 5),
@@ -241,7 +242,7 @@ class _NewPasswordState extends State<NewPassword> {
                                         child: Container(
                                             width: double.infinity,
                                             child: RoundButton(
-                                              title: 'Login Now',
+                                              title: AppLocale.loginNow.getString(context),
                                               onPress: () async {
                                                 Navigator.pop(context);
                                                 registration.verifynewPassword(newPassword.text.toString(), context);
@@ -261,10 +262,10 @@ class _NewPasswordState extends State<NewPassword> {
 
                           }
                           else if(oldPassword.text.toString() == newPassword.text.toString()){
-                            Utils.flushBarErrorMessage('Password should be 6 latter or more than ', context);
+                            Utils.flushBarErrorMessage(AppLocale.passwordShouldBe6D.getString(context), context);
                           }
                           else{
-                            Utils.flushBarErrorMessage('Confirm password does not match', context);
+                            Utils.flushBarErrorMessage(AppLocale.confirmPassNtMatch.getString(context), context);
                           }
 
                         }),

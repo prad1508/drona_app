@@ -79,7 +79,7 @@ class UserViewModel with ChangeNotifier {
       print(value.toString());
 
       //Utils.flushBarErrorMessage('Login Successfully', context);
-      print("logout");
+     // print("logout");
       Utils.flushBarErrorMessage('Logout Successfully', context);
       sp.remove('token');
     });

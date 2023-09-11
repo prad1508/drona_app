@@ -42,7 +42,9 @@ class _AcadmicSetupState extends State<AcadmicSetup> {
                           fontWeight: FontWeight.w600,
                           fontSize: 17,
                           height: 1.7),
-                      textAlign: TextAlign.center)),
+                      textAlign: TextAlign.center
+                    ),
+                ),
               const SizedBox(
                 height: 40,
               ),

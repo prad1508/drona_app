@@ -141,7 +141,7 @@ class RegistrationViewModel with ChangeNotifier {
 
     print("uid is coming is $uid");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('uid',uid)!;
+    prefs.setString('uid',uid);
 
 
 

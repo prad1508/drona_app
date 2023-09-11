@@ -4,6 +4,7 @@ import 'package:drona/view/trainee_phonbook_add.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../res/language/language.dart';
 import '../res/widget/customradio.dart';
@@ -124,10 +125,12 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           validationDebounce: const Duration(milliseconds: 100),
                           validator: Validation().isPhoneField,
                           keyboardType: TextInputType.phone,
-                          hintText: 'eg. 9876521233',
-                          isValidatingMessage: 'Enter a valid 10 digit mobile number',
+                          hintText: '${AppLocale.eg.getString(context)}. 9876521233',
+                          isValidatingMessage: AppLocale.valid10digitError.getString(context),
                           valueIsInvalidMessage:
-                          'Enter a valid 10 digit mobile number'),
+                          AppLocale.valid10digitError.getString(context),
+                          valueIsEmptyMessage: AppLocale.valueIsEmptyMessage.getString(context),
+                      ),
                       const SizedBox(
                         height: 15,
                       ),
@@ -144,7 +147,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                       TextFormField(
                         controller: fullName,
                         decoration: InputDecoration(
-                          hintText: 'Enter Full Name',
+                          hintText: AppLocale.fullName.getString(context),
                           contentPadding: const EdgeInsets.all(10),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -178,21 +181,21 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                             value: 'male',
                             groupValue: _genderValue,
                             onChanged: _genderChangedHandler(),
-                            label: 'Male ',
+                            label: AppLocale.male.getString(context),
                           ),
                           CustomRadio<String>(
                             btnColor: Colors.black,
                             value: 'female',
                             groupValue: _genderValue,
                             onChanged: _genderChangedHandler(),
-                            label: 'Female',
+                            label: AppLocale.female.getString(context),
                           ),
                           CustomRadio<String>(
                             btnColor: Colors.black,
                             value: 'other',
                             groupValue: _genderValue,
                             onChanged: _genderChangedHandler(),
-                            label: 'Other',
+                            label: AppLocale.other.getString(context),
                           ),
                         ],
                       ),
@@ -220,7 +223,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 ),
                                 DateOfBirth(
                                     controller: dob,
-                                    hintText: "e.g 01/01/2023"),
+                                    hintText: "${AppLocale.eg.getString(context)}. 01/01/2023"),
                               ],
                             ),
                           ),
@@ -278,7 +281,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                DateOfjoining(controller: doj, hintText: 'e.g 01/01/2023'),
+                                DateOfjoining(controller: doj, hintText: '${AppLocale.eg.getString(context)} 01/01/2023'),
 
                               ],
                             ),
@@ -290,7 +293,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    "Month of Billing",
+                                    AppLocale.moB.getString(context),
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
@@ -299,7 +302,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                 ),
                                 YearMonthPicker(
                                     controller: dobilling,
-                                    hintText: 'Month of Billing'),
+                                    hintText: AppLocale.moB.getString(context)),
                                 // DateOfjoining(
                                 //     controller: dobilling,
                                 //     hintText: 'Month of Billing'),
@@ -324,7 +327,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                           TextButton(onPressed: (){
                             /// open modal
                             _openModal(context);
-                          }, child: const Text("Edit Fees",
+                          }, child:  Text(AppLocale.editDate.getString(context),
                             style: TextStyle(
                               color: Color(
                                 0xffFD685D,
@@ -368,19 +371,19 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                             print(dobilling.text);
                             print(fee.text);
                             if (fullName.text.toString().isEmpty) {
-                              Utils.flushBarErrorMessage('Please fill Name', context);
+                              Utils.flushBarErrorMessage(AppLocale.fillNameError.getString(context), context);
                             }
                             else if (phone.text.toString().isEmpty) {
-                              Utils.flushBarErrorMessage('Please fill Number', context);
+                              Utils.flushBarErrorMessage(AppLocale.fillPhoneError.getString(context), context);
                             }
                             else if (doj.text.toString().isEmpty) {
-                              Utils.flushBarErrorMessage('Please Select Date of Joining', context);
+                              Utils.flushBarErrorMessage(AppLocale.enterDoj.getString(context), context);
                             }
                             else if (dobilling.text.toString().isEmpty) {
-                              Utils.flushBarErrorMessage('Please Select Month Of Blling', context);
+                              Utils.flushBarErrorMessage(AppLocale.moB.getString(context), context);
                             }
                             else if (fee.text.toString().isEmpty) {
-                              Utils.flushBarErrorMessage('Please Fill Salary', context);
+                              Utils.flushBarErrorMessage(AppLocale.enterSalary.getString(context), context);
                             }
                             else {
                               /// show dialog box
@@ -407,12 +410,13 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                             ),
                                           ),
                                           const SizedBox(height: 5),
-                                          const Text("Send Invite",style: TextStyle(
+                                           Text(AppLocale.sendInvite.getString(context),style: const TextStyle(
                                               fontSize: 14
-                                          ),),
+                                          ),
+                                           ),
                                           const SizedBox(height: 5),
-
-                                          Text('Invite "${fullName.text}" To Your Academy',style: const TextStyle(
+                                        //trParams({"time": secondsRemaining.toString()}
+                                          Text(AppLocale.inviteAcademy.getString(context).trParams({"key": fullName.text.toString()}),style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w200
                                           ),),
@@ -427,7 +431,7 @@ class _TrainAddManualyState extends State<TrainAddManualy> {
                                           child: Container(
                                               width: double.infinity,
                                               child: RoundButton(
-                                                title: 'Okay',
+                                                title: AppLocale.okay.getString(context),
                                                 onPress: () async {
                                                   Navigator.pop(context);
                                                   Map<String, dynamic> data = {

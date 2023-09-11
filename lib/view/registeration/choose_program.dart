@@ -29,8 +29,6 @@ class ChooseProgram extends StatefulWidget {
 }
 
 class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderStateMixin  {
-  //multi language support
-  final FlutterLocalization _localization = FlutterLocalization.instance;
   ProgramViewViewModel programViewViewModel = ProgramViewViewModel();
   late Map<String, dynamic> data;
   late TabController _tabController;
@@ -83,441 +81,1513 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     final registration = Provider.of<RegistrationViewModel>(context);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        supportedLocales: _localization.supportedLocales,
-        localizationsDelegates: _localization.localizationsDelegates,
-        home: Scaffold(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            appBar: AppBar(
-              toolbarHeight: 100,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              title: Row(
-                children: [
-                  ProgressPills(
-                      number: 7,
-                      active: 5,
-                      color: Theme.of(context).primaryColorLight),
-                ],
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: GestureDetector(
-                  onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ChangeNotifierProvider<ProgramViewViewModel>(
-                          create: (BuildContext context) =>
-                          programViewViewModel,
-                          child: Consumer<ProgramViewViewModel>(builder: (context, value, _,) {
-                            switch (value.dataList.status!) {
-                              case Status.loading:
-                                return const Center(
-                                    child: CircularProgressIndicator(
-                                        color: Colors.teal));
+    return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: AppBar(
+          toolbarHeight: 100,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Row(
+            children: [
+              ProgressPills(
+                  number: 7,
+                  active: 5,
+                  color: Theme.of(context).primaryColorLight),
+            ],
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ChangeNotifierProvider<ProgramViewViewModel>(
+                      create: (BuildContext context) =>
+                      programViewViewModel,
+                      child: Consumer<ProgramViewViewModel>(builder: (context, value, _,) {
+                        switch (value.dataList.status!) {
+                          case Status.loading:
+                            return const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.teal));
 
-                              case Status.completed:
-                                return
-                                  DefaultTabController(
+                          case Status.completed:
+                            return
+                              DefaultTabController(
 
-                                      length: 3,
-                                      initialIndex: 0,
-                                      child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: <Widget>[
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child:Row(
-                                                  children: [
-                                                    Text(
-                                                      AppLocale.title31.getString(context),
-                                                      style: Theme.of(context).textTheme.titleLarge,
-                                                    ),
-                                                    Text(" "),
-                                                    Text("For $serviceName" , style: Theme.of(context).textTheme.titleLarge,),
-                                                  ],
-                                                )
-
-                                            ),
-                                            const SizedBox(height: 20,),
-                                            TabBar(
-                                              controller: _tabController,
-                                              // onTap: (index){
-                                              //   programViewViewModel.activeTabIndex = index;
-                                              //   programViewViewModel.updateContinueButtonEnabled();
-                                              //  },
-                                              indicator: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius: BorderRadius.circular(5.0)),
-                                              labelColor: Colors.white,
-                                              unselectedLabelColor: Colors.black,
-                                              labelPadding: const EdgeInsets.all(0),
-                                              dividerColor: Colors.transparent,
-                                              indicatorColor: Colors.transparent,
-                                              tabs: [
-                                                Tab(
-                                                  child: Container(
-                                                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color: Colors.black),
-                                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                    ),
-                                                    child: const Text("By Level"),
-                                                  ),
+                                  length: 3,
+                                  initialIndex: 0,
+                                  child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: <Widget>[
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child:Row(
+                                              children: [
+                                                Text(
+                                                  AppLocale.title31.getString(context),
+                                                  style: Theme.of(context).textTheme.titleLarge,
                                                 ),
-                                                Tab(
-                                                  child: Container(
-                                                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(width: 1,
-                                                          color: Colors.black),
-                                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                    ),
-                                                    child: const Text("By Age"),
-                                                  ),
-                                                ),
-                                                Tab(
-                                                  child: Container(
-                                                    padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(width: 1, color: Colors.black),
-                                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                    ),
-                                                    child: const Text("Custom"),
-                                                  ),
-                                                ),
+                                                Text(" "),
+                                                Text("For $serviceName" , style: Theme.of(context).textTheme.titleLarge,),
                                               ],
+                                            )
 
+                                        ),
+                                        const SizedBox(height: 20,),
+                                        TabBar(
+                                          controller: _tabController,
+                                          // onTap: (index){
+                                          //   programViewViewModel.activeTabIndex = index;
+                                          //   programViewViewModel.updateContinueButtonEnabled();
+                                          //  },
+                                          indicator: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.circular(5.0)),
+                                          labelColor: Colors.white,
+                                          unselectedLabelColor: Colors.black,
+                                          labelPadding: const EdgeInsets.all(0),
+                                          dividerColor: Colors.transparent,
+                                          indicatorColor: Colors.transparent,
+                                          tabs: [
+                                            Tab(
+                                              child: Container(
+                                                padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black),
+                                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                ),
+                                                child: const Text("By Level"),
+                                              ),
                                             ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context).size.height * .6,
-                                              child: TabBarView(
-                                                controller: _tabController,
-                                                children: <Widget>[
-                                                  //by level
-                                                  SingleChildScrollView(
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(height: 10,),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
+                                            Tab(
+                                              child: Container(
+                                                padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(width: 1,
+                                                      color: Colors.black),
+                                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                ),
+                                                child: const Text("By Age"),
+                                              ),
+                                            ),
+                                            Tab(
+                                              child: Container(
+                                                padding: const EdgeInsets.fromLTRB(15, 13, 15, 13),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(width: 1, color: Colors.black),
+                                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                ),
+                                                child: const Text("Custom"),
+                                              ),
+                                            ),
+                                          ],
+
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context).size.height * .6,
+                                          child: TabBarView(
+                                            controller: _tabController,
+                                            children: <Widget>[
+                                              //by level
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  checkColor: Colors.white,
+                                                                  activeColor: Theme.of(context).primaryColor,
+                                                                  value: programViewViewModel.bylevelBeginner,
+                                                                  onChanged: (_) { programViewViewModel.togglebylevelBeginner();
+                                                                  programViewViewModel.handleTextFieldChange('');}
+
+                                                              ),
+                                                              Text(
+                                                                'Beginner', style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelBeginner
+                                                              ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(
+
+                                                              focusNode: programViewViewModel.focusNodes[0],
+                                                              controller: programViewViewModel.txtBylevelBeginner,
+                                                              onTap: () {},
+                                                              onChanged: (newValue) {
+                                                                programViewViewModel.handleTextFieldChange(newValue);
+                                                              },
+                                                              keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                              textInputAction:TextInputAction.done,
+                                                              inputFormatters: <TextInputFormatter>[
+                                                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                              ],
+                                                              decoration: InputDecoration(
+                                                                hintText: '  Fees',
+                                                                contentPadding: const EdgeInsets.all(15),
+                                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
+                                                                focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
+                                                                    color: Colors.blue, width: 1.0),
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                prefixIcon: Container(
+                                                                    decoration: BoxDecoration(color: programViewViewModel.focusNodes[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.all(15),
+                                                                      child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //intermediate
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  checkColor: Colors.white,
+                                                                  activeColor: Theme.of(context).primaryColor,
+                                                                  value: programViewViewModel.bylevelIntermediate,
+                                                                  onChanged: (_) { programViewViewModel.togglebylevelIntermediate();
+                                                                  programViewViewModel.handleTextFieldChange('');}
+
+                                                              ),
+                                                              Text(
+                                                                'Intermediate', style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelIntermediate ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(focusNode: programViewViewModel.focusNodes[1],
+                                                              controller: programViewViewModel.txtBylevelIntermediate,
+                                                              onChanged: (newValue) {
+                                                                programViewViewModel.handleTextFieldChange(newValue);
+                                                              },
+                                                              onTap: () {},
+                                                              keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                              textInputAction:TextInputAction.done,
+                                                              inputFormatters: <TextInputFormatter>[
+                                                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                              ],                                                                  decoration: InputDecoration(hintText: '  Fees',
+                                                                contentPadding: const EdgeInsets.all(15),
+                                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
+                                                                    color: Colors.blue, width: 1.0),
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                prefixIcon: Container(
+                                                                    decoration: BoxDecoration(color: programViewViewModel.focusNodes[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.all(15),
+                                                                      child: Text('₹/M',
+                                                                        style: TextStyle(color: programViewViewModel.focusNodes[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //Advance
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  checkColor: Colors.white,
+                                                                  activeColor: Theme.of(context).primaryColor,
+                                                                  value: programViewViewModel.bylevelAdvance,
+                                                                  onChanged: (_) {
+                                                                    programViewViewModel.togglebylevelAdvance();
+                                                                    programViewViewModel.handleTextFieldChange('');
+                                                                  }
+                                                              ),
+                                                              Text(
+                                                                'Advance', style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelAdvance
+                                                              ? SizedBox(width: 150,child:
+                                                          TextFormField(focusNode: programViewViewModel.focusNodes[2],
+                                                            controller: programViewViewModel.txtBylevelAdvance,
+                                                            onTap:
+                                                                () {},
+                                                            onChanged: (newValue) {
+                                                              programViewViewModel.handleTextFieldChange(newValue);
+                                                            },
+                                                            keyboardType: TextInputType.number,
+                                                            decoration: InputDecoration(
+                                                              hintText: '  Fees',
+                                                              contentPadding: const EdgeInsets.all(15),
+                                                              border: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(10),),
+                                                              focusedBorder: OutlineInputBorder(
+                                                                borderSide: const BorderSide(
+                                                                    color:
+                                                                    Colors.blue,
+                                                                    width: 1.0),
+                                                                borderRadius:
+                                                                BorderRadius.circular(10),
+                                                              ),
+                                                              prefixIcon: Container(
+                                                                  decoration: BoxDecoration(color: programViewViewModel.focusNodes[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(15),
+                                                                    child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                    ),
+                                                                  )),
+                                                            ),
+                                                          ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //Professional
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  checkColor:
+                                                                  Colors.white,
+                                                                  activeColor: Theme.of(context).primaryColor,
+                                                                  value: programViewViewModel.bylevelprof,
+                                                                  onChanged: (newValue) {
+                                                                    programViewViewModel.togglebylevelprof();
+                                                                    programViewViewModel.handleTextFieldChange('');
+                                                                  }
+
+                                                              ),
+                                                              Text(
+                                                                'Professional',
+                                                                style: Theme.of(
+                                                                    context)
+                                                                    .textTheme
+                                                                    .bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelprof
+                                                              ? SizedBox(width: 150, child:
+                                                          TextFormField(focusNode: programViewViewModel.focusNodes[3],
+                                                            controller: programViewViewModel.txtBylevelprof,
+                                                            onTap:
+                                                                () {},
+                                                            onChanged: (newValue) {
+                                                              programViewViewModel.handleTextFieldChange(newValue);
+                                                            },
+                                                            keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                            textInputAction:TextInputAction.done,
+                                                            inputFormatters: <TextInputFormatter>[
+                                                              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                            ],                                                                decoration: InputDecoration(
+                                                              hintText: '  Fees',
+                                                              contentPadding: const EdgeInsets.all(15),
+                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                                                              focusedBorder:
+                                                              OutlineInputBorder(
+                                                                borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                borderRadius:
+                                                                BorderRadius.circular(10),
+                                                              ),
+                                                              prefixIcon: Container(
+                                                                  decoration: BoxDecoration(color: programViewViewModel.focusNodes[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                  child: Padding(
+                                                                    padding:
+                                                                    const EdgeInsets.all(15),
+                                                                    child:
+                                                                    Text(
+                                                                      '₹/M',
+                                                                      style: TextStyle(color: programViewViewModel.focusNodes[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                    ),
+                                                                  )),
+                                                            ),
+                                                          ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    //Registration
+                                                    Container(
+                                                      padding:
+                                                      const EdgeInsets.all(0),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(width: 1, color: const Color.fromARGB(255, 224, 223, 223)),
+                                                        borderRadius:
+                                                        const BorderRadius.all(Radius.circular(5)),
+                                                      ),
+                                                      child: ExpansionTile(
+                                                        title: const Text('Registration Fee',
+                                                          style: TextStyle(fontStyle: FontStyle.normal,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 17,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        trailing: const Icon(
+                                                          Icons.arrow_drop_down,
+                                                          color: Colors.black,
+                                                        ),
+                                                        children: <Widget>[
+                                                          //Beginner
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelBeginner
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
                                                                       checkColor: Colors.white,
                                                                       activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelBeginner,
-                                                                      onChanged: (_) { programViewViewModel.togglebylevelBeginner();
-                                                                      programViewViewModel.handleTextFieldChange('');}
-
-                                                                  ),
-                                                                  Text(
-                                                                    'Beginner', style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelBeginner
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(
-
-                                                                  focusNode: programViewViewModel.focusNodes[0],
-                                                                  controller: programViewViewModel.txtBylevelBeginner,
-                                                                  onTap: () {},
-                                                                  onChanged: (newValue) {
-                                                                    programViewViewModel.handleTextFieldChange(newValue);
-                                                                  },
-                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                  textInputAction:TextInputAction.done,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                      value: programViewViewModel.bylevelBeginner2,
+                                                                      onChanged: (_) => programViewViewModel.togglebylevelBeginner2(),
+                                                                    ),
+                                                                    Text(
+                                                                      'Beginner', style: Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
                                                                   ],
-                                                                  decoration: InputDecoration(
+                                                                ),
+                                                                programViewViewModel.bylevelBeginner2
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodes[4],
+                                                                    controller: programViewViewModel.txtBylevelBeginner2,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
                                                                     hintText: '  Fees',
                                                                     contentPadding: const EdgeInsets.all(15),
-                                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
-                                                                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
-                                                                        color: Colors.blue, width: 1.0),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
                                                                       borderRadius: BorderRadius.circular(10),
                                                                     ),
                                                                     prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[4].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                                                                         child: Padding(
                                                                           padding: const EdgeInsets.all(15),
-                                                                          child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodes[4].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
                                                                           ),
                                                                         )),
                                                                   ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //intermediate
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
-                                                                      checkColor: Colors.white,
-                                                                      activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelIntermediate,
-                                                                      onChanged: (_) { programViewViewModel.togglebylevelIntermediate();
-                                                                      programViewViewModel.handleTextFieldChange('');}
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
 
-                                                                  ),
-                                                                  Text(
-                                                                    'Intermediate', style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelIntermediate ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodes[1],
-                                                                  controller: programViewViewModel.txtBylevelIntermediate,
-                                                                  onChanged: (newValue) {
-                                                                    programViewViewModel.handleTextFieldChange(newValue);
-                                                                  },
-                                                                  onTap: () {},
-                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                  textInputAction:TextInputAction.done,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                  ],                                                                  decoration: InputDecoration(hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                                                          //Intermediate
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelIntermediate
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(checkColor: Colors.white,
+                                                                      activeColor: Theme.of(context).primaryColor,
+                                                                      value: programViewViewModel.bylevelIntermediate2,
+                                                                      onChanged: (_) => programViewViewModel.togglebylevelIntermediate2(),
                                                                     ),
-                                                                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(
-                                                                        color: Colors.blue, width: 1.0),
+                                                                    Text(
+                                                                      'Intermediate',
+                                                                      style:
+                                                                      Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                programViewViewModel.bylevelIntermediate2
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodes[5],
+                                                                    controller: programViewViewModel.txtBylevelIntermediate2,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
                                                                       borderRadius: BorderRadius.circular(10),
                                                                     ),
                                                                     prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[5].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
                                                                         child: Padding(
                                                                           padding: const EdgeInsets.all(15),
-                                                                          child: Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodes[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodes[5].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
                                                                           ),
                                                                         )),
                                                                   ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+
+                                                          //Advance
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelAdvance
+                                                              ? Row(
+                                                              crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
+                                                                      checkColor:
+                                                                      Colors.white,
+                                                                      activeColor:
+                                                                      Theme.of(context).primaryColor,
+                                                                      value: programViewViewModel.bylevelAdvance2,
+                                                                      onChanged: (_) => programViewViewModel.togglebylevelAdvance2(),
+                                                                    ),
+                                                                    Text(
+                                                                      'Advance',
+                                                                      style:
+                                                                      Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //Advance
-                                                        const SizedBox(
-                                                          height: 10,
+                                                                programViewViewModel.bylevelAdvance2
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodes[6],
+                                                                    controller: programViewViewModel.txtBylevelAdvance2,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    prefixIcon: Container(
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[6].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodes[6].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          ),
+                                                                        )),
+                                                                  ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          //Professional
+
+                                                          programViewViewModel.bylevelprof
+                                                              ? Row(crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
+                                                                      checkColor:
+                                                                      Colors.white,
+                                                                      activeColor:
+                                                                      Theme.of(context).primaryColor,
+                                                                      value: programViewViewModel.bylevelProf2,
+                                                                      onChanged: (_) => programViewViewModel.togglebylevelprof2(),
+
+                                                                    ),
+                                                                    Text(
+                                                                      'Professional',
+                                                                      style:
+                                                                      Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                programViewViewModel.bylevelProf2
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodes[7],
+                                                                    controller: programViewViewModel.txtBylevelProf2,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    prefixIcon: Container(
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodes[7].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodes[7].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          ),
+                                                                        )),
+                                                                  ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+                                                        ],
+                                                        onExpansionChanged:
+                                                            (bool expanded) {
+                                                          programViewViewModel.customTileExpanded;
+
+                                                        },
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: 1,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          //by label
+                                                          data = {"service_uid": value.dataList.data!.data![0].serviceUid.toString(),
+                                                            "name": "By Level",
+                                                            "custom": false,
+                                                            "programs": [
+                                                              {
+                                                                "program_name": "beginner",
+                                                                "amount": programViewViewModel.txtBylevelBeginner.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelBeginner2.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner2.text
+                                                              },
+                                                              {
+                                                                "program_name": "intermediate",
+                                                                "amount": programViewViewModel.txtBylevelIntermediate.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelIntermediate2.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate2.text
+                                                              },
+                                                              {
+                                                                "program_name": "advance",
+                                                                "amount": programViewViewModel.txtBylevelAdvance.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelAdvance2.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance2.text
+                                                              },
+                                                              {
+                                                                "program_name": "professional",
+                                                                "amount": programViewViewModel.txtBylevelprof.text.isEmpty ? '0' : programViewViewModel.txtBylevelprof.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelProf2.text.isEmpty ? '0' : programViewViewModel.txtBylevelProf2.text
+                                                              }
+                                                            ]
+                                                          };
+                                                        }),
+
+
+
+                                                  ],
+                                                ),
+                                              ),
+                                              //by age
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                checkColor: Colors.white,
+                                                                activeColor: Theme.of(context).primaryColor,
+                                                                value: programViewViewModel.bylevelUnder12,
+                                                                onChanged: (value) {
+                                                                  programViewViewModel.togglebylevelUnder12();
+                                                                  programViewViewModel.handleTextFieldChange('');
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'Under 12',
+                                                                style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelUnder12
+                                                              ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(focusNode: programViewViewModel.focusNodesByage[0],
+                                                              controller: programViewViewModel.txtBylevelUnder12,
+                                                              onTap: () {},
+                                                              onChanged: (value){
+                                                                programViewViewModel.handleTextFieldChange(value);
+                                                              },
+                                                              keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                              textInputAction:TextInputAction.done,
+                                                              inputFormatters: <TextInputFormatter>[
+                                                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                              ],                                                                  decoration:
+                                                              InputDecoration(
+                                                                hintText: '  Fees',
+                                                                contentPadding: const EdgeInsets.all(15),
+                                                                border:
+                                                                OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
+                                                                focusedBorder:
+                                                                OutlineInputBorder(
+                                                                  borderSide: const BorderSide(
+                                                                      color: Colors.blue,
+                                                                      width: 1.0),
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                prefixIcon: Container(
+                                                                    decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.all(15),
+                                                                      child:
+                                                                      Text('₹/M',
+                                                                        style: TextStyle(color: programViewViewModel.focusNodesByage[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //under 14
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                checkColor:
+                                                                Colors.white,
+                                                                activeColor: Theme.of(context).primaryColor,
+                                                                value: programViewViewModel.bylevelUnder14,
+                                                                onChanged: (value) {
+                                                                  programViewViewModel.togglebylevelUnder14();
+                                                                  programViewViewModel.handleTextFieldChange('');
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'Under 14',
+                                                                style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelUnder14
+                                                              ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(
+                                                              focusNode: programViewViewModel.focusNodesByage[1],
+                                                              controller: programViewViewModel.txtBylevelUnder14,
+                                                              onTap: () {},
+                                                              onChanged: (value){
+                                                                programViewViewModel.handleTextFieldChange(value);
+                                                              },
+                                                              keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                              decoration:
+                                                              InputDecoration(
+                                                                hintText: '  Fees',
+                                                                contentPadding: const EdgeInsets.all(15),
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),),
+                                                                focusedBorder:
+                                                                OutlineInputBorder(
+                                                                  borderSide: const BorderSide(
+                                                                      color: Colors.blue,
+                                                                      width: 1.0),
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(10),
+                                                                ),
+                                                                prefixIcon: Container(
+                                                                    decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                    child: Padding(
+                                                                      padding:
+                                                                      const EdgeInsets.all(15),
+                                                                      child:
+                                                                      Text(
+                                                                        '₹/M',
+                                                                        style: TextStyle(color: programViewViewModel.focusNodesByage[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //Under 16
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                checkColor:
+                                                                Colors.white,
+                                                                activeColor: Theme.of(context).primaryColor,
+                                                                value:programViewViewModel.bylevelUnder16,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  programViewViewModel.togglebylevelUnder16();
+                                                                  programViewViewModel.handleTextFieldChange('');
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'Under 16',
+                                                                style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelUnder16
+                                                              ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(
+                                                              focusNode: programViewViewModel.focusNodesByage[2],
+                                                              controller: programViewViewModel.txtBylevelUnder16,
+                                                              onTap: () {},
+                                                              onChanged: (value){
+                                                                programViewViewModel.handleTextFieldChange('');
+                                                              },
+                                                              keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                              textInputAction:TextInputAction.done,
+                                                              inputFormatters: <TextInputFormatter>[
+                                                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                              ],                                                                  decoration:
+                                                            InputDecoration(hintText: '  Fees',
+                                                              contentPadding: const EdgeInsets.all(15),
+                                                              border:
+                                                              OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                              ),
+                                                              focusedBorder:
+                                                              OutlineInputBorder(
+                                                                borderSide: const BorderSide(
+                                                                    color: Colors.blue,
+                                                                    width: 1.0),
+                                                                borderRadius:
+                                                                BorderRadius.circular(10),
+                                                              ),
+                                                              prefixIcon: Container(
+                                                                  decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(15),
+                                                                    child: Text(
+                                                                      '₹/M',
+                                                                      style: TextStyle(color: programViewViewModel.focusNodesByage[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                    ),
+                                                                  )),
+                                                            ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    //Adult
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                checkColor: Colors.white,
+                                                                activeColor: Theme.of(context).primaryColor,
+                                                                value: programViewViewModel.bylevelAdult,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  programViewViewModel.togglebylevelAdult();
+                                                                  programViewViewModel.handleTextFieldChange('');
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                'Adult',
+                                                                style: Theme.of(context).textTheme.bodyMedium,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          programViewViewModel.bylevelAdult
+                                                              ? SizedBox(
+                                                            width: 150,
+                                                            child:
+                                                            TextFormField(focusNode: programViewViewModel.focusNodesByage[3],
+                                                              controller: programViewViewModel.txtBylevelAdult,
+                                                              onTap:
+                                                                  () {},
+                                                              onChanged: (value){
+                                                                programViewViewModel.handleTextFieldChange('');
+                                                              },
+                                                              keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                              decoration:
+                                                              InputDecoration(
+                                                                hintText: '  Fees',
+                                                                contentPadding: const EdgeInsets.all(15),
+                                                                border:
+                                                                OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                focusedBorder:
+                                                                OutlineInputBorder(
+                                                                  borderSide: const BorderSide(
+                                                                      color: Colors.blue,
+                                                                      width: 1.0),
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(10),
+                                                                ),
+                                                                prefixIcon: Container(
+                                                                    decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                    child: Padding(padding: const EdgeInsets.all(15),
+                                                                      child:
+                                                                      Text('₹/M',
+                                                                        style: TextStyle(color: programViewViewModel.focusNodesByage[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          )
+                                                              : Container(),
+                                                        ]),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    //by age Registration
+                                                    Container(
+                                                      padding:
+                                                      const EdgeInsets.all(
+                                                          0),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color: const Color.fromARGB(255, 224, 223, 223)),
+                                                        borderRadius:
+                                                        const BorderRadius.all(Radius.circular(5)),
+                                                      ),
+                                                      child: ExpansionTile(
+                                                        title: const Text(
+                                                          'Registration Fee',
+                                                          style: TextStyle(
+                                                            fontStyle: FontStyle.normal,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 17,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
+                                                        trailing: const Icon(
+                                                          Icons.arrow_drop_down,
+                                                          color: Colors.black,
+                                                        ),
+                                                        children: <Widget>[
+                                                          //Under 12
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelUnder12
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
                                                                       checkColor: Colors.white,
                                                                       activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelAdvance,
-                                                                      onChanged: (_) {
-                                                                        programViewViewModel.togglebylevelAdvance();
-                                                                        programViewViewModel.handleTextFieldChange('');
-                                                                      }
-                                                                  ),
-                                                                  Text(
-                                                                    'Advance', style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelAdvance
-                                                                  ? SizedBox(width: 150,child:
-                                                              TextFormField(focusNode: programViewViewModel.focusNodes[2],
-                                                                controller: programViewViewModel.txtBylevelAdvance,
-                                                                onTap:
-                                                                    () {},
-                                                                onChanged: (newValue) {
-                                                                  programViewViewModel.handleTextFieldChange(newValue);
-                                                                },
-                                                                keyboardType: TextInputType.number,
-                                                                decoration: InputDecoration(
-                                                                  hintText: '  Fees',
-                                                                  contentPadding: const EdgeInsets.all(15),
-                                                                  border: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),),
-                                                                  focusedBorder: OutlineInputBorder(
-                                                                    borderSide: const BorderSide(
-                                                                        color:
-                                                                        Colors.blue,
-                                                                        width: 1.0),
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(10),
-                                                                  ),
-                                                                  prefixIcon: Container(
-                                                                      decoration: BoxDecoration(color: programViewViewModel.focusNodes[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                      child: Padding(
-                                                                        padding: const EdgeInsets.all(15),
-                                                                        child: Text('₹/M', style: TextStyle(color: programViewViewModel.focusNodes[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                        ),
-                                                                      )),
+                                                                      value: programViewViewModel.bylevelUnder12Second,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        programViewViewModel.togglebylevelUnder12Second();
+                                                                      },
+                                                                    ),
+                                                                    Text('Under 12', style:
+                                                                    Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //Professional
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
+                                                                programViewViewModel.bylevelUnder12Second
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodesByage[4],
+                                                                    controller: programViewViewModel.txtBylevelUnder12Second,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    prefixIcon: Container(
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[4].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[4].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          ),
+                                                                        )),
+                                                                  ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+
+                                                          //Under 14
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelUnder14
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
                                                                       checkColor:
                                                                       Colors.white,
                                                                       activeColor: Theme.of(context).primaryColor,
-                                                                      value: programViewViewModel.bylevelprof,
-                                                                      onChanged: (newValue) {
-                                                                        programViewViewModel.togglebylevelprof();
-                                                                        programViewViewModel.handleTextFieldChange('');
-                                                                      }
-
-                                                                  ),
-                                                                  Text(
-                                                                    'Professional',
-                                                                    style: Theme.of(
-                                                                        context)
-                                                                        .textTheme
-                                                                        .bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelprof
-                                                                  ? SizedBox(width: 150, child:
-                                                              TextFormField(focusNode: programViewViewModel.focusNodes[3],
-                                                                controller: programViewViewModel.txtBylevelprof,
-                                                                onTap:
-                                                                    () {},
-                                                                onChanged: (newValue) {
-                                                                  programViewViewModel.handleTextFieldChange(newValue);
-                                                                },
-                                                                keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                textInputAction:TextInputAction.done,
-                                                                inputFormatters: <TextInputFormatter>[
-                                                                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                ],                                                                decoration: InputDecoration(
-                                                                  hintText: '  Fees',
-                                                                  contentPadding: const EdgeInsets.all(15),
-                                                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                                                                  focusedBorder:
-                                                                  OutlineInputBorder(
-                                                                    borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(10),
-                                                                  ),
-                                                                  prefixIcon: Container(
-                                                                      decoration: BoxDecoration(color: programViewViewModel.focusNodes[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                      child: Padding(
-                                                                        padding:
-                                                                        const EdgeInsets.all(15),
-                                                                        child:
-                                                                        Text(
-                                                                          '₹/M',
-                                                                          style: TextStyle(color: programViewViewModel.focusNodes[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                        ),
-                                                                      )),
+                                                                      value: programViewViewModel.bylevelUnder14Second,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        programViewViewModel.togglebylevelUnder14Second();
+                                                                      },
+                                                                    ),
+                                                                    Text('Under 14',
+                                                                      style:
+                                                                      Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        const SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        //Registration
-                                                        Container(
-                                                          padding:
-                                                          const EdgeInsets.all(0),
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(width: 1, color: const Color.fromARGB(255, 224, 223, 223)),
-                                                            borderRadius:
-                                                            const BorderRadius.all(Radius.circular(5)),
+                                                                programViewViewModel.bylevelUnder14Second
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodesByage[5],
+                                                                    controller: programViewViewModel.txtBylevelUnder14Second,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    prefixIcon: Container(
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[5].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[5].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          ),
+                                                                        )),
+                                                                  ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+                                                          //Under 16
+                                                          const SizedBox(
+                                                            height: 10,
                                                           ),
-                                                          child: ExpansionTile(
-                                                            title: const Text('Registration Fee',
-                                                              style: TextStyle(fontStyle: FontStyle.normal,
-                                                                fontWeight: FontWeight.w500,
-                                                                fontSize: 17,
-                                                                color: Colors.black,
-                                                              ),
-                                                            ),
-                                                            trailing: const Icon(
-                                                              Icons.arrow_drop_down,
-                                                              color: Colors.black,
-                                                            ),
-                                                            children: <Widget>[
-                                                              //Beginner
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelBeginner
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
+                                                          programViewViewModel.bylevelUnder16
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
+                                                                      checkColor: Colors.white,
+                                                                      activeColor: Theme.of(context).primaryColor,
+                                                                      value: programViewViewModel.bylevelUnder16Second,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        programViewViewModel.togglebylevelUnder16Second();
+                                                                      },
+                                                                    ),
+                                                                    Text('Under 16',
+                                                                      style:
+                                                                      Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                programViewViewModel.bylevelUnder16Second
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodesByage[6],
+                                                                    controller: programViewViewModel.txtBylevelUnder16Second,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],
+                                                                    decoration: InputDecoration(
+                                                                      hintText: '  Fees',
+                                                                      contentPadding: const EdgeInsets.all(15),
+                                                                      border: OutlineInputBorder(
+                                                                        borderRadius: BorderRadius.circular(10),
+                                                                      ),
+                                                                      focusedBorder: OutlineInputBorder(
+                                                                        borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                        borderRadius: BorderRadius.circular(10),
+                                                                      ),
+                                                                      prefixIcon: Container(
+                                                                          decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[6].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.all(15),
+                                                                            child: Text(
+                                                                              '₹/M',
+                                                                              style: TextStyle(color: programViewViewModel.focusNodesByage[6].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+                                                          //Adult
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          programViewViewModel.bylevelAdult
+                                                              ? Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: [
+                                                                    Checkbox(
+                                                                      checkColor: Colors.white,
+                                                                      activeColor: Theme.of(context).primaryColor,
+                                                                      value: programViewViewModel.bylevelAdultSecond,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        programViewViewModel.togglebylevelAdultSecond();
+                                                                      },
+                                                                    ),
+                                                                    Text('Adult', style:
+                                                                    Theme.of(context).textTheme.bodyMedium,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                programViewViewModel.bylevelAdultSecond
+                                                                    ? SizedBox(
+                                                                  width: 150,
+                                                                  child: TextFormField(
+                                                                    focusNode: programViewViewModel.focusNodesByage[7],
+                                                                    controller: programViewViewModel.txtBylevelAdultSecond,
+                                                                    onTap: () {},
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      programViewViewModel.handleTextFieldChange(value);
+                                                                    },
+                                                                    keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                    textInputAction:TextInputAction.done,
+                                                                    inputFormatters: <TextInputFormatter>[
+                                                                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                    ],                                                                        decoration: InputDecoration(
+                                                                    hintText: '  Fees',
+                                                                    contentPadding: const EdgeInsets.all(15),
+                                                                    border: OutlineInputBorder(
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                      borderRadius: BorderRadius.circular(10),
+                                                                    ),
+                                                                    prefixIcon: Container(
+                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[7].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.all(15),
+                                                                          child: Text(
+                                                                            '₹/M',
+                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[7].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                          ),
+                                                                        )),
+                                                                  ),
+                                                                  ),
+                                                                )
+                                                                    : Container(),
+                                                              ])
+                                                              : Container(),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                        ],
+                                                        onExpansionChanged:
+                                                            (bool expanded) {
+                                                          programViewViewModel.customTileExpanded;
+                                                        },
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: 1,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          //by label
+                                                          data = {
+                                                            "service_uid": value.dataList.data!.data![0].serviceUid.toString(),
+                                                            "name": "By Age",
+                                                            "custom": false,
+                                                            "programs": [
+                                                              {
+                                                                "program_name": "Under 12",
+                                                                "amount": programViewViewModel.txtBylevelUnder12.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelUnder12Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12Second.text
+                                                              },
+                                                              {
+                                                                "program_name": "Under 14",
+                                                                "amount": programViewViewModel.txtBylevelUnder14.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelUnder14Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14Second.text
+                                                              },
+                                                              {
+                                                                "program_name": "Under 16",
+                                                                "amount": programViewViewModel.txtBylevelUnder16.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelUnder16Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16Second.text
+                                                              },
+                                                              {
+                                                                "program_name": "Adult",
+                                                                "amount": programViewViewModel.txtBylevelAdult.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdult.text,
+                                                                "registrationfee": programViewViewModel.txtBylevelAdultSecond.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdultSecond.text
+                                                              }
+                                                            ]
+                                                          };
+                                                        }),
+                                                  ],
+                                                ),
+                                              ),
+                                              //Custom
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount:
+                                                        programViewViewModel.groupControllers.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          String checkboxNmae =
+                                                          programViewViewModel.groupControllers[index].name.text.toString();
+                                                          return Padding(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 10),
+                                                            child: Row(
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                                children: <Widget>[
+                                                                  Row(
+                                                                    children: [
+                                                                      Checkbox(
+                                                                        checkColor:
+                                                                        Colors.white,
+                                                                        activeColor:
+                                                                        Theme.of(context).primaryColor,
+                                                                        value: programViewViewModel.customChecked[index],
+                                                                        onChanged:
+                                                                            (value) {
+
+                                                                          programViewViewModel.togglebycustom(index);
+                                                                          programViewViewModel.handleTextFieldChange('');
+                                                                          // setState(
+                                                                          //     () {
+                                                                          //       programViewViewModel.customChecked[index] =
+                                                                          //       value!;
+                                                                          // });
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        programViewViewModel.groupControllers[index]
+                                                                            .name
+                                                                            .text
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodyMedium,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  programViewViewModel.customChecked[
+                                                                  index]
+                                                                      ? SizedBox(
+                                                                    width:
+                                                                    150,
+                                                                    child:
+                                                                    TextFormField(
+                                                                      //focusNode: _focusNodes[0],
+                                                                      controller:
+                                                                      programViewViewModel.groupControllers[index].tel,
+                                                                      onTap:
+                                                                          () {},
+                                                                      onChanged: (value){
+                                                                        programViewViewModel.handleTextFieldChange(value);
+                                                                      },
+                                                                      keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
+                                                                      textInputAction:TextInputAction.done,
+                                                                      inputFormatters: <TextInputFormatter>[
+                                                                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                                                                      ],
+                                                                      decoration:
+                                                                      InputDecoration(
+                                                                        hintText: '  Fees',
+                                                                        contentPadding: const EdgeInsets.all(15),
+                                                                        border: OutlineInputBorder(
+                                                                          borderRadius: BorderRadius.circular(10),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+                                                                          borderRadius: BorderRadius.circular(10),
+                                                                        ),
+                                                                        prefixIcon: Container(
+                                                                            decoration: BoxDecoration(color: programViewViewModel.focusNodes[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                                                            child: Padding(
+                                                                              padding: const EdgeInsets.all(15),
+                                                                              child: Text(
+                                                                                '₹/M',
+                                                                                style: TextStyle(color: programViewViewModel.focusNodes[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
+                                                                              ),
+                                                                            )),
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                      : Container(),
+                                                                ]),
+                                                          );
+                                                        }),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    programViewViewModel.groupControllers.length ==
+                                                        0
+                                                        ? Container()
+                                                        : Container(
+                                                      padding: const EdgeInsets.all(0),
+                                                      decoration:
+                                                      BoxDecoration(border: Border.all(width: 1,
+                                                          color: const Color.fromARGB(255, 224, 223, 223)),
+                                                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                                      ),
+                                                      child:
+                                                      ExpansionTile(
+                                                        title: const Text('Registration Fee',
+                                                          style: TextStyle(fontStyle: FontStyle.normal,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 17,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        trailing:
+                                                        const Icon(Icons.arrow_drop_down,
+                                                          color: Colors.black,
+                                                        ),
+                                                        children: <Widget>[
+                                                          ListView.builder(
+                                                              shrinkWrap: true,
+                                                              itemCount: programViewViewModel.groupControllers.length,
+                                                              itemBuilder: (context, index) {
+                                                                String checkboxNmae = programViewViewModel.groupControllers[index].name.text.toString();
+                                                                return programViewViewModel.customChecked[index]
+                                                                    ? Padding(padding: const EdgeInsets.only(bottom: 10),
+                                                                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
                                                                     Row(
                                                                       children: [
                                                                         Checkbox(
                                                                           checkColor: Colors.white,
                                                                           activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelBeginner2,
-                                                                          onChanged: (_) => programViewViewModel.togglebylevelBeginner2(),
+                                                                          value: programViewViewModel.customChecked2[index],
+                                                                          onChanged: (value) {
+                                                                            print(value);
+                                                                            programViewViewModel.togglebycustom2(index);
+                                                                            programViewViewModel.handleTextFieldChange('');
+
+                                                                          },
                                                                         ),
                                                                         Text(
-                                                                          'Beginner', style: Theme.of(context).textTheme.bodyMedium,
+                                                                          programViewViewModel.groupControllers[index].name.text.toString(),
+                                                                          style: Theme.of(context).textTheme.bodyMedium,
                                                                         ),
                                                                       ],
                                                                     ),
-                                                                    programViewViewModel.bylevelBeginner2
+                                                                    programViewViewModel.customChecked2[index]
                                                                         ? SizedBox(
                                                                       width: 150,
                                                                       child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodes[4],
-                                                                        controller: programViewViewModel.txtBylevelBeginner2,
+                                                                        //  focusNode: _focusNodes[4],
+                                                                        controller: programViewViewModel.groupControllers2[index].name,
                                                                         onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
+                                                                        onChanged:(value){
                                                                           programViewViewModel.handleTextFieldChange(value);
                                                                         },
+                                                                        // programViewViewModel.handleTextFieldChange(value);
                                                                         keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
                                                                         textInputAction:TextInputAction.done,
                                                                         inputFormatters: <TextInputFormatter>[
                                                                           FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
+                                                                        ],
+                                                                        decoration: InputDecoration(
                                                                           hintText: '  Fees',
                                                                           contentPadding: const EdgeInsets.all(15),
                                                                           border: OutlineInputBorder(
@@ -540,1196 +1610,120 @@ class _ChooseProgramState extends State<ChooseProgram>with SingleTickerProviderS
                                                                       ),
                                                                     )
                                                                         : Container(),
-                                                                  ])
-                                                                  : Container(),
-
-                                                              //Intermediate
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelIntermediate
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(checkColor: Colors.white,
-                                                                          activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelIntermediate2,
-                                                                          onChanged: (_) => programViewViewModel.togglebylevelIntermediate2(),
-                                                                        ),
-                                                                        Text(
-                                                                          'Intermediate',
-                                                                          style:
-                                                                          Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelIntermediate2
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodes[5],
-                                                                        controller: programViewViewModel.txtBylevelIntermediate2,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodes[5].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodes[5].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-
-                                                              //Advance
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelAdvance
-                                                                  ? Row(
-                                                                  crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                                  mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor:
-                                                                          Colors.white,
-                                                                          activeColor:
-                                                                          Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelAdvance2,
-                                                                          onChanged: (_) => programViewViewModel.togglebylevelAdvance2(),
-                                                                        ),
-                                                                        Text(
-                                                                          'Advance',
-                                                                          style:
-                                                                          Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelAdvance2
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodes[6],
-                                                                        controller: programViewViewModel.txtBylevelAdvance2,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodes[6].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodes[6].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              //Professional
-
-                                                              programViewViewModel.bylevelprof
-                                                                  ? Row(crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor:
-                                                                          Colors.white,
-                                                                          activeColor:
-                                                                          Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelProf2,
-                                                                          onChanged: (_) => programViewViewModel.togglebylevelprof2(),
-
-                                                                        ),
-                                                                        Text(
-                                                                          'Professional',
-                                                                          style:
-                                                                          Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelProf2
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodes[7],
-                                                                        controller: programViewViewModel.txtBylevelProf2,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodes[7].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodes[7].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-                                                            ],
-                                                            onExpansionChanged:
-                                                                (bool expanded) {
-                                                              programViewViewModel.customTileExpanded;
-
-                                                            },
+                                                                  ]),
+                                                                )
+                                                                    : Container();
+                                                              }),
+                                                          SizedBox(
+                                                            height: 10,
                                                           ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount: 1,
-                                                            itemBuilder:
-                                                                (context, index) {
-                                                              //by label
-                                                              data = {"service_uid": value.dataList.data!.data![0].serviceUid.toString(),
-                                                                "name": "By Level",
-                                                                "custom": false,
-                                                                "programs": [
-                                                                  {
-                                                                    "program_name": "beginner",
-                                                                    "amount": programViewViewModel.txtBylevelBeginner.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelBeginner2.text.isEmpty ? '0' : programViewViewModel.txtBylevelBeginner2.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "intermediate",
-                                                                    "amount": programViewViewModel.txtBylevelIntermediate.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelIntermediate2.text.isEmpty ? '0' : programViewViewModel.txtBylevelIntermediate2.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "advance",
-                                                                    "amount": programViewViewModel.txtBylevelAdvance.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelAdvance2.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdvance2.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "professional",
-                                                                    "amount": programViewViewModel.txtBylevelprof.text.isEmpty ? '0' : programViewViewModel.txtBylevelprof.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelProf2.text.isEmpty ? '0' : programViewViewModel.txtBylevelProf2.text
-                                                                  }
-                                                                ]
-                                                              };
-                                                            }),
-
-
-
-                                                      ],
+                                                        ],
+                                                        onExpansionChanged:
+                                                            (bool
+                                                        expanded) {
+                                                          programViewViewModel.customTileExpanded;
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
-                                                  //by age
-                                                  SingleChildScrollView(
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
-                                                                    checkColor: Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelUnder12,
-                                                                    onChanged: (value) {
-                                                                      programViewViewModel.togglebylevelUnder12();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
-                                                                  ),
-                                                                  Text(
-                                                                    'Under 12',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelUnder12
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodesByage[0],
-                                                                  controller: programViewViewModel.txtBylevelUnder12,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange(value);
-                                                                  },
-                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                  textInputAction:TextInputAction.done,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                  ],                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //under 14
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
-                                                                    checkColor:
-                                                                    Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelUnder14,
-                                                                    onChanged: (value) {
-                                                                      programViewViewModel.togglebylevelUnder14();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
-                                                                  ),
-                                                                  Text(
-                                                                    'Under 14',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelUnder14
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(
-                                                                  focusNode: programViewViewModel.focusNodesByage[1],
-                                                                  controller: programViewViewModel.txtBylevelUnder14,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange(value);
-                                                                  },
-                                                                  keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border: OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(10),),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[1].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text(
-                                                                            '₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[1].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //Under 16
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
-                                                                    checkColor:
-                                                                    Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value:programViewViewModel.bylevelUnder16,
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      programViewViewModel.togglebylevelUnder16();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
-                                                                  ),
-                                                                  Text(
-                                                                    'Under 16',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelUnder16
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(
-                                                                  focusNode: programViewViewModel.focusNodesByage[2],
-                                                                  controller: programViewViewModel.txtBylevelUnder16,
-                                                                  onTap: () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange('');
-                                                                  },
-                                                                  keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                  textInputAction:TextInputAction.done,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                  ],                                                                  decoration:
-                                                                  InputDecoration(hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[2].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.all(15),
-                                                                          child: Text(
-                                                                            '₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[2].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        //Adult
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  Checkbox(
-                                                                    checkColor: Colors.white,
-                                                                    activeColor: Theme.of(context).primaryColor,
-                                                                    value: programViewViewModel.bylevelAdult,
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      programViewViewModel.togglebylevelAdult();
-                                                                      programViewViewModel.handleTextFieldChange('');
-                                                                    },
-                                                                  ),
-                                                                  Text(
-                                                                    'Adult',
-                                                                    style: Theme.of(context).textTheme.bodyMedium,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              programViewViewModel.bylevelAdult
-                                                                  ? SizedBox(
-                                                                width: 150,
-                                                                child:
-                                                                TextFormField(focusNode: programViewViewModel.focusNodesByage[3],
-                                                                  controller: programViewViewModel.txtBylevelAdult,
-                                                                  onTap:
-                                                                      () {},
-                                                                  onChanged: (value){
-                                                                    programViewViewModel.handleTextFieldChange('');
-                                                                  },
-                                                                  keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    hintText: '  Fees',
-                                                                    contentPadding: const EdgeInsets.all(15),
-                                                                    border:
-                                                                    OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                                                                    ),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                          color: Colors.blue,
-                                                                          width: 1.0),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(10),
-                                                                    ),
-                                                                    prefixIcon: Container(
-                                                                        decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[3].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                        child: Padding(padding: const EdgeInsets.all(15),
-                                                                          child:
-                                                                          Text('₹/M',
-                                                                            style: TextStyle(color: programViewViewModel.focusNodesByage[3].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                          ),
-                                                                        )),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                                  : Container(),
-                                                            ]),
-                                                        const SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        //by age Registration
-                                                        Container(
-                                                          padding:
-                                                          const EdgeInsets.all(
-                                                              0),
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 1,
-                                                                color: const Color.fromARGB(255, 224, 223, 223)),
-                                                            borderRadius:
-                                                            const BorderRadius.all(Radius.circular(5)),
-                                                          ),
-                                                          child: ExpansionTile(
-                                                            title: const Text(
-                                                              'Registration Fee',
-                                                              style: TextStyle(
-                                                                fontStyle: FontStyle.normal,
-                                                                fontWeight: FontWeight.w500,
-                                                                fontSize: 17,
-                                                                color: Colors.black,
-                                                              ),
-                                                            ),
-                                                            trailing: const Icon(
-                                                              Icons.arrow_drop_down,
-                                                              color: Colors.black,
-                                                            ),
-                                                            children: <Widget>[
-                                                              //Under 12
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelUnder12
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor: Colors.white,
-                                                                          activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelUnder12Second,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            programViewViewModel.togglebylevelUnder12Second();
-                                                                          },
-                                                                        ),
-                                                                        Text('Under 12', style:
-                                                                        Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelUnder12Second
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodesByage[4],
-                                                                        controller: programViewViewModel.txtBylevelUnder12Second,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[4].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodesByage[4].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-
-                                                              //Under 14
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelUnder14
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor:
-                                                                          Colors.white,
-                                                                          activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelUnder14Second,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            programViewViewModel.togglebylevelUnder14Second();
-                                                                          },
-                                                                        ),
-                                                                        Text('Under 14',
-                                                                          style:
-                                                                          Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelUnder14Second
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodesByage[5],
-                                                                        controller: programViewViewModel.txtBylevelUnder14Second,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[5].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodesByage[5].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-                                                              //Under 16
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelUnder16
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor: Colors.white,
-                                                                          activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelUnder16Second,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            programViewViewModel.togglebylevelUnder16Second();
-                                                                          },
-                                                                        ),
-                                                                        Text('Under 16',
-                                                                          style:
-                                                                          Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelUnder16Second
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodesByage[6],
-                                                                        controller: programViewViewModel.txtBylevelUnder16Second,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],
-                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[6].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodesByage[6].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-                                                              //Adult
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              programViewViewModel.bylevelAdult
-                                                                  ? Row(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Row(
-                                                                      children: [
-                                                                        Checkbox(
-                                                                          checkColor: Colors.white,
-                                                                          activeColor: Theme.of(context).primaryColor,
-                                                                          value: programViewViewModel.bylevelAdultSecond,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            programViewViewModel.togglebylevelAdultSecond();
-                                                                          },
-                                                                        ),
-                                                                        Text('Adult', style:
-                                                                        Theme.of(context).textTheme.bodyMedium,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    programViewViewModel.bylevelAdultSecond
-                                                                        ? SizedBox(
-                                                                      width: 150,
-                                                                      child: TextFormField(
-                                                                        focusNode: programViewViewModel.focusNodesByage[7],
-                                                                        controller: programViewViewModel.txtBylevelAdultSecond,
-                                                                        onTap: () {},
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          programViewViewModel.handleTextFieldChange(value);
-                                                                        },
-                                                                        keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                        textInputAction:TextInputAction.done,
-                                                                        inputFormatters: <TextInputFormatter>[
-                                                                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                        ],                                                                        decoration: InputDecoration(
-                                                                          hintText: '  Fees',
-                                                                          contentPadding: const EdgeInsets.all(15),
-                                                                          border: OutlineInputBorder(
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          focusedBorder: OutlineInputBorder(
-                                                                            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                          ),
-                                                                          prefixIcon: Container(
-                                                                              decoration: BoxDecoration(color: programViewViewModel.focusNodesByage[7].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.all(15),
-                                                                                child: Text(
-                                                                                  '₹/M',
-                                                                                  style: TextStyle(color: programViewViewModel.focusNodesByage[7].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                ),
-                                                                              )),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                        : Container(),
-                                                                  ])
-                                                                  : Container(),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                            onExpansionChanged:
-                                                                (bool expanded) {
-                                                              programViewViewModel.customTileExpanded;
-                                                            },
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount: 1,
-                                                            itemBuilder:
-                                                                (context, index) {
-                                                              //by label
-                                                              data = {
-                                                                "service_uid": value.dataList.data!.data![0].serviceUid.toString(),
-                                                                "name": "By Age",
-                                                                "custom": false,
-                                                                "programs": [
-                                                                  {
-                                                                    "program_name": "Under 12",
-                                                                    "amount": programViewViewModel.txtBylevelUnder12.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder12Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder12Second.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "Under 14",
-                                                                    "amount": programViewViewModel.txtBylevelUnder14.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder14Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder14Second.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "Under 16",
-                                                                    "amount": programViewViewModel.txtBylevelUnder16.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelUnder16Second.text.isEmpty ? '0' : programViewViewModel.txtBylevelUnder16Second.text
-                                                                  },
-                                                                  {
-                                                                    "program_name": "Adult",
-                                                                    "amount": programViewViewModel.txtBylevelAdult.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdult.text,
-                                                                    "registrationfee": programViewViewModel.txtBylevelAdultSecond.text.isEmpty ? '0' : programViewViewModel.txtBylevelAdultSecond.text
-                                                                  }
-                                                                ]
-                                                              };
-                                                            }),
-                                                      ],
+                                                    const SizedBox(
+                                                      height: 20,
                                                     ),
-                                                  ),
-                                                  //Custom
-                                                  SingleChildScrollView(
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount:
-                                                            programViewViewModel.groupControllers.length,
-                                                            itemBuilder:
-                                                                (context, index) {
-                                                              String checkboxNmae =
-                                                              programViewViewModel.groupControllers[index].name.text.toString();
-                                                              return Padding(
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    bottom: 10),
-                                                                child: Row(
-                                                                    crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                    mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                    children: <Widget>[
-                                                                      Row(
-                                                                        children: [
-                                                                          Checkbox(
-                                                                            checkColor:
-                                                                            Colors.white,
-                                                                            activeColor:
-                                                                            Theme.of(context).primaryColor,
-                                                                            value: programViewViewModel.customChecked[index],
-                                                                            onChanged:
-                                                                                (value) {
-
-                                                                              programViewViewModel.togglebycustom(index);
-                                                                              programViewViewModel.handleTextFieldChange('');
-                                                                              // setState(
-                                                                              //     () {
-                                                                              //       programViewViewModel.customChecked[index] =
-                                                                              //       value!;
-                                                                              // });
-                                                                            },
-                                                                          ),
-                                                                          Text(
-                                                                            programViewViewModel.groupControllers[index]
-                                                                                .name
-                                                                                .text
-                                                                                .toString(),
-                                                                            style: Theme.of(context)
-                                                                                .textTheme
-                                                                                .bodyMedium,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      programViewViewModel.customChecked[
-                                                                      index]
-                                                                          ? SizedBox(
-                                                                        width:
-                                                                        150,
-                                                                        child:
-                                                                        TextFormField(
-                                                                          //focusNode: _focusNodes[0],
-                                                                          controller:
-                                                                          programViewViewModel.groupControllers[index].tel,
-                                                                          onTap:
-                                                                              () {},
-                                                                          onChanged: (value){
-                                                                            programViewViewModel.handleTextFieldChange(value);
-                                                                          },
-                                                                          keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                          textInputAction:TextInputAction.done,
-                                                                          inputFormatters: <TextInputFormatter>[
-                                                                            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                          ],
-                                                                          decoration:
-                                                                          InputDecoration(
-                                                                            hintText: '  Fees',
-                                                                            contentPadding: const EdgeInsets.all(15),
-                                                                            border: OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                            focusedBorder: OutlineInputBorder(
-                                                                              borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                            ),
-                                                                            prefixIcon: Container(
-                                                                                decoration: BoxDecoration(color: programViewViewModel.focusNodes[0].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.all(15),
-                                                                                  child: Text(
-                                                                                    '₹/M',
-                                                                                    style: TextStyle(color: programViewViewModel.focusNodes[0].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                        ),
-                                                                      )
-                                                                          : Container(),
-                                                                    ]),
-                                                              );
-                                                            }),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        programViewViewModel.groupControllers.length ==
-                                                            0
-                                                            ? Container()
-                                                            : Container(
-                                                          padding: const EdgeInsets.all(0),
-                                                          decoration:
-                                                          BoxDecoration(border: Border.all(width: 1,
-                                                              color: const Color.fromARGB(255, 224, 223, 223)),
-                                                            borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                                          ),
-                                                          child:
-                                                          ExpansionTile(
-                                                            title: const Text('Registration Fee',
-                                                              style: TextStyle(fontStyle: FontStyle.normal,
-                                                                fontWeight: FontWeight.w500,
-                                                                fontSize: 17,
-                                                                color: Colors.black,
-                                                              ),
-                                                            ),
-                                                            trailing:
-                                                            const Icon(Icons.arrow_drop_down,
-                                                              color: Colors.black,
-                                                            ),
-                                                            children: <Widget>[
-                                                              ListView.builder(
-                                                                  shrinkWrap: true,
-                                                                  itemCount: programViewViewModel.groupControllers.length,
-                                                                  itemBuilder: (context, index) {
-                                                                    String checkboxNmae = programViewViewModel.groupControllers[index].name.text.toString();
-                                                                    return programViewViewModel.customChecked[index]
-                                                                        ? Padding(padding: const EdgeInsets.only(bottom: 10),
-                                                                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-                                                                        Row(
-                                                                          children: [
-                                                                            Checkbox(
-                                                                              checkColor: Colors.white,
-                                                                              activeColor: Theme.of(context).primaryColor,
-                                                                              value: programViewViewModel.customChecked2[index],
-                                                                              onChanged: (value) {
-                                                                                print(value);
-                                                                                programViewViewModel.togglebycustom2(index);
-                                                                                programViewViewModel.handleTextFieldChange('');
-
-                                                                              },
-                                                                            ),
-                                                                            Text(
-                                                                              programViewViewModel.groupControllers[index].name.text.toString(),
-                                                                              style: Theme.of(context).textTheme.bodyMedium,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        programViewViewModel.customChecked2[index]
-                                                                            ? SizedBox(
-                                                                          width: 150,
-                                                                          child: TextFormField(
-                                                                            //  focusNode: _focusNodes[4],
-                                                                            controller: programViewViewModel.groupControllers2[index].name,
-                                                                            onTap: () {},
-                                                                            onChanged:(value){
-                                                                              programViewViewModel.handleTextFieldChange(value);
-                                                                            },
-                                                                            // programViewViewModel.handleTextFieldChange(value);
-                                                                            keyboardType:  const TextInputType.numberWithOptions(signed: false,decimal: true),
-                                                                            textInputAction:TextInputAction.done,
-                                                                            inputFormatters: <TextInputFormatter>[
-                                                                              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                                                                            ],
-                                                                            decoration: InputDecoration(
-                                                                              hintText: '  Fees',
-                                                                              contentPadding: const EdgeInsets.all(15),
-                                                                              border: OutlineInputBorder(
-                                                                                borderRadius: BorderRadius.circular(10),
-                                                                              ),
-                                                                              focusedBorder: OutlineInputBorder(
-                                                                                borderSide: const BorderSide(color: Colors.blue, width: 1.0),
-                                                                                borderRadius: BorderRadius.circular(10),
-                                                                              ),
-                                                                              prefixIcon: Container(
-                                                                                  decoration: BoxDecoration(color: programViewViewModel.focusNodes[4].hasFocus ? const Color.fromARGB(255, 4, 112, 201) : const Color.fromARGB(255, 193, 193, 193), borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.all(15),
-                                                                                    child: Text(
-                                                                                      '₹/M',
-                                                                                      style: TextStyle(color: programViewViewModel.focusNodes[4].hasFocus ? Colors.white : const Color.fromARGB(255, 44, 44, 44)),
-                                                                                    ),
-                                                                                  )),
-                                                                            ),
-                                                                          ),
-                                                                        )
-                                                                            : Container(),
-                                                                      ]),
-                                                                    )
-                                                                        : Container();
-                                                                  }),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                            onExpansionChanged:
-                                                                (bool
-                                                            expanded) {
-                                                              programViewViewModel.customTileExpanded;
-                                                            },
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        RoundButton(
-                                                          loading: false,
-                                                          title: 'Create Your Custom Program',
-                                                          textColor: Colors.black,
-                                                          rounded: true,
-                                                          color: Theme.of(context)
-                                                              .primaryColor
-                                                              .withOpacity(0.2),
-                                                          onPress: () {
-                                                            customProgram(context);
-                                                          },
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount: 1,
-                                                            itemBuilder:
-                                                                (context, index) {
-                                                              //by custom
-                                                              final customProgramList =
-                                                              List.generate(programViewViewModel.groupControllers.length, (index) {
-                                                                return {
-                                                                  "program_name": programViewViewModel.groupControllers[index].name.text,
-                                                                  "amount": programViewViewModel.groupControllers[index].tel.text.isEmpty ? '0' : programViewViewModel.groupControllers[index].tel.text,
-                                                                  "registrationfee": programViewViewModel.groupControllers2[index].name.text.isEmpty ? '0' : programViewViewModel.groupControllers2[index].name.text
-                                                                };
-                                                              });
-                                                              data = {
-                                                                "service_uid": value.dataList.data!.data![0].serviceUid.toString(),
-                                                                "name": "By Custom",
-                                                                "custom": true,
-                                                                "programs": customProgramList
-                                                              };
-                                                            }),
-                                                      ],
+                                                    RoundButton(
+                                                      loading: false,
+                                                      title: 'Create Your Custom Program',
+                                                      textColor: Colors.black,
+                                                      rounded: true,
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.2),
+                                                      onPress: () {
+                                                        customProgram(context);
+                                                      },
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ]));
-                              case Status.error:
-                                return const Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: 1,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          //by custom
+                                                          final customProgramList =
+                                                          List.generate(programViewViewModel.groupControllers.length, (index) {
+                                                            return {
+                                                              "program_name": programViewViewModel.groupControllers[index].name.text,
+                                                              "amount": programViewViewModel.groupControllers[index].tel.text.isEmpty ? '0' : programViewViewModel.groupControllers[index].tel.text,
+                                                              "registrationfee": programViewViewModel.groupControllers2[index].name.text.isEmpty ? '0' : programViewViewModel.groupControllers2[index].name.text
+                                                            };
+                                                          });
+                                                          data = {
+                                                            "service_uid": value.dataList.data!.data![0].serviceUid.toString(),
+                                                            "name": "By Custom",
+                                                            "custom": true,
+                                                            "programs": customProgramList
+                                                          };
+                                                        }),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ]));
+                          case Status.error:
+                            return const Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
 
-                                        NoData()
-                                      ],
-                                    ));
-                            }
-                          }),
-                        ),
-                        ValueListenableBuilder<bool>(
-                          valueListenable: programViewViewModel.isContinueButtonEnabled,
-                          builder: (context, isContinueButtonEnabled, _) {
-                            return RoundButton(
-                              loading: false,
-                              title: AppLocale.conts.getString(context),
-                              textColor: Colors.white,
-                              rounded: true,
-                              color: isContinueButtonEnabled ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
-                              onPress: () async {
-                                print(data);
-                                // programViewViewModel.isContinueButtonEnabled ?
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                /// open modal
-                                registration.programPost(data, context);
-                                openModal(context , serviceName);
+                                    NoData()
+                                  ],
+                                ));
+                        }
+                      }),
+                    ),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: programViewViewModel.isContinueButtonEnabled,
+                      builder: (context, isContinueButtonEnabled, _) {
+                        return RoundButton(
+                          loading: false,
+                          title: AppLocale.conts.getString(context),
+                          textColor: Colors.white,
+                          rounded: true,
+                          color: isContinueButtonEnabled ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+                          onPress: () async {
+                            print(data);
+                            // programViewViewModel.isContinueButtonEnabled ?
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            /// open modal
+                            registration.programPost(data, context);
+                            openModal(context , serviceName);
 
-                                //     :null;
-                              },
-                            );
+                            //     :null;
                           },
-                        )
+                        );
+                      },
+                    )
 
 
-                        // RoundButton(
-                        //   loading: false,
-                        //   title: AppLocale.conts.getString(context),
-                        //   textColor: Colors.white,
-                        //   rounded: true,
-                        //   color: Theme.of(context).primaryColor,
-                        //   onPress: () async {
-                        //     print("data is");
-                        //     print(data);
-                        //     registration.programPost(data, context);
-                        //   },
-                        // ),
-                      ]),
-                ),
-              ),
-            )));
+                    // RoundButton(
+                    //   loading: false,
+                    //   title: AppLocale.conts.getString(context),
+                    //   textColor: Colors.white,
+                    //   rounded: true,
+                    //   color: Theme.of(context).primaryColor,
+                    //   onPress: () async {
+                    //     print("data is");
+                    //     print(data);
+                    //     registration.programPost(data, context);
+                    //   },
+                    // ),
+                  ]),
+            ),
+          ),
+        ));
   }
 
   //add custom program
@@ -1966,21 +1960,21 @@ void openModal(BuildContext context , String service_name) {
     builder: (BuildContext context) {
       return Center(
         child: AlertDialog(
-          title: Center(child: Text('Confirmation')),
+          title: Center(child: Text(AppLocale.confirmationText.getString(context),),),
           content:  Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Program Setup Completed For $service_name',style: TextStyle(
+              Text('${AppLocale.programSetup.getString(context)} $service_name',style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: Colors.grey
               ),),
               SizedBox(height: 5),
-              Text('To complete setup for additional services, visit',style: TextStyle(
+              Text(AppLocale.programSetupAdditional.getString(context),style: TextStyle(
                   fontSize: 12
               ),),
               SizedBox(height: 5),
-              Text('"Academy Management"',style: TextStyle(
+              Text(AppLocale.academyManagement.getString(context),style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500
               ),)

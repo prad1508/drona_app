@@ -92,8 +92,8 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Profile Picture',
+                           Text(
+                            AppLocale.profilePicture.getString(context),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                         child: TextButton(
                           onPressed: openCamera,
                           child: Text(
-                            'Camera',
+                          AppLocale.camera.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -134,7 +134,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                         child: TextButton(
                           onPressed: openGallery,
                           child: Text(
-                            'Gallery',
+                            AppLocale.gallery.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -237,7 +237,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: const Text('Academy Details',
+          title:  Text(AppLocale.academyDetails.getString(context),
               style: TextStyle(color: Colors.black, fontSize: 18)),
           elevation: 0,
         ),
@@ -390,7 +390,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                       height: 15,
                                     ),
                                     Text(
-                                      "Academy Name", style: TextStyle(
+                                      AppLocale.academyName.getString(context), style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
                                         fontStyle: FontStyle.normal,
@@ -414,7 +414,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 16,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: 'Abc Academy',
+                                          hintText: '${AppLocale.eg.getString(context)}. Abc Academy',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -431,7 +431,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Register Number",
+                                      AppLocale.registerNumber.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -497,7 +497,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Alternate Number",
+                                      AppLocale.registerAlternateNumber.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -523,7 +523,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             height: 2),
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
-                                          hintText: 'e.g 987654253',
+                                          hintText: '${AppLocale.eg.getString(context)}. 987654253',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -540,7 +540,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Email Id",
+                                      AppLocale.emailId.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -582,7 +582,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Website",
+                                      AppLocale.website.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -628,7 +628,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                           .spaceBetween,
                                       children: [
                                         Text(
-                                          "Location",
+                                          AppLocale.location.getString(context),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontFamily: 'Loto',
@@ -670,7 +670,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: 'House no. 745, sector 13',
+                                          hintText: '${AppLocale.eg.getString(context)} House no. 745, sector 13',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -701,7 +701,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: ' State',
+                                          hintText:  AppLocale.state.getString(context),
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -732,7 +732,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: 'City',
+                                          hintText:  AppLocale.city.getString(context),
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -763,7 +763,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             fontSize: 14,
                                             height: 2),
                                         decoration: InputDecoration(
-                                          hintText: '160102',
+                                          hintText: '${AppLocale.eg.getString(context)} 160102',
                                           hintStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
@@ -780,7 +780,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Choose Your Business Category",
+                                      AppLocale.title11.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -826,7 +826,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Academy Time",
+                                      "${AppLocale.academy.getString(context)} ${AppLocale.time.getString(context)}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -977,7 +977,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                     // ),
                                     SizedBox(height: 16),
                                     Text(
-                                      "Working Days",
+                                      AppLocale.workingDays.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -1025,7 +1025,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
 
                                     SizedBox(height: 16),
                                     Text(
-                                      "Academy Joining Date",
+                                      AppLocale.academyJoiningDate.getString(context),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Loto',
@@ -1087,33 +1087,33 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                           onPressed: () async {
                                             if(academyName.text.isEmpty)
                                             {
-                                              Utils.flushBarErrorMessage("Please enter academy name", context);
+                                              Utils.flushBarErrorMessage(AppLocale.fillAcademyName.getString(context), context);
                                             }
                                             else if (address.text.isEmpty) {
-                                              Utils.flushBarErrorMessage("Please enter address", context);
+                                              Utils.flushBarErrorMessage(AppLocale.fillAddressError.getString(context), context);
                                             }
                                             else if (AlternateNumber.text.isEmpty && AlternateNumber.text.trim().length !=10) {
-                                              Utils.flushBarErrorMessage("Please enter alternate number ", context);
+                                              Utils.flushBarErrorMessage(AppLocale.enterAlternateNumber.getString(context), context);
                                             }
                                             if (email.text.isEmpty) {
-                                              Utils.flushBarErrorMessage("Please enter email", context);
+                                              Utils.flushBarErrorMessage(AppLocale.enterEmail.getString(context), context);
                                             } else if (!_isValidEmail(email.text)) {
-                                              Utils.flushBarErrorMessage("Please enter a valid email", context);
+                                              Utils.flushBarErrorMessage(AppLocale.enterValidEmail.getString(context), context);
                                             }
                                             if (website.text.isEmpty) {
-                                              Utils.flushBarErrorMessage("Please enter website", context);
+                                              Utils.flushBarErrorMessage(AppLocale.enterWebsite.getString(context), context);
                                             } else if (!_isValidWebsite(website.text)) {
-                                              Utils.flushBarErrorMessage("Please enter a valid website URL", context);
+                                              Utils.flushBarErrorMessage(AppLocale.enterValidWebsite.getString(context), context);
                                             }
                                             else if (city.text.isEmpty) {
-                                              Utils.flushBarErrorMessage("Please enter city", context);
+                                              Utils.flushBarErrorMessage(AppLocale.fillCityError.getString(context), context);
                                             }
                                             else if (state.text.isEmpty){
-                                              Utils.flushBarErrorMessage("Please enter state", context);
+                                              Utils.flushBarErrorMessage(AppLocale.fillStateError.getString(context), context);
                                             }
                                             else if (pincode.text.isEmpty)
                                             {
-                                              Utils.flushBarErrorMessage("Please enter pincode", context);
+                                              Utils.flushBarErrorMessage(AppLocale.fillPinCodeError.getString(context), context);
                                             }
                                             else {
                                               /// change academy name from shared pref
@@ -1150,8 +1150,8 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                             // working_days
 
                                           },
-                                          child: const Text(
-                                            "Submit",
+                                          child:  Text(
+                                            AppLocale.submit.getString(context),
                                             style: TextStyle(fontSize: 15,
                                                 fontFamily: 'Lato'),
                                           )),
@@ -1295,7 +1295,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          'Address: ${value
+                                                          '${AppLocale.address.getString(context)}: ${value
                                                               .dataList.data
                                                               ?.postOffice?[index]
                                                               .name}',
@@ -1303,7 +1303,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                               fontSize: 14),
                                                         ),
                                                         Text(
-                                                          ', City: ${value
+                                                          ', ${AppLocale.city.getString(context)}: ${value
                                                               .dataList.data
                                                               ?.postOffice?[index]
                                                               .block},',
@@ -1315,7 +1315,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          'State: ${value
+                                                          '${AppLocale.state.getString(context)}: ${value
                                                               .dataList.data
                                                               ?.postOffice?[index]
                                                               .state}',
@@ -1338,7 +1338,7 @@ class _Edit_Academy_DetailState extends State<Edit_Academy_Detail> {
                                               ),
                                             )),
                                   )
-                                      : Text('Data Not Found'),
+                                      : Text( AppLocale.noData.getString(context),),
                                 );
                             }
 

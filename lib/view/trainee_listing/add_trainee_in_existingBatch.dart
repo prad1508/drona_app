@@ -287,17 +287,18 @@ class _AddTrainneInExisitingBatchState
                     validationDebounce: const Duration(milliseconds: 100),
                     validator: Validation().isPhoneField,
                     keyboardType: TextInputType.phone,
-                    hintText: 'eg. 9876521233',
-                    isValidatingMessage: 'Enter a valid 10 digit mobile number',
-                    valueIsInvalidMessage:
-                        'Enter a valid 10 digit mobile number'),
+                    hintText: '${AppLocale.eg.getString(context)}. 9876521233',
+                    isValidatingMessage: AppLocale.valid10digitError.getString(context),
+                    valueIsInvalidMessage: AppLocale.valid10digitError.getString(context),
+                    valueIsEmptyMessage: AppLocale.valueIsEmptyMessage.getString(context),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Full Name",
+                    AppLocale.fullName.getString(context),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -307,7 +308,7 @@ class _AddTrainneInExisitingBatchState
                 TextFormField(
                   controller: coachName,
                   decoration: InputDecoration(
-                    hintText: 'eg. Rakesh Bansal',
+                    hintText: '${AppLocale.eg.getString(context)}. Rakesh Bansal',
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -331,7 +332,7 @@ class _AddTrainneInExisitingBatchState
                 const SizedBox(
                   height: 10,
                 ),
-                DateOfBirth(controller: dob, hintText: "e.g 01/01/2023"),
+                DateOfBirth(controller: dob, hintText: "${AppLocale.eg.getString(context)} 01/01/2023"),
                 const SizedBox(
                   height: 15,
                 ),
@@ -343,7 +344,7 @@ class _AddTrainneInExisitingBatchState
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Service",
+                    AppLocale.serviceText.getString(context),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -382,7 +383,7 @@ class _AddTrainneInExisitingBatchState
                         }
                         return DropdownButton(
                             isExpanded: true,
-                            hint: const Text("Choose Service"),
+                            hint:  Text(AppLocale.chooseService.getString(context)),
                             underline:
                                 DropdownButtonHideUnderline(child: Container()),
                             value: selectedService,
@@ -401,7 +402,7 @@ class _AddTrainneInExisitingBatchState
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Batch",
+                    AppLocale.batches.getString(context),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -445,7 +446,7 @@ class _AddTrainneInExisitingBatchState
                         }
                         return DropdownButton(
                             isExpanded: true,
-                            hint: const Text("Choose Batch"),
+                            hint:  Text(AppLocale.selectBatch.getString(context)),
                             underline:
                                 DropdownButtonHideUnderline(child: Container()),
                             value: selectedService1,
@@ -482,8 +483,8 @@ class _AddTrainneInExisitingBatchState
                           ),
                         );
                       },
-                      child: const Text(
-                        "Edit Fees",
+                      child:  Text(
+                        AppLocale.editFee.getString(context),
                         style: TextStyle(
                           color: Color(
                             0xffFD685D,
@@ -500,7 +501,7 @@ class _AddTrainneInExisitingBatchState
                   // readOnly: true,
                   controller: salary,
                   decoration: InputDecoration(
-                    hintText: 'e.g. ₹200',
+                    hintText: '${AppLocale.eg.getString(context)}. ₹200',
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -531,7 +532,7 @@ class _AddTrainneInExisitingBatchState
                           const SizedBox(
                             height: 15,
                           ),
-                          DateOfjoining(controller: doj, hintText: 'Doj'),
+                          DateOfjoining(controller: doj, hintText: AppLocale.dOfj.getString(context)),
                         ],
                       ),
                     ),
@@ -542,7 +543,7 @@ class _AddTrainneInExisitingBatchState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Month of Billing",
+                              AppLocale.moB.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -551,7 +552,7 @@ class _AddTrainneInExisitingBatchState
                           ),
                           YearMonthPicker(
                               controller: monthofBilling,
-                              hintText: 'Month of Billing'),
+                              hintText: AppLocale.moB.getString(context)),
                         ],
                       ),
                     ),
@@ -570,12 +571,12 @@ class _AddTrainneInExisitingBatchState
                       // final SharedPreferences sp = await SharedPreferences.getInstance();
                       if (phone.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Fill Phone Number Name', context);
+                            AppLocale.fillPhoneError.getString(context), context);
                       } else if (coachName.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Fill Trainee Name', context);
+                            AppLocale.fillNameError.getString(context), context);
                       } else if (dob.text.isEmpty) {
-                        Utils.flushBarErrorMessage('Please Enter DOB', context);
+                        Utils.flushBarErrorMessage(AppLocale.fillDob.getString(context), context);
                       }
 
                       // else if (salary.text.isEmpty) {
@@ -584,14 +585,14 @@ class _AddTrainneInExisitingBatchState
                       // }
                       else if (doj.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Please Enter Date of Joining', context);
+                            AppLocale.enterDoj.getString(context), context);
                       } else if (monthofBilling.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Please Enter Month of Billing', context);
+                            AppLocale.moB.getString(context), context);
                       } else if (selectedService == null &&
                           selectedService != '') {
                         Utils.flushBarErrorMessage(
-                            'Please Select Service', context);
+                            AppLocale.selectService.getString(context), context);
                       } else {
                         Map<String, dynamic> data = {
                           "batch_uid": selectedService1.toString(),
@@ -612,7 +613,8 @@ class _AddTrainneInExisitingBatchState
                         traineeViewModel.fetchTraineeAddListApi(
                             data, context, "onboarding");
                       }
-                    }),
+                    },
+                ),
               ],
             ),
           ),
@@ -656,7 +658,7 @@ class FeeDialogState extends State<FeeDialog> {
               keyboardType: TextInputType.number,
               controller: _dialogSalaryController,
               decoration: InputDecoration(
-                hintText: "Enter Fees",
+                hintText: AppLocale.enterFees.getString(context),
                 contentPadding: const EdgeInsets.all(10),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
@@ -674,7 +676,7 @@ class FeeDialogState extends State<FeeDialog> {
                   onPressed: () {
                     Navigator.of(context).pop(); // Dismiss the dialog
                   },
-                  child: const Text('Cancel'),
+                  child:  Text(AppLocale.cancel.getString(context)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
@@ -683,7 +685,7 @@ class FeeDialogState extends State<FeeDialog> {
                       String enteredText = _dialogSalaryController.text;
                       if (enteredText.isEmpty || int.parse(enteredText) <= 0) {
                         Utils.flushBarErrorMessage(
-                            "Please enter valid fees", context);
+                            AppLocale.enterValidFees.getString(context), context);
                       } else {
                         widget.salaryController.text = enteredText;
                         widget.isSalarySet = false;
@@ -691,7 +693,7 @@ class FeeDialogState extends State<FeeDialog> {
                         setState(() {}); // Dismiss the dialog
                       }
                     },
-                    child: const Text('OK'),
+                    child:  Text(AppLocale.okay.getString(context)),
                   ),
                 ),
               ],

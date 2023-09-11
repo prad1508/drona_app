@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -110,7 +111,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
             ],
           ),
           title: Text(
-            'Create Session Details',
+            AppLocale.createSessionDetails.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -153,7 +154,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Schedule Batch',
+                                  AppLocale.scheduleBatch.getString(context),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
@@ -172,7 +173,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: DropdownButton(
                                     isExpanded: true,
-                                    hint: const Text("Select batch"),
+                                    hint:  Text(AppLocale.selectBatch.getString(context)),
                                     elevation: 1,
                                     dropdownColor:
                                     const Color.fromARGB(255, 255, 255, 255),
@@ -192,7 +193,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Online Session URL',
+                                  AppLocale.title22.getString(context),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
@@ -219,7 +220,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Date',
+                                  AppLocale.date.getString(context),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
@@ -247,7 +248,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Time',
+                                  AppLocale.time.getString(context),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
@@ -264,7 +265,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                         ..text = batchFromdata.toString(),
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        hintText: 'From',
+                                        hintText: AppLocale.fromText.getString(context),
                                         contentPadding: const EdgeInsets.all(10),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(5.0),
@@ -282,7 +283,7 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                                       controller: toBatch..text = batchTodata.toString(),
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        hintText: 'To',
+                                        hintText: AppLocale.toText.getString(context),
                                         contentPadding: const EdgeInsets.all(10),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(5.0),
@@ -301,20 +302,20 @@ class _SessionalDetailsState extends State<SessionalDetails> {
                               ),
                               RoundButton(
                                 loading: false,
-                                title: 'Create Session',
+                                title: AppLocale.createSession.getString(context),
                                 textColor: Colors.white,
                                 rounded: true,
                                 color: Theme.of(context).primaryColor,
                                 onPress: () {
                                   if (fromBatch.text.isEmpty) {
                                     Utils.flushBarErrorMessage(
-                                        'Please enter Time', context);
+                                        AppLocale.enterFromTime.getString(context), context);
                                   } else if (toBatch.text.isEmpty) {
                                     Utils.flushBarErrorMessage(
-                                        'Please enter Time', context);
+                                        AppLocale.enterToTime.getString(context), context);
                                   } else if (dateschedule.text.isEmpty) {
                                     Utils.flushBarErrorMessage(
-                                        'Please enter Date', context);
+                                        AppLocale.date.getString(context), context);
                                   } else {
                                     Map data = {
                                       "batch_uid": selectedService,

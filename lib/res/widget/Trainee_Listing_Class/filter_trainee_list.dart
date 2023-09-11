@@ -3,8 +3,10 @@
 import 'dart:convert';
 
 import 'package:drona/res/app_url.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,12 +78,12 @@ class _FilterState extends State<Filter> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 34, 0, 12),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Filters",
+              AppLocale.filters.getString(context),
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -92,12 +94,12 @@ class _FilterState extends State<Filter> {
         const SizedBox(
           height: 8,
         ),
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Select Batch",
+              AppLocale.selectBatch.getString(context),
               style: TextStyle(color: Color(0xff39404A), fontSize: 12),
             ),
           ),
@@ -108,8 +110,8 @@ class _FilterState extends State<Filter> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: DropdownButtonFormField(
-            hint: const Text(
-              "Select Batch",
+            hint: Text(
+              AppLocale.selectBatch.getString(context),
               style: TextStyle(color: Color(0xff23282E), fontSize: 14),
             ),
             items: [
@@ -149,7 +151,7 @@ class _FilterState extends State<Filter> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              "Trainee Status",
+              AppLocale.traineeStatus.getString(context),
               style: TextStyle(color: Color(0xff39404A), fontSize: 12),
             ),
           ),
@@ -167,8 +169,8 @@ class _FilterState extends State<Filter> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Active",
+                  title: Text(
+                    AppLocale.active.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13,
@@ -191,8 +193,8 @@ class _FilterState extends State<Filter> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Inactive",
+                  title: Text(
+                    AppLocale.inActive.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13,
@@ -217,8 +219,8 @@ class _FilterState extends State<Filter> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Unassigned",
+                  title: Text(
+                    AppLocale.unAssigned.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13,
@@ -245,7 +247,7 @@ class _FilterState extends State<Filter> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              "Onboard Status",
+              AppLocale.onboardStatus.getString(context),
               style: TextStyle(color: Color(0xff39404A), fontSize: 12),
             ),
           ),
@@ -263,8 +265,8 @@ class _FilterState extends State<Filter> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Onboarded",
+                  title: Text(
+                    AppLocale.onboarded.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13,
@@ -287,8 +289,8 @@ class _FilterState extends State<Filter> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Not Onboarded",
+                  title: Text(
+                    AppLocale.notOnboarded.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13,
@@ -324,8 +326,8 @@ class _FilterState extends State<Filter> {
                     widget.search("", "", "");
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Clear All',
+                  child: Text(
+                    AppLocale.clearAll.getString(context),
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontSize: 13,
@@ -335,7 +337,8 @@ class _FilterState extends State<Filter> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(150, 50),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8),
+                      ),
                       backgroundColor: Color(0xff2A62B8)),
                   onPressed: () {
                     // print("valuedrop==> ${dropValue!.serviceName.toString()}");
@@ -344,8 +347,8 @@ class _FilterState extends State<Filter> {
                         dropValue1!.batchName.toString(), _value, _value1);
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Apply',
+                  child: Text(
+                    AppLocale.apply.getString(context),
                     style: TextStyle(color: Color(0xffFBFBFC)),
                   ))
             ],

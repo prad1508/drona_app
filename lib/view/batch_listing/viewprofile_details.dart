@@ -1,9 +1,11 @@
 import 'package:drona/data/response/status.dart';
 import 'package:drona/res/app_url.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/utils/no_data.dart';
 import 'package:drona/view/batch_listing/editprofile_details.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +58,7 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'View Trainee Profile',
+          AppLocale.title27.getString(context),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         actions: [
@@ -140,7 +142,7 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                         borderRadius: BorderRadius.circular(5)),
                                     child: Text(
                                       value.dataList.data!.data[widget.index]
-                                          .status == 'active'?'Active':'Not Active',
+                                          .status == 'active'?AppLocale.active.getString(context):AppLocale.inActive.getString(context),
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 11),
                                     ),
@@ -168,8 +170,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                         value.dataList.data!.data[widget.index]
                                             .gender ==
                                             'male'
-                                            ? 'Male'
-                                            : 'Female',
+                                            ? AppLocale.male.getString(context)
+                                            : AppLocale.female.getString(context),
                                         style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
@@ -199,9 +201,9 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                   const Padding(
                                       padding: EdgeInsets.only(top: 5)),
                                   Row(children: [
-                                    const Text(
-                                      "Fees : ",
-                                      style: TextStyle(fontSize: 12),
+                                     Text(
+                                      "${AppLocale.fee.getString(context)} : ",
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                     Text(
                                         '₹${value.dataList.data!.data[widget.index].fees.toString()}',
@@ -232,8 +234,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                           value.dataList.data!.data[widget.index]
                                               .join_status ==
                                               'not_onboarded'
-                                              ? 'Not Onboarded'
-                                              : 'Onboarded',
+                                              ? AppLocale.notOnboarded.getString(context)
+                                              : AppLocale.onboarded.getString(context),
                                           style: TextStyle(
                                               color: value
                                                   .dataList
@@ -281,8 +283,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Phone Number",
+                               Text(
+                                 AppLocale.phoneNumber.getString(context),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'Lato',
@@ -300,7 +302,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     keyboardType: TextInputType.number,
                                     readOnly: true,
                                     decoration: InputDecoration(
-                                      hintText: '+91-999 999 9999',
+                                      hintText: '+${value.dataList.data!
+                                          .data[widget.index].traineeUserid}',
                                       hintStyle: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -319,8 +322,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     ),
                                   )),
                               const SizedBox(height: 15),
-                              const Text(
-                                "Full Name",
+                               Text(
+                                AppLocale.fullName.getString(context),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'Lato',
@@ -354,8 +357,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                       fillColor: Colors.grey[200],),
                                   )),
                               const SizedBox(height: 15),
-                              const Text(
-                                "Date Of Birth",
+                               Text(
+                                AppLocale.dob.getString(context),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'Lato',
@@ -402,8 +405,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 10),
-                                      const Text(
-                                        "Date Of Joining",
+                                       Text(
+                                        AppLocale.doj.getString(context),
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontFamily: 'Lato',
@@ -455,8 +458,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 10),
-                                      const Text(
-                                        "Month Of Billing",
+                                       Text(
+                                         AppLocale.moB.getString(context),
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontFamily: 'Lato',
@@ -505,8 +508,8 @@ class _ViewProfileDetailsState extends State<ViewProfileDetails> {
                                 ],
                               ),
                               const SizedBox(height: 15),
-                              const Text(
-                                "Fee",
+                               Text(
+                                 AppLocale.fee.getString(context),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'Lato',

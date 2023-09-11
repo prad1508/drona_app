@@ -2,11 +2,13 @@
 
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/academy/academy_setting.dart';
 import 'package:drona/view/academy/bank_detail.dart';
 import 'package:drona/view_model/bankdetails_view_model.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -196,7 +198,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
               iconTheme: IconThemeData(color: Colors.black),
               centerTitle: true,
               backgroundColor: Colors.white,
-              title: const Text('Bank Details',
+              title:  Text(AppLocale.bankDetails.getString(context),
                   style: TextStyle(color: Colors.black, fontSize: 18)),
               elevation: 0,
             ),
@@ -242,7 +244,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Academy Name As Per Bank",
+                                    AppLocale.academyNameAsPerBank.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -287,7 +289,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy Bank Name",
+                                    AppLocale.academyBankName.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -332,7 +334,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy Bank Account No",
+                                    AppLocale.academyBankAc.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -378,7 +380,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy IFSC",
+                                    AppLocale.academyIfsc.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -423,7 +425,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy Bank Branch Address",
+                                    AppLocale.academyBankBranchAdd.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -467,7 +469,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy Google Pay No",
+                                    AppLocale.academyGpay.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -512,7 +514,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy Paytm No",
+                                    AppLocale.academyPaytm.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -559,7 +561,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                   ),
                                   SizedBox(height: 16),
                                   Text(
-                                    "Academy UPI No",
+                                    AppLocale.academyUPI.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Loto',
@@ -656,7 +658,7 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                                   child: TextButton(
                                                       onPressed: () {},
                                                       child: Text(
-                                                        "View File",
+                                                        AppLocale.viewFile.getString(context),
                                                         style: TextStyle(
                                                             color: Color(0xff626D7E),
                                                             fontSize: 12,
@@ -725,8 +727,8 @@ class _Edit_Bank_DetailsState extends State<Edit_Bank_Details> {
                                                 transition: Transition
                                                     .rightToLeft);*/
                                         },
-                                        child: const Text(
-                                          "Submit",
+                                        child:  Text(
+                                          AppLocale.submit.getString(context),
                                           style:
                                           TextStyle(fontSize: 15, fontFamily: 'Lato'),
                                         )),

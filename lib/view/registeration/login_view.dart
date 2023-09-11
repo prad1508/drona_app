@@ -1,7 +1,9 @@
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/registeration/registration.dart';
 import 'package:drona/view/registeration/reset_password.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -82,9 +84,9 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(
                 height: 60,
               ),
-              const Center(
+               Center(
                 child: Text(
-                  "Login",
+                  AppLocale.login.getString(context),
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -94,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Phone",
+                  AppLocale.phoneNumber.getString(context),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -129,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Password",
+                  AppLocale.password.getString(context),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -188,7 +190,7 @@ class _LoginViewState extends State<LoginView> {
                         },
                       ),
                       Text(
-                        "Save Credential",
+                        AppLocale.saveCredential.getString(context),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -202,7 +204,7 @@ class _LoginViewState extends State<LoginView> {
 
                     },
                     child: Text(
-                      "Forgot password?",
+                      AppLocale.forgotPassword.getString(context),
                       style: TextStyle(
                           fontSize: 14, color: Theme.of(context).primaryColor),
                     ),
@@ -213,20 +215,20 @@ class _LoginViewState extends State<LoginView> {
                 height: 21.5,
               ),
               RoundButton(
-                title: 'Login',
+                title: AppLocale.login.getString(context),
                 loading: authViewMode.loading,
                 rounded: true,
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).scaffoldBackgroundColor,
                 onPress: () {
                   if (_phoneController.text.isEmpty) {
-                    Utils.flushBarErrorMessage('Please Enter 10 Digit Mobile Number', context);
+                    Utils.flushBarErrorMessage(AppLocale.valid10digitError.getString(context), context);
                   } else if (_passwordController.text.isEmpty) {
                     Utils.flushBarErrorMessage(
-                        'Please Enter Password', context);
+                        AppLocale.enterPassword.getString(context), context);
                   } else if (_passwordController.text.length < 6) {
                     Utils.flushBarErrorMessage(
-                        'Please Enter 6 Digit Password', context);
+                        AppLocale.enter6Password.getString(context), context);
                   } else {
                     Map<String, String> data = {
                       'userid': _phoneController.text,
@@ -248,7 +250,7 @@ class _LoginViewState extends State<LoginView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't Have An Account?"),
+                       Text(AppLocale.doNtHaveAccount.getString(context)),
                       TextButton(
                         style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(0)),
@@ -257,7 +259,7 @@ class _LoginViewState extends State<LoginView> {
                           Get.to(() => const Registration(),transition: Transition.rightToLeft);
                         },
                         child: Text(
-                          "Signup",
+                          AppLocale.signup.getString(context),
                           style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).primaryColor),

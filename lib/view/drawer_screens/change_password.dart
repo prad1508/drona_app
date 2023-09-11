@@ -1,5 +1,7 @@
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/registeration/reset_password.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../res/widget/round_button.dart';
@@ -46,8 +48,8 @@ class _ChangePasswordState extends State<ChangePassword> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text(
-            'Change Password',
+          title:  Text(
+            AppLocale.changePassword.getString(context),
             style: TextStyle(fontSize: 18),
           ),
           centerTitle: true,
@@ -68,10 +70,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Align(
+                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Enter Old Password',
+                        AppLocale.enterOldPassword.getString(context),
                         style:
                             TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
                       ),
@@ -101,10 +103,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 10)),
-                    const Align(
+                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Enter New Password',
+                        AppLocale.enterNewPassword.getString(context),
                         style:
                             TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
                       ),
@@ -139,7 +141,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     RoundButton(
                         loading: false,
-                        title: 'Submit',
+                        title:AppLocale.confirm.getString(context),
                         textColor: Colors.white,
                         rounded: true,
                         color: Theme.of(context).primaryColor,
@@ -148,7 +150,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           if (oldpass.text.length>=6 && newpass.text.length>=6) {
                             setnewPassword.confirmnewPassword(newpass.text,oldpass.text, context);
                           } else {
-                            Utils.flushBarErrorMessage('Please Enter Correct Password', context);
+                            Utils.flushBarErrorMessage(AppLocale.enterCorrectPassword.getString(context), context);
                           }
                         }),
 
@@ -168,7 +170,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             Get.to(const ResetPassword());
                           },
                           child: Text(
-                            "Forgot Password",
+                              AppLocale.forgotPassword.getString(context),
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor),
                           )),

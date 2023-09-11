@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/academy/view_payment_invoice.dart';
 import 'package:drona/view_model/billing_invoice_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -138,7 +140,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Billing & Invoices',
+        title:  Text(AppLocale.billing$invoice.getString(context),
             style: TextStyle(color: Colors.black, fontSize: 18)),
         elevation: 0,
       ),
@@ -168,7 +170,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Billing Detail",
+                                  AppLocale.billingDetail.getString(context),
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -201,7 +203,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Billing Cycle",
+                                  AppLocale.billingCycle.getString(context),
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
@@ -215,7 +217,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                       borderRadius: BorderRadius.circular(8)),
                                   width: 114,
                                   height: 35,
-                                  child: Center(child: Text("Monthly"))
+                                  child: Center(child: Text(AppLocale.monthly.getString(context)))
                                   /*DropdownButtonHideUnderline(
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -244,7 +246,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Billing Day",
+                                  AppLocale.billingDay.getString(context),
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
@@ -258,7 +260,10 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                       border:
                                           Border.all(color: Color(0xffDFE1E4)),
                                       borderRadius: BorderRadius.circular(8)),
-                                  child: Center(child: Text("${value.dataList.data!.billingDate} of Every Month"),)
+                                  child: Center(child: Text(
+                                  AppLocale.title30.getString(context).trParams({"key":value.dataList.data!.billingDate},
+                                  )
+                                  ),)
                                  /* DropdownButtonHideUnderline(
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -346,7 +351,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Invoice Generated",
+                                    AppLocale.invoiceGenerated.getString(context),
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
@@ -372,7 +377,8 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                                   color: Color(0xff39404A)),
                                             ),
                                             Text(
-                                              "Generated on ${value.dataList.data!.data[index].createDd}-${value.dataList.data!.data[index].createMm}-${value.dataList.data!.data[index].createYy}",
+                                             // " ",
+                                             AppLocale.generatedOn.getString(context).trParams({"key":"${value.dataList.data!.data[index].createDd}-${value.dataList.data!.data[index].createMm}-${value.dataList.data!.data[index].createYy}"}),
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
@@ -387,7 +393,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                                           children:  [
                                             Text(
 
-                                              "${value.dataList.data!.data[index].totalTrainee} Trainee",
+                                              "${value.dataList.data!.data[index].totalTrainee} ${AppLocale.trainee.getString(context)}",
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
@@ -460,7 +466,7 @@ class _Billing_And_InvoiceState extends State<Billing_And_Invoice> {
                     ],
                   );
                 case Status.error:
-                  return Center(child: Text("No Data Found"));
+                  return Center(child: Text(AppLocale.noData.getString(context)));
               }
             },
           ),

@@ -4,12 +4,14 @@ import 'package:drona/res/widget/customradio.dart';
 import 'package:drona/view/batch_listing/trainee_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/response/status.dart';
 import '../../res/app_url.dart';
+import '../../res/language/language.dart';
 import '../../utils/utils.dart';
 import '../../view_model/trainee_view_model.dart';
 import '../../model/trainee_list_model.dart';
@@ -65,7 +67,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Deactivate',
+        title:  Text(
+            AppLocale.deactivate.getString(context),
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -141,8 +144,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                           widget.traineeList[widget.index]
                                                       .join_status ==
                                                   "not_onboarded"
-                                              ? "Not Onboarded"
-                                              : "Onboarded",
+                                              ? AppLocale.notOnboarded.getString(context)
+                                              : AppLocale.onboarded.getString(context),
                                           style: TextStyle(
                                               color: widget
                                                           .traineeList[
@@ -254,7 +257,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                         ),
                                         SizedBox(height: 4),
                                         Text(
-                                          "Due on ${widget.traineeList[widget.index].monthOfBilling}",
+                                          //"Due on ${widget.traineeList[widget.index].monthOfBilling}",
+                                          AppLocale.dueOn.getString(context).trParams({"key":widget.traineeList[widget.index].monthOfBilling}),
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontFamily: 'Lato',
@@ -278,7 +282,7 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Will The Due Amount Be Paid?',
+                                    AppLocale.dueAmountPaid.getString(context),
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Lato',
@@ -318,7 +322,7 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Deactivation Date',
+                                    AppLocale.deactivationDate.getString(context),
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Lato',
@@ -339,7 +343,7 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                         Icons.calendar_month,
                                         size: 30.0,
                                       ),
-                                      hintText: '01-01-2023',
+                                      hintText: '${AppLocale.eg.getString(context)}. 01-01-2023',
                                       contentPadding: const EdgeInsets.all(5),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(5.0),
@@ -399,7 +403,7 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                                     ),
                                                   ),
                                                   title: Text(
-                                                    "Deactivate",
+                                                    AppLocale.deactivate.getString(context),
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 17,
@@ -413,7 +417,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                                         width: 300,
                                                         height: 60,
                                                         child: Text(
-                                                          "Please Confirm Deactivation Of\n ${widget.traineeList[widget.index].traineeName}!",
+                                                          //"Please Confirm Deactivation Of\n ${widget.traineeList[widget.index].traineeName}!",
+                                                          AppLocale.deactivationConfirmation.getString(context).trParams({"key":widget.traineeList[widget.index].traineeName}),
                                                           style: TextStyle(
                                                               color: Color(0xff626D7E),
                                                               fontSize: 16,
@@ -440,8 +445,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                                           onPressed: () {
                                                             Navigator.pop(context);
                                                           },
-                                                          child: const Text(
-                                                            "Cancel",
+                                                          child:  Text(
+                                                            AppLocale.cancel.getString(context),
                                                             style: TextStyle(
                                                                 color: Color(0xff23282E),
                                                                 fontSize: 15,
@@ -487,8 +492,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                                             });
                                                           }
                                                             },
-                                                          child: const Text(
-                                                            "Confirm",
+                                                          child:  Text(
+                                                            AppLocale.confirm.getString(context),
                                                             style: TextStyle(
                                                                 color: Color(0xffFBFBFC),
                                                                 fontSize: 15,
@@ -501,8 +506,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                                               );
                                             });
                                       },
-                                      child: const Text(
-                                        "Submit",
+                                      child:  Text(
+                                        AppLocale.submit.getString(context),
                                         style: TextStyle(fontSize: 15, fontFamily: 'Lato'),
                                       )),
                                 ),
@@ -513,7 +518,8 @@ class _Deactivate_PageState extends State<Deactivate_Page> {
                       ]);
 
                 case Status.error:
-                  return Center(child: Text("No Data Found"));
+                  return Center(child: Text(AppLocale.noData.getString(context),
+                  ));
               }
             },
           ),

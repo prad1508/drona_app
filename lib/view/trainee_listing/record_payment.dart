@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/res/widget/customradio.dart';
 import 'package:drona/utils/utils.dart';
 import 'package:drona/view/trainee_listing/add_trainee_list.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -106,8 +108,8 @@ class _RecordPaymentState extends State<RecordPayment> {
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Record A Payment',
+        title:  Text(
+          AppLocale.recordPayment.getString(context),
           style: TextStyle(
               color: Colors.black,
               fontSize: 18,
@@ -182,8 +184,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   child:
                                   widget.traineeList[widget.index].status ==
                                       "active"
-                                      ? const Text(
-                                    "Active",
+                                      ?  Text(
+                                      AppLocale.active.getString(context),
+
                                     style: TextStyle(
                                       color: Color(0xffFBFBFC),
                                       fontSize: 10,
@@ -191,8 +194,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   )
-                                      : const Text(
-                                    "Inactive",
+                                      :  Text(
+                                    AppLocale.inActive.getString(context),
                                     style: TextStyle(
                                       color: Color(0xffFBFBFC),
                                       fontSize: 10,
@@ -238,8 +241,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   widget.traineeList[widget.index]
                                       .join_status ==
                                       'not_onboarded'
-                                      ? 'Not Onboarded'
-                                      : 'Onboarded',
+                                      ?AppLocale.notOnboarded.getString(context)
+                                      :AppLocale.onboarded.getString(context)
+                                  ,
                                   style: TextStyle(
                                       color: widget.traineeList[widget.index]
                                           .join_status ==
@@ -272,8 +276,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   child:
                                   widget.traineeList[widget.index].gender ==
                                       'male'
-                                      ? const Text(
-                                    "Male",
+                                      ?  Text(
+                                      AppLocale.male.getString(context)
+                                      ,
                                     style: TextStyle(
                                       color: Color(0xff39404A),
                                       fontSize: 12,
@@ -284,8 +289,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       : widget.traineeList[widget.index]
                                       .gender ==
                                       'female'
-                                      ? const Text(
-                                    "Female",
+                                      ?  Text(
+                                    AppLocale.female.getString(context),
+
                                     style: TextStyle(
                                       color: Color(0xff39404A),
                                       fontSize: 12,
@@ -293,8 +299,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                                       fontWeight: FontWeight.w400,
                                     ),
                                   )
-                                      : const Text(
-                                    "Others",
+                                      :  Text(
+                                    AppLocale.other.getString(context),
+
                                     style: TextStyle(
                                       color: Color(0xff39404A),
                                       fontSize: 12,
@@ -366,8 +373,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Text(
-                                        "Fee : ",
+                                       Text(
+                                        "${AppLocale.fee.getString(context)} : ",
                                         style: TextStyle(
                                           color: Color(0xff39404A),
                                           fontSize: 14,
@@ -423,7 +430,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Month of Billing",
+                      AppLocale.moB.getString(context),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -431,7 +438,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                   height: 10,
                 ),
                 YearMonthPicker(
-                    controller: dateOfBilling, hintText: 'Month of Billing'),
+                    controller: dateOfBilling, hintText:AppLocale.moB.getString(context),
+                ),
                 SizedBox(
                   height: 12,
                 ),
@@ -469,8 +477,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Total Fees",
+                         Text(
+                          AppLocale.totalFees.getString(context),
                           style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w700,
@@ -525,7 +533,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   },
                                 ),
                                 Text(
-                                  "MISC. Fee",
+                                  AppLocale.mISCFee.getString(context),
                                   style: TextStyle(
                                       color: Color(0xff39404A),
                                       fontSize: 15,
@@ -599,7 +607,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                   },
                                 ),
                                 Text(
-                                  "Concession",
+                                  AppLocale.concession.getString(context),
                                   style: TextStyle(
                                       color: Color(0xff39404A),
                                       fontSize: 15,
@@ -665,7 +673,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                 SizedBox(height: 20),
                 //Payment Mode;
                 Text(
-                  "Payment Through",
+                  AppLocale.paymentThrough.getString(context),
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
@@ -710,8 +718,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Date Of Transation",
+                         Text(
+                          AppLocale.dateOfTransaction.getString(context),
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -764,7 +772,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Fees Collected",
+                          AppLocale.feeCollected.getString(context),
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -825,9 +833,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                     )
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 //Payment Proof Uploder
-                Center(
+              /*  Center(
                   child: DottedBorder(
                     color: Color(0xffEAEFF8),
                     child: Padding(
@@ -881,7 +889,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 47),
+                const SizedBox(height: 47),*/
 
                 SizedBox(
                   width: 342,
@@ -912,7 +920,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                     ),
                                   ),
                                   title: Text(
-                                    "Record Payment",
+                                    AppLocale.rcdPayment.getString(context),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 17,
@@ -926,7 +934,7 @@ class _RecordPaymentState extends State<RecordPayment> {
                                         width: 209,
                                         height: 60,
                                         child: Text(
-                                          "Please Confirm Payment Record Of ${widget.traineeList[widget.index].traineeName}!",
+                                          AppLocale.confirmRecord.getString(context).trParams({"key": widget.traineeList[widget.index].traineeName}),
                                           style: TextStyle(
                                               color: Color(0xff626D7E),
                                               fontSize: 16,
@@ -953,8 +961,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Text(
-                                            "Cancel",
+                                          child:  Text(
+                                            AppLocale.cancel.getString(context),
                                             style: TextStyle(
                                                 color: Color(0xff23282E),
                                                 fontSize: 15,
@@ -1003,8 +1011,8 @@ class _RecordPaymentState extends State<RecordPayment> {
                                               Get.to(AddTraineeList(path: '',));
                                             });
                                           },
-                                          child: const Text(
-                                            "Confirm",
+                                          child:  Text(
+                                            AppLocale.confirm.getString(context),
                                             style: TextStyle(
                                                 color: Color(0xffFBFBFC),
                                                 fontSize: 15,
@@ -1017,8 +1025,9 @@ class _RecordPaymentState extends State<RecordPayment> {
                               );
                             });
                       },
-                      child: const Text(
-                        "Submit",
+                      child:  Text(
+                        AppLocale.submit.getString(context),
+
                         style: TextStyle(fontSize: 15, fontFamily: 'Lato'),
                       )),
                 ),

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/batch_listing/viewprofile_details.dart';
 import 'package:drona/view/trainee_listing/ledger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,7 +158,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                },
           ),
           title: Text(
-            'Trainee Listing',
+            AppLocale.traineeList.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           actions: [
@@ -226,7 +228,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
 
   buildListView() {
     return foundData.isEmpty
-        ? const Center(child: Text("No Data"))
+        ?  Center(child: Text(AppLocale.noData.getString(context)))
         : ListView.builder(
             itemCount: foundData.length,
             itemBuilder: (context, index) {
@@ -250,8 +252,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                               decoration:
                                   const BoxDecoration(color: Colors.brown),
                               child: TextButton(
-                                child: const Text(
-                                  "Load More",
+                                child:  Text(
+                                  AppLocale.loadMore.getString(context),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -345,8 +347,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         child: Center(
                                             child: foundData[index].status ==
                                                     "active"
-                                                ? const Text(
-                                                    "Active",
+                                                ?  Text(
+                                              AppLocale.active.getString(context),
                                                     style: TextStyle(
                                                       color: Color(0xffFBFBFC),
                                                       fontSize: 10,
@@ -355,8 +357,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                           FontWeight.w600,
                                                     ),
                                                   )
-                                                : const Text(
-                                                    "Inactive",
+                                                :  Text(
+                                              AppLocale.inActive.getString(context),
                                                     style: TextStyle(
                                                       color: Color(0xffFBFBFC),
                                                       fontSize: 10,
@@ -414,8 +416,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                             child: Text(
                                               foundData[index].join_status ==
                                                       'not_onboarded'
-                                                  ? 'Not Onboarded'
-                                                  : 'Onboarded',
+                                                  ? AppLocale.notOnboarded.getString(context)
+                                                  : AppLocale.onboarded.getString(context),
                                               style: TextStyle(
                                                   color: foundData[index]
                                                               .join_status ==
@@ -451,8 +453,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                             MainAxisAlignment.start,
                                         children: [
                                           foundData[index].gender == 'male'
-                                              ? const Text(
-                                                  "Male",
+                                              ?  Text(
+                                      AppLocale.male.getString(context),
                                                   style: TextStyle(
                                                     color: Color(0xff39404A),
                                                     fontSize: 12,
@@ -462,8 +464,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                 )
                                               : foundData[index].gender ==
                                                       'female'
-                                                  ? const Text(
-                                                      "Female",
+                                                  ?  Text(
+                                            AppLocale.female.getString(context),
                                                       style: TextStyle(
                                                         color:
                                                             Color(0xff39404A),
@@ -473,8 +475,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             FontWeight.w400,
                                                       ),
                                                     )
-                                                  : const Text(
-                                                      "Others",
+                                                  :  Text(
+                                            AppLocale.other.getString(context),
                                                       style: TextStyle(
                                                         color:
                                                             Color(0xff39404A),
@@ -554,8 +556,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                const Text(
-                                                  "Fee : ",
+                                                 Text(
+                                                  "${AppLocale.fee.getString(context)} : ",
                                                   style: TextStyle(
                                                     color: Color(0xff39404A),
                                                     fontSize: 14,
@@ -662,7 +664,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
         runFilter(value);
       },
       decoration: InputDecoration(
-          hintText: "Search",
+          hintText: AppLocale.search.getString(context),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           suffixIcon: const Icon(Icons.search),
@@ -706,11 +708,11 @@ class _AddTraineeListState extends State<AddTraineeList> {
                             color: Colors.grey[400],
                           ),
                         ),
-                        const Row(
+                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Select Option',
+                              AppLocale.selectOption.getString(context),
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -733,7 +735,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                   transition: Transition.rightToLeft);
                             },
                             child: Text(
-                              'View Profile',
+                              AppLocale.viewProfile.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -764,8 +766,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                   ),
                                                 ),
                                               ),
-                                              title: const Text(
-                                                "Send Reminder",
+                                              title:  Text(
+                                              AppLocale.sendReminder.getString(context),
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 17,
@@ -779,8 +781,10 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                   child: SizedBox(
                                                     width: 209,
                                                     height: 60,
+                                                    //Are You Sure You Want To Send\nReminder To ${traineeList[index].traineeName}!
+
                                                     child: Text(
-                                                      "Are You Sure You Want To Send\nReminder To ${traineeList[index].traineeName}!",
+                                                      AppLocale.sendReminderToTrainee.getString(context).trParams({"key": traineeList[index].traineeName}),
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xff626D7E),
@@ -819,9 +823,9 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                           onPressed: () {
                                                             Navigator.pop(context);
                                                           },
-                                                          child: const Text(
-                                                            "Cancel",
-                                                            style: TextStyle(
+                                                          child:  Text(
+                                                            AppLocale.cancel.getString(context),
+                                                            style: const TextStyle(
                                                                 color: Color(
                                                                     0xff23282E),
                                                                 fontSize: 15,
@@ -853,8 +857,8 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                                             ),
                                                           ),
                                                           onPressed: () {},
-                                                          child: const Text(
-                                                            "Confirm",
+                                                          child:  Text(
+                                                            AppLocale.confirm.getString(context),
                                                             style: TextStyle(
                                                                 color: Color(
                                                                     0xffFBFBFC),
@@ -874,7 +878,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         });
                                   },
                                   child: Text(
-                                    'Remind For Payment',
+                                    AppLocale.paymentRemind.getString(context),
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -892,7 +896,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                   ));
                             },
                             child: Text(
-                              'Record A Payment',
+                              AppLocale.recordPayment.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -909,7 +913,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                   ));
                             },
                             child: Text(
-                              'View Ledger',
+                              AppLocale.viewLedge.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -929,14 +933,14 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         transition: Transition.rightToLeft);
                                   },
                                   child: Text(
-                                    'Edit Batch',
+                                    AppLocale.editBatch.getString(context),
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
                               )
                             : Container(),
-                        status == true
+                     /*   status == true
                             ? Align(
                                 alignment: Alignment.topLeft,
                                 child: TextButton(
@@ -945,13 +949,13 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         transition: Transition.rightToLeft);
                                   },
                                   child: Text(
-                                    'Performance Assessment',
+                                    AppLocale.performanceAssessment.getString(context),
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
                               )
-                            : Container(),
+                            : Container(),*/
                         status == true
                             ? Align(
                                 alignment: Alignment.topLeft,
@@ -968,7 +972,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         transition: Transition.rightToLeft);
                                   },
                                   child: Text(
-                                    'Deactivate',
+                                    AppLocale.deactivate.getString(context),
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -989,7 +993,7 @@ class _AddTraineeListState extends State<AddTraineeList> {
                                         transition: Transition.rightToLeft);
                                   },
                                   child: Text(
-                                    'Activate',
+                                    AppLocale.activate.getString(context),
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),

@@ -1,4 +1,5 @@
 import 'package:drona/res/app_url.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/session_listing/session_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -114,7 +115,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
             ],
           ),
           title: Text(
-            'Edit Session Details',
+            AppLocale.editSession.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -197,7 +198,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Online Session URL',
+                    AppLocale.title22.getString(context),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -225,7 +226,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Date',
+                        AppLocale.date.getString(context),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -274,7 +275,8 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Time',
+                        AppLocale.time.getString(context),
+
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -331,7 +333,8 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Update',
+                    title: AppLocale.update.getString(context),
+
                     textColor: Colors.white,
                     rounded: true,
                     color: Theme.of(context).primaryColor,
@@ -354,7 +357,7 @@ class _SessionDetailEditState extends State<SessionDetailEdit> {
                 ),
                 RoundButton(
                     loading: false,
-                    title: 'Cancel Session',
+                    title: AppLocale.cancelSession.getString(context),
                     textColor: Colors.white,
                     rounded: true,
                     color: Colors.redAccent,

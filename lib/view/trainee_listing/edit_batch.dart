@@ -2,8 +2,11 @@
 
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../model/trainee_list_model.dart';
+import '../../res/language/language.dart';
 import '../../view_model/batchList_view_model.dart';
 
 class Edit_Page extends StatefulWidget {
@@ -49,8 +52,8 @@ class _Edit_PageState extends State<Edit_Page> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Edit Batch',
+        title: Text(
+          AppLocale.editBatch.getString(context),
           style: TextStyle(
               color: Color(0xff39404A),
               fontSize: 18,
@@ -70,7 +73,7 @@ class _Edit_PageState extends State<Edit_Page> {
                   children: [
                     SizedBox(height: 5),
                     Text(
-                      "Trainee's Full Name",
+                      AppLocale.traineeFullName.getString(context),
                       style: TextStyle(
                           color: Color(0xff39404A),
                           fontSize: 14,
@@ -106,7 +109,7 @@ class _Edit_PageState extends State<Edit_Page> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Service",
+                      AppLocale.serviceText.getString(context),
                       style: TextStyle(
                           color: Color(0xff39404A),
                           fontSize: 14,
@@ -147,7 +150,7 @@ class _Edit_PageState extends State<Edit_Page> {
                     SizedBox(height: 16),
                     //Batch Timing Selected;
                     Text(
-                      "Batch",
+                      AppLocale.batches.getString(context),
                       style: TextStyle(
                           color: Color(0xff39404A),
                           fontSize: 14,
@@ -190,7 +193,8 @@ class _Edit_PageState extends State<Edit_Page> {
                             }
                             return DropdownButton(
                                 isExpanded: true,
-                                hint: const Text("Choose Batch"),
+                                hint: Text(
+                                    AppLocale.selectBatch.getString(context)),
                                 underline: DropdownButtonHideUnderline(
                                     child: Container()),
                                 value: selectedBatchid,
@@ -205,7 +209,7 @@ class _Edit_PageState extends State<Edit_Page> {
                     SizedBox(height: 16),
 
                     Text(
-                      "Fees/Month",
+                      "${AppLocale.fee.getString(context)}/${AppLocale.month.getString(context)}",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -319,7 +323,13 @@ class _Edit_PageState extends State<Edit_Page> {
                                               width: 300,
                                               height: 48,
                                               child: Text(
-                                                "Please Confirm Edit Of Batch For ${widget.traineeList[widget.index].traineeName}!",
+                                                //"Please Confirm Edit  Batch For ${widget.traineeList[widget.index].traineeName}!",
+                                                AppLocale.confirmEditBatch
+                                                    .getString(context)
+                                                    .trParams({
+                                                  "key":
+                                                      "widget.traineeList[widget.index].traineeName"
+                                                }),
                                                 style: TextStyle(
                                                     color: Color(0xff626D7E),
                                                     fontSize: 16,
@@ -349,7 +359,8 @@ class _Edit_PageState extends State<Edit_Page> {
                                                   Navigator.pop(context);
                                                 },
                                                 child: Text(
-                                                  "Cancel",
+                                                  AppLocale.cancel
+                                                      .getString(context),
                                                   style: TextStyle(
                                                       color: Color(0xff23282E),
                                                       fontSize: 15,
@@ -392,12 +403,13 @@ class _Edit_PageState extends State<Edit_Page> {
                                                   };
                                                   print("data=$data");
 
-                                                  traineeViewModel.traineeBatchEditApi(data, context);
-
-
+                                                  traineeViewModel
+                                                      .traineeBatchEditApi(
+                                                          data, context);
                                                 },
                                                 child: Text(
-                                                  "Confirm",
+                                                  AppLocale.confirm
+                                                      .getString(context),
                                                   style: TextStyle(
                                                       color: Color(0xffFBFBFC),
                                                       fontSize: 15,
@@ -411,8 +423,8 @@ class _Edit_PageState extends State<Edit_Page> {
                                     );
                                   });
                             },
-                            child: const Text(
-                              "Submit",
+                            child: Text(
+                              AppLocale.submit.getString(context),
                               style:
                                   TextStyle(fontSize: 15, fontFamily: 'Lato'),
                             )),

@@ -32,7 +32,7 @@ class CustomRadio<T> extends StatelessWidget {
             Radius.circular(10)),
         color: isSelected ? Colors.white : Colors.black,
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

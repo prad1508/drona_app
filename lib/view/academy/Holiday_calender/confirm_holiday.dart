@@ -1,4 +1,6 @@
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 
 import 'holiday_calender.dart';
@@ -21,7 +23,7 @@ class _Confirm_HolidayState extends State<Confirm_Holiday> {
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Confirm Holiday',
+        title:  Text(AppLocale.confirmHoliday.getString(context),
             style: TextStyle(
                 color: Colors.black, fontSize: 18, fontFamily: 'Lato')),
         elevation: 0,
@@ -842,8 +844,8 @@ class _Confirm_HolidayState extends State<Confirm_Holiday> {
                     onPressed: () {
                       Get.to(Holiday_Calender());
                     },
-                    child: const Text(
-                      "Submit",
+                    child:  Text(
+                      AppLocale.submit.getString(context),
                       style: TextStyle(fontSize: 15,
                           fontFamily: 'Lato'),
                     )),

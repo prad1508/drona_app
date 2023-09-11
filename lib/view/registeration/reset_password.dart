@@ -1,3 +1,4 @@
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -38,8 +39,8 @@ class _ResetPasswordState extends State<ResetPassword> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text(
-            'Reset Password',
+          title:  Text(
+            AppLocale.resetPassword.getString(context),
             style: TextStyle(fontSize: 18),
           ),
           centerTitle: true,
@@ -60,10 +61,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Align(
+                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Please Enter Your Phone Number To Receive A Verification Code',
+                        AppLocale.receiveVerificationCode.getString(context),
                         style:
                         TextStyle(fontSize: 16, fontFamily: 'Loto-Regular'),
                       ),
@@ -78,15 +79,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                         keyboardType: TextInputType.phone,
                         hintText: 'XXX-XXX-XXXX',
                         isValidatingMessage:
-                        'Enter a valid 10 digit mobile number',
+                        AppLocale.valid10digitError.getString(context),
                         valueIsInvalidMessage:
-                        'Enter a valid 10 digit mobile number'),
+                        AppLocale.valid10digitError.getString(context),
+                      valueIsEmptyMessage: AppLocale.valueIsEmptyMessage.getString(context),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * .4,
                     ),
                     RoundButton(
                         loading: false,
-                        title: 'Send',
+                        title: AppLocale.send.getString(context),
                         textColor: Colors.white,
                         rounded: true,
                         color: Theme.of(context).primaryColor,
@@ -100,7 +103,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             registration.forgetPassword(data, context);
                           }
                           else{
-                            Utils.flushBarErrorMessage('Please Enter 10 Digit Mobile Number', context);
+                            Utils.flushBarErrorMessage(AppLocale.valid10digitError.getString(context), context);
                           }
                         }),
 

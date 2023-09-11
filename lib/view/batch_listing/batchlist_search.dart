@@ -159,7 +159,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
           ],
         ),
         title: Text(
-          'Batch List',
+          AppLocale.batchList.getString(context),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         centerTitle: true,
@@ -260,7 +260,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
 
   buildListView(double w) {
     return foundData.isEmpty
-        ? const Center(child: Text("No Data"))
+        ?  Center(child: Text(AppLocale.noData.getString(context)))
         : ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: w * 0.01),
             physics: const BouncingScrollPhysics(),
@@ -402,7 +402,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
                                     ),
                                     Row(
                                       children: [
-                                        const Text("Coach Name : ",
+                                         Text("${AppLocale.coachName.getString(context)} : ",
                                             style: TextStyle(
                                                 color: Color(0xff39404A),
                                                 fontSize: 13,
@@ -466,7 +466,7 @@ class _SearchBatchListState extends State<SearchBatchList> {
         runFilter(value);
       },
       decoration: InputDecoration(
-          hintText: "Search",
+          hintText: AppLocale.search.getString(context),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           suffixIcon: const Icon(Icons.search),

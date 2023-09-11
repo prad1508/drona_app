@@ -1,3 +1,4 @@
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -166,7 +167,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Edit Batch',
+          AppLocale.editBatch.getString(context),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         centerTitle: true,
@@ -280,7 +281,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Batch Name',
+            AppLocale.batchName.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -290,7 +291,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         TextFormField(
                           controller: batchName..text,
                           decoration: InputDecoration(
-                            hintText: 'eg. Cricket',
+                            hintText: '${AppLocale.eg.getString(context)}. Cricket',
                             contentPadding: const EdgeInsets.all(10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
@@ -303,9 +304,9 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         const SizedBox(
                           height: 15,
                         ),
-                        const Align(
+                         Align(
                             alignment: Alignment.topLeft,
-                            child: Text('Services')),
+                            child: Text(AppLocale.services.getString(context),)),
                         const SizedBox(
                           height: 10,
                         ),
@@ -329,12 +330,12 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Assign Coach',
+                           AppLocale.assignCoach.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             TextButton(
-                              child: const Text(
-                                'Add Coach',
+                              child:  Text(
+                                AppLocale.addCoach.getString(context),
                                 style: TextStyle(color: Colors.redAccent),
                               ),
                               onPressed: () {
@@ -460,7 +461,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                                     Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          'Program',
+                            AppLocale.program.getString(context),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium,
@@ -575,7 +576,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Fee',
+                             AppLocale.fee.getString(context),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 /*TextButton(
@@ -699,7 +700,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Type of Batch',
+            AppLocale.tYOB.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -714,14 +715,14 @@ class _EditBatchListingState extends State<EditBatchListing> {
                               value: 'group',
                               groupValue: _groupBatch,
                               onChanged: _valueChangedBatch(),
-                              label: 'Group Coaching',
+                              label: AppLocale.groupCoaching.getString(context),
                             ),
                             CustomRadio<String>(
                               btnColor: Colors.black,
                               value: 'private',
                               groupValue: _groupBatch,
                               onChanged: _valueChangedBatch(),
-                              label: 'Private Coaching',
+                              label: AppLocale.privateCoaching.getString(context),
                             ),
                           ],
                         ),
@@ -735,7 +736,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             value: value1,
                             onChanged: (value) {
                               setState(() {
-                                this.value1 = value!;
+                                //this.value1 = value!;
+                                value1 = value!;
                                 onlineSession = value;
                                 Provider.of<CoachlistViewViewModel>(context,
                                         listen: false)
@@ -750,7 +752,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Provide Online Sessions',
+                                AppLocale.title21.getString(context),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
@@ -762,7 +764,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Online Session Url',
+                            AppLocale.title22.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -773,7 +775,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
                           readOnly: onlineSession ? false : true,
                           controller: onlineUrl..text,
                           decoration: InputDecoration(
-                            hintText: 'e.g. ww.xyz.com',
+                            hintText: '${AppLocale.eg.getString(context)}. ww.xyz.com',
                             filled: true,
                             fillColor: onlineSession
                                 ? Colors.white
@@ -793,7 +795,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Batch Days',
+            AppLocale.batchDays.getString(context),
+
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -953,7 +956,8 @@ class _EditBatchListingState extends State<EditBatchListing> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Batch Timing',
+                    AppLocale.batchTiming.getString(context),
+
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -1013,7 +1017,7 @@ class _EditBatchListingState extends State<EditBatchListing> {
 
                         RoundButton(
                           loading: false,
-                          title: 'Save',
+                          title: AppLocale.save.getString(context),
                           textColor: Colors.white,
                           rounded: true,
                           color: Theme.of(context).primaryColor,

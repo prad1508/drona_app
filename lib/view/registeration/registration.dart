@@ -99,18 +99,21 @@ class _RegistrationState extends State<Registration> {
                       validationDebounce: const Duration(milliseconds: 50),
                       validator: Validation().isPhoneField,
                       keyboardType: TextInputType.phone,
-                      hintText: 'eg. 9658992342',
+                      hintText: '${AppLocale.eg.getString(context)}. 9658992342',
                       isValidatingMessage:
-                      'Enter a valid 10 digit mobile number',
+                      AppLocale.valid10digitError.getString(context),
                       valueIsInvalidMessage:
-                      'Enter a valid 10 digit mobile number'),
+                      AppLocale.valid10digitError.getString(context),
+                      valueIsEmptyMessage:
+                      AppLocale.valueIsEmptyMessage.getString(context),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      AppLocale.title34.getString(context),
+                      AppLocale.fullName.getString(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -121,7 +124,7 @@ class _RegistrationState extends State<Registration> {
                     controller: fullName,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
-                      hintText: 'eg. Ashmit Singh',
+                      hintText: '${AppLocale.eg.getString(context)}. Ashmit Singh',
                       contentPadding: const EdgeInsets.all(10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -185,7 +188,10 @@ class _RegistrationState extends State<Registration> {
                     validationDebounce: const Duration(milliseconds: 50),
                     validator: Validation().isEmailField,
                     keyboardType: TextInputType.emailAddress,
-                    hintText: 'eg. abc@example.com',
+                    hintText: '${AppLocale.eg.getString(context)}. abc@example.com',
+                    isValidatingMessage: AppLocale.isValidatingMessage.getString(context),
+                    valueIsEmptyMessage: AppLocale.valueIsEmptyMessage.getString(context),
+                    valueIsInvalidMessage: AppLocale.valueIsInvalidMessage.getString(context),
                   ),
                   const SizedBox(
                     height: 15,
@@ -294,13 +300,13 @@ class _RegistrationState extends State<Registration> {
                         ? () {
                             if (fullName.text.isEmpty) {
                               Utils.flushBarErrorMessage(
-                                  'Fill Full Name', context);
+                                  AppLocale.fillNameError.getString(context), context);
                             } else if (phone.text.toString().length < 10) {
                               Utils.flushBarErrorMessage(
-                                  'Fill Phone Number', context);
+                                  AppLocale.fillPhoneError.getString(context), context);
                             } else if (phone.text.toString().length > 10) {
                               Utils.flushBarErrorMessage(
-                                  'Please Check Phone Number', context);
+                                  AppLocale.checkNumberError.getString(context), context);
                             } else {
                               print("_role==$_role");
                               Map<String, String> data = {

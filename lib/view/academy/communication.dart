@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 
 import '../Academy_Listing/communication_edit.dart';
@@ -31,7 +33,7 @@ class _CommunicationState extends State<Communication> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Sample Message",
+                AppLocale.sampleMessage.getString(context),
                 style: TextStyle(
                   color: Colors.black,
                   fontStyle: FontStyle.normal,
@@ -61,7 +63,7 @@ class _CommunicationState extends State<Communication> {
                             fontSize: 17,
                           ),
                         ),
-                        SizedBox(height: 35),
+                        SizedBox(height: 25),
                         Text(
                           "Abc Academy",
                           style: TextStyle(
@@ -81,7 +83,7 @@ class _CommunicationState extends State<Communication> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Your Signature",
+                    AppLocale.yourSignature.getString(context),
                     style: TextStyle(
                       color: Colors.black,
                       fontStyle: FontStyle.normal,
@@ -91,7 +93,7 @@ class _CommunicationState extends State<Communication> {
                   ),
                   InkWell(
                     child: Text(
-                      "Edit",
+                      AppLocale.edit.getString(context),
                       style: TextStyle(
                         color: Color(0xffFD685D),
                         fontStyle: FontStyle.normal,

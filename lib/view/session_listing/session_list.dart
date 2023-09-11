@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/session_listing/view_detailsclosed.dart';
 import 'package:drona/view/session_listing/view_session_details.dart';
@@ -171,7 +172,7 @@ class _SessionListState extends State<SessionList>
           ],
         ),
         title: Text(
-          'Session Listing',
+          AppLocale.sessionListing.getString(context),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         centerTitle: true,
@@ -228,7 +229,7 @@ class _SessionListState extends State<SessionList>
                     // print(foundData);
                   },
                   decoration: InputDecoration(
-                      hintText: "Search",
+                      hintText: AppLocale.search.getString(context),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 15),
                       suffixIcon: const Icon(Icons.search),
@@ -258,7 +259,7 @@ class _SessionListState extends State<SessionList>
                                 Icons.calendar_month,
                                 size: 30.0,
                               ),
-                              hintText: "2023-01-01",
+                              hintText: "${AppLocale.eg.getString(context)}. 2023-01-01",
                               contentPadding: const EdgeInsets.all(10),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -296,7 +297,7 @@ class _SessionListState extends State<SessionList>
                                 Icons.calendar_month,
                                 size: 30.0,
                               ),
-                              hintText: "2023-01-01",
+                              hintText: "${AppLocale.eg.getString(context)}. 2023-01-01",
                               contentPadding: const EdgeInsets.all(10),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -333,7 +334,7 @@ class _SessionListState extends State<SessionList>
                                 foundData = infoData;
                               });
                             },
-                            child: const Text("Filter")),
+                            child:  Text(AppLocale.filters.getString(context),),),
                       ],
                     ),
                   ),
@@ -367,8 +368,8 @@ class _SessionListState extends State<SessionList>
                             backgroundColor: _controller.index != 0
                                 ? const Color.fromARGB(255, 242, 242, 242)
                                 : Colors.grey.shade100,
-                            label: const Text(
-                              'All',
+                            label:  Text(
+                              AppLocale.all.getString(context),
                               style: TextStyle(color: Colors.blue),
                             ),
                             avatar: CircleAvatar(
@@ -385,8 +386,8 @@ class _SessionListState extends State<SessionList>
                             backgroundColor: _controller.index != 1
                                 ? const Color.fromARGB(255, 242, 242, 242)
                                 : Colors.green.shade100,
-                            label: const Text(
-                              'Scheduled',
+                            label:  Text(
+                              AppLocale.scheduled.getString(context),
                             ),
                             avatar: CircleAvatar(
                               backgroundColor: _controller.index != 1
@@ -402,8 +403,8 @@ class _SessionListState extends State<SessionList>
                             backgroundColor: _controller.index != 2
                                 ? const Color.fromARGB(255, 242, 242, 242)
                                 : Colors.brown.shade100,
-                            label: const Text(
-                              'Canceled',
+                            label:  Text(
+                              AppLocale.canceled.getString(context),
                             ),
                             avatar: CircleAvatar(
                               backgroundColor: _controller.index != 2
@@ -419,8 +420,8 @@ class _SessionListState extends State<SessionList>
                             backgroundColor: _controller.index != 3
                                 ? const Color.fromARGB(255, 242, 242, 242)
                                 : Colors.redAccent.shade100,
-                            label: const Text(
-                              'Closed',
+                            label:  Text(
+                              AppLocale.closed.getString(context),
                             ),
                             avatar: CircleAvatar(
                               backgroundColor: _controller.index != 3
@@ -544,8 +545,9 @@ class _SessionListState extends State<SessionList>
                       ? Container(
                           decoration: const BoxDecoration(color: Colors.blue),
                           child: TextButton(
-                            child: const Text(
-                              "Load More",
+                            child:  Text(
+                              AppLocale.loadMore.getString(context),
+
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -694,8 +696,8 @@ class _SessionListState extends State<SessionList>
               ? Container(
             decoration: const BoxDecoration(color: Colors.blue),
             child: TextButton(
-              child: const Text(
-                "Load More",
+              child:  Text(
+                AppLocale.loadMore.getString(context),
                 style:
                 TextStyle(color: Colors.white, fontSize: 18),
               ),
@@ -848,8 +850,9 @@ class _SessionListState extends State<SessionList>
               ? Container(
             decoration: const BoxDecoration(color: Colors.blue),
             child: TextButton(
-              child: const Text(
-                "Load More",
+              child:  Text(
+                AppLocale.loadMore.getString(context),
+
                 style:
                 TextStyle(color: Colors.white, fontSize: 18),
               ),
@@ -1003,8 +1006,8 @@ class _SessionListState extends State<SessionList>
               ? Container(
             decoration: const BoxDecoration(color: Colors.blue),
             child: TextButton(
-              child: const Text(
-                "Load More",
+              child:  Text(
+                AppLocale.loadMore.getString(context),
                 style:
                 TextStyle(color: Colors.white, fontSize: 18),
               ),
@@ -1140,53 +1143,4 @@ class _SessionListState extends State<SessionList>
   }
 
 
-  //notification invitation send
-  Future<bool> showExitPopup(context) async {
-    return await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: SizedBox(
-              height: 170,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Send invite ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        fontFamily: 'Loto-Regular'),
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  const Text(
-                    "Send invitation to all the coaches",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        fontFamily: 'Loto-Regular'),
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  const SizedBox(height: 15),
-                  RoundButton(
-                    loading: false,
-                    title: 'Okay',
-                    textColor: Colors.white,
-                    rounded: true,
-                    color: Theme.of(context).primaryColor,
-                    onPress: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 }

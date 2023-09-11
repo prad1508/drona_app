@@ -3,11 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drona/res/app_url.dart';
 import 'package:drona/view_model/trainee_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../model/trainee_list_model.dart';
 
 
 import '../../data/response/status.dart';
+import '../../res/language/language.dart';
 
 class Ledger_Page extends StatefulWidget {
   String traineeProfileUid;
@@ -51,7 +54,8 @@ class _Ledger_PageState extends State<Ledger_Page> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('View Ledger',
+        title:  Text(AppLocale.viewLedge.getString(context),
+
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -121,7 +125,7 @@ class _Ledger_PageState extends State<Ledger_Page> {
                                       ),
                                       SizedBox(width: 5,),
                                       Text(
-                                        widget.traineeList[widget.index].join_status == "not_onboarded" ? "Not Onboarded" : "Onboarded",
+                                        widget.traineeList[widget.index].join_status == "not_onboarded" ? AppLocale.notOnboarded.getString(context): AppLocale.onboarded.getString(context),
                                         style:
                                         TextStyle(color: widget.traineeList[widget.index].join_status == "not_onboarded" ? Colors.red :Colors.green, fontSize: 10),
                                       ),
@@ -215,7 +219,8 @@ class _Ledger_PageState extends State<Ledger_Page> {
                                       ),
                                       SizedBox(height: 4),
                                      Text(
-                                        "Due on ${widget.traineeList[widget.index].monthOfBilling}",
+
+                                       AppLocale.dueOn.getString(context).trParams({"key":widget.traineeList[widget.index].monthOfBilling}),
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontFamily: 'Lato',
@@ -240,11 +245,11 @@ class _Ledger_PageState extends State<Ledger_Page> {
                             headingRowColor: MaterialStatePropertyAll(Color(0xffEAEFF8)),
                             headingRowHeight: 35,
                             dividerThickness: double.infinity,
-                            columns: <DataColumn>[
+                            columns:  <DataColumn>[
                               DataColumn(label: Text("#")),
-                              DataColumn(label: Text("Month")),
-                              DataColumn(label: Text("FEE")),
-                              DataColumn(label: Text("DUE")),
+                              DataColumn(label: Text(AppLocale.month.getString(context),),),
+                              DataColumn(label: Text(AppLocale.fee.getString(context),)),
+                              DataColumn(label: Text(AppLocale.due.getString(context),)),
                             ],
                             //Data Table Row;
                             rows: value.dataList1.data!.data.map((e) {
@@ -409,7 +414,7 @@ class _Ledger_PageState extends State<Ledger_Page> {
                   );
 
                 case Status.error:
-                  return Center(child: Text("No Data Found"));
+                  return Center(child: Text(AppLocale.noData.getString(context)));
               }
 
             },

@@ -574,20 +574,20 @@ class _TellusAcadmicState extends State<TellusAcadmic> {
                           onPress: () {
                             if (acadmicName.text.isEmpty) {
                               Utils.flushBarErrorMessage(
-                                  'Fill Academy Name', context);
+                                  AppLocale.fillAcademyName.getString(context), context);
                             }
                             if (pincodedata.text.isEmpty) {
                               Utils.flushBarErrorMessage(
-                                  'Fill Pin Code', context);
+                                  AppLocale.fillPinCodeError.getString(context), context);
                             }
                             if (address.text.isEmpty) {
-                              Utils.flushBarErrorMessage('Fill Address', context);
+                              Utils.flushBarErrorMessage(AppLocale.fillAddressError.getString(context), context);
                             }
                             if (city.text.isEmpty) {
-                              Utils.flushBarErrorMessage('Fill City', context);
+                              Utils.flushBarErrorMessage(AppLocale.fillCityError.getString(context), context);
                             }
                             if (state.text.isEmpty) {
-                              Utils.flushBarErrorMessage('Fill State', context);
+                              Utils.flushBarErrorMessage(AppLocale.fillStateError.getString(context), context);
                             } else {
                               Map<String, String> data = {
                                 "academyname": acadmicName.text.toString(),

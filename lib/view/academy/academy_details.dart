@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: const Text('Academy Details',
+          title:  Text(AppLocale.academyDetails.getString(context),
               style: TextStyle(color: Colors.black, fontSize: 18)),
           actions: [
             Padding(
@@ -190,7 +191,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                 height: 30,
                               ),
                               Text(
-                                "Academy Name",
+                                AppLocale.academyName.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -231,7 +232,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Register Number",
+                                AppLocale.registerNumber.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -285,7 +286,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   ),),),
                               SizedBox(height: 16),
                               Text(
-                                "Alternate Number",
+                                AppLocale.registerAlternateNumber.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -328,7 +329,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                                   ),),),
                               SizedBox(height: 16),
                               Text(
-                                "Email Id",
+                                AppLocale.emailId.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -371,7 +372,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Website",
+                                AppLocale.website.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -414,7 +415,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Location",
+                                AppLocale.location.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -542,7 +543,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Choose Your Business Category",
+                                AppLocale.title11.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -580,7 +581,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Academy Time",
+                                "${AppLocale.academy.getString(context)} ${AppLocale.time.getString(context)}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -663,7 +664,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Working Days",
+                                AppLocale.workingDays.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',
@@ -711,7 +712,7 @@ class _Academy_Detail_PageState extends State<Academy_Detail_Page> {
                               ),
                               SizedBox(height: 16),
                               Text(
-                                "Academy Joining Date",
+                                AppLocale.academyJoiningDate.getString(context),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Loto',

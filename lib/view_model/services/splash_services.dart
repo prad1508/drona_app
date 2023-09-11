@@ -69,7 +69,7 @@ class SplashServices with ChangeNotifier {
         await Future.delayed(const Duration(seconds: 1));
         // ignore: use_build_context_synchronously
         //Navigator.pushNamed(context, RoutesName.language);
-        Get.to(() => const Language(), transition: Transition.rightToLeft);
+        Get.to(() =>  Language(), transition: Transition.rightToLeft);
       } else {
         await Future.delayed(const Duration(seconds: 1));
         // ignore: use_build_context_synchronously

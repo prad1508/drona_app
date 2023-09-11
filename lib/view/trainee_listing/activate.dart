@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/res/widget/datefield.dart';
 import 'package:drona/utils/utils.dart';
 import 'package:drona/view/dashboard/layout.dart';
@@ -49,8 +50,8 @@ class _Activate_PageState extends State<Activate_Page> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Activate',
+        title:  Text(
+          AppLocale.activate.getString(context),
           style: TextStyle(
               fontSize: 18,
               fontFamily: 'Lato',
@@ -119,9 +120,11 @@ class _Activate_PageState extends State<Activate_Page> {
                                 widget.traineeList[widget.index]
                                     .join_status ==
                                     "not_onboarded"
-                                    ? "Not Onboarded"
-                                    : "Onboarded",
-                                style: TextStyle(
+                                    ?
+                                AppLocale.notOnboarded.getString(context)
+                                    :                                 AppLocale.onboarded.getString(context),
+
+                                  style: TextStyle(
                                     color: widget
                                         .traineeList[
                                     widget.index]
@@ -233,7 +236,8 @@ class _Activate_PageState extends State<Activate_Page> {
                     //Service selected;
                     SizedBox(height: 16),*/
                     Text(
-                      "Service",
+                     // "Service",
+                      AppLocale.serviceText.getString(context),
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Lato',
@@ -276,7 +280,8 @@ class _Activate_PageState extends State<Activate_Page> {
                     SizedBox(height: 16),
                     //Batch Timing Selected;
                     Text(
-                      "Batch",
+                      //"Batch",
+                      AppLocale.batchText.getString(context),
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Lato',
@@ -318,7 +323,7 @@ class _Activate_PageState extends State<Activate_Page> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Fees/Month",
+                      "${AppLocale.fee.getString(context)}/${AppLocale.month.getString(context)}",
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Lato',
@@ -389,7 +394,7 @@ class _Activate_PageState extends State<Activate_Page> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Activation Date",
+                      AppLocale.activationDate.getString(context),
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Lato',
@@ -417,7 +422,7 @@ class _Activate_PageState extends State<Activate_Page> {
                             Icons.calendar_month,
                             size: 30.0,
                           ),
-                          hintText: '01-01-2023',
+                          hintText: '${AppLocale.eg.getString(context)}. 01-01-2023',
                           contentPadding: const EdgeInsets.all(5),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -474,7 +479,7 @@ class _Activate_PageState extends State<Activate_Page> {
                                         ),
                                       ),
                                       title: Text(
-                                        "Activate",
+                                        AppLocale.activate.getString(context),
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 17,
@@ -488,7 +493,8 @@ class _Activate_PageState extends State<Activate_Page> {
                                             width: 300,
                                             height: 48,
                                             child: Text(
-                                              "Please Confirm Activation Of \n${widget.traineeList[widget.index].traineeName}",
+                                              //"Please Confirm Activation Of \n${widget.traineeList[widget.index].traineeName}",
+                                              AppLocale.activationConfirmation.getString(context).trParams({"key":widget.traineeList[widget.index].traineeName}),
                                               style: TextStyle(
                                                   color: Color(0xff626D7E),
                                                   fontSize: 16,
@@ -517,7 +523,7 @@ class _Activate_PageState extends State<Activate_Page> {
                                                 Navigator.pop(context);
                                               },
                                               child: Text(
-                                                "Cancel",
+                                                AppLocale.cancel.getString(context),
                                                 style: TextStyle(
                                                     color: Color(0xff23282E),
                                                     fontSize: 15,
@@ -544,7 +550,7 @@ class _Activate_PageState extends State<Activate_Page> {
                                               onPressed: () {
                                                // bool checkValidation = formKey.currentState!.validate();
                                                 if (tDateController.text == "") {
-                                                  Utils.flushBarErrorMessage("Please select Activation Date", context);
+                                                  Utils.flushBarErrorMessage(AppLocale.pleaseActivationDate.getString(context), context);
                                                   // setState(() {});
                                                 } else {
                                                   //autoValidateMode = AutovalidateMode.disabled;
@@ -565,7 +571,7 @@ class _Activate_PageState extends State<Activate_Page> {
 
                                               },
                                               child: Text(
-                                                "Confirm",
+                                                AppLocale.confirm.getString(context),
                                                 style: TextStyle(
                                                     color: Color(0xffFBFBFC),
                                                     fontSize: 15,
@@ -579,8 +585,8 @@ class _Activate_PageState extends State<Activate_Page> {
                                   );
                                 });
                           },
-                          child: const Text(
-                            "Submit",
+                          child:  Text(
+                            AppLocale.submit.getString(context),
                             style: TextStyle(fontSize: 15, fontFamily: 'Lato'),
                           )),
                     ),

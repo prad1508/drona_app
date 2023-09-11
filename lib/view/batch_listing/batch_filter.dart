@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,12 +80,12 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
     return Padding(
       padding:const EdgeInsets.fromLTRB(0, 34, 0, 12),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Align(
+         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Filters",
+              AppLocale.filters.getString(context),
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -94,12 +96,12 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
         const SizedBox(
           height: 8,
         ),
-        const Align(
+         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              "Select Service",
+              AppLocale.selectServiceText.getString(context),
               style: TextStyle(color: Color(0xff39404A), fontSize: 12),
             ),
           ),
@@ -110,7 +112,7 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: DropdownButtonFormField(
-            hint: const Text("Select service",
+            hint:  Text(AppLocale.selectServiceText.getString(context),
               style: TextStyle(color: Color(0xff23282E), fontSize: 14),
             ),
             items: [
@@ -151,7 +153,7 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              "Status",
+              AppLocale.status.getString(context),
                 style: TextStyle(color: Color(0xff39404A), fontSize: 12), ),
           ),
         ),
@@ -168,8 +170,8 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Active",
+                  title:  Text(
+                    AppLocale.active.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13, fontWeight: FontWeight.bold),
@@ -191,8 +193,8 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Inactive",
+                  title:  Text(
+                    AppLocale.inActive.getString(context),
                     style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13, fontWeight: FontWeight.bold),                  ),
@@ -215,9 +217,8 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
                       vertical: VisualDensity.minimumDensity),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    "Unassigned",
-                    style: TextStyle(
+                  title:  Text(
+                    AppLocale.unAssigned.getString(context),                    style: TextStyle(
                         color: Color(0xff39404A),
                         fontSize: 13, fontWeight: FontWeight.bold),                  ),
                   value: "Unassigned",
@@ -251,7 +252,7 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
                     widget.search("", "");
                     Navigator.of(context).pop();
                   },
-                  child:const Text('Clear All',
+                  child: Text( AppLocale.clearAll.getString(context),
                     style: TextStyle(
                         color: Color(0xff23282E),
                         fontSize: 13, fontWeight: FontWeight.bold),
@@ -269,8 +270,8 @@ class _BatchFilterPageState extends State<BatchFilterPage> {
                     widget.search(dropValue1!.serviceName.toString(), _value);
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Apply',
+                  child:  Text(
+                    AppLocale.apply.getString(context),
                     style: TextStyle(
                         color: Color(0xffFBFBFC)),
                   ))

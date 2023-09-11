@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/academy/billing_invoice.dart';
 import 'package:drona/view/academy/communication.dart';
 import 'package:drona/view/academy/service_program.dart';
@@ -8,6 +9,7 @@ import 'package:drona/view/academy/academy_details.dart';
 import 'package:drona/view/dashboard/layout.dart';
 import 'package:drona/view/reports/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -55,7 +57,7 @@ class _academy_settingState extends State<academy_setting> {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: const Text('Academy Setting',
+          title:  Text(AppLocale.academySetting.getString(context),
               style: TextStyle(color: Colors.black, fontSize: 18)),
           elevation: 0,
         ),
@@ -112,7 +114,7 @@ class _academy_settingState extends State<academy_setting> {
                                                 Padding(
                                                   padding: EdgeInsets.only(left: 12),
                                                   child: Text(
-                                                    'Services',
+                                                    AppLocale.serviceText.getString(context),
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontStyle: FontStyle.normal,
@@ -174,7 +176,7 @@ class _academy_settingState extends State<academy_setting> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children:  [
-                                          Text("Process"),
+                                          Text(AppLocale.process.getString(context)),
                                           Text("${value.dataList.data?.academyProgress} %"),
                                         ],
                                       ),
@@ -205,7 +207,7 @@ class _academy_settingState extends State<academy_setting> {
                                     leading: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Academy Details",
+                                        AppLocale.academyDetails.getString(context),
                                         style: TextStyle(
                                             color: Color(0xff39404A),
                                             fontSize: 14,
@@ -226,7 +228,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "complete",
+                                              AppLocale.complete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.green,
@@ -252,7 +254,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "Incomplete",
+                                              AppLocale.incomplete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.redAccent,
@@ -286,7 +288,7 @@ class _academy_settingState extends State<academy_setting> {
                                     leading: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Service, Program & Facility",
+                                        AppLocale.serviceProgramAndFacility.getString(context),
                                         style: TextStyle(
                                             color: Color(0xff39404A),
                                             fontSize: 14,
@@ -307,7 +309,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "complete",
+                                              AppLocale.complete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.green,
@@ -333,7 +335,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "Incomplete",
+                                              AppLocale.incomplete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.redAccent,
@@ -364,7 +366,7 @@ class _academy_settingState extends State<academy_setting> {
                                     leading: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Bank Details",
+                                        AppLocale.bankDetails.getString(context),
                                         style: TextStyle(
                                             color: Color(0xff39404A),
                                             fontSize: 14,
@@ -385,7 +387,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "complete",
+                                              AppLocale.complete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.green,
@@ -411,7 +413,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "Incomplete",
+                                              AppLocale.incomplete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.redAccent,
@@ -443,7 +445,7 @@ class _academy_settingState extends State<academy_setting> {
                                       leading: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "Communication",
+                                            AppLocale.communication.getString(context),
                                             style: TextStyle(
                                                 color: Color(0xff39404A),
                                                 fontSize: 14,
@@ -464,7 +466,7 @@ class _academy_settingState extends State<academy_setting> {
                                                 borderRadius: BorderRadius.circular(4.0),
                                               ),
                                               child: Text(
-                                                "complete",
+                                                AppLocale.complete.getString(context),
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                   color: Colors.green,
@@ -490,7 +492,7 @@ class _academy_settingState extends State<academy_setting> {
                                                 borderRadius: BorderRadius.circular(4.0),
                                               ),
                                               child: Text(
-                                                "Incomplete",
+                                                AppLocale.incomplete.getString(context),
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                   color: Colors.redAccent,
@@ -518,7 +520,7 @@ class _academy_settingState extends State<academy_setting> {
                                     leading: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Billing And Invoices",
+                                        AppLocale.billing$invoice.getString(context),
                                         style: TextStyle(
                                             color: Color(0xff39404A),
                                             fontSize: 14,
@@ -539,7 +541,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "complete",
+                                              AppLocale.complete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.green,
@@ -565,7 +567,7 @@ class _academy_settingState extends State<academy_setting> {
                                               borderRadius: BorderRadius.circular(4.0),
                                             ),
                                             child: Text(
-                                              "Incomplete",
+                                              AppLocale.incomplete.getString(context),
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                 color: Colors.redAccent,
@@ -595,7 +597,7 @@ class _academy_settingState extends State<academy_setting> {
                                     leading: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "Holiday Calender",
+                                        AppLocale.holidayCalender.getString(context),
                                         style: TextStyle(
                                             color: Color(0xff39404A),
                                             fontSize: 14,

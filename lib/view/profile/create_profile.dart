@@ -296,10 +296,12 @@ class _CreateProfileState extends State<CreateProfile> {
                     validationDebounce: const Duration(milliseconds: 100),
                     validator: Validation().isPhoneField,
                     keyboardType: TextInputType.phone,
-                    hintText: 'eg. 9876521233',
+                    hintText: '${AppLocale.eg.getString(context)}. 9876521233',
                     isValidatingMessage: 'Enter a valid 10 digit mobile number',
                     valueIsInvalidMessage:
-                        'Enter a valid 10 digit mobile number'),
+                        'Enter a valid 10 digit mobile number',
+                    valueIsEmptyMessage: AppLocale.valueIsEmptyMessage.getString(context),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -316,7 +318,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 TextFormField(
                   controller: coachName,
                   decoration: InputDecoration(
-                    hintText: 'eg. Rakesh Bansal',
+                    hintText: '${AppLocale.eg.getString(context)}. Rakesh Bansal',
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -398,7 +400,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 TextFormField(
                   controller: email,
                   decoration: InputDecoration(
-                    hintText: 'e.g. xyz@email.com',
+                    hintText: '${AppLocale.eg.getString(context)}. xyz@email.com',
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -424,7 +426,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 TextFormField(
                   controller: salary,
                   decoration: InputDecoration(
-                    hintText: 'e.g. ₹200',
+                    hintText: '${AppLocale.eg.getString(context)}. ₹200',
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -474,7 +476,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         }
                         return DropdownButton(
                             isExpanded: true,
-                            hint: const Text("Choose Your Service"),
+                            hint:  Text(AppLocale.chooseService.getString(context)),
                             underline:
                                 DropdownButtonHideUnderline(child: Container()),
                             value: selectedService,
@@ -483,8 +485,11 @@ class _CreateProfileState extends State<CreateProfile> {
                                 selectedService = newValue!;
                               });
                             },
-                            items: dropdownItems);
-                      })),
+                            items: dropdownItems,
+                        );
+                      },
+                      ),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -499,7 +504,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 const SizedBox(
                   height: 15,
                 ),
-                DateOfjoining(controller: doj, hintText: 'Doj'),
+                DateOfjoining(controller: doj, hintText: AppLocale.selectDate.getString(context)),
                 const SizedBox(
                   height: 15,
                 ),
@@ -513,20 +518,20 @@ class _CreateProfileState extends State<CreateProfile> {
                       // final SharedPreferences sp = await SharedPreferences.getInstance();
                       if (phone.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Fill Phone Number Name', context);
+                            AppLocale.fillPhoneError.getString(context), context);
                       } else if (coachName.text.isEmpty) {
-                        Utils.flushBarErrorMessage('Fill Coach Name', context);
+                        Utils.flushBarErrorMessage(AppLocale.fillCoachName.getString(context), context);
                       } else if (dob.text.isEmpty) {
-                        Utils.flushBarErrorMessage('Please Enter DOB', context);
+                        Utils.flushBarErrorMessage(AppLocale.enterDoj.getString(context), context);
                       } else if (_genderValue!.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Please Select Gender', context);
+                            AppLocale.selectGender.getString(context), context);
                       } else if (salary.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Please Enter Salary', context);
+                            AppLocale.enterSalary.getString(context), context);
                       } else if (doj.text.isEmpty) {
                         Utils.flushBarErrorMessage(
-                            'Please Enter Date of Joining', context);
+                            AppLocale.enterDoj.getString(context), context);
                       }
                       // else if (email.text.isEmpty) {
                       //   Utils.flushBarErrorMessage(
@@ -535,7 +540,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       else if (selectedService == null &&
                           selectedService != '') {
                         Utils.flushBarErrorMessage(
-                            'Please Select Service', context);
+                        AppLocale.selectService.getString(context), context);
                       } else {
                         Map data = {
                           "service_uid": selectedService.toString(),
@@ -575,8 +580,8 @@ class _CreateProfileState extends State<CreateProfile> {
                                       ),
                                     ),
                                     const SizedBox(height: 5),
-                                    const Text(
-                                      "Send Invite",
+                                     Text(
+                                      AppLocale.sendInvite.getString(context),
                                       style: TextStyle(fontSize: 14),
                                     ),
                                     const SizedBox(height: 5),
@@ -596,7 +601,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                     child: Container(
                                         width: double.infinity,
                                         child: RoundButton(
-                                          title: 'Send Invitation',
+                                          title: AppLocale.sendInvitation.getString(context),
                                           onPress: () async {
                                             print("page is ${widget.pathPage}");
                                             Navigator.pop(context);

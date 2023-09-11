@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:drona/data/response/status.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:drona/utils/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -83,7 +84,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            ' View Batch Details',
+            AppLocale.viewBatchDetails.getString(context),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           centerTitle: true,
@@ -136,7 +137,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Batch Name',
+                              AppLocale.batchName.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -163,9 +164,11 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           const SizedBox(
                             height: 15,
                           ),
-                          const Align(
+                          Align(
                               alignment: Alignment.topLeft,
-                              child: Text('Services')),
+                              child: Text(
+                                AppLocale.serviceText.getString(context),
+                              )),
                           const SizedBox(
                             height: 10,
                           ),
@@ -192,7 +195,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Assign Coach',
+                              AppLocale.assignCoach.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -222,7 +225,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Program',
+                              AppLocale.program.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -250,7 +253,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Fee',
+                              AppLocale.fee.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -280,7 +283,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Type of Batch',
+                              AppLocale.tYOB.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -311,7 +314,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Online Session Url',
+                              AppLocale.title22.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -341,7 +344,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Batch Days',
+                              AppLocale.batchDays.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -389,7 +392,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Batch Timing',
+                              AppLocale.batchTiming.getString(context),
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -445,7 +448,8 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                           Row(
                                             children: [
                                               Text(
-                                                "Trainee List",
+                                                AppLocale.traineeList
+                                                    .getString(context),
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -550,7 +554,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                     child: Center(
                                                                         child: value.dataList.data!.data[index].status == "active"
                                                                             ? Text(
-                                                                                "Active",
+                                                                                AppLocale.active.getString(context),
                                                                                 style: TextStyle(
                                                                                   color: Color(0xffFBFBFC),
                                                                                   fontSize: 10,
@@ -559,7 +563,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                                 ),
                                                                               )
                                                                             : Text(
-                                                                                "Inactive",
+                                                                                AppLocale.inActive.getString(context),
                                                                                 style: TextStyle(
                                                                                   color: Color(0xffFBFBFC),
                                                                                   fontSize: 10,
@@ -624,7 +628,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                           child: Center(
                                                                               child: value.dataList.data!.data[index].join_status == "not_onboarded"
                                                                                   ? Text(
-                                                                                      "Not Onboarded",
+                                                                                      AppLocale.notOnboarded.getString(context),
                                                                                       style: TextStyle(
                                                                                         color: Colors.redAccent,
                                                                                         fontSize: 10,
@@ -633,7 +637,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                                       ),
                                                                                     )
                                                                                   : Text(
-                                                                                      "Onboarded",
+                                                                                      AppLocale.onboarded.getString(context),
                                                                                       style: TextStyle(
                                                                                         color: Color(0xff47C088),
                                                                                         fontSize: 10,
@@ -676,7 +680,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                         child: value.dataList.data?.data[index].gender ==
                                                                                 'male'
                                                                             ? Text(
-                                                                                "Male",
+                                                                                AppLocale.male.getString(context),
                                                                                 style: TextStyle(
                                                                                   color: Color(0xff39404A),
                                                                                   fontSize: 12,
@@ -686,7 +690,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                               )
                                                                             : value.dataList.data?.data[index].gender == 'female'
                                                                                 ? Text(
-                                                                                    "Female",
+                                                                                    AppLocale.female.getString(context),
                                                                                     style: TextStyle(
                                                                                       color: Color(0xff39404A),
                                                                                       fontSize: 12,
@@ -695,7 +699,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                                     ),
                                                                                   )
                                                                                 : Text(
-                                                                                    "Others",
+                                                                                    AppLocale.other.getString(context),
                                                                                     style: TextStyle(
                                                                                       color: Color(0xff39404A),
                                                                                       fontSize: 12,
@@ -811,7 +815,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Fee : ",
+                                                                              "${AppLocale.fee.getString(context)} : ",
                                                                               style: TextStyle(
                                                                                 color: Color(0xff39404A),
                                                                                 fontSize: 14,
@@ -885,7 +889,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                           //
                           RoundButton(
                               loading: false,
-                              title: 'Add Trainee',
+                              title: AppLocale.addTrainee.getString(context),
                               textColor: Colors.white,
                               rounded: true,
                               color: Theme.of(context).primaryColor,
@@ -932,13 +936,22 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                             height: 15,
                                           ),
                                           Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20),
-                                                child: Text(
-                                                    'Add Trainee In ${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}'),
-                                              )),
+                                            alignment: Alignment.topLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20),
+                                              child: Text(
+                                                AppLocale.title23
+                                                    .getString(context)
+                                                    .trParams(
+                                                  {
+                                                    'key':
+                                                        "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -956,23 +969,6 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                           left: 10),
                                                   child: TextButton(
                                                       onPressed: () {
-                                                        /*Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                context) =>
-                                                                    TrainAddManualy(
-                                                                      batchId: value
-                                                                          .dataList
-                                                                          .data!
-                                                                          .data![0]
-                                                                          .uid
-                                                                          .toString(),
-                                                                      batchName:
-                                                                      "${value.dataList.data?.data![widget.ListIndex].batchName.toString().toUpperCase()}",
-                                                                    ),
-                                                              ),
-                                                            );*/
                                                         Get.to(
                                                             () =>
                                                                 TrainAddManualy(
@@ -998,7 +994,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                                 .rightToLeft);
                                                       },
                                                       child: Text(
-                                                        'Enter Manually',
+                                                        AppLocale.enterManually.getString(context),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyMedium,
@@ -1015,7 +1011,7 @@ class _ViewBatchDetailsState extends State<ViewBatchDetails> {
                                                   child: TextButton(
                                                     onPressed: () {},
                                                     child: Text(
-                                                      'Select From Existing Trainees',
+                                                      AppLocale.selectFromExistingTrainee.getString(context),
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodyMedium,

@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +53,7 @@ class _ServiceListPageState extends State<ServiceListPage> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Service And Program',
+        title:  Text(AppLocale.serviceAndProgram.getString(context),
             style: TextStyle(color: Colors.black, fontSize: 18)),
         elevation: 0,
         actions: [

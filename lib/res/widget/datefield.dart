@@ -107,7 +107,7 @@ class _DateOfjoiningState extends State<DateOfjoining> {
           Icons.calendar_month,
           size: 30.0,
         ),
-        hintText: 'Select a date',
+        hintText: widget.hintText,
         contentPadding: const EdgeInsets.all(10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),

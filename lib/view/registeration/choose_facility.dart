@@ -33,7 +33,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
   bool clay = false;
   bool hard = false;
   bool _customTileExpanded = false;
-   TextEditingController nofacility = TextEditingController();
+  TextEditingController nofacility = TextEditingController();
   int CountSurfaces = 0;
   String facilityname = '';
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -127,65 +127,57 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         alignment: Alignment.center,
                         child: Consumer<FacilityViewViewModel>(
                             builder: (context, value, _) {
-                          facilityname = value.dataList.data?.inputtextname.toString() ?? '';
-                            switch (value.dataList.status!) {
-                              case Status.loading:
+                          facilityname =
+                              value.dataList.data?.inputtextname.toString() ??
+                                  '';
+                          switch (value.dataList.status!) {
+                            case Status.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.teal,
+                                ),
+                              );
 
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.teal,
-                                    ),
-                                  );
+                            case Status.completed:
+                              return Row(
+                                children: [
+                                  Text(
+                                    AppLocale.title36.getString(context),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Text(" "),
+                                  Text(
+                                    "For ${value.dataList.data?.serviceName}"??
+                                        '',
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  )
+                                ],
+                              );
 
-                              case Status.completed:
-                                return Row(
-                                  children: [
-                                    Text(
-                                      AppLocale.title36.getString(context),
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    ),
-                                    Text(' '),
-                                    Text(
-                                      value.dataList.data?.serviceName
-                                          .toString() ??
-                                          '',
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    )
-                                  ],
-                                );
-
-                              case Status.error:
-                                return Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .center,
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        Icon(
-                                          Icons.error_outline,
-                                          color: Theme
-                                              .of(context)
-                                              .primaryColorDark,
-                                          size: 100.0,
-                                        ),
-                                        NoData()
-                                        // Text(
-                                        //   value.dataList.message.toString(),
-                                        //   style: TextStyle(
-                                        //       color: Theme.of(context).primaryColor,
-                                        //       fontSize: 20,
-                                        //       height: 2),
-                                        // )
-                                      ],
-                                    ));
-                            }
+                            case Status.error:
+                              return Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    color: Theme.of(context).primaryColorDark,
+                                    size: 100.0,
+                                  ),
+                                  NoData()
+                                  // Text(
+                                  //   value.dataList.message.toString(),
+                                  //   style: TextStyle(
+                                  //       color: Theme.of(context).primaryColor,
+                                  //       fontSize: 20,
+                                  //       height: 2),
+                                  // )
+                                ],
+                              ));
+                          }
                         }),
                       ),
                       const SizedBox(
@@ -199,10 +191,8 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         facilityname =
                             value.dataList.data?.inputtextname.toString() ?? '';
 
-
                         switch (value.dataList.status!) {
                           case Status.loading:
-
                             return const Center(
                               child: CircularProgressIndicator(
                                 color: Colors.teal,
@@ -210,17 +200,18 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                             );
 
                           case Status.completed:
-                            return   Column(
+                            return Column(
                               children: [
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
-                                      width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
                                       child: Column(
                                         children: [
                                           Align(
@@ -249,10 +240,10 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                               counterText: "",
                                               hintText: '0',
                                               contentPadding:
-                                              const EdgeInsets.all(10),
+                                                  const EdgeInsets.all(10),
                                               border: OutlineInputBorder(
                                                 borderRadius:
-                                                BorderRadius.circular(5.0),
+                                                    BorderRadius.circular(5.0),
                                                 borderSide: BorderSide(
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -274,8 +265,8 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                     children: [
                                       Text(
                                         value.dataList.data
-                                            ?.checkboxwithselectoptionname
-                                            .toString() ??
+                                                ?.checkboxwithselectoptionname
+                                                .toString() ??
                                             '',
                                         style: const TextStyle(
                                             fontSize: 17,
@@ -294,49 +285,55 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                 ),
                                 ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: value.dataList.data
-                                        ?.checkboxwithselectoption?.length ??
+                                    itemCount: value
+                                            .dataList
+                                            .data
+                                            ?.checkboxwithselectoption
+                                            ?.length ??
                                         0,
                                     itemBuilder: (context, index) {
                                       String checkboxNmae = value.dataList.data
-                                          ?.checkboxwithselectoption?[index]
-                                          .toString() ??
+                                              ?.checkboxwithselectoption?[index]
+                                              .toString() ??
                                           '';
                                       return Column(
                                         children: [
                                           Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: <Widget>[
                                                 Row(
                                                   children: [
                                                     Checkbox(
                                                       checkColor: Colors.white,
-                                                      activeColor: Theme.of(context)
-                                                          .primaryColor,
-                                                      value:
-                                                      _surfaceisChecked[index],
+                                                      activeColor:
+                                                          Theme.of(context)
+                                                              .primaryColor,
+                                                      value: _surfaceisChecked[
+                                                          index],
                                                       onChanged: (value) {
                                                         if (value == true) {
                                                           surfaceselectedlist[
-                                                          index] = checkboxNmae;
+                                                                  index] =
+                                                              checkboxNmae;
                                                         } else {
                                                           surfaceselectedlist[
-                                                          index] = false;
+                                                              index] = false;
                                                         }
                                                         setState(() {
-                                                          _surfaceisChecked[index] =
-                                                              value;
+                                                          _surfaceisChecked[
+                                                              index] = value;
                                                         });
                                                       },
                                                     ),
                                                     Text(
                                                       value
-                                                          .dataList
-                                                          .data
-                                                          ?.checkboxwithselectoption?[
-                                                      index]
-                                                          .toString() ??
+                                                              .dataList
+                                                              .data
+                                                              ?.checkboxwithselectoption?[
+                                                                  index]
+                                                              .toString() ??
                                                           '',
                                                       style: Theme.of(context)
                                                           .textTheme
@@ -346,36 +343,47 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                                 ),
                                                 _surfaceisChecked[index]
                                                     ? Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: const Color
-                                                            .fromARGB(255,
-                                                            218, 216, 216)),
-                                                    borderRadius:
-                                                    const BorderRadius
-                                                        .all(
-                                                        Radius.circular(
-                                                            5)),
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .fromLTRB(10, 0, 10, 0),
-                                                  child:
-                                                  DropdownButtonHideUnderline(
-                                                    child: DropdownButton(
-                                                        isExpanded: false,
-                                                        value: selectedValue[
-                                                        index],
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            selectedValue[
-                                                            index] =
-                                                                value ?? true;
-                                                          });
-                                                        },
-                                                        items: dropdownItems),
-                                                  ),
-                                                )
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              width: 1,
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  218,
+                                                                  216,
+                                                                  216)),
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          5)),
+                                                        ),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                10, 0, 10, 0),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child: DropdownButton(
+                                                              isExpanded: false,
+                                                              value:
+                                                                  selectedValue[
+                                                                      index],
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  selectedValue[
+                                                                          index] =
+                                                                      value ??
+                                                                          true;
+                                                                });
+                                                              },
+                                                              items:
+                                                                  dropdownItems),
+                                                        ),
+                                                      )
                                                     : Container(),
                                               ]),
                                           const SizedBox(
@@ -394,8 +402,8 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                         width: 1,
                                         color: const Color.fromARGB(
                                             255, 224, 223, 223)),
-                                    borderRadius:
-                                    const BorderRadius.all(Radius.circular(5)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5)),
                                   ),
                                   child: ExpansionTile(
                                     title: const Text(
@@ -414,50 +422,58 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                     children: <Widget>[
                                       ListView.builder(
                                           shrinkWrap: true,
-                                          itemCount:
-                                          value.dataList.data?.other?.length ??
+                                          itemCount: value.dataList.data?.other
+                                                  ?.length ??
                                               0,
                                           itemBuilder: (context, index) {
-                                            var checkboxotherNmae =
-                                            value.dataList.data?.other?[index];
+                                            var checkboxotherNmae = value
+                                                .dataList.data?.other?[index];
                                             return Column(
                                               children: [
                                                 Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: <Widget>[
                                                       Row(
                                                         children: [
                                                           Checkbox(
                                                             checkColor:
-                                                            Colors.white,
-                                                            activeColor:
-                                                            Theme.of(context)
+                                                                Colors.white,
+                                                            activeColor: Theme
+                                                                    .of(context)
                                                                 .primaryColor,
-                                                            value: _otherChecked[
-                                                            index],
+                                                            value:
+                                                                _otherChecked[
+                                                                    index],
                                                             onChanged: (value) {
-                                                              if (value == true) {
+                                                              if (value ==
+                                                                  true) {
                                                                 otherselectedlist[
-                                                                index] =
+                                                                        index] =
                                                                     checkboxotherNmae;
                                                               } else {
                                                                 otherselectedlist[
-                                                                index] = false;
+                                                                        index] =
+                                                                    false;
                                                               }
                                                               setState(() {
                                                                 _otherChecked[
-                                                                index] = value;
+                                                                        index] =
+                                                                    value;
                                                               });
                                                             },
                                                           ),
                                                           Text(
-                                                            value.dataList.data
-                                                                ?.other?[index]
-                                                                .toString() ??
+                                                            value
+                                                                    .dataList
+                                                                    .data
+                                                                    ?.other?[
+                                                                        index]
+                                                                    .toString() ??
                                                                 '',
-                                                            style: Theme.of(context)
+                                                            style: Theme.of(
+                                                                    context)
                                                                 .textTheme
                                                                 .bodyMedium,
                                                           ),
@@ -473,7 +489,7 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                     ],
                                     onExpansionChanged: (bool expanded) {
                                       setState(
-                                              () => _customTileExpanded = expanded);
+                                          () => _customTileExpanded = expanded);
                                     },
                                   ),
                                 ),
@@ -483,15 +499,17 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                 ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: 1,
-                                    itemBuilder: (context, index) {CountSurfaces = 0;
+                                    itemBuilder: (context, index) {
+                                      CountSurfaces = 0;
                                       List checkboxOption = List.generate(
                                           value
-                                              .dataList
-                                              .data
-                                              ?.checkboxwithselectoption
-                                              ?.length ??
+                                                  .dataList
+                                                  .data
+                                                  ?.checkboxwithselectoption
+                                                  ?.length ??
                                               0, (index) {
-                                        if (surfaceselectedlist[index] != false) {
+                                        if (surfaceselectedlist[index] !=
+                                            false) {
                                           CountSurfaces +=
                                               int.parse(selectedValue[index]);
 
@@ -499,35 +517,51 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                                             'name': surfaceselectedlist[index]
                                                 .toString(),
                                             'quantity':
-                                            selectedValue[index].toString()
+                                                selectedValue[index].toString()
                                           };
                                         }
                                       });
-                                      checkboxOption
-                                          .removeWhere((value) => value == null);
+                                      checkboxOption.removeWhere(
+                                          (value) => value == null);
                                       //nomber of others checked with quantity
                                       List checkboxOptionOther = List.generate(
-                                          value.dataList.data?.other?.length ?? 0,
-                                              (index) {
-                                            if (otherselectedlist[index] != false) {
-                                              return {
-                                                'name':
-                                                otherselectedlist[index].toString(),
-                                              };
-                                            }
-                                          });
-                                      checkboxOptionOther.removeWhere((value) => value == null);
+                                          value.dataList.data?.other?.length ??
+                                              0, (index) {
+                                        if (otherselectedlist[index] != false) {
+                                          return {
+                                            'name': otherselectedlist[index]
+                                                .toString(),
+                                          };
+                                        }
+                                      });
+                                      checkboxOptionOther.removeWhere(
+                                          (value) => value == null);
                                       List.filled(_otherLength ?? 0, false);
                                       data = {
-                                        'cat_name': value.dataList.data?.catName.toString(),
-                                        'cat_uid': value.dataList.data?.catUid.toString(),
-                                        'service_name': value.dataList.data?.serviceName.toString(),
-                                        'service_id': value.dataList.data?.serviceId.toString(),
-                                        'facility_uid': value.dataList.data?.uid.toString(),
-                                        'inputtextname': value.dataList.data?.inputtextname.toString(),
-                                        'inputtextdata': nofacility.text.toString(),
-                                        'checkboxwithselectoption': checkboxOption,
-                                        'checkboxwithselectoptionname': value.dataList.data?.checkboxwithselectoptionname.toString(),
+                                        'cat_name': value.dataList.data?.catName
+                                            .toString(),
+                                        'cat_uid': value.dataList.data?.catUid
+                                            .toString(),
+                                        'service_name': value
+                                            .dataList.data?.serviceName
+                                            .toString(),
+                                        'service_id': value
+                                            .dataList.data?.serviceId
+                                            .toString(),
+                                        'facility_uid':
+                                            value.dataList.data?.uid.toString(),
+                                        'inputtextname': value
+                                            .dataList.data?.inputtextname
+                                            .toString(),
+                                        'inputtextdata':
+                                            nofacility.text.toString(),
+                                        'checkboxwithselectoption':
+                                            checkboxOption,
+                                        'checkboxwithselectoptionname': value
+                                            .dataList
+                                            .data
+                                            ?.checkboxwithselectoptionname
+                                            .toString(),
                                         'other': checkboxOptionOther
                                       };
                                       print("data==$data");
@@ -535,41 +569,29 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                               ],
                             );
 
-
                           case Status.error:
                             return Center(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center,
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .center,
-                                  children: [
-                                    Icon(
-                                      Icons.error_outline,
-                                      color: Theme
-                                          .of(context)
-                                          .primaryColorDark,
-                                      size: 100.0,
-                                    ),
-                                    NoData()
-                                    // Text(
-                                    //   value.dataList.message.toString(),
-                                    //   style: TextStyle(
-                                    //       color: Theme.of(context).primaryColor,
-                                    //       fontSize: 20,
-                                    //       height: 2),
-                                    // )
-                                  ],
-                                ));
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: Theme.of(context).primaryColorDark,
+                                  size: 100.0,
+                                ),
+                                NoData()
+                                // Text(
+                                //   value.dataList.message.toString(),
+                                //   style: TextStyle(
+                                //       color: Theme.of(context).primaryColor,
+                                //       fontSize: 20,
+                                //       height: 2),
+                                // )
+                              ],
+                            ));
                         }
-
-
-
-
-
-
                       }),
-
                       RoundButton(
                         loading: false,
                         title: AppLocale.conts.getString(context),
@@ -579,15 +601,17 @@ class _ChooseFacilityState extends State<ChooseFacility> {
                         onPress: () {
                           if (nofacility.text.isEmpty) {
                             print("data$data");
-                            registration.facilityePost(data, context, path: '', serviceUid: '', serviceName: '');
+                            registration.facilityePost(data, context,
+                                path: '', serviceUid: '', serviceName: '');
                           } else {
                             if (CountSurfaces == int.parse(nofacility.text)) {
                               print("data$data");
 
-                              registration.facilityePost(data, context, path: '', serviceUid: '', serviceName: '');
+                              registration.facilityePost(data, context,
+                                  path: '', serviceUid: '', serviceName: '');
                             } else {
                               Utils.flushBarErrorMessage(
-                                  'Total facility should be equal to ${nofacility.text.toString()}',
+                                  '${AppLocale.noEqualT0.getString(context)} ${nofacility.text.toString()}',
                                   context);
                             }
                           }

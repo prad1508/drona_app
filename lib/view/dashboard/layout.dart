@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:drona/res/language/language.dart';
 import 'package:drona/view/batch_listing/ViewBatchDetails1.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../batch_listing/ViewBatchDetails2.dart';
 import '../reports/attendance.dart';
@@ -126,14 +128,164 @@ class _LayoutState extends State<Layout> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: buildMyNavBar(context)),
+          bottomNavigationBar: Container(
+            height: 70,
+            decoration:  BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    IconButton(
+                      enableFeedback: false,
+                      onPressed: () {
+                        setState(() {
+                          pageIndex = 0;
+                        });
+                      },
+                      icon: pageIndex == 0
+                          ? Icon(
+                        Icons.dashboard_rounded,
+                        size: 24,
+                        color: Theme.of(context).primaryColor,
+                      )
+                          : const Icon(
+                        Icons.space_dashboard_outlined,
+                        size: 24,
+                        color: Color.fromARGB(255, 153, 160, 171),
+                      ),
+                    ),
+                    pageIndex == 0
+                        ?  Text(
+                      AppLocale.homeText.getString(context).toString(),
+                      style: const TextStyle(height: .5, fontSize: 12),
+                    )
+                        :  Text(
+                      AppLocale.homeText.getString(context).toString(),
+                      style: const TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconButton(
+                      enableFeedback: false,
+                      onPressed: () {
+                        setState(() {
+                          pageIndex = 1;
+                        });
+                      },
+                      icon: pageIndex == 1
+                          ? Icon(
+                        Icons.calendar_today,
+                        size: 24,
+                        color: Theme.of(context).primaryColor,
+                      )
+                          : const Icon(
+                        Icons.calendar_today_outlined,
+                        size: 24,
+                        color: Color.fromARGB(255, 153, 160, 171),
+                      ),
+                    ),
+                    pageIndex == 1
+                        ?  Text(
+                      AppLocale.attendance.getString(context).toString(),
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                        :  Text(
+                      AppLocale.attendance.getString(context).toString(),
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconButton(
+                      enableFeedback: false,
+                      onPressed: () {
+                        setState(() {
+                          pageIndex = 2;
+                        });
+                      },
+                      icon: pageIndex == 2
+                          ? Icon(
+                        Icons.wallet,
+                        color: Theme.of(context).primaryColor,
+                        size: 24,
+                      )
+                          : const Icon(
+                        Icons.wallet_membership,
+                        color: Color.fromARGB(255, 153, 160, 171),
+                        size: 24,
+                      ),
+                    ),
+                    pageIndex == 2
+                        ?  Text(
+                      AppLocale.batches.getString(context),
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                        :  Text(
+                      AppLocale.batches.getString(context),
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconButton(
+                      enableFeedback: false,
+                      onPressed: () {
+                        setState(() {
+                          pageIndex = 3;
+                        });
+                      },
+                      icon: pageIndex == 3
+                          ? Icon(
+                        Icons.group,
+                        color: Theme.of(context).primaryColor,
+                        size: 24,
+                      )
+                          : const Icon(
+                        Icons.group_outlined,
+                        color: Color.fromARGB(255, 153, 160, 171),
+                        size: 24,
+                      ),
+                    ),
+                    pageIndex == 3
+                        ?  Text(
+                      AppLocale.trainee.getString(context),
+                      style: TextStyle(height: .5, fontSize: 12),
+                    )
+                        :  Text(
+                      AppLocale.trainee.getString(context),
+                      style: TextStyle(
+                          height: .5,
+                          color: Color.fromARGB(255, 153, 160, 171),
+                          fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )),
     );
   }
 
   Container buildMyNavBar(BuildContext context) {
     return Container(
       height: 70,
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         color: Colors.white,
       ),
       child: Row(
@@ -161,12 +313,12 @@ class _LayoutState extends State<Layout> {
                       ),
               ),
               pageIndex == 0
-                  ? const Text(
-                      'Home',
+                  ?  Text(
+                      AppLocale.homeText.getString.toString(),
                       style: TextStyle(height: .5, fontSize: 12),
                     )
-                  : const Text(
-                      'Home',
+                  :  Text(
+                AppLocale.homeText.getString.toString(),
                       style: TextStyle(
                           height: .5,
                           color: Color.fromARGB(255, 153, 160, 171),
@@ -196,12 +348,12 @@ class _LayoutState extends State<Layout> {
                       ),
               ),
               pageIndex == 1
-                  ? const Text(
-                      'Attendence',
+                  ?  Text(
+                      AppLocale.attendance.getString(context).toString(),
                       style: TextStyle(height: .5, fontSize: 12),
                     )
-                  : const Text(
-                      'Attendence',
+                  :  Text(
+                AppLocale.attendance.getString(context).toString(),
                       style: TextStyle(
                           height: .5,
                           color: Color.fromARGB(255, 153, 160, 171),
@@ -231,12 +383,12 @@ class _LayoutState extends State<Layout> {
                       ),
               ),
               pageIndex == 2
-                  ? const Text(
-                      'Batches',
+                  ?  Text(
+                      AppLocale.batches.getString(context),
                       style: TextStyle(height: .5, fontSize: 12),
                     )
-                  : const Text(
-                      'Batches',
+                  :  Text(
+                AppLocale.batches.getString(context),
                       style: TextStyle(
                           height: .5,
                           color: Color.fromARGB(255, 153, 160, 171),
@@ -266,12 +418,12 @@ class _LayoutState extends State<Layout> {
                       ),
               ),
               pageIndex == 3
-                  ? const Text(
-                      'Trainees',
+                  ?  Text(
+                AppLocale.trainee.getString(context),
                       style: TextStyle(height: .5, fontSize: 12),
                     )
-                  : const Text(
-                      'Trainees',
+                  :  Text(
+                AppLocale.trainee.getString(context),
                       style: TextStyle(
                           height: .5,
                           color: Color.fromARGB(255, 153, 160, 171),

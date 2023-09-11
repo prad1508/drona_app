@@ -15,9 +15,9 @@ class AsyncTextFormField extends StatefulWidget {
   const AsyncTextFormField({ required this.validator,
       required this.validationDebounce,
       required this.controller,
-      this.isValidatingMessage = "please wait for the validation to complete",
-      this.valueIsEmptyMessage = 'please enter a value',
-      this.valueIsInvalidMessage = 'please enter a valid value',
+      required this.isValidatingMessage,
+      required this.valueIsEmptyMessage,
+      required this.valueIsInvalidMessage,
       this.hintText = '',  
       this.enable = true,
       this.keyboardType = TextInputType.name, super.key});

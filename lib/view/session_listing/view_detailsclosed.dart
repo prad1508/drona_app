@@ -1,4 +1,5 @@
 import 'package:drona/res/app_url.dart';
+import 'package:drona/res/language/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -117,7 +118,7 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
           ],
         ),
         title: Text(
-          'View Session Details',
+          AppLocale.viewSessionDetails.getString(context),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         centerTitle: true,
@@ -234,7 +235,8 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                                       });
                                     },
                                   ),
-                                  const Text('Attendance Marked')
+
+                                   Text(AppLocale.attendanceMarked.getString(context),)
                                 ],
                               ),
                             ],
@@ -260,8 +262,8 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                                         child: Chip(
                                           backgroundColor: const Color.fromARGB(
                                               255, 242, 242, 242),
-                                          label: const Text(
-                                            'Present',
+                                          label:  Text(
+                                            AppLocale.present.getString(context),
                                             style:
                                             TextStyle(color: Colors.blue),
                                           ),
@@ -281,8 +283,8 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                                         child: Chip(
                                           backgroundColor: const Color.fromARGB(
                                               255, 242, 242, 242),
-                                          label: const Text(
-                                            'Absent',
+                                          label:  Text(
+                                            AppLocale.absent.getString(context),
                                           ),
                                           /*avatar: CircleAvatar(
                                               backgroundColor:
@@ -300,8 +302,8 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                                         child: Chip(
                                           backgroundColor: const Color.fromARGB(
                                               255, 242, 242, 242),
-                                          label: const Text(
-                                            'Leave',
+                                          label:  Text(
+                                            AppLocale.leave.getString(context),
                                           ),
                                           /*avatar:CircleAvatar(
                                               backgroundColor:
@@ -735,9 +737,9 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                                   width: 10,
                                 ),
                                 Column(
-                                  children: const [
+                                  children:  [
                                     Text(
-                                      'View File',
+                                      AppLocale.viewFile.getString(context),
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontStyle: FontStyle.normal,
@@ -764,7 +766,7 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Feedback for Trainee',
+                            AppLocale.feedbackTrainee.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -793,7 +795,7 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Feedback	for	Academy',
+                            AppLocale.feedbackAcademy.getString(context),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -822,7 +824,7 @@ class _ViewDetailClosedState extends State<ViewDetailClosed> {
                         value.dataList2.data!.status == "closed"? SizedBox():
                         RoundButton(
                             loading: false,
-                            title: 'Close Session',
+                            title: AppLocale.closeSession.getString(context),
                             textColor: Colors.white,
                             rounded: true,
                             color: const Color(0xff2A62B8),
